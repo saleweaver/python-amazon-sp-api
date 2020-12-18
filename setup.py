@@ -3,11 +3,11 @@ from setuptools import setup
 setup(
     name='python-sp-api',
     version='0.0.1',
-    requires=[
+    install_requires=[
         "requests",
-        "six>=1.15.0,<1.16.0",
-        "boto3>=1.16.39,<1.17.0",
-        "cachetools>=4.2.0,<4.3.0"
+        "six~=1.15.0",
+        "boto3~=1.16.39",
+        "cachetools~=4.2.0"
     ],
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.client', 'sp_api', 'sp_api.api',
