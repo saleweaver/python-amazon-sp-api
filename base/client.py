@@ -72,7 +72,7 @@ class Client(BaseClient):
         if params is None:
             params = {}
         params.update({'MarketplaceIds': self.marketplace_id})
-        self.method = params.pop('method')
+        self.method = params.pop('method', data.pop('method'))
 
         return request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
                        auth=self._sign_request())
