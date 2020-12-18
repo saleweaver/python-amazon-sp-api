@@ -5,9 +5,9 @@ from .notifications.notifications import Notifications
 from .product_fees.product_fees import ProductFees
 
 __all__ = [
-    "Finances",
     "Orders",
     "Sellers",
     "Notifications",
-    "ProductFees"
+    "ProductFees",
+    "Finances"
 ]
