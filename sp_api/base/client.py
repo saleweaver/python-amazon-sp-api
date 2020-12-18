@@ -28,7 +28,6 @@ class Client(BaseClient):
 
     @staticmethod
     def set_role():
-        print(os.environ.get('SP_API_ROLE_ARN'))
         role = client.assume_role(
             RoleArn=os.environ.get('SP_API_ROLE_ARN'),
             RoleSessionName='guid'
