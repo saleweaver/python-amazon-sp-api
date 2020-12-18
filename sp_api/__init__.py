@@ -1,21 +1,32 @@
-from .api import (finances, product_fees, notifications, sellers, orders)
-from .auth import (access_token_response, credentials, access_token_client)
-from .base import (client, base_client, aws_sig_v4, marketplaces)
+from .api.finances.finances import Finances
+from .api.notifications.notifications import Notifications
+from .api.orders.orders import Orders
+from .api.product_fees.product_fees import ProductFees
+from .api.sellers.sellers import Sellers
+from .auth.access_token_client import AccessTokenClient
+from .auth.access_token_response import AccessTokenResponse
+from .auth.credentials import Credentials
+from .base.aws_sig_v4 import AWSSigV4
+from .base.base_client import BaseClient
+from .base.client import Client
 from .base.helpers import fill_query_params, sp_endpoint
+from .base.marketplaces import Marketplaces
+
 
 __all__ = [
-    'finances',
-    'product_fees',
-    'notifications',
-    'sellers',
-    'orders',
-    'access_token_response',
-    'access_token_client',
-    'credentials',
-    'client',
-    'base_client',
-    'aws_sig_v4',
-    'marketplaces',
+    'AccessTokenResponse',
+    'AccessTokenClient',
+    'Credentials',
+    'Client',
+    'BaseClient',
+    'AWSSigV4',
+    'Marketplaces',
     'fill_query_params',
-    'sp_endpoint'
+    'sp_endpoint',
+
+    "Orders",
+    "Sellers",
+    "Notifications",
+    "ProductFees",
+    "Finances"
 ]
