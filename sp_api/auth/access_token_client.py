@@ -3,8 +3,9 @@ import requests
 import logging
 from cachetools import TTLCache
 
-from sp_api import Credentials, AccessTokenResponse
-from sp_api import BaseClient
+from .credentials import Credentials
+from .access_token_response import AccessTokenResponse
+from sp_api.base import BaseClient
 
 cache = TTLCache(maxsize=10, ttl=3600)
 logger = logging.getLogger(__name__)

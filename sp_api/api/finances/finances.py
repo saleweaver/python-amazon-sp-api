@@ -1,6 +1,6 @@
 from sp_api.api.finances.models.list_financial_events_response import ListFinancialEventsResponse
-from sp_api import Client, Marketplaces
-from sp_api import sp_endpoint, fill_query_params
+from sp_api.base import Client, Marketplaces
+from sp_api.base import sp_endpoint, fill_query_params
 
 
 class Finances(Client):

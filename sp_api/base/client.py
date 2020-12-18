@@ -5,8 +5,10 @@ import boto3
 from cachetools import TTLCache
 from requests import request
 
-from sp_api import AccessTokenClient, AccessTokenResponse
-from sp_api import BaseClient, Marketplaces, AWSSigV4
+from sp_api.auth import AccessTokenClient, AccessTokenResponse
+from .base_client import BaseClient
+from .marketplaces import Marketplaces
+from sp_api.base import AWSSigV4
 
 role_cache = TTLCache(maxsize=10, ttl=3600)
 client = boto3.client('sts',
@@ -18,7 +20,7 @@ client = boto3.client('sts',
 class Client(BaseClient):
     def __init__(self,
                  marketplace: Marketplaces,
-                 refresh_token=None):
+                  refresh_token=None):
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self._auth = AccessTokenClient(refresh_token)
@@ -68,8 +70,10 @@ class Client(BaseClient):
     def request(self, path: str, *, data: dict = None, params: dict = None):
         if params is None:
             params = {}
+        if data is None:
+            data = {}
         params.update({'MarketplaceIds': self.marketplace_id})
-        self.method = params.pop('method', data.pop('method'))
+        self.method = params.pop('method', data.pop('method', 'GET'))
 
         return request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
                        auth=self._sign_request())

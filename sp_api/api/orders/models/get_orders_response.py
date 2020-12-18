@@ -15,7 +15,6 @@ import re  # noqa: F401
 
 import six
 
-from api.orders.models.orders_list import OrdersList
 
 
 class GetOrdersResponse(object):

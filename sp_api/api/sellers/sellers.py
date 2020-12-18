@@ -1,6 +1,6 @@
-from sp_api import sp_endpoint
+from sp_api.base.helpers import sp_endpoint
 from sp_api.api.sellers.models.get_marketplace_participations_response import GetMarketplaceParticipationsResponse
-from sp_api import Client, Marketplaces
+from sp_api.base import Client, Marketplaces
 
 
 class Sellers(Client):
