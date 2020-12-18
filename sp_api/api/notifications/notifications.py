@@ -7,7 +7,7 @@ from sp_api.api.notifications.models.get_destination_response import GetDestinat
 from sp_api.api.notifications.models.get_destinations_response import GetDestinationsResponse
 from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
 from sp_api.api.notifications.models.get_subscription_response import GetSubscriptionResponse
-from sp_api.base import Client, Marketplaces
+from sp_api import Client, Marketplaces
 
 
 class Notifications(Client):

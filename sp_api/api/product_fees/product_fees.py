@@ -1,6 +1,6 @@
 from sp_api import sp_endpoint, fill_query_params
 from sp_api.api.product_fees.models.get_my_fees_estimate_response import GetMyFeesEstimateResponse
-from sp_api.base import Client, Marketplaces
+from sp_api import Client, Marketplaces
 
 
 class ProductFees(Client):
