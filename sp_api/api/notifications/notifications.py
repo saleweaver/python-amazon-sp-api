@@ -1,15 +1,13 @@
-from api.finances.models.list_financial_events_response import ListFinancialEventsResponse
-from api.notifications.models.create_destination_response import CreateDestinationResponse
-from api.notifications.models.create_subscription_response import CreateSubscriptionResponse
-from api.notifications.models.delete_destination_response import DeleteDestinationResponse
-from api.notifications.models.delete_subscription_by_id_response import DeleteSubscriptionByIdResponse
-from api.notifications.models.get_destination_response import GetDestinationResponse
-from api.notifications.models.get_destinations_response import GetDestinationsResponse
-from api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
-from api.notifications.models.get_subscription_response import GetSubscriptionResponse
-from base.client import Client
-from base.helpers import fill_query_params, sp_endpoint
-from base.marketplaces import Marketplaces
+from sp_api import sp_endpoint, fill_query_params
+from sp_api.api.notifications.models.create_destination_response import CreateDestinationResponse
+from sp_api.api.notifications.models.create_subscription_response import CreateSubscriptionResponse
+from sp_api.api.notifications.models.delete_destination_response import DeleteDestinationResponse
+from sp_api.api.notifications.models.delete_subscription_by_id_response import DeleteSubscriptionByIdResponse
+from sp_api.api.notifications.models.get_destination_response import GetDestinationResponse
+from sp_api.api.notifications.models.get_destinations_response import GetDestinationsResponse
+from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
+from sp_api.api.notifications.models.get_subscription_response import GetSubscriptionResponse
+from sp_api.base import Client, Marketplaces
 
 
 class Notifications(Client):

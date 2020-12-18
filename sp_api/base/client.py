@@ -5,11 +5,8 @@ import boto3
 from cachetools import TTLCache
 from requests import request
 
-from auth.access_token_client import AccessTokenClient
-from auth.access_token_response import AccessTokenResponse
-from base.aws_sig_v4 import AWSSigV4
-from base.base_client import BaseClient
-from base.marketplaces import Marketplaces
+from sp_api.auth import AccessTokenClient, AccessTokenResponse
+from sp_api.base import BaseClient, Marketplaces, AWSSigV4
 
 role_cache = TTLCache(maxsize=10, ttl=3600)
 client = boto3.client('sts',

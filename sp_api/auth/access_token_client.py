@@ -1,11 +1,11 @@
 import requests
 
-from auth.access_token_response import AccessTokenResponse
-from auth.credentials import Credentials
-from base.base_client import BaseClient
-
 import logging
 from cachetools import TTLCache
+
+from sp_api.auth import Credentials, AccessTokenResponse
+from sp_api.base import BaseClient
+
 cache = TTLCache(maxsize=10, ttl=3600)
 logger = logging.getLogger(__name__)
 

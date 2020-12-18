@@ -1,9 +1,8 @@
-from api.orders.models.get_order_items_response import GetOrderItemsResponse
-from api.orders.models.get_order_response import GetOrderResponse
-from api.orders.models.get_orders_response import GetOrdersResponse
-from base.client import Client
-from base.helpers import fill_query_params, sp_endpoint
-from base.marketplaces import Marketplaces
+from sp_api import sp_endpoint, fill_query_params
+from sp_api.api.orders.models.get_order_items_response import GetOrderItemsResponse
+from sp_api.api.orders.models.get_order_response import GetOrderResponse
+from sp_api.api.orders.models.get_orders_response import GetOrdersResponse
+from sp_api.base import Client, Marketplaces
 
 
 class Orders(Client):

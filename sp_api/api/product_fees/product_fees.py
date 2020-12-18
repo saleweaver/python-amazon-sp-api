@@ -1,8 +1,6 @@
-from api.product_fees.models.get_my_fees_estimate_response import GetMyFeesEstimateResponse
-from auth.credentials import Credentials
-from base.client import Client
-from base.helpers import fill_query_params, sp_endpoint
-from base.marketplaces import Marketplaces
+from sp_api import sp_endpoint, fill_query_params
+from sp_api.api.product_fees.models.get_my_fees_estimate_response import GetMyFeesEstimateResponse
+from sp_api.base import Client, Marketplaces
 
 
 class ProductFees(Client):
