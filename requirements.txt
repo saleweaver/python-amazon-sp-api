@@ -2,4 +2,6 @@ pytest
 requests~=2.25.1
 six~=1.15.0
 boto3~=1.16.39
-cachetools
+cachetools~=4.2.0
+setuptools~=51.0.0
+pycryptodome

@@ -6,5 +6,22 @@ from sp_api.base import Marketplaces
 
 
 def test_create_report():
-    print(Orders().get_orders(CreatedAfter=(datetime.now() - timedelta(days=2)).isoformat()))
     print(Reports().create_report(reportType='GET_FLAT_FILE_OPEN_LISTINGS_DATA'))
+
+
+def test_get_report():
+    print(Reports().get_report('595273018615'))
+
+
+def test_get_report_document_w_decrypt():
+    res = Reports().get_report_document('amzn1.tortuga.3.ab8cfb77-d791-4ecf-a2f5-b13cdbb9d502.T1N111ABCO06IT',
+                                        decrypt=False)
+    print(res)
+    assert 'document' in res.payload
+
+
+def test_get_report_document_n_decrypt():
+    res = Reports().get_report_document('amzn1.tortuga.3.ab8cfb77-d791-4ecf-a2f5-b13cdbb9d502.T1N111ABCO06IT',
+                                        decrypt=False)
+    print(res)
+    assert 'document' not in res.payload
