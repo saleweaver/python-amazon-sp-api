@@ -4,6 +4,22 @@
 Early development status, contributions very welcome!
 
 ---
+### Usage
+
+```
+# orders API
+try:
+    res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    print(res.payload)  # json data
+except SellingApiException as ex:
+    print(ex)
+
+
+# report request     
+createReportResponse = Reports().create_report(reportType='GET_FLAT_FILE_OPEN_LISTINGS_DATA')
+
+```
+---
 
 ### Environment variables needed
 

@@ -11,16 +11,59 @@ class Orders(Client):
 
     @sp_endpoint('/orders/v0/orders')
     def get_orders(self, **kwargs):
+        """
+        Returns orders created or updated during the time frame indicated by the specified parameters. You can also apply a range of filtering criteria to narrow the list of orders returned. If NextToken is present, that will be used to retrieve the orders instead of other criteria.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 1 | 1 |
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        :param kwargs:
+        :return:
+        """
         return GetOrdersResponse(
             **self.request(kwargs.pop('path'), params={**kwargs}).json())
 
     @sp_endpoint('/orders/v0/orders/{}')
     def get_order(self, order_id, **kwargs):
+        """
+        Returns the order indicated by the specified order ID.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 1 | 1 |
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        :param order_id:
+        :param kwargs:
+        :return:
+        """
         return GetOrderResponse(
             **self.request(fill_query_params(kwargs.pop('path'), order_id),
                            params={**kwargs}).json())
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
     def get_order_items(self, order_id, **kwargs):
+        """
+        Returns detailed order item information for the order indicated by the specified order ID. If NextToken is provided, it's used to retrieve the next page of order items.
+
+        Note: When an order is in the Pending state (the order has been placed but payment has not been authorized), the getOrderItems operation does not return information about pricing, taxes, shipping charges, gift status or promotions for the order items in the order. After an order leaves the Pending state (this occurs when payment has been authorized) and enters the Unshipped, Partially Shipped, or Shipped state, the getOrderItems operation returns information about pricing, taxes, shipping charges, gift status and promotions for the order items in the order.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 1 | 1 |
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        :param order_id:
+        :param kwargs:
+        :return:
+        """
         return GetOrderItemsResponse(
             **self.request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())

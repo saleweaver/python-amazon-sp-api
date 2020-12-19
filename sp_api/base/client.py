@@ -1,3 +1,4 @@
+import json
 import os
 from datetime import datetime
 
@@ -24,7 +25,7 @@ class SellingApiException(BaseException):
 class Client(BaseClient):
     def __init__(self,
                  marketplace: Marketplaces,
-                  refresh_token=None):
+                 refresh_token=None):
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self._auth = AccessTokenClient(refresh_token)
@@ -46,7 +47,7 @@ class Client(BaseClient):
             'user-agent': self.user_agent,
             'x-amz-access-token': self.auth.access_token,
             'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-
+            'content-type': 'application/json'
         }
 
     @property
@@ -75,11 +76,18 @@ class Client(BaseClient):
             params = {}
         if data is None:
             data = {}
-        params.update({'MarketplaceIds': self.marketplace_id})
+
         self.method = params.pop('method', data.pop('method', 'GET'))
 
+        if self.method == 'POST':
+            data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
+            data = json.dumps(data)
+        else:
+            params.update({'MarketplaceIds': self.marketplace_id})
+
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
-                       auth=self._sign_request())
+                      auth=self._sign_request())
         if e := res.json().get('errors', None):
+            print(e)
             raise SellingApiException(e)
         return res
