@@ -31,3 +31,9 @@ createReportResponse = Reports().create_report(reportType='GET_FLAT_FILE_OPEN_LI
 | SP_API_SECRET_KEY | AWS USER SECRET KEY |
 | SP_API_ACCESS_KEY | AWS USER ACCESS KEY |
 | SP_API_ROLE_ARN | The role's arn (needs permission to "Assume Role" STS) |
+
+
+---
+### DISCLAIMER
+
+We are not affiliated with Amazon
