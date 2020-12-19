@@ -4,6 +4,14 @@
 Early development status, contributions very welcome!
 
 ---
+
+### Installation
+
+```
+pip install python-amazon-sp-api
+```
+
+---
 ### Usage
 
 ```
