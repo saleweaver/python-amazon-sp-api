@@ -1,4 +1,4 @@
-# PYTHON-SP-API
+# PYTHON-AMAZON-SP-API
 ### Amazon Selling-Partner API
 
 Early development status, contributions very welcome!
