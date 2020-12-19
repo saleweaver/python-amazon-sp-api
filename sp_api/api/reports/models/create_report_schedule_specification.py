@@ -30,7 +30,6 @@ class CreateReportScheduleSpecification(object):
     """
     swagger_types = {
         'report_type': 'str',
-        'marketplace_ids': 'list[str]',
         'report_options': 'ReportOptions',
         'period': 'str',
         'next_report_creation_time': 'datetime'
@@ -38,22 +37,20 @@ class CreateReportScheduleSpecification(object):
 
     attribute_map = {
         'report_type': 'reportType',
-        'marketplace_ids': 'marketplaceIds',
         'report_options': 'reportOptions',
         'period': 'period',
         'next_report_creation_time': 'nextReportCreationTime'
     }
 
-    def __init__(self, report_type=None, marketplace_ids=None, report_options=None, period=None, next_report_creation_time=None):  # noqa: E501
+    def __init__(self, report_type=None, report_options=None, period=None, next_report_creation_time=None, **kwargs):  # noqa: E501
         """CreateReportScheduleSpecification - a model defined in Swagger"""  # noqa: E501
         self._report_type = None
-        self._marketplace_ids = None
         self._report_options = None
         self._period = None
         self._next_report_creation_time = None
         self.discriminator = None
         self.report_type = report_type
-        self.marketplace_ids = marketplace_ids
+
         if report_options is not None:
             self.report_options = report_options
         self.period = period
@@ -84,31 +81,6 @@ class CreateReportScheduleSpecification(object):
             raise ValueError("Invalid value for `report_type`, must not be `None`")  # noqa: E501
 
         self._report_type = report_type
-
-    @property
-    def marketplace_ids(self):
-        """Gets the marketplace_ids of this CreateReportScheduleSpecification.  # noqa: E501
-
-        A list of marketplace identifiers for the report schedule.  # noqa: E501
-
-        :return: The marketplace_ids of this CreateReportScheduleSpecification.  # noqa: E501
-        :rtype: list[str]
-        """
-        return self._marketplace_ids
-
-    @marketplace_ids.setter
-    def marketplace_ids(self, marketplace_ids):
-        """Sets the marketplace_ids of this CreateReportScheduleSpecification.
-
-        A list of marketplace identifiers for the report schedule.  # noqa: E501
-
-        :param marketplace_ids: The marketplace_ids of this CreateReportScheduleSpecification.  # noqa: E501
-        :type: list[str]
-        """
-        if marketplace_ids is None:
-            raise ValueError("Invalid value for `marketplace_ids`, must not be `None`")  # noqa: E501
-
-        self._marketplace_ids = marketplace_ids
 
     @property
     def report_options(self):
@@ -154,6 +126,7 @@ class CreateReportScheduleSpecification(object):
         if period is None:
             raise ValueError("Invalid value for `period`, must not be `None`")  # noqa: E501
         allowed_values = ["PT5M", "PT15M", "PT30M", "PT1H", "PT2H", "PT4H", "PT8H", "PT12H", "P1D", "P2D", "P3D", "PT84H", "P7D", "P14D", "P15D", "P18D", "P30D", "P1M"]  # noqa: E501
+        period = period.value
         if period not in allowed_values:
             raise ValueError(
                 "Invalid value for `period` ({0}), must be one of {1}"  # noqa: E501

@@ -29,11 +29,11 @@ class DeleteSubscriptionByIdResponse(object):
                             and the value is json key in definition.
     """
     swagger_types = {
-        'errors': 'ErrorList'
+        'errors': 'ErrorList',
     }
 
     attribute_map = {
-        'errors': 'errors'
+        'errors': 'errors',
     }
 
     def __init__(self, errors=None):  # noqa: E501
@@ -42,6 +42,7 @@ class DeleteSubscriptionByIdResponse(object):
         self.discriminator = None
         if errors is not None:
             self.errors = errors
+
 
     @property
     def errors(self):
