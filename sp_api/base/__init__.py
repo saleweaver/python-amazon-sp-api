@@ -4,6 +4,8 @@ from .client import Client
 from .helpers import fill_query_params, sp_endpoint
 from .marketplaces import Marketplaces
 from .client import SellingApiException
+from .schedules import Schedules
+from .report_status import ReportStatus
 
 __all__ = [
     'Client',
@@ -12,5 +14,7 @@ __all__ = [
     'Marketplaces',
     'fill_query_params',
     'sp_endpoint',
-    'SellingApiException'
+    'SellingApiException',
+    'Schedules',
+    'ReportStatus'
 ]
