@@ -82,3 +82,4 @@ class Client(BaseClient):
                        auth=self._sign_request())
         if e := res.json().get('errors', None):
             raise SellingApiException(e)
+        return res
