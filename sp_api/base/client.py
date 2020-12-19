@@ -67,7 +67,7 @@ class Client(BaseClient):
         return AWSSigV4('execute-api',
                         aws_access_key_id=role.get('AccessKeyId'),
                         aws_secret_access_key=role.get('SecretAccessKey'),
-                        region='us-east-1',
+                        region=os.environ.get('SP_AWS_REGION', 'us-east-1'),
                         aws_session_token=role.get('SessionToken')
                         )
 
