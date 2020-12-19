@@ -17,6 +17,10 @@ client = boto3.client('sts',
                       )
 
 
+class SellingApiException(BaseException):
+    pass
+
+
 class Client(BaseClient):
     def __init__(self,
                  marketplace: Marketplaces,
@@ -74,5 +78,7 @@ class Client(BaseClient):
         params.update({'MarketplaceIds': self.marketplace_id})
         self.method = params.pop('method', data.pop('method', 'GET'))
 
-        return request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
+        res = request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
                        auth=self._sign_request())
+        if e := res.json().get('errors', None):
+            raise SellingApiException(e)
