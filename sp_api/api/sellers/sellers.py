@@ -9,4 +9,4 @@ class Sellers(Client):
 
     @sp_endpoint('/sellers/v1/marketplaceParticipations')
     def get_marketplace_participation(self, **kwargs):
-        return GetMarketplaceParticipationsResponse(**self.request(kwargs.pop('path')).json())
+        return GetMarketplaceParticipationsResponse(**self._request(kwargs.pop('path')).json())

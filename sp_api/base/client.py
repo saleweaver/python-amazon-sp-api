@@ -71,7 +71,7 @@ class Client(BaseClient):
                         aws_session_token=role.get('SessionToken')
                         )
 
-    def request(self, path: str, *, data: dict = None, params: dict = None):
+    def _request(self, path: str, *, data: dict = None, params: dict = None):
         if params is None:
             params = {}
         if data is None:

@@ -40,7 +40,7 @@ class Notifications(Client):
         :return:
         """
         return CreateSubscriptionResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), notification_type), data={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), notification_type), data={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}')
@@ -60,7 +60,7 @@ class Notifications(Client):
         :return:
         """
         return GetSubscriptionResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), notification_type), params={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), notification_type), params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='DELETE')
@@ -81,8 +81,8 @@ class Notifications(Client):
         :return:
         """
         return DeleteSubscriptionByIdResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
-                           params={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
+                            params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='GET')
@@ -103,8 +103,8 @@ class Notifications(Client):
         :return:
         """
         return GetSubscriptionByIdResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
-                           params={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
+                            params={**kwargs}).json()
         )
 
     @sp_endpoint(path='/notifications/v1/destinations', method='POST')
@@ -123,7 +123,7 @@ class Notifications(Client):
         :return:
         """
         return CreateDestinationResponse(
-            **self.request(kwargs.pop('path'), data={**kwargs}).json()
+            **self._request(kwargs.pop('path'), data={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations', method='GET')
@@ -142,7 +142,7 @@ class Notifications(Client):
         :return:
         """
         return GetDestinationsResponse(
-            **self.request(kwargs.pop('path'), params={**kwargs}).json()
+            **self._request(kwargs.pop('path'), params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='GET')
@@ -162,7 +162,7 @@ class Notifications(Client):
         :return:
         """
         return GetDestinationResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='DELETE')
@@ -182,7 +182,7 @@ class Notifications(Client):
         :return:
         """
         return DeleteDestinationResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
         )
 
 

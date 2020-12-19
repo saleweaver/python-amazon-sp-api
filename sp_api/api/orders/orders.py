@@ -25,7 +25,7 @@ class Orders(Client):
         :return:
         """
         return GetOrdersResponse(
-            **self.request(kwargs.pop('path'), params={**kwargs}).json())
+            **self._request(kwargs.pop('path'), params={**kwargs}).json())
 
     @sp_endpoint('/orders/v0/orders/{}')
     def get_order(self, order_id, **kwargs):
@@ -44,8 +44,8 @@ class Orders(Client):
         :return:
         """
         return GetOrderResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), order_id),
-                           params={**kwargs}).json())
+            **self._request(fill_query_params(kwargs.pop('path'), order_id),
+                            params={**kwargs}).json())
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
     def get_order_items(self, order_id, **kwargs):
@@ -66,4 +66,4 @@ class Orders(Client):
         :return:
         """
         return GetOrderItemsResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())

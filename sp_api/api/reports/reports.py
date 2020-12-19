@@ -26,5 +26,5 @@ class Reports(Client):
         :return:
         """
         return CreateReportResponse(
-            **self.request(kwargs.pop('path'), data={**kwargs}).json()
+            **self._request(kwargs.pop('path'), data={**kwargs}).json()
         )

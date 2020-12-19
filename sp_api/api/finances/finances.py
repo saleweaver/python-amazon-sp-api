@@ -10,4 +10,4 @@ class Finances(Client):
     @sp_endpoint('/finances/v0/orders/{}/financialEvents')
     def get_financial_events_for_order(self, order_id, **kwargs):
         return ListFinancialEventsResponse(
-            **self.request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())
