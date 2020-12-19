@@ -15,7 +15,7 @@ setup(
               'sp_api.api.orders', 'sp_api.api.orders.models', 'sp_api.api.sellers', 'sp_api.api.sellers.models',
               'sp_api.api.finances', 'sp_api.api.finances.models', 'sp_api.api.product_fees',
               'sp_api.api.notifications', 'sp_api.api.notifications.models', 'sp_api.auth', 'sp_api.base'],
-    url='',
+    url='https://github.com/saleweaver/python-amazon-sp-api',
     license='mit',
     author='Michael Primke',
     author_email='info@saleweaver.com',
