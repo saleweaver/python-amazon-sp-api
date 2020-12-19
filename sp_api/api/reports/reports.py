@@ -150,7 +150,6 @@ class Reports(Client):
             **self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs).json()
         )
 
-
     @staticmethod
     def decrypt_report_document(url, initialization_vector, key, encryption_standard):
         """
