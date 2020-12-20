@@ -8,5 +8,4 @@ class ProductFees(Client):
 
     @sp_endpoint('/products/fees/v0/listings/{}/feesEstimate')
     def get_product_fees_estimate_for_sku(self, seller_sku, **kwargs):
-        pass
-        #return GetMyFeesEstimateResponse(**self.request(fill_query_params(kwargs.pop('path'), seller_sku)).json())
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku)).json()

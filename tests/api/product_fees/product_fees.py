@@ -1,3 +1,5 @@
-from api.product_fees.product_fees import ProductFees
-from base.marketplaces import Marketplaces
+from sp_api.api import ProductFees
 
+
+def test_get_fees_for_sku():
+    print(ProductFees().get_product_fees_estimate_for_sku('2092'))
