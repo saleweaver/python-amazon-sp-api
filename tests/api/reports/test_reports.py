@@ -6,7 +6,7 @@ from sp_api.base import Marketplaces, Schedules
 
 
 def test_create_report():
-    print(Reports().create_report(reportType='GET_FLAT_FILE_OPEN_LISTINGS_DATA'))
+    print(Reports().create_report(reportType='GET_MERCHANT_LISTINGS_DATA_LITER'))
 
 
 def test_get_report():
