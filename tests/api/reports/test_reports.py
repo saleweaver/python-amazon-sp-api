@@ -6,7 +6,7 @@ from sp_api.base import Marketplaces, Schedules
 
 
 def test_create_report():
-    print(Reports().create_report(reportType='GET_MERCHANT_LISTINGS_DATA_LITER'))
+    print(Reports().create_report(reportType='GET_REFERRAL_FEE_PREVIEW_REPORT'))
 
 
 def test_get_report():

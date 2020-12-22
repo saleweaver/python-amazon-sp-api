@@ -14,3 +14,7 @@ def test_get_orders():
 
 def test_get_order_items():
     print(Orders().get_order_items('33').payload)
+
+
+def test_get_order():
+    print(Orders().get_order('114-8291421-3654623').payload)
