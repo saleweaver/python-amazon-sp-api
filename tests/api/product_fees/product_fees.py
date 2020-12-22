@@ -5,4 +5,4 @@ from sp_api.base import Marketplaces
 
 
 def test_get_fees_for_sku():
-    print(ProductFees().get_product_fees_estimate_for_sku("2035", 39.32))
+    print(ProductFees().get_product_fees_estimate_for_sku("2035", 39.32, is_fba=True))
