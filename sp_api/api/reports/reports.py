@@ -17,7 +17,7 @@ def decrypt_aes(content, key, iv):
     key = base64.b64decode(key)
     iv = base64.b64decode(iv)
     decrypter = AES.new(key, AES.MODE_CBC, iv)
-    return decrypter.decrypt(content).decode('utf-8')
+    return decrypter.decrypt(content).decode('iso-8859-1')
 
 
 class Reports(Client):

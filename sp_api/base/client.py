@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from datetime import datetime
 
 import boto3
@@ -88,6 +89,5 @@ class Client(BaseClient):
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
                       auth=self._sign_request())
         if e := res.json().get('errors', None):
-            print(e)
             raise SellingApiException(e)
         return res
