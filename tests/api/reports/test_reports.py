@@ -6,22 +6,22 @@ from sp_api.base import Marketplaces, Schedules
 
 
 def test_create_report():
-    print(Reports().create_report(reportType='GET_REFERRAL_FEE_PREVIEW_REPORT'))
+    print(Reports().create_report(reportType='GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA'))
 
 
 def test_get_report():
-    print(Reports().get_report('595273018615'))
+    print(Reports().get_report('597294018618'))
 
 
 def test_get_report_document_w_decrypt():
-    res = Reports().get_report_document('amzn1.tortuga.3.ab8cfb77-d791-4ecf-a2f5-b13cdbb9d502.T1N111ABCO06IT',
-                                        decrypt=False)
+    res = Reports().get_report_document('as',
+                                        decrypt=True)
     print(res)
     assert 'document' in res.payload
 
 
 def test_get_report_document_n_decrypt():
-    res = Reports().get_report_document('amzn1.tortuga.3.ab8cfb77-d791-4ecf-a2f5-b13cdbb9d502.T1N111ABCO06IT',
+    res = Reports().get_report_document('as',
                                         decrypt=False)
     print(res)
     assert 'document' not in res.payload
@@ -35,12 +35,12 @@ def test_create_report_schedule():
 
 
 def test_delete_schedule_by_id():
-    res = Reports().delete_report_schedule('50004018615')
+    res = Reports().delete_report_schedule('5000d4018615')
     print(res)
     assert res.errors is None
 
 
 def test_get_schedule_by_id_existing_schedule():
-    res = Reports().get_report_schedule('50004018615')
+    res = Reports().get_report_schedule('5000401d8615')
     print(res)
     assert res.errors is None

@@ -8,6 +8,8 @@ import datetime
 import hashlib
 import hmac
 import logging
+import re
+import urllib.parse
 from collections import OrderedDict
 from requests import __version__ as requests_version
 from requests.auth import AuthBase
@@ -108,7 +110,6 @@ class AWSSigV4(AuthBase):
 
         # Parse request to get URL parts
         p = urlparse(r.url)
-        log.debug("Request URL: %s", p)
         host = p.hostname
         uri = p.path
         if len(p.query) > 0:
@@ -119,7 +120,7 @@ class AWSSigV4(AuthBase):
         ## Task 1: Create Cononical Request
         ## Ref: http://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
         # Query string values must be URL-encoded (space=%20) and be sorted by name.
-        canonical_querystring = "&".join(map(lambda p: "=".join(p), sorted(qs.items())))
+        canonical_querystring = "&".join(map(lambda x: '='.join(x), sorted(qs.items())))
 
         # Create the canonical headers and signed headers. Header names
         # must be trimmed and lowercase, and sorted in code point order from
@@ -144,7 +145,6 @@ class AWSSigV4(AuthBase):
         # Combine elements to create canonical request
         canonical_request = '\n'.join([r.method, uri, canonical_querystring,
                                        canonical_headers, signed_headers, payload_hash])
-        log.debug("Canonical Request: '%s'", canonical_request)
 
         ## Task 2: Create string to sign
         credential_scope = '/'.join([self.datestamp, self.region, self.service, 'aws4_request'])

@@ -1,3 +1,5 @@
+import json
+
 from sp_api.api.product_fees.models.get_my_fees_estimate_response import GetMyFeesEstimateResponse
 from sp_api.base.helpers import sp_endpoint, fill_query_params
 from sp_api.base import Client, Marketplaces
@@ -39,4 +41,4 @@ class ProductFees(Client):
             }
         })
         return GetMyFeesEstimateResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs).jsom())
+            **self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs).json())
