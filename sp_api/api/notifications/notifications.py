@@ -40,7 +40,8 @@ class Notifications(Client):
         :return:
         """
         return CreateSubscriptionResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), notification_type), data={**kwargs}).json()
+            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), notification_type),
+                                                data={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}')
@@ -60,7 +61,8 @@ class Notifications(Client):
         :return:
         """
         return GetSubscriptionResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), notification_type), params={**kwargs}).json()
+            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), notification_type),
+                                                params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='DELETE')
@@ -81,8 +83,9 @@ class Notifications(Client):
         :return:
         """
         return DeleteSubscriptionByIdResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
-                            params={**kwargs}).json()
+            **self._request_grantless_operation(
+                fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
+                params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='GET')
@@ -103,12 +106,13 @@ class Notifications(Client):
         :return:
         """
         return GetSubscriptionByIdResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
-                            params={**kwargs}).json()
+            **self._request_grantless_operation(
+                fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
+                params={**kwargs}).json()
         )
 
     @sp_endpoint(path='/notifications/v1/destinations', method='POST')
-    def create_destination(self, **kwargs):
+    def create_destination(self, name, arn, **kwargs):
         """
         Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
@@ -119,11 +123,25 @@ class Notifications(Client):
         | 1 | 5 |
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        :param name:
+        :param arn:
         :param kwargs:
         :return:
         """
+
+        data = {
+            'body': {
+                'resourceSpecification': {
+                    'sqs': {
+                        'arn': arn
+                    }
+                },
+                'name': name,
+            }
+        }
+
         return CreateDestinationResponse(
-            **self._request(kwargs.pop('path'), data={**kwargs}).json()
+            **self._request_grantless_operation(kwargs.pop('path'), data=data).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations', method='GET')
@@ -142,7 +160,7 @@ class Notifications(Client):
         :return:
         """
         return GetDestinationsResponse(
-            **self._request(kwargs.pop('path'), params={**kwargs}).json()
+            **self._request_grantless_operation(kwargs.pop('path'), params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='GET')
@@ -162,7 +180,8 @@ class Notifications(Client):
         :return:
         """
         return GetDestinationResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
+            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
+                                                params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='DELETE')
@@ -182,7 +201,6 @@ class Notifications(Client):
         :return:
         """
         return DeleteDestinationResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), destination_id), params={**kwargs}).json()
+            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
+                                                params={**kwargs}).json()
         )
-
-

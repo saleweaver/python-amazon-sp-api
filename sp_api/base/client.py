@@ -56,6 +56,10 @@ class Client(BaseClient):
         return self._auth.get_auth()
 
     @property
+    def grantless_auth(self) -> AccessTokenResponse:
+        return self._auth.get_grantless_auth()
+
+    @property
     def role(self):
         try:
             role = role_cache['role']
@@ -72,12 +76,13 @@ class Client(BaseClient):
                         aws_session_token=role.get('SessionToken')
                         )
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None):
+    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None):
+
         if params is None:
             params = {}
         if data is None:
             data = {}
-
+        print(headers, 'headers')
         self.method = params.pop('method', data.pop('method', 'GET'))
 
         if self.method == 'POST':
@@ -86,8 +91,19 @@ class Client(BaseClient):
         else:
             params.update({'MarketplaceIds': self.marketplace_id})
 
-        res = request(self.method, self.endpoint + path, params=params, data=data, headers=self.headers,
+        res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
         if e := res.json().get('errors', None):
             raise SellingApiException(e)
         return res
+
+    def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
+        headers = {
+            'host': self.endpoint[8:],
+            'user-agent': self.user_agent,
+            'x-amz-access-token': self.grantless_auth.access_token,
+            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
+            'content-type': 'application/json'
+        }
+
+        return self._request(path, data=data, params=params, headers=headers)
