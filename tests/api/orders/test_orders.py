@@ -13,7 +13,7 @@ def test_get_orders():
 
 
 def test_get_order_items():
-    print(Orders().get_order_items('33').payload)
+    print(Orders().get_order_items('114-9002040-4229851').payload)
 
 
 def test_get_order():
