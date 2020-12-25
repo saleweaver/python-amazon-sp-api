@@ -1,4 +1,8 @@
 # PYTHON-AMAZON-SP-API
+
+
+![CodeQL](https://github.com/saleweaver/python-amazon-sp-api/workflows/CodeQL/badge.svg)
+
 ### Amazon Selling-Partner API
 
 Early development status, contributions very welcome!

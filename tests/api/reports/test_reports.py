@@ -10,7 +10,7 @@ def test_create_report():
 
 
 def test_get_report():
-    print(Reports().get_report('597294018618'))
+    print(Reports().get_report('597asdf8618'))
 
 
 def test_get_report_document_w_decrypt():
