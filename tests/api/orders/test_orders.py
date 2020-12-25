@@ -13,8 +13,8 @@ def test_get_orders():
 
 
 def test_get_order_items():
-    print(Orders().get_order_items('114-9002040-4229851').payload)
+    print(Orders().get_order_items('asdf-4229851').payload)
 
 
 def test_get_order():
-    print(Orders().get_order('114-8291421-3654623').payload)
+    print(Orders().get_order('1asdf1-3654623').payload)
