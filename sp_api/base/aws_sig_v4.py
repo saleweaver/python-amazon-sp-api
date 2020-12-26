@@ -111,7 +111,7 @@ class AWSSigV4(AuthBase):
         # Parse request to get URL parts
         p = urlparse(r.url)
         host = p.hostname
-        uri = p.path
+        uri = urllib.parse.quote(p.path)
         if len(p.query) > 0:
             qs = dict(map(lambda i: i.split('='), p.query.split('&')))
         else:
