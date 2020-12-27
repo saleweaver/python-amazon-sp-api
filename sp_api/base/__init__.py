@@ -6,6 +6,8 @@ from .marketplaces import Marketplaces
 from .client import SellingApiException
 from .schedules import Schedules
 from .report_status import ReportStatus
+from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
+from .fulfillment_channel import FulfillmentChannel
 
 __all__ = [
     'Client',
@@ -16,5 +18,9 @@ __all__ = [
     'sp_endpoint',
     'SellingApiException',
     'Schedules',
-    'ReportStatus'
+    'ReportStatus',
+    'FirstDayOfWeek',
+    'Granularity',
+    'BuyerType',
+    'FulfillmentChannel'
 ]
