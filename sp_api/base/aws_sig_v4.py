@@ -1,17 +1,11 @@
-#!/bin/env python3
-
-# https://pypi.org/project/requests-auth-aws-sigv4/
-
 from __future__ import print_function
 import os
 import datetime
 import hashlib
 import hmac
 import logging
-import re
 import urllib.parse
 from collections import OrderedDict
-from requests import __version__ as requests_version
 from requests.auth import AuthBase
 from requests.compat import urlencode, quote, urlparse
 
@@ -19,7 +13,7 @@ USE_BOTO3 = False
 try:
     import boto3
 
-    USE_BOTO3 = True
+    USE_BOTO3 = False
 except ImportError:
     pass
 
@@ -48,34 +42,13 @@ class AWSSigV4(AuthBase):
         '''
         # Set Service
         self.service = service
-        if USE_BOTO3:
-            # Setup Session
-            if 'session' in kwargs:
-                if type(kwargs['session']) == boto3.Session:
-                    session = kwargs['session']
-                else:
-                    raise ValueError("Session must be boto3.Session, {} invalid, ".format(type(kwargs['session'])))
-            else:
-                session = boto3.Session()
-            log.debug("Using boto3 session: %s", session)
 
         # First, get credentials passed explicitly
         self.aws_access_key_id = kwargs.get('aws_access_key_id')
         self.aws_secret_access_key = kwargs.get('aws_secret_access_key')
         self.aws_session_token = kwargs.get('aws_session_token')
         # Next, try environment variables or use boto3
-        if self.aws_access_key_id is None or self.aws_secret_access_key is None:
-            if USE_BOTO3:
-                cred = session.get_credentials()
-                log.debug("Got credential from boto3 session")
-                self.aws_access_key_id = cred.access_key
-                self.aws_secret_access_key = cred.secret_key
-                self.aws_session_token = cred.token
-            else:
-                log.debug("Checking environment for credentials")
-                self.aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID')
-                self.aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
-                self.aws_session_token = os.environ.get('AWS_SESSION_TOKEN') or os.environ.get('AWS_SECURITY_TOKEN')
+
         # Last, fail if still not found
         if self.aws_access_key_id is None or self.aws_secret_access_key is None:
             raise KeyError("AWS Access Key ID and Secret Access Key are required")
@@ -84,15 +57,7 @@ class AWSSigV4(AuthBase):
         self.region = kwargs.get('region')
         # Next, try environment variables or use boto3
         if self.region is None:
-            if USE_BOTO3:
-                self.region = session.region_name
-                log.debug("Got region from boto3 session")
-            else:
-                log.debug("Checking environment for region")
-                self.region = os.environ.get('AWS_DEFAULT_REGION')
-        # Last, fail if not found
-        if self.region is None:
-            raise KeyError("Region is required")
+            self.region = os.environ.get('SP_AWS_REGION', 'us-east-1')
 
     def __call__(self, r):
         ''' Called to add authentication information to request
@@ -110,21 +75,16 @@ class AWSSigV4(AuthBase):
 
         # Parse request to get URL parts
         p = urlparse(r.url)
+
         host = p.hostname
         uri = urllib.parse.quote(p.path)
+
         if len(p.query) > 0:
             qs = dict(map(lambda i: i.split('='), p.query.split('&')))
         else:
             qs = dict()
 
-        ## Task 1: Create Cononical Request
-        ## Ref: http://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
-        # Query string values must be URL-encoded (space=%20) and be sorted by name.
         canonical_querystring = "&".join(map(lambda x: '='.join(x), sorted(qs.items())))
-
-        # Create the canonical headers and signed headers. Header names
-        # must be trimmed and lowercase, and sorted in code point order from
-        # low to high. Note that there is a trailing \n.
         headers_to_sign = {'host': host, 'x-amz-date': self.amzdate}
         if self.aws_session_token is not None:
             headers_to_sign['x-amz-security-token'] = self.aws_session_token
@@ -133,33 +93,28 @@ class AWSSigV4(AuthBase):
         canonical_headers = ''.join(map(lambda h: ":".join(h) + '\n', ordered_headers.items()))
         signed_headers = ';'.join(ordered_headers.keys())
 
-        # Create payload hash (hash of the request body content).
         if r.method == 'GET':
-            payload_hash = hashlib.sha256(('').encode('utf-8')).hexdigest()
+            payload_hash = hashlib.sha256(''.encode('utf-8')).hexdigest()
         else:
             if r.body:
-                payload_hash = hashlib.sha256((r.body).encode('utf-8')).hexdigest()
+                payload_hash = hashlib.sha256(r.body.encode('utf-8')).hexdigest()
             else:
                 payload_hash = hashlib.sha256(''.encode('utf-8')).hexdigest()
 
-        # Combine elements to create canonical request
         canonical_request = '\n'.join([r.method, uri, canonical_querystring,
                                        canonical_headers, signed_headers, payload_hash])
 
-        ## Task 2: Create string to sign
         credential_scope = '/'.join([self.datestamp, self.region, self.service, 'aws4_request'])
         string_to_sign = '\n'.join(['AWS4-HMAC-SHA256', self.amzdate,
                                     credential_scope, hashlib.sha256(canonical_request.encode('utf-8')).hexdigest()])
         log.debug("String-to-Sign: '%s'", string_to_sign)
 
-        ## Task 3: Calculate Signature
         kDate = sign_msg(('AWS4' + self.aws_secret_access_key).encode('utf-8'), self.datestamp)
         kRegion = sign_msg(kDate, self.region)
         kService = sign_msg(kRegion, self.service)
         kSigning = sign_msg(kService, 'aws4_request')
         signature = hmac.new(kSigning, string_to_sign.encode('utf-8'), hashlib.sha256).hexdigest()
 
-        ## Task 4: Add signing information to request
         authorization_header = "AWS4-HMAC-SHA256 Credential={}/{}, SignedHeaders={}, Signature={}".format(
             self.aws_access_key_id, credential_scope, signed_headers, signature)
         r.headers.update({
