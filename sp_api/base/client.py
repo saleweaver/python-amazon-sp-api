@@ -91,10 +91,9 @@ class Client(BaseClient):
             if 'MarketplaceIds' not in params and 'marketplaceIds' not in params:
                 params.update({'MarketplaceIds': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
 
-        print(self.endpoint + path, params)
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
-        print(res.url)
+
         if e := res.json().get('errors', None):
             raise SellingApiException(e)
         return res
