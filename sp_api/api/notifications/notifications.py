@@ -130,18 +130,16 @@ class Notifications(Client):
         """
 
         data = {
-            'body': {
-                'resourceSpecification': {
-                    'sqs': {
-                        'arn': arn
-                    }
-                },
-                'name': name,
-            }
+            'resourceSpecification': {
+                'sqs': {
+                    'arn': arn
+                }
+            },
+            'name': name,
         }
 
         return CreateDestinationResponse(
-            **self._request_grantless_operation(kwargs.pop('path'), data=data).json()
+            **self._request_grantless_operation(kwargs.pop('path'), data={**kwargs, **data}).json()
         )
 
     @sp_endpoint('/notifications/v1/destinations', method='GET')

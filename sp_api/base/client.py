@@ -81,7 +81,7 @@ class Client(BaseClient):
             params = {}
         if data is None:
             data = {}
-        print(headers, 'headers')
+
         self.method = params.pop('method', data.pop('method', 'GET'))
 
         if self.method == 'POST':
