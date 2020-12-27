@@ -7,7 +7,7 @@ from sp_api.api.notifications.models.get_destination_response import GetDestinat
 from sp_api.api.notifications.models.get_destinations_response import GetDestinationsResponse
 from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
 from sp_api.api.notifications.models.get_subscription_response import GetSubscriptionResponse
-from sp_api.base import Client, Marketplaces
+from sp_api.base import Client, Marketplaces, deprecated, NotificationType
 
 
 class Notifications(Client):
@@ -22,10 +22,15 @@ class Notifications(Client):
     def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None):
         super().__init__(marketplace, refresh_token)
 
+    @deprecated
+    def add_subscription(self, notification_type: NotificationType or str, **kwargs):
+        return self.create_subscription(notification_type, **kwargs)
+
     @sp_endpoint('/notifications/v1/subscriptions/{}', method='POST')
-    def add_subscription(self, notification_type, **kwargs):
+    def create_subscription(self, notification_type: NotificationType or str, destination_id: str = None, **kwargs):
         """
-        Creates a subscription for the specified notification type to be delivered to the specified destination. Before you can subscribe, you must first create the destination by calling the createDestination operation.
+        Creates a subscription for the specified notification type to be delivered to the specified destination.
+        Before you can subscribe, you must first create the destination by calling the createDestination operation.
 
         **Usage Plan:**
 
@@ -35,13 +40,20 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        :param destination_id: str
         :param notification_type: str
         :param kwargs:
         :return:
         """
+        data = {
+            'destinationId': kwargs.pop('destinationId', destination_id),
+            'payloadVersion': kwargs.pop('payload_version', '1.0')
+        }
         return CreateSubscriptionResponse(
-            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), notification_type),
-                                                data={**kwargs}).json()
+            **self._request(fill_query_params(kwargs.pop('path'),
+                                                                  notification_type if isinstance(notification_type,
+                                                                                                  str) else notification_type.value),
+                                                data={**kwargs, **data}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}')
@@ -61,14 +73,15 @@ class Notifications(Client):
         :return:
         """
         return GetSubscriptionResponse(
-            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), notification_type),
+            **self._request(fill_query_params(kwargs.pop('path'), notification_type if isinstance(notification_type, str) else notification_type.value),
                                                 params={**kwargs}).json()
         )
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='DELETE')
     def delete_notification_subscription(self, notification_type, subscription_id, **kwargs):
         """
-        Deletes the subscription indicated by the subscription identifier and notification type that you specify. The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The deleteSubscriptionById API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
+        Deletes the subscription indicated by the subscription identifier and notification type that you specify.
+        The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The deleteSubscriptionById API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
         **Usage Plan:**
 
@@ -83,31 +96,8 @@ class Notifications(Client):
         :return:
         """
         return DeleteSubscriptionByIdResponse(
-            **self._request_grantless_operation(
-                fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
-                params={**kwargs}).json()
-        )
-
-    @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='GET')
-    def delete_notification_subscription(self, notification_type, subscription_id, **kwargs):
-        """
-        Returns information about a subscription for the specified notification type. The getSubscriptionById API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
-        **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1 | 5 |
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        :param notification_type:
-        :param subscription_id:
-        :param kwargs:
-        :return:
-        """
-        return GetSubscriptionByIdResponse(
-            **self._request_grantless_operation(
-                fill_query_params(kwargs.pop('path'), notification_type, subscription_id),
+            **self._request(
+                fill_query_params(kwargs.pop('path'), notification_type if isinstance(notification_type, str) else notification_type.value, subscription_id),
                 params={**kwargs}).json()
         )
 
