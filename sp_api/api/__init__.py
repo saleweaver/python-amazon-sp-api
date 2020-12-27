@@ -5,8 +5,10 @@ from .product_fees.product_fees import ProductFees
 from .sellers.sellers import Sellers
 from .reports.reports import Reports
 from .products.products import Products
+from .sales.sales import Sales
 
 __all__ = [
+    "Sales",
     "Products",
     "Reports",
     "Orders",
