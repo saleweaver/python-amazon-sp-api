@@ -8,6 +8,8 @@ from .schedules import Schedules
 from .report_status import ReportStatus
 from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
 from .fulfillment_channel import FulfillmentChannel
+from .deprecated import deprecated
+from .notifications import NotificationType
 
 __all__ = [
     'Client',
@@ -22,5 +24,7 @@ __all__ = [
     'FirstDayOfWeek',
     'Granularity',
     'BuyerType',
-    'FulfillmentChannel'
+    'FulfillmentChannel',
+    'deprecated',
+    'NotificationType'
 ]
