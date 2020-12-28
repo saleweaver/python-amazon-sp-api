@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from sp_api.api import Reports, Orders
-from sp_api.api.reports.models.create_report_specification import CreateReportSpecification
 from sp_api.base import Marketplaces, Schedules
 
 
