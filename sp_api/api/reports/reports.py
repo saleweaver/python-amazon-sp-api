@@ -63,7 +63,7 @@ class Reports(Client):
         )
 
     @sp_endpoint('/reports/2020-09-04/documents/{}')
-    def get_report_document(self, document_id, decrypt: bool = False, **kwargs):
+    def get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs):
         """
         Returns the information required for retrieving a report document's contents. This includes a presigned URL for the report document as well as the information required to decrypt the document's contents.
 
@@ -74,6 +74,7 @@ class Reports(Client):
         | 0.0167 | 15 |
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        :param file: If passed, will save the document to the file specified. Only valid if decrypt=True
         :param decrypt:
         :param document_id:
         :param kwargs:
@@ -81,14 +82,17 @@ class Reports(Client):
         """
         res = self._request(fill_query_params(kwargs.pop('path'), document_id)).json()
         if decrypt:
-            res.get('payload').update({
-                'document': self.decrypt_report_document(
+            document = self.decrypt_report_document(
                     res.get('payload').get('url'),
                     res.get('payload').get('encryptionDetails').get('initializationVector'),
                     res.get('payload').get('encryptionDetails').get('key'),
                     res.get('payload').get('encryptionDetails').get('standard')
                 )
+            res.get('payload').update({
+                'document': document
             })
+            if file:
+                file.write(document)
         return GetReportDocumentResponse(
             **res
         )

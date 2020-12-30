@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 tz = pytz.timezone('US/Central')
 fmt = '%Y-%m-%dT%H:%M:%S%z'
 
-interval = ( datetime.now(tz) - timedelta(days=7) ), ( datetime.now(tz) )
+interval = ( datetime.now(tz) - timedelta(days=185) ), ( datetime.now(tz) )
 
 
 def test_sales_granularity_hour():
