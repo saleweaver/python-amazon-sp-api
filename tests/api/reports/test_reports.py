@@ -5,23 +5,22 @@ from sp_api.base import Marketplaces, Schedules
 
 
 def test_create_report():
-    print(Reports().create_report(reportType='GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA'))
+    print(Reports().create_report(reportType='GET_FBA_MYI_ALL_INVENTORY_DATA'))
 
 
 def test_get_report():
-    print(Reports().get_report('597asdf8618'))
+    print(Reports().get_report('600333018624'))
 
 
 def test_get_report_document_w_decrypt():
-    res = Reports().get_report_document('as',
-                                        decrypt=True)
+    res = Reports().get_report_document('5',
+                                        decrypt=True, file=open('output.tsv', 'w+'))
     print(res)
     assert 'document' in res.payload
 
 
 def test_get_report_document_n_decrypt():
-    res = Reports().get_report_document('as',
-                                        decrypt=False)
+    res = Reports().get_report_document('as', decrypt=False)
     print(res)
     assert 'document' not in res.payload
 
