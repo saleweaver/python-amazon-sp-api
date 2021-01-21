@@ -9,14 +9,6 @@ from collections import OrderedDict
 from requests.auth import AuthBase
 from requests.compat import urlencode, quote, urlparse
 
-USE_BOTO3 = False
-try:
-    import boto3
-
-    USE_BOTO3 = False
-except ImportError:
-    pass
-
 __version__ = '0.4'
 
 log = logging.getLogger(__name__)
