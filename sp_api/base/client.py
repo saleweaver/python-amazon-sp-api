@@ -2,6 +2,7 @@ import json
 import os
 import re
 from datetime import datetime
+from pprint import pprint
 
 import boto3
 from cachetools import TTLCache
@@ -75,7 +76,7 @@ class Client(BaseClient):
                         aws_session_token=role.get('SessionToken')
                         )
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None):
+    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None, add_marketplace=True):
 
         if params is None:
             params = {}
@@ -85,11 +86,13 @@ class Client(BaseClient):
         self.method = params.pop('method', data.pop('method', 'GET'))
 
         if self.method == 'POST':
-            data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
+            if add_marketplace and (not data.get('marketplaceIds', None) and not data.get('MarketplaceIds', None)):
+                data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
             data = json.dumps(data)
         else:
-            if 'MarketplaceIds' not in params and 'marketplaceIds' not in params:
-                params.update({'MarketplaceIds': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
+            if add_marketplace and ('MarketplaceIds' not in data and 'marketplaceIds' not in data):
+                params.update({'MarketplaceId': self.marketplace_id, 'MarketplaceIds': self.marketplace_id,
+                             'marketplace_ids': self.marketplace_id})
 
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())

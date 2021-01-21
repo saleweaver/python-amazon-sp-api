@@ -6,6 +6,8 @@ from .sellers.sellers import Sellers
 from .reports.reports import Reports
 from .products.products import Products
 from .sales.sales import Sales
+from .catalog.catalog import Catalog
+from .feeds.feeds import Feeds
 
 __all__ = [
     "Sales",
@@ -15,5 +17,7 @@ __all__ = [
     "Sellers",
     "Notifications",
     "ProductFees",
-    "Finances"
+    "Finances",
+    "Catalog",
+    "Feeds"
 ]
