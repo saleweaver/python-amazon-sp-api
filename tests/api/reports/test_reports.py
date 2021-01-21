@@ -7,7 +7,7 @@ def test_create_report():
 
 
 def test_get_report():
-    print(Reports(marketplace=Marketplaces.DE).get_report(''))
+    print(Reports(marketplace=Marketplaces.DE).get_report('50632018648'))
 
 
 def test_get_report_document_w_decrypt():
