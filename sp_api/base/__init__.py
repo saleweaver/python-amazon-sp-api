@@ -1,7 +1,7 @@
 from .aws_sig_v4 import AWSSigV4
 from .base_client import BaseClient
 from .client import Client
-from .helpers import fill_query_params, sp_endpoint
+from .helpers import fill_query_params, sp_endpoint, decrypt_aes, encrypt_aes
 from .marketplaces import Marketplaces
 from .client import SellingApiException
 from .schedules import Schedules
@@ -26,5 +26,7 @@ __all__ = [
     'BuyerType',
     'FulfillmentChannel',
     'deprecated',
+    'decrypt_aes',
+    'encrypt_aes',
     'NotificationType'
 ]

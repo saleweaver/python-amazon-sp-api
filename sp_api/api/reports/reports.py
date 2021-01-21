@@ -9,15 +9,7 @@ from sp_api.api.reports.models.get_report_document_response import GetReportDocu
 from sp_api.api.reports.models.get_report_response import GetReportResponse
 from sp_api.base import sp_endpoint, fill_query_params, SellingApiException
 from sp_api.base import Client, Marketplaces
-import base64
-from Crypto.Cipher import AES
-
-
-def decrypt_aes(content, key, iv):
-    key = base64.b64decode(key)
-    iv = base64.b64decode(iv)
-    decrypter = AES.new(key, AES.MODE_CBC, iv)
-    return decrypter.decrypt(content).decode('iso-8859-1')
+from sp_api.base.helpers import decrypt_aes
 
 
 class Reports(Client):
@@ -59,7 +51,7 @@ class Reports(Client):
         :return:
         """
         return GetReportResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), report_id)).json()
+            **self._request(fill_query_params(kwargs.pop('path'), report_id), add_marketplace=False).json()
         )
 
     @sp_endpoint('/reports/2020-09-04/documents/{}')
@@ -80,7 +72,7 @@ class Reports(Client):
         :param kwargs:
         :return:
         """
-        res = self._request(fill_query_params(kwargs.pop('path'), document_id)).json()
+        res = self._request(fill_query_params(kwargs.pop('path'), document_id), add_marketplace=False).json()
         if decrypt:
             document = self.decrypt_report_document(
                     res.get('payload').get('url'),
@@ -165,7 +157,7 @@ class Reports(Client):
         :return:
         """
         if encryption_standard == 'AES':
-            return decrypt_aes(requests.get(url).content, key, initialization_vector)
+            return decrypt_aes(requests.get(url).content, key, initialization_vector).decode('iso-8859-1')
         raise SellingApiException([{
             'message': 'Only AES decryption is implemented. Contribute: https://github.com/saleweaver/python-sp-api'
         }])
