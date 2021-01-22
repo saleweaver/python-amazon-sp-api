@@ -5,7 +5,6 @@ import pytz
 from sp_api.api import Sales
 from sp_api.base import Granularity
 import logging
-logging.basicConfig(level=logging.DEBUG)
 
 tz = pytz.timezone('US/Central')
 fmt = '%Y-%m-%dT%H:%M:%S%z'

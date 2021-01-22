@@ -3,7 +3,6 @@ from datetime import datetime
 from sp_api.api.sales.models.get_order_metrics_response import GetOrderMetricsResponse
 from sp_api.base import Client, Marketplaces, sp_endpoint, Granularity
 import logging
-logging.basicConfig(level=logging.DEBUG)
 
 
 class Sales(Client):
