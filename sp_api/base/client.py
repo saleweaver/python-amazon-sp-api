@@ -96,7 +96,8 @@ class Client(BaseClient):
 
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
-
+        print(res.headers)
+        print(res.json())
         if e := res.json().get('errors', None):
             raise SellingApiException(e)
         return res

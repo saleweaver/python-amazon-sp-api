@@ -25,6 +25,8 @@ def encrypt_aes(file_or_bytes_io, key, iv):
     aes = AES.new(key, AES.MODE_CBC, iv)
     try:
         return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='iso-8859-1'), 16))
+    except UnicodeEncodeError:
+        return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='utf-8'), 16))
     except TypeError:
         return aes.encrypt(pad(file_or_bytes_io.read(), 16))
 
