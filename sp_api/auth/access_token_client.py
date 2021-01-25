@@ -6,6 +6,7 @@ from cachetools import TTLCache
 from .credentials import Credentials
 from .access_token_response import AccessTokenResponse
 from sp_api.base import BaseClient
+import hashlib
 
 cache = TTLCache(maxsize=10, ttl=3600)
 grantless_cache = TTLCache(maxsize=10, ttl=3600)
@@ -28,14 +29,15 @@ class AccessTokenClient(BaseClient):
         """
         global cache
 
+        cache_key = 'access_token_'+hashlib.md5(self.credentials.refresh_token)
         try:
-            access_token = cache['access_token']
+            access_token = cache[cache_key]
             logger.debug('from cache')
         except KeyError:
             response = requests.post(self.scheme + self.host + self.path, data=self.data, headers=self.headers)
             logger.debug('token refreshed')
             cache = TTLCache(maxsize=10, ttl=3600)
-            cache['access_token'] = response.json()
+            cache[cache_key] = response.json()
             access_token = response.json()
 
         return AccessTokenResponse(**access_token)
@@ -52,14 +54,15 @@ class AccessTokenClient(BaseClient):
         :return:
         """
         global grantless_cache
+        cache_key = 'access_token_' + hashlib.md5(self.credentials.refresh_token)
         try:
-            access_token = grantless_cache['access_token']
+            access_token = grantless_cache[cache_key]
             logger.debug('from_cache')
         except KeyError:
             response = requests.post(self.scheme + self.host + self.path, data=self.grantless_data, headers=self.headers)
             logger.debug('token_refreshed')
             grantless_cache = TTLCache(maxsize=10, ttl=3600)
-            grantless_cache['access_token'] = response.json()
+            grantless_cache[cache_key] = response.json()
             access_token = response.json()
 
         return AccessTokenResponse(**access_token)
