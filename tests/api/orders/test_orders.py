@@ -13,15 +13,15 @@ def test_get_orders():
 
 
 def test_get_order_items():
-    print(Orders().get_order_items('112-4494115-9849003').payload)
+    print(Orders().get_order_items('').payload)
 
 
 def test_get_order_address():
-    print(Orders().get_order_address('112-4494115-9849003').payload)
+    print(Orders().get_order_address('').payload)
 
 
 def test_get_order_buyer_info():
-    print(Orders().get_order_buyer_info('112-4494115-9849003').payload)
+    print(Orders().get_order_buyer_info('').payload)
 
 
 def test_get_order():
