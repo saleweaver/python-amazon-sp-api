@@ -29,7 +29,7 @@ class AccessTokenClient(BaseClient):
         """
         global cache
 
-        cache_key = 'access_token_'+hashlib.md5(self.credentials.refresh_token)
+        cache_key = self.get_cache_key()
         try:
             access_token = cache[cache_key]
             logger.debug('from cache')
@@ -54,7 +54,7 @@ class AccessTokenClient(BaseClient):
         :return:
         """
         global grantless_cache
-        cache_key = 'access_token_' + hashlib.md5(self.credentials.refresh_token)
+        cache_key = self.get_cache_key()
         try:
             access_token = grantless_cache[cache_key]
             logger.debug('from_cache')
@@ -91,3 +91,6 @@ class AccessTokenClient(BaseClient):
             'User-Agent': self.user_agent,
             'content-type': self.content_type
         }
+
+    def get_cache_key(self):
+        return 'access_token_' + hashlib.md5(self.credentials.refresh_token.encode('utf-8')).hexdigest()
