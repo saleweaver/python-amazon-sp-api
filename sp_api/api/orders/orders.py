@@ -1,3 +1,5 @@
+from sp_api.api.orders.models.get_order_address_response import GetOrderAddressResponse
+from sp_api.api.orders.models.get_order_buyer_info_response import GetOrderBuyerInfoResponse
 from sp_api.base import sp_endpoint, fill_query_params
 from sp_api.api.orders.models.get_order_items_response import GetOrderItemsResponse
 from sp_api.api.orders.models.get_order_response import GetOrderResponse
@@ -75,3 +77,15 @@ class Orders(Client):
         """
         return GetOrderItemsResponse(
             **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())
+
+    @sp_endpoint('/orders/v0/orders/{}/address')
+    def get_order_address(self, order_id, **kwargs):
+        return GetOrderAddressResponse(
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json()
+        )
+
+    @sp_endpoint('/orders/v0/orders/{}/buyerInfo')
+    def get_order_buyer_info(self, order_id, **kwargs):
+        return GetOrderBuyerInfoResponse(
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json()
+        )
