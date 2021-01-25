@@ -5,7 +5,7 @@
 
 ### Amazon Selling-Partner API
 
-Early development status, contributions very welcome!
+Contributions very welcome!
 
 ---
 
