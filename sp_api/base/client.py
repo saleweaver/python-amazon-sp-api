@@ -90,7 +90,7 @@ class Client(BaseClient):
                 data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
             data = json.dumps(data)
         else:
-            if add_marketplace and ('MarketplaceIds' not in params and 'marketplaceIds' not in params):
+            if add_marketplace and ('MarketplaceIds' not in params and 'marketplaceIds' not in params and 'marketplace_ids' not in params and 'MarketplaceId' not in params):
                 params.update({'MarketplaceId': self.marketplace_id, 'MarketplaceIds': self.marketplace_id,
                                'marketplace_ids': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
