@@ -95,7 +95,7 @@ class Client(BaseClient):
                                'marketplace_ids': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
-
+        print(res)
         e = res.json().get('errors', None)
         if e:
             raise SellingApiException(e)
