@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytz
 
 from sp_api.api import Sales
-from sp_api.base import Granularity
+from sp_api.base import Granularity, Marketplaces
 import logging
 
 tz = pytz.timezone('US/Central')
@@ -18,7 +18,7 @@ def test_sales_granularity_hour():
 
 
 def test_sales_granularity_day():
-    s = Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
+    s = Sales(marketplace=Marketplaces.DE).get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
     print(s)
 
 
