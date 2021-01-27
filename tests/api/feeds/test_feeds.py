@@ -13,7 +13,7 @@ def test_create_doc():
 
 def test_get_feed():
     feed_id = '50670018654'
-    Feeds(marketplace=Marketplaces.DE).get_feed(feed_id)
+    print(Feeds(marketplace=Marketplaces.DE).get_feed(feed_id))
 
 
 def test_get_feed_results():

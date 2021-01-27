@@ -4,3 +4,10 @@ class BaseClient:
     content_type = 'application/x-www-form-urlencoded;charset=UTF-8'
     user_agent = 'python-sp-api'
 
+    def __init__(self):
+        try:
+            import pkg_resources
+            version = pkg_resources.require("python-amazon-sp-api")[0].version
+            self.user_agent += f'-{version}'
+        except:
+            pass

@@ -31,6 +31,7 @@ class Client(BaseClient):
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self._auth = AccessTokenClient(refresh_token)
+        super().__init__()
 
     @staticmethod
     def set_role():
