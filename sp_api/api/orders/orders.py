@@ -48,8 +48,8 @@ class Orders(Client):
         :return:
         """
         return GetOrderResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id),
-                            params={**kwargs}).json())
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False).json()
+        )
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
     def get_order_items(self, order_id, **kwargs):

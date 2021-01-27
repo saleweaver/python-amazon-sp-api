@@ -90,15 +90,14 @@ class Client(BaseClient):
                 data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
             data = json.dumps(data)
         else:
-            if add_marketplace and ('MarketplaceIds' not in data and 'marketplaceIds' not in data):
+            if add_marketplace and ('MarketplaceIds' not in params and 'marketplaceIds' not in params):
                 params.update({'MarketplaceId': self.marketplace_id, 'MarketplaceIds': self.marketplace_id,
-                             'marketplace_ids': self.marketplace_id})
+                               'marketplace_ids': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
 
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
-        print(res.headers)
-        print(res.json())
-        if e := res.json().get('errors', None):
+        e = res.json().get('errors', None)
+        if e:
             raise SellingApiException(e)
         return res
 
