@@ -20,7 +20,6 @@ class AccessTokenClient(BaseClient):
     path = '/auth/o2/token'
 
     def __init__(self, refresh_token=None, account='default', credentials=None):
-        print('access', credentials)
         super().__init__(account, credentials)
         self.cred = Credentials(refresh_token, self.credentials)
 

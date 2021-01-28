@@ -36,7 +36,6 @@ class Products(Client):
 
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
 
-
     @sp_endpoint('/products/pricing/v0/competitivePrice', method='GET')
     def get_competitive_pricing_for_skus(self, seller_sku_list, **kwargs):
         """
@@ -49,7 +48,6 @@ class Products(Client):
         """
         return self._create_get_pricing_request(seller_sku_list, 'Sku', **kwargs)
 
-
     @sp_endpoint('/products/pricing/v0/competitivePrice', method='GET')
     def get_competitive_pricing_for_asins(self, asin_list, **kwargs):
         """
@@ -61,7 +59,6 @@ class Products(Client):
 
         """
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
-
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         """
