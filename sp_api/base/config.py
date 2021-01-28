@@ -9,9 +9,17 @@ class MissingCredentials(Exception):
 class CredentialProvider:
     credentials = None
 
-    def __init__(self, account='default'):
+    def __init__(self, account='default', credentials=None):
         self.account = account
-        self.from_env()
+        if credentials:
+            print('hier')
+            self.credentials = self.Config(**credentials)
+            missing = self.credentials.check_config()
+            if len(missing):
+                raise MissingCredentials('Your credentials are incomplete!')
+        else:
+            print('hhhkalsflkajsfdlö')
+            self.from_env()
 
     def from_env(self):
         account_data = dict(

@@ -106,6 +106,29 @@ Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoform
 Orders(account='ANOTHER_ACCOUNT').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
 ```
 
+#### Credentials by params:
+
+Pass a dict like below to the client:
+
+```
+credentials=dict(
+        refresh_token='<refresh_token>',
+        lwa_app_id='<lwa_app_id>',
+        lwa_client_secret='<lwa_client_secret>',
+        aws_secret_key='<aws_secret_access_key>',
+        aws_access_key='<aws_access_key_id>',
+        role_arn='<role_arn>',
+    )
+    
+Orders(credentials=credentials).get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+```
+
+The refresh token can be passed directly to the client, too. You don't need to pass the whole credentials if all that changes is the refresh token. 
+
+Credentials are looked up in the following order:
+1. Credential dict
+2. Env variables
+3. Config File
 
 ---
 ### DISCLAIMER

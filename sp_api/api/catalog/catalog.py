@@ -4,8 +4,8 @@ from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params
 
 
 class Catalog(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
-        super().__init__(marketplace, refresh_token, account)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
+        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/catalog/v0/items/{}')
     def get_item(self, asin, **kwargs):

@@ -4,8 +4,8 @@ from sp_api.base import Client, Marketplaces
 
 
 class Sellers(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
-        super().__init__(marketplace, refresh_token, account)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
+        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/sellers/v1/marketplaceParticipations')
     def get_marketplace_participation(self, **kwargs):
