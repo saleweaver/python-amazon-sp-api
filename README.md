@@ -39,7 +39,7 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 
 ### Credential configuration
 
-You can set the required credentials via a config file, or with environment variables.
+You can set the required credentials via a config file, with environment variables or by passing them as a dict.
 An example config file is provided in this repository, it supports multiple accounts.
 The programm looks for a file called [credentials.yml](https://github.com/saleweaver/python-amazon-sp-api/blob/master/credentials.yml)
 
