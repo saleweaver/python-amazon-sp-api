@@ -6,8 +6,8 @@ import logging
 
 
 class Sales(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
-        super().__init__(marketplace, refresh_token, account)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
+        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/sales/v1/orderMetrics')
     def get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs):

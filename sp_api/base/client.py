@@ -26,9 +26,10 @@ class Client(BaseClient):
     def __init__(self,
                  marketplace: Marketplaces,
                  refresh_token=None,
-                 account='default'
+                 account='default',
+                 credentials=None
                  ):
-        super().__init__(account)
+        super().__init__(account, credentials)
         self.boto3_client = boto3.client(
             'sts',
             aws_access_key_id=self.credentials.aws_access_key,
@@ -37,8 +38,7 @@ class Client(BaseClient):
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
-        self._auth = AccessTokenClient(refresh_token, account)
-
+        self._auth = AccessTokenClient(refresh_token=refresh_token, account=account, credentials=credentials)
 
     def set_role(self):
         role = self.boto3_client.assume_role(

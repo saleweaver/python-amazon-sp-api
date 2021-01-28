@@ -4,8 +4,8 @@ from sp_api.base import sp_endpoint, fill_query_params
 
 
 class Finances(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
-        super().__init__(marketplace, refresh_token, account)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
+        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/finances/v0/orders/{}/financialEvents')
     def get_financial_events_for_order(self, order_id, **kwargs):
