@@ -18,7 +18,7 @@ def test_sales_granularity_hour():
 
 
 def test_sales_granularity_day():
-    s = Sales(marketplace=Marketplaces.DE).get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
+    s = Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
     print(s)
 
 

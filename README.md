@@ -37,7 +37,54 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 ```
 ---
 
-### Environment variables needed
+### Credential configuration
+
+You can set the required credentials via a config file, or with environment variables.
+An example config file is provided in this repository, it supports multiple accounts.
+The programm looks for a file called [credentials.yml](https://github.com/saleweaver/python-amazon-sp-api/blob/master/credentials.yml)
+
+The config is parsed by [confused](https://confuse.readthedocs.io/en/latest/usage.html#search-paths), see their docs for more in depth information. 
+Search paths are:
+
+- macOS: ~/.config/python-sp-api
+- Other Unix: ~/.config/python-sp-api
+- Windows: %APPDATA%\python-sp-api where the APPDATA environment variable falls back to %HOME%\AppData\Roaming if undefined
+
+```
+version: '1.0'
+
+default:
+  refresh_token: ''
+  lwa_app_id: ''
+  lwa_client_secret: ''
+  aws_secret_key: ''
+  aws_access_key: ''
+  role_arn: ''
+
+another_account:
+  refresh_token: ''
+  lwa_app_id: ''
+  lwa_client_secret: ''
+  aws_secret_key: ''
+  aws_access_key: ''
+  role_arn: ''
+
+```
+
+If no account is passed to the client, default will be used.
+
+```
+# use default
+Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+```
+```
+# use 'another_account'
+Orders(account='another_account').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+```
+
+----
+
+#### If you prefer to set environment variables, the following have to be set:
 
 | ENVIRONMENT VARIABLE  | DESCRIPTION | 
 |---|---|
@@ -47,7 +94,18 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 | SP_API_SECRET_KEY | AWS USER SECRET KEY |
 | SP_API_ACCESS_KEY | AWS USER ACCESS KEY |
 | SP_API_ROLE_ARN | The role's arn (needs permission to "Assume Role" STS) |
-| SP_AWS_REGION | Defaults to 'us-east-1'. You can set it to a different region. |
+
+You can (but don't have to) suffix each of these variables with `_<account>` if you want to set multiple accounts via env variables.  
+
+```
+# use default, with or without suffix
+Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+```
+```
+# use 'ANOTHER_ACCOUNT', e.g. SP_API_REFRESH_TOKEN_ANOTHER_ACCOUNT
+Orders(account='ANOTHER_ACCOUNT').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+```
+
 
 ---
 ### DISCLAIMER
