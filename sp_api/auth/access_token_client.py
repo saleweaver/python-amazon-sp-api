@@ -19,8 +19,9 @@ class AccessTokenClient(BaseClient):
     grant_type = 'refresh_token'
     path = '/auth/o2/token'
 
-    def __init__(self, refresh_token=None):
-        self.credentials = Credentials(refresh_token)
+    def __init__(self, refresh_token=None, account='default'):
+        super().__init__(account)
+        self.cred = Credentials(refresh_token, self.credentials)
 
     def get_auth(self) -> AccessTokenResponse:
         """
@@ -71,18 +72,18 @@ class AccessTokenClient(BaseClient):
     def grantless_data(self):
         return {
             'grant_type': 'client_credentials',
-            'client_id': self.credentials.client_id,
+            'client_id': self.cred.client_id,
             'scope': 'sellingpartnerapi::notifications',
-            'client_secret': self.credentials.client_secret
+            'client_secret': self.cred.client_secret
         }
 
     @property
     def data(self):
         return {
             'grant_type': self.grant_type,
-            'client_id': self.credentials.client_id,
-            'refresh_token': self.credentials.refresh_token,
-            'client_secret': self.credentials.client_secret
+            'client_id': self.cred.client_id,
+            'refresh_token': self.cred.refresh_token,
+            'client_secret': self.cred.client_secret
         }
 
     @property
@@ -93,4 +94,4 @@ class AccessTokenClient(BaseClient):
         }
 
     def _get_cache_key(self):
-        return 'access_token_' + hashlib.md5(self.credentials.refresh_token.encode('utf-8')).hexdigest()
+        return 'access_token_' + hashlib.md5(self.cred.refresh_token.encode('utf-8')).hexdigest()

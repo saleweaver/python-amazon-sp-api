@@ -16,8 +16,9 @@ from sp_api.base.helpers import encrypt_aes, decrypt_aes
 
 
 class Feeds(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None):
-        super().__init__(marketplace, refresh_token)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
+        super().__init__(marketplace, refresh_token, account)
+
 
     @sp_endpoint('/feeds/2020-09-04/feeds', method='POST')
     def create_feed(self, feed_type, input_feed_document_id, **kwargs):

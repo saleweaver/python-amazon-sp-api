@@ -10,6 +10,7 @@ from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
 from .fulfillment_channel import FulfillmentChannel
 from .deprecated import deprecated
 from .notifications import NotificationType
+from .config import CredentialProvider, MissingCredentials
 
 __all__ = [
     'Client',
@@ -28,5 +29,7 @@ __all__ = [
     'deprecated',
     'decrypt_aes',
     'encrypt_aes',
-    'NotificationType'
+    'NotificationType',
+    "CredentialProvider",
+    "MissingCredentials"
 ]

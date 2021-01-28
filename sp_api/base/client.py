@@ -14,10 +14,6 @@ from .marketplaces import Marketplaces
 from sp_api.base import AWSSigV4
 
 role_cache = TTLCache(maxsize=10, ttl=3600)
-client = boto3.client('sts',
-                      aws_access_key_id=os.environ.get('SP_API_ACCESS_KEY'),
-                      aws_secret_access_key=os.environ.get('SP_API_SECRET_KEY')
-                      )
 
 
 class SellingApiException(BaseException):
@@ -25,18 +21,28 @@ class SellingApiException(BaseException):
 
 
 class Client(BaseClient):
+    boto3_client = None
+
     def __init__(self,
                  marketplace: Marketplaces,
-                 refresh_token=None):
+                 refresh_token=None,
+                 account='default'
+                 ):
+        super().__init__(account)
+        self.boto3_client = boto3.client(
+            'sts',
+            aws_access_key_id=self.credentials.aws_access_key,
+            aws_secret_access_key=self.credentials.aws_secret_key
+        )
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
-        self._auth = AccessTokenClient(refresh_token)
-        super().__init__()
+        self.region = marketplace.region
+        self._auth = AccessTokenClient(refresh_token, account)
 
-    @staticmethod
-    def set_role():
-        role = client.assume_role(
-            RoleArn=os.environ.get('SP_API_ROLE_ARN'),
+
+    def set_role(self):
+        role = self.boto3_client.assume_role(
+            RoleArn=self.credentials.role_arn,
             RoleSessionName='guid'
         )
         role_cache['role'] = role
@@ -73,7 +79,7 @@ class Client(BaseClient):
         return AWSSigV4('execute-api',
                         aws_access_key_id=role.get('AccessKeyId'),
                         aws_secret_access_key=role.get('SecretAccessKey'),
-                        region=os.environ.get('SP_AWS_REGION', 'us-east-1'),
+                        region=self.region,
                         aws_session_token=role.get('SessionToken')
                         )
 
@@ -91,7 +97,8 @@ class Client(BaseClient):
                 data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
             data = json.dumps(data)
         else:
-            if add_marketplace and ('MarketplaceIds' not in params and 'marketplaceIds' not in params and 'marketplace_ids' not in params and 'MarketplaceId' not in params):
+            if add_marketplace and (
+                    'MarketplaceIds' not in params and 'marketplaceIds' not in params and 'marketplace_ids' not in params and 'MarketplaceId' not in params):
                 params.update({'MarketplaceId': self.marketplace_id, 'MarketplaceIds': self.marketplace_id,
                                'marketplace_ids': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
