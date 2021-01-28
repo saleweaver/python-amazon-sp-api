@@ -13,8 +13,8 @@ from sp_api.base.helpers import decrypt_aes
 
 
 class Reports(Client):
-    def __init__(self, marketplace=Marketplaces.US, refresh_token=None):
-        super().__init__(marketplace, refresh_token)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
+        super().__init__(marketplace, refresh_token, account)
 
     @sp_endpoint('/reports/2020-09-04/reports', method='POST')
     def create_report(self, **kwargs):

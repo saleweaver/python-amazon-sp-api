@@ -22,50 +22,19 @@ def sign_msg(key, msg):
 class AWSSigV4(AuthBase):
 
     def __init__(self, service, **kwargs):
-        ''' Create authentication mechanism
-
-        :param service: AWS Service identifier, for example `ec2`.  This is required.
-        :param region:  AWS Region, for example `us-east-1`.  If not provided, it will be set using
-            the environment variables `AWS_DEFAULT_REGION` or using boto3, if available.
-        :param session: If boto3 is available, will attempt to get credentials using boto3,
-            unless passed explicitly.  If using boto3, the provided session will be used or a new
-            session will be created.
-
-        '''
-        # Set Service
         self.service = service
-
-        # First, get credentials passed explicitly
         self.aws_access_key_id = kwargs.get('aws_access_key_id')
         self.aws_secret_access_key = kwargs.get('aws_secret_access_key')
         self.aws_session_token = kwargs.get('aws_session_token')
-        # Next, try environment variables or use boto3
-
-        # Last, fail if still not found
         if self.aws_access_key_id is None or self.aws_secret_access_key is None:
             raise KeyError("AWS Access Key ID and Secret Access Key are required")
-
-        # Get Region passed explicitly
         self.region = kwargs.get('region')
-        # Next, try environment variables or use boto3
-        if self.region is None:
-            self.region = os.environ.get('SP_AWS_REGION', 'us-east-1')
 
     def __call__(self, r):
-        ''' Called to add authentication information to request
-
-        :param r: `requests.models.PreparedRequest` object to modify
-
-        :returns: `requests.models.PreparedRequest`, modified to add authentication
-
-        '''
-        # Create a date for headers and the credential string
         t = datetime.datetime.utcnow()
         self.amzdate = t.strftime('%Y%m%dT%H%M%SZ')
         self.datestamp = t.strftime('%Y%m%d')
         log.debug("Starting authentication with amzdate=%s", self.amzdate)
-
-        # Parse request to get URL parts
         p = urlparse(r.url)
 
         host = p.hostname

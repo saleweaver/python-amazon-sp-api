@@ -8,8 +8,8 @@ from sp_api.base import Client, Marketplaces
 
 
 class Orders(Client):
-    def __init__(self, marketplace=Marketplaces.US, refresh_token=None):
-        super().__init__(marketplace, refresh_token)
+    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default'):
+        super().__init__(marketplace, refresh_token, account)
 
     @sp_endpoint('/orders/v0/orders')
     def get_orders(self, **kwargs):

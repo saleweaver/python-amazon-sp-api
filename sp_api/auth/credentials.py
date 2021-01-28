@@ -2,7 +2,7 @@ import os
 
 
 class Credentials:
-    def __init__(self, refresh_token):
-        self.client_id = os.environ.get('LWA_APP_ID')
-        self.client_secret = os.environ.get('LWA_CLIENT_SECRET')
-        self.refresh_token = refresh_token or os.environ.get('SP_API_REFRESH_TOKEN')
+    def __init__(self, refresh_token, credentials):
+        self.client_id = credentials.lwa_app_id
+        self.client_secret = credentials.lwa_client_secret
+        self.refresh_token = refresh_token or credentials.refresh_token
