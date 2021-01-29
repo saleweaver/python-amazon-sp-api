@@ -8,6 +8,7 @@ from .products.products import Products
 from .sales.sales import Sales
 from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
+from .inventories.inventories import Inventories
 
 __all__ = [
     "Sales",
@@ -19,5 +20,6 @@ __all__ = [
     "ProductFees",
     "Finances",
     "Catalog",
-    "Feeds"
+    "Feeds",
+    "Inventories"
 ]

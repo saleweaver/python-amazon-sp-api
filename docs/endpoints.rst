@@ -15,6 +15,5 @@ Endpoints
     endpoints/reports
     endpoints/sales
     endpoints/sellers
-
-
+    endpoints/inventories
 
