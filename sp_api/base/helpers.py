@@ -15,6 +15,7 @@ def sp_endpoint(path, method='GET'):
                 'method': method
             })
             return function(*args, **kwargs)
+        wrapper.__doc__ = function.__doc__
         return wrapper
     return decorator
 

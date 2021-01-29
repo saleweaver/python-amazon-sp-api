@@ -1,5 +1,6 @@
 Feeds
 =====
 
+..  autoclass:: sp_api.api.Feeds
 
-Nothing here yet.
+

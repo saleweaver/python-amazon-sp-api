@@ -13,3 +13,10 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    credentials
    client_usage
    endpoints
+
+
+Indices and tables
+==================
+*  :ref:`genindex`
+*  :ref:`modindex`
+*  :ref:`search`
