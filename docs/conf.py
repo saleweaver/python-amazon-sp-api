@@ -28,7 +28,7 @@ author = 'Michael Primke'
 # ones.
 extensions = [
     "sphinx_rtd_theme",
-    'sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',     'sphinx_markdown_tables',
+    'sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',
 
 ]
 
