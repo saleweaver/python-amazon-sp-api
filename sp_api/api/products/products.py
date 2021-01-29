@@ -5,27 +5,58 @@ from sp_api.base import Client, Marketplaces, sp_endpoint
 
 
 class Products(Client):
+    """
+    :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/product-pricing-api/productPricingV0.md
+    """
+
     def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
         super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/products/pricing/v0/price', method='GET')
-    def get_product_pricing_for_skus(self, seller_sku_list, **kwargs):
+    def get_product_pricing_for_skus(self, seller_sku_list: [str], item_condition=None, **kwargs) -> GetPricingResponse:
         """
-        Returns pricing information for a seller's offer listings based on seller sku.
+        get_product_pricing_for_skus(self, seller_sku_list: [str], item_condition: str = None, **kwargs) -> GetPricingResponse
+        Returns pricing information for a seller's offer listings based on SKU.
 
-        :param seller_sku_list:
-        :param kwargs:
-        :return:
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+        Args:
+
+            seller_sku_list: [str]
+            item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
+            **kwargs:
+
+        Returns:
+            GetPricingResponse:
         """
+        if item_condition is not None:
+            kwargs['ItemCondition'] = item_condition
+
         return self._create_get_pricing_request(seller_sku_list, 'Sku', **kwargs)
 
     @sp_endpoint('/products/pricing/v0/price', method='GET')
-    def get_product_pricing_for_asins(self, asin_list, item_condition=None, **kwargs):
+    def get_product_pricing_for_asins(self, asin_list: [str], item_condition=None, **kwargs) -> GetPricingResponse:
         """
+        get_product_pricing_for_asins(self, asin_list: [str], item_condition=None, **kwargs) -> GetPricingResponse
         Returns pricing information for a seller's offer listings based on ASIN.
 
-        :param asin_list:
-        :param item_condition:
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+
+        :param asin_list: [str]
+        :param item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
            Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
            Available values : New, Used, Collectible, Refurbished, Club
         :param kwargs:
@@ -37,25 +68,44 @@ class Products(Client):
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
 
     @sp_endpoint('/products/pricing/v0/competitivePrice', method='GET')
-    def get_competitive_pricing_for_skus(self, seller_sku_list, **kwargs):
+    def get_competitive_pricing_for_skus(self, seller_sku_list: [str], **kwargs):
         """
+        get_competitive_pricing_for_skus(self, seller_sku_list, **kwargs)
         Returns competitive pricing information for a seller's offer listings based on Seller Sku
-        :param asin_list:
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+
+        :param seller_sku_list: [str]
         :param kwargs:
         :return:
-
-
         """
         return self._create_get_pricing_request(seller_sku_list, 'Sku', **kwargs)
 
     @sp_endpoint('/products/pricing/v0/competitivePrice', method='GET')
-    def get_competitive_pricing_for_asins(self, asin_list, **kwargs):
+    def get_competitive_pricing_for_asins(self, asin_list: [str], **kwargs) -> GetPricingResponse:
         """
+        get_competitive_pricing_for_asins(self, asin_list, **kwargs) -> GetPricingResponse
         Returns competitive pricing information for a seller's offer listings based on ASIN
-        :param asin_list:
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+
+        :param asin_list: [str]
         :param kwargs:
         :return:
-
 
         """
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)

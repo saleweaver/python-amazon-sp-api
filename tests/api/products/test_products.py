@@ -5,4 +5,4 @@ from sp_api.base import Marketplaces
 
 
 def test_pricing_for_sku():
-    print(Products().get_competitive_pricing_for_asins(['']))
+    print(Products(Marketplaces.US).get_competitive_pricing_for_asins(['B07JVNQ6MH']))

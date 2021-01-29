@@ -1,6 +1,7 @@
 Endpoints
 =========
 
+
 ..  toctree::
     :maxdepth: 1
 
@@ -15,3 +16,4 @@ Endpoints
     endpoints/sales
     endpoints/sellers
     endpoints/inventories
+

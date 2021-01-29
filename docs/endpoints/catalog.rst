@@ -2,4 +2,5 @@ Catalog
 =======
 
 
-Nothing here yet.
+..  autoclass:: sp_api.api.Catalog
+
