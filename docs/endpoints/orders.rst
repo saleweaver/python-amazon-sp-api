@@ -2,4 +2,4 @@ Orders
 ======
 
 
-Nothing here yet.
+..  autoclass:: sp_api.api.Orders
