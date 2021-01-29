@@ -21,14 +21,14 @@ project = 'PYTHON-AMAZON-SP-API'
 copyright = '2021, Michael Primke'
 author = 'Michael Primke'
 
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-        "sphinx_rtd_theme",
+    "sphinx_rtd_theme",
+    'sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',
 
 ]
 
@@ -39,9 +39,9 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
+autodoc_default_options = {"members": True, "undoc-members": True, 'member-order': 'bysource'}
 html_theme_options = {
-    "collapse_navigation" : False
+    "collapse_navigation": False
 }
 # -- Options for HTML output -------------------------------------------------
 

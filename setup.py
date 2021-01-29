@@ -22,6 +22,7 @@ setup(
               'sp_api.api.sales', 'sp_api.api.sales.models',
               'sp_api.api.catalog', 'sp_api.api.catalog.models',
               'sp_api.api.notifications', 'sp_api.api.notifications.models', 'sp_api.api.reports',
+              'sp_api.api.inventories', 'sp_api.api.inventories.models',
               'sp_api.api.reports.models', 'sp_api.auth', 'sp_api.base'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
     license='mit',
