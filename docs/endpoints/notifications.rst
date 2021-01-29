@@ -2,4 +2,4 @@ Notifications
 =============
 
 
-Nothing here yet.
+..  autoclass:: sp_api.api.Notifications
