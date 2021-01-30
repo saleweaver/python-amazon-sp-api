@@ -1,7 +1,14 @@
 Client Usage
 ============
 
+
+
+
+
+
 All endpoint's clients have the following signature and default values:
+
+
 
 .. code-block:: python
 

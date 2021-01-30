@@ -102,7 +102,7 @@ class Sales(Client):
         """
         kwargs.update({
             'interval': '--'.join([self._create_datetime_stamp(_interval) for _interval in interval]),
-            'granularity': granularity.value.upper(),
+            'granularity': granularity.value,
         })
         if granularityTimeZone:
             kwargs.update({'granularityTimeZone': granularityTimeZone})

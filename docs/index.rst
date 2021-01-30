@@ -13,6 +13,9 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    credentials
    client_usage
    endpoints
+   responses
+   exceptions
+   testing
 
 
 Indices and tables
