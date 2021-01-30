@@ -8,6 +8,7 @@ to_doc.py
 # C extensions
 *.so
 .credentials.yml
+clear_build.sh
 # Distribution / packaging
 .Python
 build/

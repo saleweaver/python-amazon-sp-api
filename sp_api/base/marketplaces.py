@@ -25,8 +25,11 @@ Singapore	A19VAU5U5O7RUS	SG
 Australia	A39IBJ37TRP1C6	AU
 Japan	A1VC38T7YXB528	JP
 """
+import sys
 from enum import Enum
 import os
+import logging
+l = logging.getLogger(__name__)
 
 
 class AWS_ENV(Enum):

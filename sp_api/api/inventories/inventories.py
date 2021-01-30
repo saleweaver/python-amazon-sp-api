@@ -55,8 +55,8 @@ class Inventories(Client):
         """
 
         kwargs.update({
-            'granularityType': InventoryGranularity.MARKETPLACE.value,
-            "granularityId": self.marketplace_id
+            'granularityType': kwargs.get('granularityType', InventoryGranularity.MARKETPLACE.value),
+            "granularityId": kwargs.get('granularityId', self.marketplace_id)
         })
-
+        print(kwargs)
         return GetInventorySummariesResponse(**self._request(kwargs.pop('path'), params=kwargs).json())
