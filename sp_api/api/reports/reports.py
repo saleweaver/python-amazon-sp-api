@@ -32,7 +32,7 @@ class Reports(Client):
         :return:
         """
         return CreateReportResponse(
-            **self._request(kwargs.pop('path'), data={**kwargs}).json()
+            **self._request(kwargs.pop('path'), data=kwargs).json()
         )
 
     @sp_endpoint('/reports/2020-09-04/reports/{}')
