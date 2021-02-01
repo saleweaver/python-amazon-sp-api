@@ -1,5 +1,6 @@
 from sp_api.api.orders.models.get_order_address_response import GetOrderAddressResponse
 from sp_api.api.orders.models.get_order_buyer_info_response import GetOrderBuyerInfoResponse
+from sp_api.api.orders.models.get_order_items_buyer_info_response import GetOrderItemsBuyerInfoResponse
 from sp_api.base import sp_endpoint, fill_query_params
 from sp_api.api.orders.models.get_order_items_response import GetOrderItemsResponse
 from sp_api.api.orders.models.get_order_response import GetOrderResponse
@@ -184,4 +185,32 @@ class Orders(Client):
         """
         return GetOrderBuyerInfoResponse(
             **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json()
+        )
+
+    @sp_endpoint('/orders/v0/orders/{}/orderItems/buyerInfo')
+    def get_order_items_buyer_info(self, order_id: str, **kwargs) -> GetOrderItemsBuyerInfoResponse:
+        """
+        get_order_items_buyer_info(self, order_id: str, **kwargs) -> GetOrderItemsBuyerInfoResponse
+
+        Returns buyer information in the order items of the order indicated by the specified order ID.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
+            order_id: str
+            key NextToken: str | retrieve data by next token
+
+        Returns:
+            GetOrderItemsBuyerInfoResponse
+        """
+        return GetOrderItemsBuyerInfoResponse(
+            **self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs).json()
         )
