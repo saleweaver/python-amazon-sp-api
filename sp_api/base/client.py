@@ -1,8 +1,5 @@
 import json
-import os
-import re
 from datetime import datetime
-from pprint import pprint
 
 import boto3
 from cachetools import TTLCache
@@ -102,7 +99,6 @@ class Client(BaseClient):
                       auth=self._sign_request())
 
         e = res.json().get('errors', None)
-        print(e)
         if e:
             exception = get_exception_for_code(res.status_code)
             raise exception(e)

@@ -9,6 +9,7 @@ class SellingApiException(BaseException):
         error: list Amazon Error list
 
     """
+    code = 999
 
     def __init__(self, error):
         try:
