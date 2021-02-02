@@ -43,6 +43,8 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 
 Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
+[![Documentation Status](https://readthedocs.org/projects/python-amazon-sp-api/badge/?version=latest)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
+
 ### DISCLAIMER
 
 We are not affiliated with Amazon

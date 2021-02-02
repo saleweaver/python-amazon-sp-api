@@ -1,3 +1,5 @@
+import urllib
+
 from sp_api.api.inventories.models.get_inventory_summaries_response import GetInventorySummariesResponse
 from sp_api.base import Client, Marketplaces, sp_endpoint
 from sp_api.base.InventoryEnums import InventoryGranularity
@@ -58,4 +60,7 @@ class Inventories(Client):
             'granularityType': kwargs.get('granularityType', InventoryGranularity.MARKETPLACE.value),
             "granularityId": kwargs.get('granularityId', self.marketplace_id)
         })
+        if 'sellerSkus' in kwargs:
+            kwargs.update({'sellerSkus': ','.join([urllib.parse.quote_plus(s) for s in kwargs.get('sellerSkus')])})
+
         return GetInventorySummariesResponse(**self._request(kwargs.pop('path'), params=kwargs).json())
