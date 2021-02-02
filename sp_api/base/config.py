@@ -3,6 +3,9 @@ import confuse
 
 
 class MissingCredentials(Exception):
+    """
+    Credentials are missing, see the error output to find possible causes
+    """
     pass
 
 

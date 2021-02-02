@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
 from sp_api.api import Orders
-from sp_api.base import Marketplaces
 
 
 def test_get_orders():
@@ -39,3 +38,12 @@ def test_get_order_items_buyer_info():
     assert res.errors is None
     assert res.payload.get('AmazonOrderId') is not None
 
+
+def test_get_orders_400_error():
+    from sp_api.base import SellingApiBadRequestException
+
+    try:
+        Orders().get_orders(CreatedAfter='TEST_CASE_400')
+    except SellingApiBadRequestException as sep:
+        assert sep.code == 400
+        assert sep.amzn_code == 'InvalidInput'

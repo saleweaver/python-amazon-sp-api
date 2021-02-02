@@ -1,5 +1,5 @@
 from sp_api.api import Reports
-from sp_api.base import Marketplaces, Schedules
+from sp_api.base import Marketplaces, Schedules, SellingApiBadRequestException, SellingApiServerException
 
 
 def test_create_report():
@@ -11,6 +11,32 @@ def test_create_report():
             "ATVPDKIKX0DER"
         ])
     assert res.payload.get('reportId') == 'ID323'
+
+
+def test_create_report_expect_400():
+    try:
+        res = Reports().create_report(
+            reportType="BAD_FEE_DISCOUNTS_REPORT",
+            dataStartTime="2019-12-10T20:11:24.000Z",
+            marketplaceIds=[
+                "A1PA6795UKMFR9",
+                "ATVPDKIKX0DER"
+            ])
+    except SellingApiBadRequestException as br:
+        assert br.code == 400
+
+
+def test_create_report_expect_500():
+    try:
+        res = Reports().create_report(
+            reportType="BAD_FEE_DISCasdafsdsfsdfsdOUNTS_REPORT",
+            dataStartTime="2019-12-10T20:11:24.000Z",
+            marketplaceIds=[
+                "A1PA6asfd795UKMFR9",
+                "ATVPDKIKX0DER"
+            ])
+    except SellingApiServerException as br:
+        assert br.code == 500
 
 
 def test_get_report():

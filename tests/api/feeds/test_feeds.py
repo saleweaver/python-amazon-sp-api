@@ -1,4 +1,5 @@
 from sp_api.api import Feeds
+from sp_api.base import SellingApiBadRequestException, SellingApiServerException
 
 
 def test_create_feed():
@@ -13,3 +14,18 @@ def test_get_feed():
     assert res.payload.get('feedId') == 'FeedId1'
     assert res.payload.get('processingStatus') == 'CANCELLED'
 
+
+def test_get_feed_expect_400():
+    try:
+        Feeds().get_feed('badFeedId1')
+    except SellingApiBadRequestException as br:
+        assert type(br) == SellingApiBadRequestException
+        assert br.code == 400
+
+
+def test_get_feed_expect_500():
+    try:
+        Feeds().get_feed('giberish')
+    except SellingApiServerException as br:
+        assert type(br) == SellingApiServerException
+        assert br.code == 500

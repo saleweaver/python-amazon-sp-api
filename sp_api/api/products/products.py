@@ -133,4 +133,4 @@ class Products(Client):
                                 [urllib.parse.quote_plus(s) for s in item_list])},
                                     'ItemType': item_type,
                                     **({'ItemCondition': kwargs.pop('ItemCondition')} if 'ItemCondition' in kwargs else {}),
-                                    'MarketplaceId': self.marketplace_id}).json())
+                                    'MarketplaceId': kwargs.get('MarketplaceId', self.marketplace_id)}).json())
