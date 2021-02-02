@@ -3,7 +3,13 @@ from .base_client import BaseClient
 from .client import Client
 from .helpers import fill_query_params, sp_endpoint, decrypt_aes, encrypt_aes
 from .marketplaces import Marketplaces
-from .client import SellingApiException
+from .exceptions import SellingApiException
+from .exceptions import SellingApiBadRequestException
+from .exceptions import SellingApiNotFoundException
+from .exceptions import SellingApiForbiddenException
+from .exceptions import SellingApiRequestThrottledException
+from .exceptions import SellingApiServerException
+from .exceptions import SellingApiTemporarilyUnavailableException
 from .schedules import Schedules
 from .report_status import ReportStatus
 from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
@@ -20,6 +26,12 @@ __all__ = [
     'fill_query_params',
     'sp_endpoint',
     'SellingApiException',
+    'SellingApiBadRequestException',
+    'SellingApiNotFoundException',
+    'SellingApiForbiddenException',
+    'SellingApiBadRequestException',
+    'SellingApiRequestThrottledException',
+    'SellingApiTemporarilyUnavailableException',
     'Schedules',
     'ReportStatus',
     'FirstDayOfWeek',

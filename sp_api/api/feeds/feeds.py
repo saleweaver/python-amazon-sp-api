@@ -8,7 +8,7 @@ from sp_api.api.feeds.models.create_feed_document_response import CreateFeedDocu
 from sp_api.api.feeds.models.create_feed_response import CreateFeedResponse
 from sp_api.api.feeds.models.get_feed_document_response import GetFeedDocumentResponse
 from sp_api.api.feeds.models.get_feed_response import GetFeedResponse
-from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params, SellingApiException
+from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params
 
 import zlib
 
@@ -97,6 +97,7 @@ class Feeds(Client):
         )
         if 200 <= upload.status_code < 300:
             return response
+        from sp_api.base.exceptions import SellingApiException
         raise SellingApiException(upload.headers)
 
     def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [CreateFeedDocumentResponse, CreateFeedResponse]:
