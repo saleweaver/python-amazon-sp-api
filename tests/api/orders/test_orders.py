@@ -41,7 +41,6 @@ def test_get_order_items_buyer_info():
 
 def test_get_orders_400_error():
     from sp_api.base import SellingApiBadRequestException
-
     try:
         Orders().get_orders(CreatedAfter='TEST_CASE_400')
     except SellingApiBadRequestException as sep:
