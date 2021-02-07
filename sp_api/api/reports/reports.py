@@ -6,11 +6,10 @@ from sp_api.api.notifications.models.delete_subscription_by_id_response import D
 from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
 from sp_api.api.reports.models.create_report_response import CreateReportResponse
 from sp_api.api.reports.models.create_report_schedule_response import CreateReportScheduleResponse
-from sp_api.api.reports.models.create_report_schedule_specification import CreateReportScheduleSpecification
 from sp_api.api.reports.models.get_report_document_response import GetReportDocumentResponse
 from sp_api.api.reports.models.get_report_response import GetReportResponse
 from sp_api.base import sp_endpoint, fill_query_params, SellingApiException
-from sp_api.base import Client, Marketplaces
+from sp_api.base import Client
 from sp_api.base.helpers import decrypt_aes
 
 
