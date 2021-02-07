@@ -70,8 +70,3 @@ def test_get_schedule_by_id():
     assert res.errors is None
     assert 'period' in res.payload
     assert res.payload.get('reportType') == 'FEE_DISCOUNTS_REPORT'
-
-
-def test_tss():
-    res = Reports().get_report_document('amzn1.tortuga.3.4186672e-f372-4515-bc25-d5f4e8c99be3.T10ANXHOAW9UQO', decrypt=True)
-    print(res)
