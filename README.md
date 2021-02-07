@@ -16,7 +16,7 @@ Contributions very welcome!
 ---
 
 ### Installation
-[![Badge](https://img.shields.io/pypi/v/python-amazon-sp-api?style=for-the-badge&version)](https://pypi.org/project/python-amazon-sp-api/)
+[![Badge](https://img.shields.io/pypi/v/python-amazon-sp-api?style=for-the-badge&version2)](https://pypi.org/project/python-amazon-sp-api/)
 ```
 pip install python-amazon-sp-api
 ```
