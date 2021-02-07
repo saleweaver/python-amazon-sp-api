@@ -1,10 +1,11 @@
 from sp_api.api import Catalog
-from sp_api.base import Marketplaces, SellingApiBadRequestException
+from sp_api.base import Marketplaces, SellingApiBadRequestException, ApiResponse
 
 
 def test_get_catalog_item():
     res = Catalog().get_item('ASIN_200', MarketplaceId='TEST_CASE_200')
     assert res.errors is None
+    assert isinstance(res, ApiResponse)
 
 
 def test_list_catalog_items():

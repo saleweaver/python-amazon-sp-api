@@ -17,8 +17,10 @@ from .fulfillment_channel import FulfillmentChannel
 from .deprecated import deprecated
 from .notifications import NotificationType
 from .config import CredentialProvider, MissingCredentials
+from .ApiResponse import ApiResponse
 
 __all__ = [
+    'ApiResponse',
     'Client',
     'BaseClient',
     'AWSSigV4',

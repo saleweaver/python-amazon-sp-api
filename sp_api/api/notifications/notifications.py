@@ -1,13 +1,5 @@
 from sp_api.base.helpers import sp_endpoint, fill_query_params
-from sp_api.api.notifications.models.create_destination_response import CreateDestinationResponse
-from sp_api.api.notifications.models.create_subscription_response import CreateSubscriptionResponse
-from sp_api.api.notifications.models.delete_destination_response import DeleteDestinationResponse
-from sp_api.api.notifications.models.delete_subscription_by_id_response import DeleteSubscriptionByIdResponse
-from sp_api.api.notifications.models.get_destination_response import GetDestinationResponse
-from sp_api.api.notifications.models.get_destinations_response import GetDestinationsResponse
-from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
-from sp_api.api.notifications.models.get_subscription_response import GetSubscriptionResponse
-from sp_api.base import Client, Marketplaces, deprecated, NotificationType
+from sp_api.base import Client, Marketplaces, deprecated, NotificationType, ApiResponse
 
 
 class Notifications(Client):
@@ -21,9 +13,10 @@ class Notifications(Client):
         return self.create_subscription(notification_type, **kwargs)
 
     @sp_endpoint('/notifications/v1/subscriptions/{}', method='POST')
-    def create_subscription(self, notification_type: NotificationType or str, destination_id: str = None, **kwargs) -> CreateSubscriptionResponse:
+    def create_subscription(self, notification_type: NotificationType or str, destination_id: str = None,
+                            **kwargs) -> ApiResponse:
         """
-        create_subscription(self, notification_type: NotificationType or str, destination_id: str = None, **kwargs) -> CreateSubscriptionResponse
+        create_subscription(self, notification_type: NotificationType or str, destination_id: str = None, **kwargs) -> ApiResponse
         Creates a subscription for the specified notification type to be delivered to the specified destination.
         Before you can subscribe, you must first create the destination by calling the createDestination operation.
 
@@ -44,24 +37,22 @@ class Notifications(Client):
 
 
         Returns:
-            CreateSubscriptionResponse:
+            ApiResponse:
 
         """
         data = {
             'destinationId': kwargs.pop('destinationId', destination_id),
             'payloadVersion': kwargs.pop('payload_version', '1.0')
         }
-        return CreateSubscriptionResponse(
-            **self._request(fill_query_params(kwargs.pop('path'),
-                                                                  notification_type if isinstance(notification_type,
-                                                                                                  str) else notification_type.value),
-                                                data={**kwargs, **data}).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'),
+                                               notification_type if isinstance(notification_type,
+                                                                               str) else notification_type.value),
+                             data={**kwargs, **data})
 
     @sp_endpoint('/notifications/v1/subscriptions/{}')
-    def get_subscription(self, notification_type: NotificationType or str, **kwargs) -> GetSubscriptionResponse:
+    def get_subscription(self, notification_type: NotificationType or str, **kwargs) -> ApiResponse:
         """
-        get_subscription(self, notification_type: NotificationType or str, **kwargs) -> GetSubscriptionResponse
+        get_subscription(self, notification_type: NotificationType or str, **kwargs) -> ApiResponse
         Returns information about subscriptions of the specified notification type. You can use this API to get subscription information when you do not have a subscription identifier.
 
         **Usage Plan:**
@@ -80,18 +71,18 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            GetSubscriptionResponse:
+            ApiResponse:
 
         """
-        return GetSubscriptionResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), notification_type if isinstance(notification_type, str) else notification_type.value),
-                                                params={**kwargs}).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), notification_type if isinstance(notification_type,
+                                                                                                   str) else notification_type.value),
+                             params={**kwargs})
 
     @sp_endpoint('/notifications/v1/subscriptions/{}/{}', method='DELETE')
-    def delete_notification_subscription(self, notification_type: NotificationType or str, subscription_id: str, **kwargs) -> DeleteSubscriptionByIdResponse:
+    def delete_notification_subscription(self, notification_type: NotificationType or str, subscription_id: str,
+                                         **kwargs) -> ApiResponse:
         """
-        delete_notification_subscription(self, notification_type: NotificationType or str, subscription_id: str, **kwargs) -> DeleteSubscriptionByIdResponse
+        delete_notification_subscription(self, notification_type: NotificationType or str, subscription_id: str, **kwargs) -> ApiResponse
         Deletes the subscription indicated by the subscription identifier and notification type that you specify.
         The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The deleteSubscriptionById API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
@@ -111,19 +102,19 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            DeleteSubscriptionByIdResponse:
+            ApiResponse:
 
         """
-        return DeleteSubscriptionByIdResponse(
-            **self._request(
-                fill_query_params(kwargs.pop('path'), notification_type if isinstance(notification_type, str) else notification_type.value, subscription_id),
-                params={**kwargs}).json()
-        )
+        return self._request(
+            fill_query_params(kwargs.pop('path'),
+                              notification_type if isinstance(notification_type, str) else notification_type.value,
+                              subscription_id),
+            params={**kwargs})
 
     @sp_endpoint(path='/notifications/v1/destinations', method='POST')
-    def create_destination(self, name: str, arn: str, **kwargs) -> CreateDestinationResponse:
+    def create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse:
         """
-        create_destination(self, name: str, arn: str, **kwargs) -> CreateDestinationResponse
+        create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse
         Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
         **Usage Plan:**
@@ -141,7 +132,7 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            CreateDestinationResponse:
+            ApiResponse:
 
         """
 
@@ -154,14 +145,12 @@ class Notifications(Client):
             'name': name,
         }
 
-        return CreateDestinationResponse(
-            **self._request_grantless_operation(kwargs.pop('path'), data={**kwargs, **data}).json()
-        )
+        return self._request_grantless_operation(kwargs.pop('path'), data={**kwargs, **data})
 
     @sp_endpoint('/notifications/v1/destinations', method='GET')
-    def get_destinations(self, **kwargs) -> GetDestinationsResponse:
+    def get_destinations(self, **kwargs) -> ApiResponse:
         """
-        get_destinations(self, **kwargs) -> GetDestinationsResponse
+        get_destinations(self, **kwargs) -> ApiResponse
         Returns information about all destinations. The getDestinations API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
         **Usage Plan:**
@@ -179,17 +168,15 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            GetDestinationsResponse:
+            ApiResponse:
 
         """
-        return GetDestinationsResponse(
-            **self._request_grantless_operation(kwargs.pop('path'), params={**kwargs}).json()
-        )
+        return self._request_grantless_operation(kwargs.pop('path'), params={**kwargs})
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='GET')
-    def get_destination(self, destination_id: str, **kwargs) -> GetDestinationResponse:
+    def get_destination(self, destination_id: str, **kwargs) -> ApiResponse:
         """
-        get_destination(self, destination_id: str, **kwargs) -> GetDestinationResponse
+        get_destination(self, destination_id: str, **kwargs) -> ApiResponse
         Returns information about all destinations. The getDestinations API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
         **Usage Plan:**
@@ -208,19 +195,17 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            GetDestinationResponse:
+            ApiResponse:
 
 
         """
-        return GetDestinationResponse(
-            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
-                                                params={**kwargs}).json()
-        )
+        return self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
+                                                 params={**kwargs})
 
     @sp_endpoint('/notifications/v1/destinations/{}', method='DELETE')
-    def delete_destination(self, destination_id: str, **kwargs) -> DeleteDestinationResponse:
+    def delete_destination(self, destination_id: str, **kwargs) -> ApiResponse:
         """
-        delete_destination(self, destination_id: str, **kwargs) -> DeleteDestinationResponse
+        delete_destination(self, destination_id: str, **kwargs) -> ApiResponse
         Deletes the destination that you specify. The deleteDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
 
         **Usage Plan:**
@@ -238,10 +223,8 @@ class Notifications(Client):
             **kwargs:
 
         Returns:
-            DeleteDestinationResponse:
+            ApiResponse:
 
         """
-        return DeleteDestinationResponse(
-            **self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
-                                                params={**kwargs}).json()
-        )
+        return self._request_grantless_operation(fill_query_params(kwargs.pop('path'), destination_id),
+                                                 params={**kwargs})

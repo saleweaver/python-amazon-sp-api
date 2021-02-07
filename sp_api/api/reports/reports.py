@@ -2,13 +2,7 @@ import zlib
 
 import requests
 
-from sp_api.api.notifications.models.delete_subscription_by_id_response import DeleteSubscriptionByIdResponse
-from sp_api.api.notifications.models.get_subscription_by_id_response import GetSubscriptionByIdResponse
-from sp_api.api.reports.models.create_report_response import CreateReportResponse
-from sp_api.api.reports.models.create_report_schedule_response import CreateReportScheduleResponse
-from sp_api.api.reports.models.get_report_document_response import GetReportDocumentResponse
-from sp_api.api.reports.models.get_report_response import GetReportResponse
-from sp_api.base import sp_endpoint, fill_query_params, SellingApiException
+from sp_api.base import sp_endpoint, fill_query_params, SellingApiException, ApiResponse
 from sp_api.base import Client
 from sp_api.base.helpers import decrypt_aes
 
@@ -16,8 +10,9 @@ from sp_api.base.helpers import decrypt_aes
 class Reports(Client):
 
     @sp_endpoint('/reports/2020-09-04/reports', method='POST')
-    def create_report(self, **kwargs):
+    def create_report(self, **kwargs) -> ApiResponse:
         """
+        create_report(self, **kwargs) -> ApiResponse
         Creates a report.
 
         **Usage Plan:**
@@ -30,13 +25,12 @@ class Reports(Client):
         :param kwargs:
         :return:
         """
-        return CreateReportResponse(
-            **self._request(kwargs.pop('path'), data=kwargs).json()
-        )
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/reports/2020-09-04/reports/{}')
-    def get_report(self, report_id, **kwargs):
+    def get_report(self, report_id, **kwargs) -> ApiResponse:
         """
+        get_report(self, report_id, **kwargs)
         Returns report details (including the reportDocumentId, if available) for the report that you specify.
 
         **Usage Plan:**
@@ -49,13 +43,12 @@ class Reports(Client):
         :param report_id:
         :return:
         """
-        return GetReportResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), report_id), add_marketplace=False).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), report_id), add_marketplace=False)
 
     @sp_endpoint('/reports/2020-09-04/documents/{}')
-    def get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs):
+    def get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs) -> ApiResponse:
         """
+        get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs) -> ApiResponse
         Returns the information required for retrieving a report document's contents. This includes a presigned URL for the report document as well as the information required to decrypt the document's contents.
 
         **Usage Plan:**
@@ -69,29 +62,29 @@ class Reports(Client):
         :param decrypt:
         :param document_id:
         :param kwargs:
-        :return:
+        :return: ApiResponse
         """
-        res = self._request(fill_query_params(kwargs.pop('path'), document_id), add_marketplace=False).json()
+        res = self._request(fill_query_params(kwargs.pop('path'), document_id), add_marketplace=False)
         if decrypt:
             document = self.decrypt_report_document(
-                    res.get('payload').get('url'),
-                    res.get('payload').get('encryptionDetails').get('initializationVector'),
-                    res.get('payload').get('encryptionDetails').get('key'),
-                    res.get('payload').get('encryptionDetails').get('standard'),
-                    res.get('payload')
+                    res.payload.get('url'),
+                    res.payload.get('encryptionDetails').get('initializationVector'),
+                    res.payload.get('encryptionDetails').get('key'),
+                    res.payload.get('encryptionDetails').get('standard'),
+                    res.payload
                 )
-            res.get('payload').update({
+            res.payload.update({
                 'document': document
             })
             if file:
                 file.write(document)
-        return GetReportDocumentResponse(
-            **res
-        )
+
+        return res
 
     @sp_endpoint('/reports/2020-09-04/schedules', method='POST')
-    def create_report_schedule(self, **kwargs):
+    def create_report_schedule(self, **kwargs) -> ApiResponse:
         """
+        create_report_schedule(self, **kwargs) -> ApiResponse
         Creates a report schedule. If a report schedule with the same report type and marketplace IDs already exists, it will be cancelled and replaced with this one.
 
         **Usage Plan:**
@@ -104,11 +97,12 @@ class Reports(Client):
         :param kwargs:
         :return:
         """
-        return CreateReportScheduleResponse(**self._request(kwargs.pop('path'), data=kwargs).json())
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/reports/2020-09-04/schedules/{}', method='DELETE')
-    def delete_report_schedule(self, schedule_id, **kwargs):
+    def delete_report_schedule(self, schedule_id, **kwargs) -> ApiResponse:
         """
+        delete_report_schedule(self, schedule_id, **kwargs) -> ApiResponse
         Cancels the report schedule that you specify.
 
         **Usage Plan:**
@@ -122,12 +116,10 @@ class Reports(Client):
         :param kwargs:
         :return:
         """
-        return DeleteSubscriptionByIdResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
 
     @sp_endpoint('/reports/2020-09-04/schedules/{}')
-    def get_report_schedule(self, schedule_id, **kwargs):
+    def get_report_schedule(self, schedule_id, **kwargs) -> ApiResponse:
         """
         Cancels the report schedule that you specify.
 
@@ -142,9 +134,7 @@ class Reports(Client):
         :param kwargs:
         :return:
         """
-        return GetSubscriptionByIdResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
 
     @staticmethod
     def decrypt_report_document(url, initialization_vector, key, encryption_standard, payload):
@@ -154,7 +144,9 @@ class Reports(Client):
         :param initialization_vector:
         :param key:
         :param encryption_standard:
+        :param payload:
         :return:
+
         """
         if encryption_standard == 'AES':
             decrypted = decrypt_aes(requests.get(url).content, key, initialization_vector)
