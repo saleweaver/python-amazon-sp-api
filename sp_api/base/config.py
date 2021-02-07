@@ -18,25 +18,27 @@ class CredentialProvider:
             self.credentials = self.Config(**credentials)
             missing = self.credentials.check_config()
             if len(missing):
-                raise MissingCredentials('Your credentials are incomplete!')
+                raise MissingCredentials(f'The following configuration parameters are missing: {missing}')
         else:
             self.from_env()
 
     def from_env(self):
         account_data = dict(
-            refresh_token=os.environ.get(f'SP_API_REFRESH_TOKEN_{self.account}',
-                                         os.environ.get('SP_API_REFRESH_TOKEN')),
-            lwa_app_id=os.environ.get(f'LWA_APP_ID_{self.account}', os.environ.get('LWA_APP_ID')),
-            lwa_client_secret=os.environ.get(f'LWA_CLIENT_SECRET_{self.account}',
-                                             os.environ.get('LWA_CLIENT_SECRET')),
-            aws_secret_key=os.environ.get(f'SP_API_SECRET_KEY_{self.account}', os.environ.get('SP_API_SECRET_KEY')),
-            aws_access_key=os.environ.get(f'SP_API_ACCESS_KEY_{self.account}', os.environ.get('SP_API_ACCESS_KEY')),
-            role_arn=os.environ.get(f'SP_API_ROLE_ARN_{self.account}', os.environ.get('SP_API_ROLE_ARN'))
+            refresh_token=self._get_env('SP_API_REFRESH_TOKEN'),
+            lwa_app_id=self._get_env('LWA_APP_ID'),
+            lwa_client_secret=self._get_env('LWA_CLIENT_SECRET'),
+            aws_secret_key=self._get_env('SP_API_SECRET_KEY'),
+            aws_access_key=self._get_env('SP_API_ACCESS_KEY'),
+            role_arn=self._get_env('SP_API_ROLE_ARN')
         )
         self.credentials = self.Config(**account_data)
         missing = self.credentials.check_config()
         if len(missing):
             self.read_config()
+
+    def _get_env(self, key):
+        return os.environ.get(f'{key}_{self.account}',
+                              os.environ.get(key))
 
     def read_config(self):
         try:

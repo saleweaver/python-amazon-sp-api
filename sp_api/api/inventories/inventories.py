@@ -10,9 +10,6 @@ class Inventories(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/fba-inventory-api/fbaInventory.md#getinventorysummaries
     """
 
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
-
     @sp_endpoint('/fba/inventory/v1/summaries')
     def get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse:
 

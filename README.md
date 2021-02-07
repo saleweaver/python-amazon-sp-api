@@ -4,15 +4,18 @@
 ![CodeQL](https://github.com/saleweaver/python-amazon-sp-api/workflows/CodeQL/badge.svg)
 ![Tests](https://codebuild.eu-central-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUXZBQ29Jd3NaNE45elZGRmdveVZMa0JCank4OGY4dnBMNDA3WGpsZXdpRXRTRHBKK1BvYmtneG00My8yYkdjdXc2S2VOeFBYcGN0VmxmVnhvZVIxZCtNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlnQUxNNlFZOVNWd0lRRlUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
-
 ### Amazon Selling-Partner API
+
+If you have questions, please join on slack
+
+[![slack](https://img.shields.io/badge/slack-python--amazon--sp--api-blue?style=for-the-badge&logo=slack)][slack_invite]
 
 Contributions very welcome!
 
 ---
 
 ### Installation
-
+[![Badge](https://img.shields.io/pypi/v/python-amazon-sp-api?style=for-the-badge)](https://pypi.org/project/python-amazon-sp-api/)
 ```
 pip install python-amazon-sp-api
 ```
@@ -43,8 +46,16 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 
 Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
-[![Documentation Status](https://readthedocs.org/projects/python-amazon-sp-api/badge/?version=latest)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
 
 ### DISCLAIMER
 
 We are not affiliated with Amazon
+
+
+### LICENSE
+
+![License](https://img.shields.io/github/license/saleweaver/python-amazon-sp-api?style=for-the-badge)
+
+
+[slack_invite]: https://join.slack.com/t/python-amazon-sp-api/shared_invite/zt-m2jwh0mc-peaOVY9TZeH~klcRQKdqdQ

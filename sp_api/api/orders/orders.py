@@ -13,9 +13,6 @@ class Orders(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/orders-api
     """
 
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
-
     @sp_endpoint('/orders/v0/orders')
     def get_orders(self, **kwargs) -> GetOrdersResponse:
         """

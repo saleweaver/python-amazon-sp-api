@@ -21,8 +21,6 @@ class Feeds(Client):
 
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/feeds-api
     """
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/feeds/2020-09-04/feeds', method='POST')
     def create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> CreateFeedResponse:

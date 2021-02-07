@@ -6,9 +6,11 @@ from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params
 class Catalog(Client):
     """
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/catalog-items-api/catalogItemsV0.md
+
+    Examples:
+       Catalog(Marketplaces.US, refresh_token=None, account='default', credentials=None)
+
     """
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/catalog/v0/items/{}')
     def get_item(self, asin: str, **kwargs) -> GetCatalogItemResponse:
