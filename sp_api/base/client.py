@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import logging
 
 import boto3
 from cachetools import TTLCache
@@ -7,9 +8,11 @@ from requests import request
 
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
 from .base_client import BaseClient
-from .exceptions import get_exception_for_code
+from .exceptions import get_exception_for_code, SellingApiBadRequestException
 from .marketplaces import Marketplaces
 from sp_api.base import AWSSigV4
+
+log = logging.getLogger(__name__)
 
 role_cache = TTLCache(maxsize=10, ttl=3600)
 
@@ -17,12 +20,14 @@ role_cache = TTLCache(maxsize=10, ttl=3600)
 class Client(BaseClient):
     boto3_client = None
 
-    def __init__(self,
-                 marketplace: Marketplaces,
-                 refresh_token=None,
-                 account='default',
-                 credentials=None
-                 ):
+    def __init__(
+            self,
+            marketplace: Marketplaces = Marketplaces.US,
+            *,
+            refresh_token=None,
+            account='default',
+            credentials=None
+    ):
         super().__init__(account, credentials)
         self.boto3_client = boto3.client(
             'sts',
@@ -78,7 +83,6 @@ class Client(BaseClient):
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None, add_marketplace=True):
-
         if params is None:
             params = {}
         if data is None:
@@ -98,10 +102,10 @@ class Client(BaseClient):
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
 
-        e = res.json().get('errors', None)
-        if e:
+        error = res.json().get('errors', None)
+        if error:
             exception = get_exception_for_code(res.status_code)
-            raise exception(e)
+            raise exception(error)
         return res
 
     def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):

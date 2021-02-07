@@ -9,8 +9,7 @@ class Products(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/product-pricing-api/productPricingV0.md
     """
 
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
+
 
     @sp_endpoint('/products/pricing/v0/price', method='GET')
     def get_product_pricing_for_skus(self, seller_sku_list: [str], item_condition=None, **kwargs) -> GetPricingResponse:

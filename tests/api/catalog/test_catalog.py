@@ -1,5 +1,5 @@
 from sp_api.api import Catalog
-from sp_api.base import Marketplaces
+from sp_api.base import Marketplaces, SellingApiBadRequestException
 
 
 def test_get_catalog_item():
@@ -10,3 +10,10 @@ def test_get_catalog_item():
 def test_list_catalog_items():
     res = Catalog().list_items(MarketplaceId='TEST_CASE_200', SellerSKU='SKU_200')
     assert res.errors is None
+
+
+def test_list_catalog_expect_400():
+    try:
+        Catalog().list_items(MarketplaceId='TEST_CASE_400', SellerSKU='SKU_400')
+    except SellingApiBadRequestException as br:
+        assert type(br) == SellingApiBadRequestException

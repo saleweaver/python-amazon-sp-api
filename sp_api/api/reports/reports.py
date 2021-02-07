@@ -1,3 +1,5 @@
+import zlib
+
 import requests
 
 from sp_api.api.notifications.models.delete_subscription_by_id_response import DeleteSubscriptionByIdResponse
@@ -13,8 +15,6 @@ from sp_api.base.helpers import decrypt_aes
 
 
 class Reports(Client):
-    def __init__(self, marketplace=Marketplaces.US, *, refresh_token=None, account='default', credentials=None):
-        super().__init__(marketplace, refresh_token, account, credentials)
 
     @sp_endpoint('/reports/2020-09-04/reports', method='POST')
     def create_report(self, **kwargs):
@@ -78,7 +78,8 @@ class Reports(Client):
                     res.get('payload').get('url'),
                     res.get('payload').get('encryptionDetails').get('initializationVector'),
                     res.get('payload').get('encryptionDetails').get('key'),
-                    res.get('payload').get('encryptionDetails').get('standard')
+                    res.get('payload').get('encryptionDetails').get('standard'),
+                    res.get('payload')
                 )
             res.get('payload').update({
                 'document': document
@@ -147,7 +148,7 @@ class Reports(Client):
         )
 
     @staticmethod
-    def decrypt_report_document(url, initialization_vector, key, encryption_standard):
+    def decrypt_report_document(url, initialization_vector, key, encryption_standard, payload):
         """
         Decrypts a report document, currently AES encryption is implemented
         :param url:
@@ -157,7 +158,10 @@ class Reports(Client):
         :return:
         """
         if encryption_standard == 'AES':
-            return decrypt_aes(requests.get(url).content, key, initialization_vector).decode('iso-8859-1')
+            decrypted = decrypt_aes(requests.get(url).content, key, initialization_vector)
+            if 'compressionAlgorithm' in payload:
+                return zlib.decompress(bytearray(decrypted), 15 + 32).decode('iso-8859-1')
+            return decrypted.decode('iso-8859-1')
         raise SellingApiException([{
             'message': 'Only AES decryption is implemented. Contribute: https://github.com/saleweaver/python-sp-api'
         }])

@@ -10,7 +10,7 @@ setup(
         "cachetools~=4.2.0",
         "pycryptodome",
         "pytz",
-        "confuse~=1.4.0"
+        "confuse~=1.4.0",
     ],
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client', 'sp_api',
