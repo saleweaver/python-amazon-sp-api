@@ -1,6 +1,6 @@
 from sp_api.api.catalog.models.get_catalog_item_response import GetCatalogItemResponse
 from sp_api.api.catalog.models.list_catalog_items_response import ListCatalogItemsResponse
-from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params
+from sp_api.base import Client, sp_endpoint, fill_query_params
 
 
 class Catalog(Client):
