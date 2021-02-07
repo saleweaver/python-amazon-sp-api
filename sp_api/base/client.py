@@ -83,31 +83,43 @@ class Client(BaseClient):
                         aws_session_token=role.get('SessionToken')
                         )
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None, add_marketplace=True) -> ApiResponse:
+    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
+                 add_marketplace=True) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
             data = {}
 
         self.method = params.pop('method', data.pop('method', 'GET'))
-
+        if add_marketplace:
+            self._add_marketplaces(data if self.method == 'POST' else params)
         if self.method == 'POST':
-            if add_marketplace and (not data.get('marketplaceIds', None) and not data.get('MarketplaceIds', None)):
-                data.update({'marketplaceIds': [self.marketplace_id], 'MarketplaceIds': [self.marketplace_id]})
             data = json.dumps(data)
-        else:
-            if add_marketplace and (
-                    'MarketplaceIds' not in params and 'marketplaceIds' not in params and 'marketplace_ids' not in params and 'MarketplaceId' not in params):
-                params.update({'MarketplaceId': self.marketplace_id, 'MarketplaceIds': self.marketplace_id,
-                               'marketplace_ids': self.marketplace_id, 'marketplaceIds': self.marketplace_id})
+
         res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
                       auth=self._sign_request())
 
+        return self._check_response(res)
+
+    @staticmethod
+    def _check_response(res) -> ApiResponse:
         error = res.json().get('errors', None)
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error)
         return ApiResponse(**res.json(), headers=res.headers)
+
+    def _add_marketplaces(self, data):
+        POST = ['marketplaceIds', 'MarketplaceIds']
+        GET = ['MarketplaceId', 'MarketplaceIds', 'marketplace_ids', 'marketplaceIds']
+
+        if self.method == 'POST':
+            if any(x in data.keys() for x in POST):
+                return
+            return data.update({k: self.marketplace_id for k in POST})
+        if any(x in data.keys() for x in GET):
+            return
+        return data.update({k: self.marketplace_id for k in GET})
 
     def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
         headers = {
