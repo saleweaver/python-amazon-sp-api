@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from sp_api.api.sales.models.get_order_metrics_response import GetOrderMetricsResponse
-from sp_api.base import Client, Marketplaces, sp_endpoint, Granularity
+from sp_api.base import Client, Marketplaces, sp_endpoint, Granularity, ApiResponse
 import logging
 
 
@@ -11,10 +10,9 @@ class Sales(Client):
     """
 
     @sp_endpoint('/sales/v1/orderMetrics')
-    def get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs):
-
+    def get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse:
         """
-        get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs)
+        get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse
 
         Returns aggregated order metrics for given interval, broken down by granularity, for given buyer type.
 
@@ -100,7 +98,9 @@ class Sales(Client):
         :param granularityTimeZone:
         :param granularity:
         :param kwargs:
-        :return:
+
+        :return: ApiResponse
+
         """
         kwargs.update({
             'interval': '--'.join([self._create_datetime_stamp(_interval) for _interval in interval]),
@@ -108,10 +108,19 @@ class Sales(Client):
         })
         if granularityTimeZone:
             kwargs.update({'granularityTimeZone': granularityTimeZone})
-        return GetOrderMetricsResponse(**self._request(kwargs.pop('path'), params=kwargs).json())
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @staticmethod
     def _create_datetime_stamp(datetime_obj: datetime or str):
+        """
+        Create datetimestring
+
+        Args:
+            datetime_obj:
+
+        Returns:
+
+        """
         if isinstance(datetime_obj, str):
             return datetime_obj
         fmt = '%Y-%m-%dT%H:%M:%S%z'

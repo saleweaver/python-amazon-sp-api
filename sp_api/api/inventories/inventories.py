@@ -1,7 +1,6 @@
 import urllib
 
-from sp_api.api.inventories.models.get_inventory_summaries_response import GetInventorySummariesResponse
-from sp_api.base import Client, Marketplaces, sp_endpoint
+from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
 from sp_api.base.InventoryEnums import InventoryGranularity
 
 
@@ -11,8 +10,7 @@ class Inventories(Client):
     """
 
     @sp_endpoint('/fba/inventory/v1/summaries')
-    def get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse:
-
+    def get_inventory_summary_marketplace(self, **kwargs) -> ApiResponse:
         """
         get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse
 
@@ -60,4 +58,4 @@ class Inventories(Client):
         if 'sellerSkus' in kwargs:
             kwargs.update({'sellerSkus': ','.join([urllib.parse.quote_plus(s) for s in kwargs.get('sellerSkus')])})
 
-        return GetInventorySummariesResponse(**self._request(kwargs.pop('path'), params=kwargs).json())
+        return self._request(kwargs.pop('path'), params=kwargs)

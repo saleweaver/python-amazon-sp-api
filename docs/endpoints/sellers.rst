@@ -5,5 +5,4 @@ Sellers
 
 
 
-
-Nothing here yet.
+..  autoclass:: sp_api.api.Sellers

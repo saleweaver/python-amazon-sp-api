@@ -1,14 +1,5 @@
-import os
-import struct
-from io import BytesIO
-
 import requests
-
-from sp_api.api.feeds.models.create_feed_document_response import CreateFeedDocumentResponse
-from sp_api.api.feeds.models.create_feed_response import CreateFeedResponse
-from sp_api.api.feeds.models.get_feed_document_response import GetFeedDocumentResponse
-from sp_api.api.feeds.models.get_feed_response import GetFeedResponse
-from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params
+from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params, ApiResponse
 
 import zlib
 
@@ -23,9 +14,9 @@ class Feeds(Client):
     """
 
     @sp_endpoint('/feeds/2020-09-04/feeds', method='POST')
-    def create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> CreateFeedResponse:
+    def create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse:
         """
-        create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> CreateFeedResponse
+        create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse
 
         Creates a feed. Call `create_feed_document` to upload the feed first.
         `submit_feed` combines both.
@@ -53,12 +44,12 @@ class Feeds(Client):
             'inputFeedDocumentId': input_feed_document_id,
             **kwargs
         }
-        return CreateFeedResponse(**self._request(kwargs.get('path'), data=data).json())
+        return self._request(kwargs.get('path'), data=data)
 
     @sp_endpoint('/feeds/2020-09-04/documents', method='POST')
-    def create_feed_document(self, file, content_type='text/tsv', **kwargs) -> CreateFeedDocumentResponse:
+    def create_feed_document(self, file, content_type='text/tsv', **kwargs) -> ApiResponse:
         """
-        create_feed_document(self, file: File or FileLike, content_type='text/tsv', **kwargs) -> CreateFeedDocumentResponse
+        create_feed_document(self, file: File or FileLike, content_type='text/tsv', **kwargs) -> ApiResponse
         Creates a feed document for the feed type that you specify.
         This method also encrypts and uploads the file you specify.
 
@@ -84,7 +75,7 @@ class Feeds(Client):
         data = {
             'contentType': content_type
         }
-        response = CreateFeedDocumentResponse(**self._request(kwargs.get('path'), data={**data, **kwargs}).json())
+        response = self._request(kwargs.get('path'), data={**data, **kwargs})
         upload = requests.put(
             response.payload.get('url'),
             data=encrypt_aes(file,
@@ -98,9 +89,9 @@ class Feeds(Client):
         from sp_api.base.exceptions import SellingApiException
         raise SellingApiException(upload.headers)
 
-    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [CreateFeedDocumentResponse, CreateFeedResponse]:
+    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
         """
-        submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [CreateFeedDocumentResponse, CreateFeedResponse]
+        submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
         Combines `create_feed_document` and `create_feed`, uploads the encrypted file and sends the feed to amazon.
 
         **Usage Plan:**
@@ -125,9 +116,9 @@ class Feeds(Client):
         return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
 
     @sp_endpoint('/feeds/2020-09-04/feeds/{}')
-    def get_feed(self, feed_id: str, **kwargs) -> GetFeedResponse:
+    def get_feed(self, feed_id: str, **kwargs) -> ApiResponse:
         """
-        get_feed(self, feed_id: str, **kwargs) -> GetFeedResponse
+        get_feed(self, feed_id: str, **kwargs) -> ApiResponse
         Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
 
         **Usage Plan:**
@@ -147,8 +138,8 @@ class Feeds(Client):
         Returns:
             GetFeedResponse:
         """
-        return GetFeedResponse(**self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
-                                               add_marketplace=False).json())
+        return self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
+                             add_marketplace=False)
 
     @sp_endpoint('/feeds/2020-09-04/documents/{}')
     def get_feed_result_document(self, feed_id, **kwargs) -> str:
@@ -171,9 +162,8 @@ class Feeds(Client):
         Returns:
             str: The feed results' contents
         """
-        response = GetFeedDocumentResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
-                            add_marketplace=False).json())
+        response = self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
+                                 add_marketplace=False)
         url = response.payload.get('url')
         decrypted = decrypt_aes(
             requests.get(url).content,

@@ -3,5 +3,4 @@ Product Fees
 
 
 
-
-Nothing here yet.
+..  autoclass:: sp_api.api.ProductFees

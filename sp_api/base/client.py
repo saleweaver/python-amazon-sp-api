@@ -7,6 +7,7 @@ from cachetools import TTLCache
 from requests import request
 
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
+from .ApiResponse import ApiResponse
 from .base_client import BaseClient
 from .exceptions import get_exception_for_code, SellingApiBadRequestException
 from .marketplaces import Marketplaces
@@ -82,7 +83,7 @@ class Client(BaseClient):
                         aws_session_token=role.get('SessionToken')
                         )
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None, add_marketplace=True):
+    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None, add_marketplace=True) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
@@ -106,7 +107,7 @@ class Client(BaseClient):
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error)
-        return res
+        return ApiResponse(**res.json(), headers=res.headers)
 
     def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
         headers = {

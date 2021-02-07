@@ -1,14 +1,7 @@
 Responses
 =========
 
+All endpoints return `sp_api.base.ApiResponse` with the following signature. `payload` contains Amazon's response.
 
-
-All responses have the following signature. `Payload` contains Amazon's response.
-
-
-
-.. code-block:: python
-
-    Response(payload, error)
-
+..  autoclass:: sp_api.base.ApiResponse
 

@@ -1,6 +1,5 @@
-from sp_api.api.catalog.models.get_catalog_item_response import GetCatalogItemResponse
-from sp_api.api.catalog.models.list_catalog_items_response import ListCatalogItemsResponse
-from sp_api.base import Client, sp_endpoint, fill_query_params
+
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Catalog(Client):
@@ -10,9 +9,9 @@ class Catalog(Client):
     """
 
     @sp_endpoint('/catalog/v0/items/{}')
-    def get_item(self, asin: str, **kwargs) -> GetCatalogItemResponse:
+    def get_item(self, asin: str, **kwargs) -> ApiResponse:
         """
-        get_item(self, asin: str, **kwargs) -> GetCatalogItemResponse
+        get_item(self, asin: str, **kwargs) -> ApiResponse
         Returns a specified item and its attributes.
 
         **Usage Plan:**
@@ -33,14 +32,12 @@ class Catalog(Client):
         Returns:
             GetCatalogItemResponse:
         """
-        return GetCatalogItemResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
 
     @sp_endpoint('/catalog/v0/items')
-    def list_items(self, **kwargs) -> ListCatalogItemsResponse:
+    def list_items(self, **kwargs) -> ApiResponse:
         """
-        list_items(self, **kwargs) -> ListCatalogItemsResponse
+        list_items(self, **kwargs) -> ApiResponse
         Returns a list of items and their attributes, based on a search query or item identifiers that you specify. When based on a search query, provide the Query parameter and optionally, the QueryContextId parameter. When based on item identifiers, provide a single appropriate parameter based on the identifier type, and specify the associated item value. MarketplaceId is always required.
 
         **Usage Plan:**
@@ -67,6 +64,5 @@ class Catalog(Client):
         Returns:
             ListCatalogItemsResponse:
         """
-        return ListCatalogItemsResponse(
-            **self._request(kwargs.pop('path'), params=kwargs).json()
-        )
+        return self._request(kwargs.pop('path'), params=kwargs)
+

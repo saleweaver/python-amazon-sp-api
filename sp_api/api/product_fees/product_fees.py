@@ -1,28 +1,76 @@
-import json
-
-from sp_api.api.product_fees.models.get_my_fees_estimate_response import GetMyFeesEstimateResponse
 from sp_api.base.helpers import sp_endpoint, fill_query_params
-from sp_api.base import Client, Marketplaces
+from sp_api.base import Client, ApiResponse
 
 
 class ProductFees(Client):
+    """
+    :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/product-fees-api
+    """
 
     @sp_endpoint('/products/fees/v0/listings/{}/feesEstimate', method='POST')
     def get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD',
-                                          is_fba=False, points: dict = dict, **kwargs):
+                                          is_fba=False, points: dict = dict, **kwargs) -> ApiResponse:
+        """
+        get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD', is_fba=False, points: dict = dict, **kwargs) -> ApiResponse
+
+        Returns fees for sku
+
+        Args:
+            seller_sku:
+            price:
+            shipping_price:
+            currency:
+            is_fba:
+            points:
+            **kwargs:
+
+        Returns:
+            ApiResponse:
+
+        """
         kwargs.update(self._create_body(price, shipping_price, currency, is_fba, seller_sku, points))
-        return GetMyFeesEstimateResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs).json())
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
 
     @sp_endpoint('/products/fees/v0/items/{}/feesEstimate', method='POST')
     def get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,
                                            points: dict = dict,
-                                           **kwargs):
+                                           **kwargs) -> ApiResponse:
+        """
+        get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,  points: dict = dict, **kwargs) -> ApiResponse
+
+        Returns fees for asin
+
+        Args:
+            asin:
+            price:
+            currency:
+            shipping_price:
+            is_fba:
+            points:
+            **kwargs:
+
+        Returns:
+            ApiResponse:
+
+        """
         kwargs.update(self._create_body(price, shipping_price, currency, is_fba, asin, points))
-        return GetMyFeesEstimateResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs).json())
+        return self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs)
 
     def _create_body(self, price, shipping_price=None, currency='USD', is_fba=False, identifier=None, points=dict):
+        """
+        Create request body
+
+        Args:
+            price:
+            shipping_price:
+            currency:
+            is_fba:
+            identifier:
+            points:
+
+        Returns:
+
+        """
         return {
             'FeesEstimateRequest': {
                 'Identifier': identifier or str(price),

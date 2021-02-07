@@ -1,10 +1,4 @@
-from sp_api.api.orders.models.get_order_address_response import GetOrderAddressResponse
-from sp_api.api.orders.models.get_order_buyer_info_response import GetOrderBuyerInfoResponse
-from sp_api.api.orders.models.get_order_items_buyer_info_response import GetOrderItemsBuyerInfoResponse
-from sp_api.base import sp_endpoint, fill_query_params
-from sp_api.api.orders.models.get_order_items_response import GetOrderItemsResponse
-from sp_api.api.orders.models.get_order_response import GetOrderResponse
-from sp_api.api.orders.models.get_orders_response import GetOrdersResponse
+from sp_api.base import sp_endpoint, fill_query_params, ApiResponse
 from sp_api.base import Client, Marketplaces
 
 
@@ -14,9 +8,9 @@ class Orders(Client):
     """
 
     @sp_endpoint('/orders/v0/orders')
-    def get_orders(self, **kwargs) -> GetOrdersResponse:
+    def get_orders(self, **kwargs) -> ApiResponse:
         """
-        get_orders(self, **kwargs) -> GetOrdersResponse
+        get_orders(self, **kwargs) -> ApiResponse
         Returns orders created or updated during the time frame indicated by the specified parameters.
         You can also apply a range of filtering criteria to narrow the list of orders returned.
         If NextToken is present, that will be used to retrieve the orders instead of other criteria.
@@ -50,17 +44,16 @@ class Orders(Client):
 
 
         Returns:
-            GetOrdersResponse:
+            ApiResponse:
 
 
         """
-        return GetOrdersResponse(
-            **self._request(kwargs.pop('path'), params={**kwargs}).json())
+        return self._request(kwargs.pop('path'), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}')
-    def get_order(self, order_id: str, **kwargs) -> GetOrderResponse:
+    def get_order(self, order_id: str, **kwargs) -> ApiResponse:
         """
-        get_order(self, order_id: str, **kwargs) -> GetOrderResponse
+        get_order(self, order_id: str, **kwargs) -> ApiResponse
         Returns the order indicated by the specified order ID.
 
         **Usage Plan:**
@@ -79,18 +72,17 @@ class Orders(Client):
             **kwargs:
 
         Returns:
-            GetOrderResponse:
+            ApiResponse:
 
 
         """
-        return GetOrderResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False)
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
-    def get_order_items(self, order_id: str, **kwargs) -> GetOrderItemsResponse:
+    def get_order_items(self, order_id: str, **kwargs) -> ApiResponse:
         """
-        get_order_items(self, order_id: str, **kwargs) -> GetOrderItemsResponse
+        get_order_items(self, order_id: str, **kwargs) -> ApiResponse
+
         Returns detailed order item information for the order indicated by the specified order ID.
         If NextToken is provided, it's used to retrieve the next page of order items.
 
@@ -119,15 +111,16 @@ class Orders(Client):
             **kwargs:
 
         Returns:
-            GetOrderItemsResponse:
+            ApiResponse:
 
         """
-        return GetOrderItemsResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json())
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}/address')
-    def get_order_address(self, order_id, **kwargs):
+    def get_order_address(self, order_id, **kwargs) -> ApiResponse:
         """
+        get_order_address(self, order_id, **kwargs) -> ApiResponse
+
         Returns the shipping address for the order indicated by the specified order ID.
 
         :note: To get useful information from this method, you need to have access to PII.
@@ -146,16 +139,14 @@ class Orders(Client):
             **kwargs:
 
         Returns:
-
+            ApiResponse
         """
-        return GetOrderAddressResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}/buyerInfo')
-    def get_order_buyer_info(self, order_id: str, **kwargs) -> GetOrderBuyerInfoResponse:
+    def get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
         """
-        get_order_buyer_info(self, order_id: str, **kwargs) -> GetOrderBuyerInfoResponse
+        get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
         Returns buyer information for the order indicated by the specified order ID.
 
         :note: To get useful information from this method, you need to have access to PII.
@@ -180,14 +171,12 @@ class Orders(Client):
             GetOrderBuyerInfoResponse:
 
         """
-        return GetOrderBuyerInfoResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems/buyerInfo')
-    def get_order_items_buyer_info(self, order_id: str, **kwargs) -> GetOrderItemsBuyerInfoResponse:
+    def get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
         """
-        get_order_items_buyer_info(self, order_id: str, **kwargs) -> GetOrderItemsBuyerInfoResponse
+        get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
 
         Returns buyer information in the order items of the order indicated by the specified order ID.
 
@@ -206,8 +195,6 @@ class Orders(Client):
             key NextToken: str | retrieve data by next token
 
         Returns:
-            GetOrderItemsBuyerInfoResponse
+            ApiResponse
         """
-        return GetOrderItemsBuyerInfoResponse(
-            **self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs).json()
-        )
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
