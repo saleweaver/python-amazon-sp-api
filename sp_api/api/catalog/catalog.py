@@ -7,9 +7,6 @@ class Catalog(Client):
     """
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/catalog-items-api/catalogItemsV0.md
 
-    Examples:
-       Catalog(Marketplaces.US, refresh_token=None, account='default', credentials=None)
-
     """
 
     @sp_endpoint('/catalog/v0/items/{}')
