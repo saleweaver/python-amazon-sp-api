@@ -1,8 +1,10 @@
+from collections import abc
+from datetime import datetime
 import zlib
 
 import requests
 
-from sp_api.base import sp_endpoint, fill_query_params, SellingApiException, ApiResponse
+from sp_api.base import sp_endpoint, fill_query_params, SellingApiException, ApiResponse, ProcessingStatus, Marketplaces
 from sp_api.base import Client
 from sp_api.base.helpers import decrypt_aes
 
@@ -181,6 +183,52 @@ class Reports(Client):
             ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
+
+    @sp_endpoint('/reports/2020-09-04/reports')
+    def get_reports(self, **kwargs) -> ApiResponse:
+        """
+        get_reports(self, **kwargs) -> ApiResponse
+
+        Returns report details for the reports that match the filters that you specify.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.0222                                  10
+        ======================================  ==============
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+
+        Args:
+            key reportTypes: str[] or ReportType[] | optional  A list of report types used to filter reports. When reportTypes is provided, the other filter parameters (processingStatuses, marketplaceIds, createdSince, createdUntil) and pageSize may also be provided. Either reportTypes or nextToken is required.
+            key processingStatuses: str[] or ProcessingStatus[] optional	A list of processing statuses used to filter reports.
+            key marketplaceIds: str[] or Marketplaces[] optional	A list of marketplace identifiers used to filter reports. The reports returned will match at least one of the marketplaces that you specify.
+            key pageSize: int optional	The maximum number of reports to return in a single call.
+            key createdSince: str or datetime optional	The earliest report creation date and time for reports to include in the response, in ISO 8601 date time format. The default is 90 days ago. Reports are retained for a maximum of 90 days.	string (date-time)	-
+            key	createdUntil: str or datetime optional	The latest report creation date and time for reports to include in the response, in ISO 8601 date time format. The default is now.	string (date-time)	-
+            key nextToken: str optional	A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getReports operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.	string	-
+
+
+        Returns:
+            ApiResponse
+        """
+        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
+            kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
+        if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable):
+            kwargs.update({'processingStatuses': ','.join(kwargs.get('processingStatuses'))})
+        if kwargs.get('marketplaceIds', None) and isinstance(kwargs.get('marketplaceIds'), abc.Iterable):
+            marketplaces = kwargs.get('marketplaceIds')
+            if not isinstance(marketplaces, abc.Iterable):
+                marketplaces = [marketplaces]
+            kwargs.update({'marketplaceIds': ','.join([m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
+        for k in ['createdSince', 'createdUntil']:
+            if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
+                kwargs.update({k: kwargs.get(k).isoformat()})
+
+        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
 
     @staticmethod
     def decrypt_report_document(url, initialization_vector, key, encryption_standard, payload):

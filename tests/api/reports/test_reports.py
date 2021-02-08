@@ -1,5 +1,7 @@
 from sp_api.api import Reports
-from sp_api.base import Marketplaces, Schedules, SellingApiBadRequestException, SellingApiServerException
+from sp_api.base import Marketplaces, Schedules, SellingApiBadRequestException, SellingApiServerException, \
+    ProcessingStatus
+from sp_api.base.reportTypes import ReportType
 
 
 def test_create_report():
@@ -70,3 +72,43 @@ def test_get_schedule_by_id():
     assert res.errors is None
     assert 'period' in res.payload
     assert res.payload.get('reportType') == 'FEE_DISCOUNTS_REPORT'
+
+
+def test_get_reports_1():
+    report_types = [
+        "FEE_DISCOUNTS_REPORT",
+        "GET_AFN_INVENTORY_DATA"
+    ]
+    processing_status = [
+        "IN_QUEUE",
+        "IN_PROGRESS"
+    ]
+    res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
+    assert res.errors is None
+
+
+def test_get_reports_2():
+    report_types = [
+        "FEE_DISCOUNTS_REPORT",
+        "GET_AFN_INVENTORY_DATA"
+    ]
+    processing_status = [
+        ProcessingStatus.IN_QUEUE,
+        ProcessingStatus.IN_PROGRESS
+    ]
+    res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
+    assert res.errors is None
+
+
+def test_get_reports_3():
+    report_types = [
+        ReportType.FEE_DISCOUNTS_REPORT,
+        ReportType.GET_AFN_INVENTORY_DATA
+    ]
+    processing_status = [
+        ProcessingStatus.IN_QUEUE,
+        ProcessingStatus.IN_PROGRESS
+    ]
+    res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
+    assert res.errors is None
+
