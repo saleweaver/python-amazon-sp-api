@@ -6,7 +6,7 @@ from sp_api.base.reportTypes import ReportType
 
 def test_create_report():
     res = Reports().create_report(
-        reportType='GET_MERCHANT_LISTINGS_ALL_DATA',
+        reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA,
         dataStartTime='2019-12-10T20:11:24.000Z',
         marketplaceIds=[
             "A1PA6795UKMFR9",
