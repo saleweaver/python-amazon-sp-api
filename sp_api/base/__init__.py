@@ -18,8 +18,12 @@ from .deprecated import deprecated
 from .notifications import NotificationType
 from .config import CredentialProvider, MissingCredentials
 from .ApiResponse import ApiResponse
+from .processing_status import ProcessingStatus
+from .reportTypes import ReportType
 
 __all__ = [
+    'ReportType',
+    'ProcessingStatus',
     'ApiResponse',
     'Client',
     'BaseClient',

@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class NotificationType(Enum):
+class NotificationType(str, Enum):
     ANY_OFFER_CHANGED = 'ANY_OFFER_CHANGED'
     FEED_PROCESSING_FINISHED = 'FEED_PROCESSING_FINISHED'
     FBA_OUTBOUND_SHIPMENT_STATUS = 'FBA_OUTBOUND_SHIPMENT_STATUS'
