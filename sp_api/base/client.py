@@ -91,12 +91,12 @@ class Client(BaseClient):
             data = {}
 
         self.method = params.pop('method', data.pop('method', 'GET'))
+
         if add_marketplace:
             self._add_marketplaces(data if self.method == 'POST' else params)
-        if self.method == 'POST':
-            data = json.dumps(data)
 
-        res = request(self.method, self.endpoint + path, params=params, data=data, headers=headers or self.headers,
+        res = request(self.method, self.endpoint + path, params=params,
+                      data=json.dumps(data) if self.method == 'POST' else None, headers=headers or self.headers,
                       auth=self._sign_request())
 
         return self._check_response(res)

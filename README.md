@@ -7,14 +7,20 @@
 ![Tech](https://img.shields.io/codeclimate/tech-debt/saleweaver/python-amazon-sp-api)
 ![Coverage](https://img.shields.io/codeclimate/coverage/saleweaver/python-amazon-sp-api)
 
-### Amazon Selling-Partner API
+## Amazon Selling-Partner API
 
-If you have questions, please join on slack
+A wrapper around **Amazon's Selling Partner API** with some additions, and an easy-to-use interface.
+
+
+### Q & A
+
+If you have questions, please ask them in github discussions 
+
+[![discussions](https://img.shields.io/badge/github-discussions-brightgreen?style=for-the-badge&logo=github)](https://github.com/saleweaver/python-amazon-sp-api/discussions)
+
+or join on slack
 
 [![slack](https://img.shields.io/badge/slack-python--amazon--sp--api-blue?style=for-the-badge&logo=slack)][slack_invite]
-
-Contributions very welcome!
-
 
 ---
 
