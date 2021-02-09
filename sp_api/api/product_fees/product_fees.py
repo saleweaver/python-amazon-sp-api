@@ -9,7 +9,7 @@ class ProductFees(Client):
 
     @sp_endpoint('/products/fees/v0/listings/{}/feesEstimate', method='POST')
     def get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD',
-                                          is_fba=False, points: dict = dict, **kwargs) -> ApiResponse:
+                                          is_fba=False, points: dict = None, **kwargs) -> ApiResponse:
         """
         get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD', is_fba=False, points: dict = dict, **kwargs) -> ApiResponse
 
@@ -33,7 +33,7 @@ class ProductFees(Client):
 
     @sp_endpoint('/products/fees/v0/items/{}/feesEstimate', method='POST')
     def get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,
-                                           points: dict = dict,
+                                           points: dict = None,
                                            **kwargs) -> ApiResponse:
         """
         get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,  points: dict = dict, **kwargs) -> ApiResponse
@@ -56,7 +56,7 @@ class ProductFees(Client):
         kwargs.update(self._create_body(price, shipping_price, currency, is_fba, asin, points))
         return self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs)
 
-    def _create_body(self, price, shipping_price=None, currency='USD', is_fba=False, identifier=None, points=dict):
+    def _create_body(self, price, shipping_price=None, currency='USD', is_fba=False, identifier=None, points: dict=None):
         """
         Create request body
 
@@ -83,7 +83,7 @@ class ProductFees(Client):
                         'Amount': shipping_price,
                         'CurrencyCode': currency
                     } if shipping_price else None,
-                    **points
+                    'Points': points or None
                 },
                 'IsAmazonFulfilled': is_fba,
                 'MarketplaceId': self.marketplace_id
