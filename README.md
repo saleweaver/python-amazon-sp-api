@@ -18,9 +18,6 @@ If you have questions, please ask them in github discussions
 
 [![discussions](https://img.shields.io/badge/github-discussions-brightgreen?style=for-the-badge&logo=github)](https://github.com/saleweaver/python-amazon-sp-api/discussions)
 
-or join on slack
-
-[![slack](https://img.shields.io/badge/slack-python--amazon--sp--api-blue?style=for-the-badge&logo=slack)][slack_invite]
 
 ---
 
