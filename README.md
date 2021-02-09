@@ -2,9 +2,6 @@
 
 ![CodeQL](https://github.com/saleweaver/python-amazon-sp-api/workflows/CodeQL/badge.svg)
 ![Tests](https://codebuild.eu-central-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUXZBQ29Jd3NaNE45elZGRmdveVZMa0JCank4OGY4dnBMNDA3WGpsZXdpRXRTRHBKK1BvYmtneG00My8yYkdjdXc2S2VOeFBYcGN0VmxmVnhvZVIxZCtNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlnQUxNNlFZOVNWd0lRRlUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-
-![Maintainability](https://img.shields.io/codeclimate/maintainability/saleweaver/python-amazon-sp-api)
-![Tech](https://img.shields.io/codeclimate/tech-debt/saleweaver/python-amazon-sp-api)
 ![Coverage](https://img.shields.io/codeclimate/coverage/saleweaver/python-amazon-sp-api)
 
 ## Amazon Selling-Partner API
@@ -65,4 +62,6 @@ We are not affiliated with Amazon
 ![License](https://img.shields.io/github/license/saleweaver/python-amazon-sp-api?style=for-the-badge)
 
 
-[slack_invite]: https://join.slack.com/t/python-amazon-sp-api/shared_invite/zt-m2jwh0mc-peaOVY9TZeH~klcRQKdqdQ
+---
+![Maintainability](https://img.shields.io/codeclimate/maintainability/saleweaver/python-amazon-sp-api?style=for-the-badge)
+![Tech](https://img.shields.io/codeclimate/tech-debt/saleweaver/python-amazon-sp-api?style=for-the-badge)
