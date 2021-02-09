@@ -6,7 +6,7 @@
 
 ## Amazon Selling-Partner API
 
-A wrapper around **Amazon's Selling Partner API** with some additions, and an easy-to-use interface.
+A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
 
 ### Q & A
