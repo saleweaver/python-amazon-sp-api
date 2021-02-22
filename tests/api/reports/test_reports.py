@@ -1,3 +1,4 @@
+from sp_api import api
 from sp_api.api import Reports
 from sp_api.base import Marketplaces, Schedules, SellingApiBadRequestException, SellingApiServerException, \
     ProcessingStatus
@@ -111,4 +112,5 @@ def test_get_reports_3():
     ]
     res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
     assert res.errors is None
+
 
