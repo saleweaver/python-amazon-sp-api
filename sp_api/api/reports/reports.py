@@ -110,7 +110,11 @@ class Reports(Client):
                 'document': document
             })
             if file:
-                file.write(document)
+                if isinstance(file, str):
+                    with open(file, "w") as text_file:
+                        text_file.write(document)
+                else:
+                    file.write(document)
 
         return res
 
