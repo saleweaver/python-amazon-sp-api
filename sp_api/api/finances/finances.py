@@ -19,3 +19,46 @@ class Finances(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
+    @sp_endpoint('/finances/v0/financialEvents')
+    def list_financial_events(self, **kwargs) -> ApiResponse:
+        """
+        list_financial_events(self, **kwargs) -> ApiResponse:
+
+
+        Args:
+            **kwargs:
+
+        Returns:
+
+        """
+        return self._request(fill_query_params(kwargs.pop('path')), params={**kwargs})
+
+    @sp_endpoint('/finances/v0/financialEventGroups/{eventGroupId}/financialEvents')
+    def list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
+        """
+        list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
+
+
+        Args:
+            event_group_id
+            **kwargs:
+
+        Returns:
+
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), event_group_id), params={**kwargs})
+
+    @sp_endpoint('/finances/v0/financialEventGroups')
+    def list_financial_event_groups(self, **kwargs) -> ApiResponse:
+        """
+        list_financial_event_groups(self, **kwargs) -> ApiResponse:
+
+
+        Args:
+            **kwargs:
+
+        Returns:
+
+        """
+        return self._request(fill_query_params(kwargs.pop('path')), params={**kwargs})
+
