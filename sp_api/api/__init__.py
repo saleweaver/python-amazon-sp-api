@@ -9,6 +9,7 @@ from .sales.sales import Sales
 from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
 from .inventories.inventories import Inventories
+from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
 
 __all__ = [
     "Sales",
@@ -21,5 +22,6 @@ __all__ = [
     "Finances",
     "Catalog",
     "Feeds",
-    "Inventories"
+    "Inventories",
+    "FulfillmentInbound"
 ]
