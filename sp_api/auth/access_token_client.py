@@ -1,12 +1,14 @@
 import requests
 
+import hashlib
 import logging
 from cachetools import TTLCache
 
+from sp_api.base import BaseClient
+
 from .credentials import Credentials
 from .access_token_response import AccessTokenResponse
-from sp_api.base import BaseClient
-import hashlib
+from .exceptions import AuthorizationError
 
 cache = TTLCache(maxsize=10, ttl=3600)
 grantless_cache = TTLCache(maxsize=10, ttl=3600)
@@ -23,6 +25,15 @@ class AccessTokenClient(BaseClient):
         super().__init__(account, credentials)
         self.cred = Credentials(refresh_token, self.credentials)
 
+    def _request(self, url, data, headers):
+        response = requests.post(url, data=data, headers=headers)
+        response_data = response.json()
+        if response.status_code != 200:
+            error_message = response_data.get('error_description')
+            error_code = response_data.get('error')
+            raise AuthorizationError(error_code, error_message, response.status_code)
+        return response_data
+
     def get_auth(self) -> AccessTokenResponse:
         """
         Get's the access token
@@ -35,12 +46,11 @@ class AccessTokenClient(BaseClient):
             access_token = cache[cache_key]
             logger.debug('from cache')
         except KeyError:
-            response = requests.post(self.scheme + self.host + self.path, data=self.data, headers=self.headers)
+            request_url = self.scheme + self.host + self.path
+            access_token = self._request(request_url, self.data, self.headers)
             logger.debug('token refreshed')
             cache = TTLCache(maxsize=10, ttl=3600)
-            cache[cache_key] = response.json()
-            access_token = response.json()
-
+            cache[cache_key] = access_token
         return AccessTokenResponse(**access_token)
 
     def get_grantless_auth(self):
@@ -60,11 +70,11 @@ class AccessTokenClient(BaseClient):
             access_token = grantless_cache[cache_key]
             logger.debug('from_cache')
         except KeyError:
-            response = requests.post(self.scheme + self.host + self.path, data=self.grantless_data, headers=self.headers)
+            request_url = self.scheme + self.host + self.path
+            access_token = self._request(request_url, data=self.grantless_data, headers=self.headers)
             logger.debug('token_refreshed')
             grantless_cache = TTLCache(maxsize=10, ttl=3600)
-            grantless_cache[cache_key] = response.json()
-            access_token = response.json()
+            grantless_cache[cache_key] = access_token
 
         return AccessTokenResponse(**access_token)
 
