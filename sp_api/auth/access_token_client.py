@@ -28,7 +28,7 @@ class AccessTokenClient(BaseClient):
     def _request(self, url, data, headers):
         response = requests.post(url, data=data, headers=headers)
         response_data = response.json()
-        if response.status_code != '200':
+        if response.status_code != 200:
             error_message = response_data.get('error_description')
             error_code = response_data.get('error')
             raise AuthorizationError(error_code, error_message, response.status_code)
