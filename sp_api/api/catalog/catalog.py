@@ -1,3 +1,4 @@
+import urllib.parse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
@@ -64,5 +65,6 @@ class Catalog(Client):
         Returns:
             ListCatalogItemsResponse:
         """
+        if 'Query' in kwargs:
+            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
         return self._request(kwargs.pop('path'), params=kwargs)
-
