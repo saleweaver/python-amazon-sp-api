@@ -1,5 +1,5 @@
 import urllib.parse
-from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
+from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse, fill_query_params
 
 
 class Products(Client):
@@ -104,6 +104,31 @@ class Products(Client):
 
         """
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
+
+    @sp_endpoint('/products/pricing/v0/items/{}/offers', method='GET')
+    def get_item_offers(self, asin, item_condition='New', **kwargs) -> ApiResponse:
+        """
+        Returns pricing information for a seller's offer listings based on seller SKU or ASIN.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+
+        :param asin: str
+        :param item_condition: str
+        :param kwargs:
+        :return:
+        """
+        if item_condition is not None:
+            kwargs['ItemCondition'] = item_condition
+        return self._request(fill_query_params(kwargs.pop('path'), asin),
+                            params={**({'ItemCondition': kwargs.pop('ItemCondition')} if 'ItemCondition' in kwargs else {}),
+                                    'MarketplaceId': kwargs.get('MarketplaceId', self.marketplace_id)}).json()
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
