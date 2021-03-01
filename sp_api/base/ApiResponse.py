@@ -7,9 +7,17 @@ class ApiResponse:
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
-        self.next_token = nextToken
+        self.next_token = self.set_next_token(nextToken)
         self.kwargs = kwargs
 
     def __str__(self):
         return pprint.pformat(self.__dict__)
+
+    def set_next_token(self, nextToken=None):
+        if nextToken:
+            return nextToken
+        try:
+            return self.payload.get('NextToken', None)
+        except AttributeError:
+            return None
 
