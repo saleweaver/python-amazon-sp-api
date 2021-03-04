@@ -23,7 +23,7 @@ class Client(BaseClient):
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces.US,
+            marketplace: Marketplaces = Marketplaces.ES,
             *,
             refresh_token=None,
             account='default',

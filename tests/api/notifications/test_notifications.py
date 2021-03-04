@@ -9,7 +9,7 @@ def test_create_destination():
 
 
 def test_create_subscription():
-    res = Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
+    res = Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE)
     assert res.payload.get('destinationId') == 'TEST_CASE_200_DESTINATION_ID'
     assert res.payload.get('subscriptionId') == 'TEST_CASE_200_SUBSCRIPTION_ID'
 

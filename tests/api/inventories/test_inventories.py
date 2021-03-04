@@ -5,6 +5,7 @@ from sp_api.base import SellingApiServerException, SellingApiForbiddenException
 def test_get_inventory_summary_marketplace():
     res = Inventories().get_inventory_summary_marketplace(**{
         "details": True,
+        "granularityId": "ATVPDKIKX0DER",
         "marketplaceIds": ["ATVPDKIKX0DER"]
     })
     assert res.errors is None
