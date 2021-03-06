@@ -113,4 +113,3 @@ def test_get_reports_3():
     res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
     assert res.errors is None
 
-

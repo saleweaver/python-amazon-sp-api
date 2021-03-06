@@ -29,3 +29,4 @@ def test_get_feed_expect_500():
     except SellingApiServerException as br:
         assert type(br) == SellingApiServerException
         assert br.code == 500
+
