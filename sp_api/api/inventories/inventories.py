@@ -59,3 +59,4 @@ class Inventories(Client):
             kwargs.update({'sellerSkus': ','.join([urllib.parse.quote_plus(s) for s in kwargs.get('sellerSkus')])})
 
         return self._request(kwargs.pop('path'), params=kwargs)
+
