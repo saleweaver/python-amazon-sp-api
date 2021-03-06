@@ -93,7 +93,7 @@ class Client(BaseClient):
         self.method = params.pop('method', data.pop('method', 'GET'))
 
         if add_marketplace:
-            self._add_marketplaces(data if self.method == 'POST' else params)
+            self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
 
         res = request(self.method, self.endpoint + path, params=params,
                       data=json.dumps(data) if data and self.method in ('POST', 'PUT') else None, headers=headers or self.headers,

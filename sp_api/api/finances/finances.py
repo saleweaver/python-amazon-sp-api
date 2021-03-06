@@ -33,8 +33,8 @@ class Finances(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path')), params={**kwargs})
 
-    @sp_endpoint('/finances/v0/financialEventGroups/{eventGroupId}/financialEvents')
-    def list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
+    @sp_endpoint('/finances/v0/financialEventGroups/{}/financialEvents')
+    def list_financial_events_by_group_id(self, event_group_id,  **kwargs) -> ApiResponse:
         """
         list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
 
@@ -60,5 +60,5 @@ class Finances(Client):
         Returns:
 
         """
-        return self._request(fill_query_params(kwargs.pop('path')), params={**kwargs})
+        return self._request(kwargs.pop('path'), params={**kwargs})
 

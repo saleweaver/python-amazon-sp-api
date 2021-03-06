@@ -30,3 +30,5 @@ def test_sales_granularity_total_by_asin():
 def test_sales_granularity_day_by_asin():
     res = Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central', asin='B008OLKVEW')
     assert res.payload[0].get('unitCount') == 1
+
+
