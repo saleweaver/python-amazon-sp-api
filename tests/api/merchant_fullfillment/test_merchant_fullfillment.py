@@ -1,5 +1,6 @@
 from sp_api.api.merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
-from sp_api.base import SellingApiServerException, SellingApiForbiddenException
+from sp_api.base import SellingApiServerException, SellingApiForbiddenException, SellingApiBadRequestException
+
 
 def test_get_eligible_shipment_services_old():
     res = MerchantFulfillment().get_eligible_shipment_services_old({
@@ -79,22 +80,6 @@ def test_get_eligible_shipment_services():
     assert res.payload.get('ShippingServiceList') is not None
 
 
-def test_get_shipment():
-    res = MerchantFulfillment().get_shipment("abcddcba-00c3-4f6f-a63a-639f76ee9253")
-    assert res.errors is None
-    assert res.payload.get('ShipmentId') == "abcddcba-00c3-4f6f-a63a-639f76ee9253"
-
-
-def test_cancel_shipment():
-    res = MerchantFulfillment().cancel_shipment("be7a0a53-00c3-4f6f-a63a-639f76ee9253")
-    assert res.errors is None
-    assert res.payload.get('ShipmentId') == "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
-
-def test_cancel_shipment_old():
-    res = MerchantFulfillment().cancel_shipment_old("be7a0a53-00c3-4f6f-a63a-639f76ee9253")
-    assert res.errors is None
-    assert res.payload.get('ShipmentId') == "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
-
 def test_create_shipment():
     res = MerchantFulfillment().create_shipment(
         shipment_request_details={
@@ -136,10 +121,36 @@ def test_create_shipment():
                                "+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER"
                                "/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52"
                                "+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW"
-                               "/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t "
+                               "/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t"
     )
     assert res.errors is None
     assert res.payload.get('ShipmentId') == "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
+
+
+def test_get_shipment():
+    res = MerchantFulfillment().get_shipment("abcddcba-00c3-4f6f-a63a-639f76ee9253")
+    assert res.errors is None
+    assert res.payload.get('ShipmentId') == "abcddcba-00c3-4f6f-a63a-639f76ee9253"
+
+
+def test_get_shipment_400():
+    try:
+        res = MerchantFulfillment().get_shipment("aabbccdd-1beb-4cda-8bf4-7366cfddbec1")
+    except SellingApiBadRequestException as br:
+        assert br.code == 400
+        assert type(br) == SellingApiBadRequestException
+
+
+def test_cancel_shipment():
+    res = MerchantFulfillment().cancel_shipment("be7a0a53-00c3-4f6f-a63a-639f76ee9253")
+    assert res.errors is None
+    assert res.payload.get('ShipmentId') == "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
+
+def test_cancel_shipment_old():
+    res = MerchantFulfillment().cancel_shipment_old("be7a0a53-00c3-4f6f-a63a-639f76ee9253")
+    assert res.errors is None
+    assert res.payload.get('ShipmentId') == "be7a0a53-00c3-4f6f-a63a-639f76ee9253"
+
 
 
 def test_get_additional_seller_inputs_old():
