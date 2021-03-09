@@ -36,5 +36,7 @@ def decrypt_aes(content, key, iv):
     key = base64.b64decode(key)
     iv = base64.b64decode(iv)
     decrypter = AES.new(key, AES.MODE_CBC, iv)
-    return decrypter.decrypt(content)
+    decrypted = decrypter.decrypt(content)
+    padding_bytes = decrypted[-1]
+    return decrypted[:-padding_bytes]
 
