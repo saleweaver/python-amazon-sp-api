@@ -1,5 +1,5 @@
 from sp_api.api import Inventories
-from sp_api.base import SellingApiServerException, SellingApiForbiddenException
+from sp_api.base import SellingApiServerException, SellingApiForbiddenException, Marketplaces
 
 
 def test_get_inventory_summary_marketplace():
@@ -19,3 +19,4 @@ def test_get_inventory_summary_marketplace_expect_500():
         })
     except SellingApiForbiddenException as se:
         assert se.code == 403
+
