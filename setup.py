@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.3.3',
+    version='0.3.4',
     install_requires=[
         "requests",
         "six~=1.15.0",
@@ -27,6 +27,9 @@ setup(
               'sp_api.api.notifications',
               'sp_api.api.reports',
               'sp_api.api.inventories',
+              'sp_api.api.messaging',
+              'sp_api.api.upload',
+              'sp_api.api.merchant_fulfillment',
               'sp_api.api.fulfillment_inbound',
               'sp_api.auth',
               'sp_api.base'],

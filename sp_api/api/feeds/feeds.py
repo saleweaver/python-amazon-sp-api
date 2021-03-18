@@ -73,7 +73,7 @@ class Feeds(Client):
 
         """
         data = {
-            'contentType': content_type
+            'contentType': kwargs.get('contentType', content_type)
         }
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
         upload = requests.put(

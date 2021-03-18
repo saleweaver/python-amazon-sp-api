@@ -9,7 +9,7 @@ def test_item_guidance():
 
 
 def test_plans():
-    res = FulfillmentInbound().plans(**{
+    res = FulfillmentInbound().plans({
         "ShipFromAddress": {
             "Name": "Name",
             "AddressLine1": "123 any st",
@@ -43,7 +43,7 @@ def test_plans():
 
 
 def test_create_inbound_shipment():
-    res = FulfillmentInbound().create_shipment('123', **{
+    res = FulfillmentInbound().create_shipment('123', {
         "InboundShipmentHeader": {
             "ShipmentName": "43545345",
             "ShipFromAddress": {
@@ -84,7 +84,7 @@ def test_create_inbound_shipment():
 
 
 def test_update_shipment():
-    res = FulfillmentInbound().update_shipment('123', **{
+    res = FulfillmentInbound().update_shipment('123', {
         "MarketplaceId": "ATVPDKIKX0DER",
         "InboundShipmentHeader": {
             "ShipmentName": "Shipment for FBA15DJCQ1ZF",
@@ -116,17 +116,17 @@ def test_preorder():
     res = FulfillmentInbound().preorder('shipmentId1', MarketplaceId='MarketplaceId1')
     assert res.errors is None
 
-
-def test_confirm_preorder():
-    res = FulfillmentInbound().confirm_preorder('shipmentId1', **{
-        "NeedByDate": "2020-10-10",
-        "MarketplaceId": "MarketplaceId1"
-    })
-    assert res.errors is None
+#
+# def test_confirm_preorder():
+#     res = FulfillmentInbound().confirm_preorder('shipmentId1', **{
+#         "NeedByDate": "2020-10-10",
+#         "MarketplaceId": "MarketplaceId1"
+#     })
+#     assert res.errors is None
 
 
 def test_get_prep_orders():
-    res = FulfillmentInbound().prep_instruction(**{"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+    res = FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
     assert res.errors is None
 
 
