@@ -10,6 +10,8 @@ from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
 from .inventories.inventories import Inventories
 from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
+from .upload.upload import Upload
+from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 __all__ = [
@@ -24,6 +26,9 @@ __all__ = [
     "Catalog",
     "Feeds",
     "Inventories",
+    "FulfillmentInbound",
+    'Upload',
+    "Messaging",
     "FulfillmentInbound",
     "MerchantFulfillment"
 ]
