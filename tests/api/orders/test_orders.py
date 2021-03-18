@@ -4,7 +4,7 @@ from sp_api.api import Orders
 
 
 def test_get_orders():
-    res = Orders().get_orders(CreatedAfter='TEST_CASE_200')
+    res = Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
     assert res.errors is None
     assert res.payload.get('Orders') is not None
 
