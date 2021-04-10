@@ -1,5 +1,5 @@
 import urllib.parse
-from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
+from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
 
 
 class Products(Client):
@@ -104,6 +104,31 @@ class Products(Client):
 
         """
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
+
+    @sp_endpoint('/products/pricing/v0/listings/{}/offers', method='GET')
+    def get_listings_offer(self, seller_sku: str, **kwargs) -> ApiResponse:
+        """
+        get_listings_offer(self, seller_sku: str, **kwargs) -> ApiResponse
+        Returns the lowest priced offers for a single SKU listing
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
+
+        Args:
+            :param seller_sku: str
+            key ItemCondition: str | Possible values: New, Used, Collectible, Refurbished, Club.
+            key MarketplaceId: str
+
+        Returns:
+            GetOffersResponse:
+
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params={**kwargs})       
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
