@@ -53,6 +53,7 @@ class Marketplaces(Enum):
 
     AE = (f"{BASE_URL}-eu.amazon.com", "A2VIGQ35RCS4UG", "eu-west-1")
     DE = (f"{BASE_URL}-eu.amazon.com", "A1PA6795UKMFR9", "eu-west-1")
+    PL = (f"{BASE_URL}-eu.amazon.com", "A1C3SOZRARQ6R3", "eu-west-1")
     EG = (f"{BASE_URL}-eu.amazon.com", "ARBP9OOSHTCHU", "eu-west-1")
     ES = (f"{BASE_URL}-eu.amazon.com", "A1RKKUPIHCS9HS", "eu-west-1")
     FR = (f"{BASE_URL}-eu.amazon.com", "A13V1IB3VIYZZH", "eu-west-1")
