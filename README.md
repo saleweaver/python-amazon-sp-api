@@ -29,7 +29,8 @@ pip install python-amazon-sp-api
 
 ```
 from sp_api.api import Orders
-
+from sp_api.api import Reports
+from sp_api.api import Feeds
 # orders API
 try:
     res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
