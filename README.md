@@ -55,6 +55,7 @@ Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
 
+Remember AWS Access key and AWS Secret Key must be from a developer. Don't Put the Keys of your IAM user. Send your Developer Id(Register as a developer and you will get it) to seller and he will authorize you to access the keys.
 ### DISCLAIMER
 
 We are not affiliated with Amazon
