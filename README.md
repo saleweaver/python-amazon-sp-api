@@ -31,9 +31,11 @@ pip install python-amazon-sp-api
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
+import datetime
+from datetime import timedelta
 # orders API
 try:
-    res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    res = Orders().get_orders(CreatedAfter=(datetime.datetime.utcnow() - timedelta(days=7)).isoformat())
     print(res.payload)  # json data
 except SellingApiException as ex:
     print(ex)
