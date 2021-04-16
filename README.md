@@ -31,9 +31,13 @@ pip install python-amazon-sp-api
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
+from sp_api.base import SellingApiException, Marketplaces
 # orders API
+# Indian Marketplace, to Insert Multiple put all the marketplaces seperated by comma in List.
+marketplaces = 'A21TJRUUN4KGV' 
 try:
-    res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    res = Orders(marketplace=Marketplaces.ES).get_orders(CreatedAfter=(datetime.datetime.utcnow() - timedelta(days=30)).isoformat(),
+MarketplaceIds=','.join(marketplaces))
     print(res.payload)  # json data
 except SellingApiException as ex:
     print(ex)
