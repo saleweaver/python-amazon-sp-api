@@ -41,8 +41,12 @@ class AWSSigV4(AuthBase):
         uri = urllib.parse.quote(p.path)
 
         # sort query parameters alphabetically
-        split_query_parameters = list(map(lambda param: param.split('='), p.query.split('&')))
-        ordered_query_parameters = sorted(split_query_parameters, key=lambda param: (param[0], param[1]))
+        if len(p.query) > 0:
+            split_query_parameters = list(map(lambda param: param.split('='), p.query.split('&')))
+            ordered_query_parameters = sorted(split_query_parameters, key=lambda param: (param[0], param[1]))
+        else:
+            ordered_query_parameters = list()
+
         canonical_querystring = "&".join(map(lambda param: "=".join(param), ordered_query_parameters))
 
         headers_to_sign = {'host': host, 'x-amz-date': self.amzdate}
