@@ -40,12 +40,15 @@ class AWSSigV4(AuthBase):
         host = p.hostname
         uri = urllib.parse.quote(p.path)
 
+        # sort query parameters alphabetically
         if len(p.query) > 0:
-            qs = dict(map(lambda i: i.split('='), p.query.split('&')))
+            split_query_parameters = list(map(lambda param: param.split('='), p.query.split('&')))
+            ordered_query_parameters = sorted(split_query_parameters, key=lambda param: (param[0], param[1]))
         else:
-            qs = dict()
+            ordered_query_parameters = list()
 
-        canonical_querystring = "&".join(map(lambda x: '='.join(x), sorted(qs.items())))
+        canonical_querystring = "&".join(map(lambda param: "=".join(param), ordered_query_parameters))
+
         headers_to_sign = {'host': host, 'x-amz-date': self.amzdate}
         if self.aws_session_token is not None:
             headers_to_sign['x-amz-security-token'] = self.aws_session_token
@@ -85,4 +88,3 @@ class AWSSigV4(AuthBase):
             'x-amz-security-token': self.aws_session_token
         })
         return r
-
