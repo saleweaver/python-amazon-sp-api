@@ -31,6 +31,7 @@ setup(
               'sp_api.api.upload',
               'sp_api.api.merchant_fulfillment',
               'sp_api.api.fulfillment_inbound',
+              'sp_api.api.shipping',
               'sp_api.auth',
               'sp_api.base'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
