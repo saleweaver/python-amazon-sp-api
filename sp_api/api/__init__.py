@@ -13,6 +13,7 @@ from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
 from .upload.upload import Upload
 from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
+from .shipping.shipping import Shipping
 
 __all__ = [
     "Sales",
@@ -30,5 +31,6 @@ __all__ = [
     'Upload',
     "Messaging",
     "FulfillmentInbound",
-    "MerchantFulfillment"
+    "MerchantFulfillment",
+    "Shipping",
 ]
