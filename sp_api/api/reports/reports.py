@@ -167,7 +167,7 @@ class Reports(Client):
     @sp_endpoint('/reports/2020-09-04/schedules/{}')
     def get_report_schedule(self, schedule_id, **kwargs) -> ApiResponse:
         """
-        Cancels the report schedule that you specify.
+        Returns report schedule details for the report schedule that you specify.
 
         **Usage Plan:**
 
@@ -180,13 +180,39 @@ class Reports(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            schedule_id: str
+            schedule_id: str | required The identifier for the report schedule. This identifier is unique only in combination with a seller ID.
             kwargs:
 
         Returns:
             ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
+
+    @sp_endpoint('/reports/2020-09-04/schedules')
+    def get_report_schedules(self, **kwargs) -> ApiResponse:
+        """
+        Returns report schedule details that match the filters that you specify.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.0222                                  10
+        ======================================  ==============
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
+            key reportTypes: str[] or ReportType[] | required  A list of report types used to filter report schedules. Min count : 1. Max count : 10.
+
+        Returns:
+            ApiResponse
+        """
+        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
+            kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/reports/2020-09-04/reports')
     def get_reports(self, **kwargs) -> ApiResponse:
