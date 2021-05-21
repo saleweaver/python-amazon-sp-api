@@ -18,8 +18,3 @@ def test_list_catalog_expect_400():
         Catalog().list_items(MarketplaceId='TEST_CASE_400', SellerSKU='SKU_400')
     except SellingApiBadRequestException as br:
         assert type(br) == SellingApiBadRequestException
-
-
-def test_cc():
-    res = Catalog().get_item('')
-    print(res)
