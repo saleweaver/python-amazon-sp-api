@@ -125,6 +125,7 @@ def create_endpoint_file(model_json):
     add_to_init(endpoint)
     add_to_setup_py(endpoint)
 
+
 def get_endpoint_from_url(url):
     n = url.split('/')[-2][:-10]
     return make_endpoint_name(n)
