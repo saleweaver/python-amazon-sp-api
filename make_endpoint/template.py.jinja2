@@ -1,0 +1,35 @@
+import urllib.parse
+
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+
+
+class {{ endpoint }}(Client):
+    """
+    {{ endpoint }} SP-API Client
+    :link: {{ docs_link }}
+
+    {{ description }}
+    """
+
+{% for operation in operations %}
+    @sp_endpoint('{{ operation.uri }}', method='{{ operation.method }}')
+    def {{ operation.title }}(self, {{ (operation.query_param + ', ') if operation.has_query_params }}**kwargs) -> ApiResponse:
+        """
+        {{ operation.title }}(self, {{ (operation.query_param + ', ') if operation.has_query_params }}**kwargs) -> ApiResponse
+
+        {{ operation.description }}
+
+         Args:
+        {% for arg in operation.params %}
+            {{ 'key ' if arg['in'] == 'query' else ''}}{{ arg.name }}:{{ arg.type }} | {{ '* REQUIRED' if arg.required else '' }} {{ arg.description }}
+        {% endfor %}
+
+         Returns:
+            ApiResponse:
+        """
+    {% if operation.has_query_params %}
+        return self._request(fill_query_params(kwargs.pop('path'), {{ operation.query_param }}), {{ operation.params_or_data }}=kwargs)
+    {% else %}
+        return self._request(kwargs.pop('path'),  {{ operation.params_or_data }}=kwargs)
+    {% endif %}
+{% endfor %}
