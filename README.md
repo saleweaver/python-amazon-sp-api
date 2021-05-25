@@ -11,7 +11,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ### Q & A
 
-If you have questions, please ask them in github discussions 
+If you have questions, please ask them in GitHub discussions 
 
 [![discussions](https://img.shields.io/badge/github-discussions-brightgreen?style=for-the-badge&logo=github)](https://github.com/saleweaver/python-amazon-sp-api/discussions)
 
@@ -31,6 +31,8 @@ pip install python-amazon-sp-api
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
+from sp_api.base.reportTypes import ReportType
+
 # orders API
 try:
     res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
@@ -40,7 +42,7 @@ except SellingApiException as ex:
 
 
 # report request     
-createReportResponse = Reports().create_report(reportType='GET_FLAT_FILE_OPEN_LISTINGS_DATA')
+createReportResponse = Reports().create_report(reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA)
 
 # submit feed
 # feeds can be submitted like explained in Amazon's docs, or simply by calling submit_feed
