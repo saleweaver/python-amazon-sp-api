@@ -78,6 +78,19 @@ class AccessTokenClient(BaseClient):
 
         return AccessTokenResponse(**access_token)
 
+    def authorize_auth_code(self, auth_code):
+        request_url = self.scheme + self.host + self.path
+        res = self._request(request_url, data=self._auth_code_request_body(auth_code), headers=self.headers)
+        return res.json()
+
+    def _auth_code_request_body(self, auth_code):
+        return {
+            'grant_type': 'authorization_code',
+            'code': auth_code,
+            'client_id': self.cred.client_id,
+            'client_secret': self.cred.client_secret
+        }
+
     @property
     def grantless_data(self):
         return {
