@@ -67,7 +67,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), data=kwargs, params={'marketplaceIds': kwargs.get('marketplaceIds') or self.marketplace_id})
     
 
     @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='DELETE')
