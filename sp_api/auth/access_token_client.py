@@ -81,7 +81,7 @@ class AccessTokenClient(BaseClient):
     def authorize_auth_code(self, auth_code):
         request_url = self.scheme + self.host + self.path
         res = self._request(request_url, data=self._auth_code_request_body(auth_code), headers=self.headers)
-        return res.json()
+        return res
 
     def _auth_code_request_body(self, auth_code):
         return {
