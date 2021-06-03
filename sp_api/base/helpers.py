@@ -29,10 +29,14 @@ def encrypt_aes(file_or_bytes_io, key, iv):
     iv = base64.b64decode(iv)
     aes = AES.new(key, AES.MODE_CBC, iv)
     try:
+        if isinstance(file_or_bytes_io, BytesIO):
+            return aes.encrypt(pad(file_or_bytes_io.read(), 16))
         return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='iso-8859-1'), 16))
     except UnicodeEncodeError:
+        file_or_bytes_io.seek(0)
         return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='utf-8'), 16))
     except TypeError:
+        file_or_bytes_io.seek(0)
         return aes.encrypt(pad(file_or_bytes_io.read(), 16))
 
 
