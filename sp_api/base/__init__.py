@@ -17,7 +17,7 @@ from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
 from .fulfillment_channel import FulfillmentChannel
 from .deprecated import deprecated
 from .notifications import NotificationType
-from .config import CredentialProvider, MissingCredentials
+from .credential_provider import CredentialProvider, MissingCredentials
 from .ApiResponse import ApiResponse
 from .processing_status import ProcessingStatus
 from .reportTypes import ReportType

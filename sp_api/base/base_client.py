@@ -1,4 +1,4 @@
-from sp_api.base.config import CredentialProvider
+from sp_api.base.credential_provider import CredentialProvider
 
 
 class BaseClient:

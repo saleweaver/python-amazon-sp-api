@@ -3,8 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytz
 
 from sp_api.api import Sales
-from sp_api.base import Granularity, Marketplaces, CredentialProvider
-import logging
+from sp_api.base import Granularity
 
 tz = pytz.timezone('US/Central')
 fmt = '%Y-%m-%dT%H:%M:%S%z'

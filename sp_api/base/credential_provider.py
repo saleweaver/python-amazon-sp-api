@@ -1,6 +1,8 @@
+import json
 import os
 import confuse
 import boto3
+from botocore.exceptions import ClientError
 
 class MissingCredentials(Exception):
     """
@@ -14,21 +16,46 @@ class CredentialProvider:
 
     def __init__(self, account='default', credentials=None):
         self.account = account
-        self.from_secrets()
+        self.read_credentials = [
+            self.from_secrets,
+            self.from_env,
+            self.read_config
+        ]
         if credentials:
             self.credentials = self.Config(**credentials)
             missing = self.credentials.check_config()
             if len(missing):
                 raise MissingCredentials(f'The following configuration parameters are missing: {missing}')
         else:
-            self.from_env()
+            self.load_credentials()
+
+    def load_credentials(self):
+        for read_method in self.read_credentials:
+            if read_method():
+                return True
 
     def from_secrets(self):
-        client = boto3.client('secretsmanager')
-        response = client.get_secret_value(
-            SecretId='tests/sp-api'
-        )
-        print(response)
+        if not os.environ.get('SP_API_AWS_SECRET_ID', None):
+            return
+        try:
+            client = boto3.client('secretsmanager')
+            response = client.get_secret_value(
+                SecretId=os.environ.get('SP_API_AWS_SECRET_ID')
+            )
+            secret = json.loads(response.get('SecretString'))
+            account_data = dict(
+                refresh_token=secret.get('SP_API_REFRESH_TOKEN'),
+                lwa_app_id=secret.get('LWA_APP_ID'),
+                lwa_client_secret=secret.get('LWA_CLIENT_SECRET'),
+                aws_secret_key=secret.get('SP_API_SECRET_KEY'),
+                aws_access_key=secret.get('SP_API_ACCESS_KEY'),
+                role_arn=secret.get('SP_API_ROLE_ARN')
+            )
+        except ClientError as client_error:
+            return
+        else:
+            self.credentials = self.Config(**account_data)
+            return len(self.credentials.check_config()) == 0
 
     def from_env(self):
         account_data = dict(
@@ -40,9 +67,7 @@ class CredentialProvider:
             role_arn=self._get_env('SP_API_ROLE_ARN')
         )
         self.credentials = self.Config(**account_data)
-        missing = self.credentials.check_config()
-        if len(missing):
-            self.read_config()
+        return len(self.credentials.check_config()) == 0
 
     def _get_env(self, key):
         return os.environ.get(f'{key}_{self.account}',
@@ -65,7 +90,9 @@ class CredentialProvider:
                 f'Neither environment variables nor a config file were found. '
                 f'Please set the correct variables, or use a config file (credentials.yml). '
                 f'See https://confuse.readthedocs.io/en/latest/usage.html#search-paths for search paths.'
-                )
+            )
+        else:
+            return True
 
     class Config:
         def __init__(self,
