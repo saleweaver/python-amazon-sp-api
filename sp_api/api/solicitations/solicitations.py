@@ -67,5 +67,5 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), amazonOrderId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), amazonOrderId), params=kwargs)
     
