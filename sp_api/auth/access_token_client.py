@@ -1,9 +1,12 @@
-import requests
+import json
+import os
 
+import requests
+from botocore.exceptions import ClientError
 import hashlib
 import logging
 from cachetools import TTLCache
-
+import boto3
 from sp_api.base import BaseClient
 
 from .credentials import Credentials
@@ -44,14 +47,24 @@ class AccessTokenClient(BaseClient):
         cache_key = self._get_cache_key()
         try:
             access_token = cache[cache_key]
-            logger.debug('from cache')
         except KeyError:
-            request_url = self.scheme + self.host + self.path
-            access_token = self._request(request_url, self.data, self.headers)
-            logger.debug('token refreshed')
-            cache = TTLCache(maxsize=10, ttl=3600)
+            cache_ttl = 3600
+            access_token = None
+            if self.use_secrets():
+                access_token = self.get_secret()
+            if not access_token:
+                request_url = self.scheme + self.host + self.path
+                access_token = self._request(request_url, self.data, self.headers)
+                if self.use_secrets():
+                    self.put_access_token(access_token)
+            else:
+                cache_ttl = access_token.get('expires_in')
+            cache = TTLCache(maxsize=10, ttl=cache_ttl - 15)
             cache[cache_key] = access_token
         return AccessTokenResponse(**access_token)
+
+    def use_secrets(self):
+        return os.environ.get('SP_API_AWS_SECRET_ID') and os.environ.get('SP_API_USE_SECRET_ACCESS_TOKEN_ROTATION')
 
     def get_grantless_auth(self):
         """
@@ -118,3 +131,31 @@ class AccessTokenClient(BaseClient):
 
     def _get_cache_key(self):
         return 'access_token_' + hashlib.md5(self.cred.refresh_token.encode('utf-8')).hexdigest()
+
+    def get_secret(self):
+
+        try:
+            client = boto3.client('secretsmanager')
+            response = client.get_secret_value(
+                SecretId=os.environ.get('SP_API_AWS_SECRET_ID')
+            )
+            secret = json.loads(response.get('SecretString'))
+        except ClientError:
+            pass
+        else:
+            try:
+                return json.loads(secret.get(f'SP_API_ACCESS_TOKEN__{self._get_cache_key()}'))
+            except TypeError:
+                return
+
+    def put_access_token(self, access_token):
+        try:
+            client = boto3.client('secretsmanager')
+            response = client.get_secret_value(
+                SecretId=os.environ.get('SP_API_AWS_SECRET_ID')
+            )
+            secret = json.loads(response.get('SecretString'))
+            secret.update({f'SP_API_ACCESS_TOKEN__{self._get_cache_key()}': json.dumps(access_token)})
+            client.put_secret_value(SecretId=os.environ.get('SP_API_AWS_SECRET_ID'), SecretString=json.dumps(secret))
+        except ClientError:
+            pass

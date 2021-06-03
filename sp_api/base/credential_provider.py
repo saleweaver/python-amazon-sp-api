@@ -3,6 +3,8 @@ import os
 import confuse
 import boto3
 from botocore.exceptions import ClientError
+from cachetools import Cache
+
 
 class MissingCredentials(Exception):
     """
@@ -13,12 +15,13 @@ class MissingCredentials(Exception):
 
 class CredentialProvider:
     credentials = None
+    cache = Cache(maxsize=10)
 
     def __init__(self, account='default', credentials=None):
         self.account = account
         self.read_credentials = [
-            self.from_secrets,
             self.from_env,
+            self.from_secrets,
             self.read_config
         ]
         if credentials:
@@ -51,6 +54,7 @@ class CredentialProvider:
                 aws_access_key=secret.get('SP_API_ACCESS_KEY'),
                 role_arn=secret.get('SP_API_ROLE_ARN')
             )
+            self.cache['account_data'] = json.dumps(account_data)
         except ClientError as client_error:
             return
         else:
@@ -58,14 +62,17 @@ class CredentialProvider:
             return len(self.credentials.check_config()) == 0
 
     def from_env(self):
-        account_data = dict(
-            refresh_token=self._get_env('SP_API_REFRESH_TOKEN'),
-            lwa_app_id=self._get_env('LWA_APP_ID'),
-            lwa_client_secret=self._get_env('LWA_CLIENT_SECRET'),
-            aws_secret_key=self._get_env('SP_API_SECRET_KEY'),
-            aws_access_key=self._get_env('SP_API_ACCESS_KEY'),
-            role_arn=self._get_env('SP_API_ROLE_ARN')
-        )
+        try:
+            account_data = json.loads(self.cache['account_data'])
+        except KeyError:
+            account_data = dict(
+                refresh_token=self._get_env('SP_API_REFRESH_TOKEN'),
+                lwa_app_id=self._get_env('LWA_APP_ID'),
+                lwa_client_secret=self._get_env('LWA_CLIENT_SECRET'),
+                aws_secret_key=self._get_env('SP_API_SECRET_KEY'),
+                aws_access_key=self._get_env('SP_API_ACCESS_KEY'),
+                role_arn=self._get_env('SP_API_ROLE_ARN')
+            )
         self.credentials = self.Config(**account_data)
         return len(self.credentials.check_config()) == 0
 
