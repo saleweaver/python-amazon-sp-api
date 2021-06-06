@@ -2,29 +2,8 @@ import os
 import re
 
 dirs = [
-    'aplus_content',
-    'authorization',
-    'messaging',
-    'notifications',
-    'fba_inbound_eligibility',
-    'merchant_fulfillment',
-    'fulfillment_inbound',
-    'fba_small_and_light',
-    'fulfillment_outbound',
-    'services',
-    'shipping',
-    'solicitations',
-    'tokens',
-    'vendor_direct_fulfillment_inventory',
-    'upload',
-    'vendor_direct_fulfillment_orders',
-    'vendor_direct_fulfillment_payments',
-    'vendor_direct_fulfillment_shipping',
-    'vendor_direct_fulfillment_transactions',
-    'vendor_invoices',
-    'vendor_orders',
-    'vendor_shipments',
-    'vendor_transaction_status'
+    'listings_items',
+    'product_type_definitions'
 ]
 
 

@@ -38,3 +38,5 @@ Endpoints
     endpoints/vendor_orders
     endpoints/vendor_shipments
     endpoints/vendor_transaction_status
+    endpoints/listings_items
+    endpoints/product_type_definitions
