@@ -15,6 +15,10 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .product_type_definitions.product_type_definitions import ProductTypeDefinitions
+    
+from .listings_items.listings_items import ListingsItems
+    
 from .vendor_transaction_status.vendor_transaction_status import VendorTransactionStatus
     
 from .vendor_shipments.vendor_shipments import VendorShipments
@@ -71,6 +75,10 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "ProductTypeDefinitions",
+    
+    "ListingsItems",
+    
     "VendorTransactionStatus",
     
     "VendorShipments",
