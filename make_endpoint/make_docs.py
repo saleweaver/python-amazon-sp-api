@@ -3,7 +3,8 @@ import re
 
 dirs = [
     'listings_items',
-    'product_type_definitions'
+    'product_type_definitions',
+    'catalog_items'
 ]
 
 
