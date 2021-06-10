@@ -130,6 +130,31 @@ class Products(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params={**kwargs})       
 
+    @sp_endpoint('/products/pricing/v0/items/{}/offers', method='GET')
+    def get_item_offers(self, asin: str, **kwargs) -> ApiResponse:
+        """
+        get_item_offers(self, asin: str, **kwargs) -> ApiResponse
+        Returns the lowest priced offers for a single item based on ASIN
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       10
+        ======================================  ==============
+
+        Args:
+            :param seller_sku: str
+            key ItemCondition: str | Possible values: New, Used, Collectible, Refurbished, Club.
+            key MarketplaceId: str
+
+        Returns:
+            GetOffersResponse:
+
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), asin), params={**kwargs})
+
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
                              params={**{f"{item_type}s": ','.join(
