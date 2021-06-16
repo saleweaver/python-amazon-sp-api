@@ -28,7 +28,6 @@ pip install python-amazon-sp-api
 ### Usage
 
 ```
-
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
