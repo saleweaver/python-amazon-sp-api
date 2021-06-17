@@ -13,17 +13,17 @@ def to_class_name(s):
 
 
 def get_endpoint_link(s):
-    return f"""    endpoints/{s}
-"""
+    return """    endpoints/{}
+""".format(s)
 
 
 def get_endpoint_file_template(s):
     class_name = to_class_name(s)
-    return f"""{class_name}
-{'=' * len(class_name)}
+    return """{}
+{}
     
     
-..  autoclass:: sp_api.api.{class_name}"""
+..  autoclass:: sp_api.api.{}""".format(class_name, '=' * len(class_name), class_name)
 
 
 def append_to_links(link):
@@ -33,7 +33,7 @@ def append_to_links(link):
 
 
 def create_endpoint_file(file_contents, endpoint):
-    with open(f'../docs/endpoints/{endpoint}.rst', 'w+') as f:
+    with open('../docs/endpoints/{}.rst'.format(endpoint), 'w+') as f:
         f.write(file_contents)
     f.close()
 

@@ -11,7 +11,7 @@ class BaseClient:
         try:
             import pkg_resources
             version = pkg_resources.require("python-amazon-sp-api")[0].version
-            self.user_agent += f'-{version}'
+            self.user_agent += '-{}'.format(version)
         except:
             pass
         self.credentials = CredentialProvider(account, credentials).credentials
