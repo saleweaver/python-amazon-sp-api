@@ -33,7 +33,7 @@ def make_py(endpoint, operations, description, directory):
     template = env.get_template(file)
     out = template.render(context)
 
-    with open(os.path.join(directory, f'{sub(endpoint)}.py'), 'w+') as f:
+    with open(os.path.join(directory, '{}.py'.format(sub(endpoint))), 'w+') as f:
         f.write(out)
     f.close()
 
@@ -47,7 +47,7 @@ def make_endpoint_name(s):
 
 
 def make_directory(endpoint):
-    directory = f'../sp_api/api/{sub(endpoint)}'
+    directory = '../sp_api/api/{}'.format(sub(endpoint))
     if os.path.exists(directory):
         raise Exception('Directory exists')
     os.mkdir(directory)
@@ -70,12 +70,12 @@ def make_params(params, model):
 
 def add_to_init(endpoint):
     e = sub(endpoint)
-    import_template = f'''##### DO NOT DELETE ########## INSERT IMPORT HERE #######
-from .{e}.{e} import {endpoint}
-    '''
-    append_template = f'''##### DO NOT DELETE ########## INSERT TITLE HERE #######
-    "{endpoint}",
-    '''
+    import_template = '''##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .{}.{} import {}
+    '''.format(e, e, endpoint)
+    append_template = '''##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "{}",
+    '''.format(endpoint)
     with open('../sp_api/api/__init__.py', 'r') as f:
         content = f.read()
         content = import_template.join(content.split('##### DO NOT DELETE ########## INSERT IMPORT HERE #######'))
@@ -87,10 +87,10 @@ from .{e}.{e} import {endpoint}
 
 
 def add_to_setup_py(endpoint):
-    package = f"'sp_api.api.{sub(endpoint)}'"
-    append_template = f"""##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
-              {package},
-    """
+    package = "'sp_api.api.{}'".format(sub(endpoint))
+    append_template = """##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              {},
+    """.format(package)
     with open('../setup.py', 'r') as f:
         content = f.read()
         content = append_template.join(content.split('##### DO NOT DELETE ########## INSERT PACKAGE HERE #######'))

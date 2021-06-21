@@ -144,7 +144,7 @@ class AccessTokenClient(BaseClient):
             pass
         else:
             try:
-                return json.loads(secret.get(f'SP_API_ACCESS_TOKEN__{self._get_cache_key()}'))
+                return json.loads(secret.get('SP_API_ACCESS_TOKEN__{}'.format(self._get_cache_key())))
             except TypeError:
                 return
 
@@ -155,7 +155,7 @@ class AccessTokenClient(BaseClient):
                 SecretId=os.environ.get('SP_API_AWS_SECRET_ID')
             )
             secret = json.loads(response.get('SecretString'))
-            secret.update({f'SP_API_ACCESS_TOKEN__{self._get_cache_key()}': json.dumps(access_token)})
+            secret.update({'SP_API_ACCESS_TOKEN__{}'.format(self._get_cache_key()): json.dumps(access_token)})
             client.put_secret_value(SecretId=os.environ.get('SP_API_AWS_SECRET_ID'), SecretString=json.dumps(secret))
         except ClientError:
             pass
