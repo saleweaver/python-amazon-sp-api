@@ -19,7 +19,7 @@ class CredentialProvider:
             self.credentials = self.Config(**credentials)
             missing = self.credentials.check_config()
             if len(missing):
-                raise MissingCredentials(f'The following configuration parameters are missing: {missing}')
+                raise MissingCredentials('The following configuration parameters are missing: {}'.format(missing))
         else:
             self.from_env()
 
@@ -45,7 +45,7 @@ class CredentialProvider:
             self.read_config()
 
     def _get_env(self, key):
-        return os.environ.get(f'{key}_{self.account}',
+        return os.environ.get('{}_{}'.format(key, self.account),
                               os.environ.get(key))
 
     def read_config(self):
@@ -57,14 +57,14 @@ class CredentialProvider:
             self.credentials = self.Config(**account_data)
             missing = self.credentials.check_config()
             if len(missing):
-                raise MissingCredentials(f'The following configuration parameters are missing: {missing}')
+                raise MissingCredentials('The following configuration parameters are missing: {}'.format(missing))
         except confuse.exceptions.NotFoundError:
-            raise MissingCredentials(f'The account {self.account} was not setup in your configuration file.')
+            raise MissingCredentials('The account {} was not setup in your configuration file.'.format(self.account))
         except confuse.exceptions.ConfigReadError:
             raise MissingCredentials(
-                f'Neither environment variables nor a config file were found. '
-                f'Please set the correct variables, or use a config file (credentials.yml). '
-                f'See https://confuse.readthedocs.io/en/latest/usage.html#search-paths for search paths.'
+                'Neither environment variables nor a config file were found. '
+                'Please set the correct variables, or use a config file (credentials.yml). '
+                'See https://confuse.readthedocs.io/en/latest/usage.html#search-paths for search paths.'
                 )
 
     class Config:

@@ -157,7 +157,7 @@ class Products(Client):
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
-                             params={**{f"{item_type}s": ','.join(
+                             params={**{"{}s".format(item_type): ','.join(
                                  [urllib.parse.quote_plus(s) for s in item_list])},
                                      'ItemType': item_type,
                                      **({'ItemCondition': kwargs.pop(
