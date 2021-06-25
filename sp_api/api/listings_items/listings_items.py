@@ -86,8 +86,8 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         return self._request(fill_query_params(kwargs.pop('path'), sellerId), data=kwargs)
     
 
-    @sp_endpoint('/listings/2020-09-01/items/{}', method='PUT')
-    def put_listings_item(self, sellerId, **kwargs) -> ApiResponse:
+    @sp_endpoint('/listings/2020-09-01/items/{}/{}', method='PUT')
+    def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         put_listings_item(self, sellerId, **kwargs) -> ApiResponse
 
@@ -129,5 +129,5 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.get('body'), params=kwargs)
     
