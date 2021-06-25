@@ -12,8 +12,8 @@ class ListingsItems(Client):
     """
 
 
-    @sp_endpoint('/listings/2020-09-01/items/{}', method='DELETE')
-    def delete_listings_item(self, sellerId, **kwargs) -> ApiResponse:
+    @sp_endpoint('/listings/2020-09-01/items/{}/{}', method='DELETE')
+    def delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         delete_listings_item(self, sellerId, **kwargs) -> ApiResponse
 
@@ -43,7 +43,7 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
     
 
     @sp_endpoint('/listings/2020-09-01/items/{}', method='PATCH')
