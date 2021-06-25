@@ -96,7 +96,7 @@ class Client(BaseClient):
             self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
 
         res = request(self.method, self.endpoint + path, params=params,
-                      data=json.dumps(data) if data and self.method in ('POST', 'PUT') else None, headers=headers or self.headers,
+                      data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None, headers=headers or self.headers,
                       auth=self._sign_request())
 
         return self._check_response(res)
