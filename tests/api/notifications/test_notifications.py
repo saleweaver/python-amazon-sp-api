@@ -1,5 +1,5 @@
 from sp_api.api import Notifications, Reports
-from sp_api.base import SellingApiException, NotificationType, ReportType
+from sp_api.base import SellingApiException, NotificationType, ReportType, Marketplaces
 
 
 def test_create_destination():
