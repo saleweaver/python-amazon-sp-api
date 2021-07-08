@@ -66,8 +66,12 @@ class AccessTokenClient(BaseClient):
     def use_secrets(self):
         return os.environ.get('SP_API_AWS_SECRET_ID') and os.environ.get('SP_API_USE_SECRET_ACCESS_TOKEN_ROTATION')
 
-    def get_grantless_auth(self):
+    def get_grantless_auth(self, scope='sellingpartnerapi::notifications'):
         """
+        :param scope: One of allowed scope for grantless operations:
+            sellingpartnerapi::notifications or sellingpartnerapi::migration
+            See: https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/developer-guide/SellingPartnerApiDeveloperGuide.md#step-3-configure-your-lwa-credentials
+
         POST /auth/o2/token HTTP/l.l
         Host: api.amazon.com
         Content-Type: application/x-www-form-urlencoded;charset=UTF-8
@@ -75,25 +79,33 @@ class AccessTokenClient(BaseClient):
         &scope=sellingpartnerapi::notifications
         &client_id=foodev
         &client_secret=Y76SDl2F
-        :return:
+        :return: AccessTokenResponse
         """
         global grantless_cache
-        cache_key = self._get_cache_key()
+        cache_key = self._get_cache_key(scope)
         try:
             access_token = grantless_cache[cache_key]
-            logger.debug('from_cache')
+            logger.debug('from_cache. scope: %s', scope)
         except KeyError:
             request_url = self.scheme + self.host + self.path
-            access_token = self._request(request_url, data=self.grantless_data, headers=self.headers)
+            access_token = self._request(
+                request_url,
+                data=self.grantless_data(scope),
+                headers=self.headers
+            )
             logger.debug('token_refreshed')
-            grantless_cache = TTLCache(maxsize=10, ttl=3600)
+            grantless_cache.clear()
             grantless_cache[cache_key] = access_token
 
         return AccessTokenResponse(**access_token)
 
     def authorize_auth_code(self, auth_code):
         request_url = self.scheme + self.host + self.path
-        res = self._request(request_url, data=self._auth_code_request_body(auth_code), headers=self.headers)
+        res = self._request(
+            request_url,
+            data=self._auth_code_request_body(auth_code),
+            headers=self.headers
+        )
         return res
 
     def _auth_code_request_body(self, auth_code):
@@ -104,12 +116,11 @@ class AccessTokenClient(BaseClient):
             'client_secret': self.cred.client_secret
         }
 
-    @property
-    def grantless_data(self):
+    def grantless_data(self, scope_value: str):
         return {
             'grant_type': 'client_credentials',
             'client_id': self.cred.client_id,
-            'scope': 'sellingpartnerapi::notifications',
+            'scope': scope_value,
             'client_secret': self.cred.client_secret
         }
 
@@ -129,8 +140,10 @@ class AccessTokenClient(BaseClient):
             'content-type': self.content_type
         }
 
-    def _get_cache_key(self):
-        return 'access_token_' + hashlib.md5(self.cred.refresh_token.encode('utf-8')).hexdigest()
+    def _get_cache_key(self, token_flavor=''):
+        return 'access_token_' + hashlib.md5(
+            (token_flavor + self.cred.refresh_token).encode('utf-8')
+        ).hexdigest()
 
     def get_secret(self):
 

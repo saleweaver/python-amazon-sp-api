@@ -10,7 +10,7 @@ class Authorization(Client):
 
     The Selling Partner API for Authorization helps developers manage authorizations and check the specific permissions associated with a given authorization.
     """
-
+    grantless_scope = 'sellingpartnerapi::migration'
 
     @sp_endpoint('/authorization/v1/authorizationCode', method='GET')
     def get_authorization_code(self, **kwargs) -> ApiResponse:
@@ -40,5 +40,5 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request_grantless_operation(kwargs.pop('path'),  params=kwargs)
 
