@@ -20,6 +20,7 @@ role_cache = TTLCache(maxsize=10, ttl=3600)
 
 class Client(BaseClient):
     boto3_client = None
+    grantless_scope = ''
 
     def __init__(
             self,
@@ -64,7 +65,9 @@ class Client(BaseClient):
 
     @property
     def grantless_auth(self) -> AccessTokenResponse:
-        return self._auth.get_grantless_auth()
+        if not self.grantless_scope:
+            raise Exception("Grantless operations require scope")
+        return self._auth.get_grantless_auth(self.grantless_scope)
 
     @property
     def role(self):

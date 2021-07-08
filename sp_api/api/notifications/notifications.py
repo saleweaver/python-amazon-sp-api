@@ -6,6 +6,7 @@ class Notifications(Client):
     """
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/notifications-api/notifications.md
     """
+    grantless_scope = 'sellingpartnerapi::notifications'
 
     @deprecated
     def add_subscription(self, notification_type: NotificationType or str, **kwargs):
