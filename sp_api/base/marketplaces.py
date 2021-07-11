@@ -28,8 +28,6 @@ Japan	A1VC38T7YXB528	JP
 import sys
 from enum import Enum
 import os
-import logging
-l = logging.getLogger(__name__)
 
 
 class AWS_ENV(Enum):

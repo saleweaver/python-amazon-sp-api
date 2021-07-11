@@ -7,6 +7,7 @@ class ApiResponse:
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
+        self.rate_limit = self.set_rate_limit(headers)
         self.next_token = self.set_next_token(nextToken)
         if kwargs != self.payload:
             self.kwargs = kwargs
@@ -22,3 +23,9 @@ class ApiResponse:
         except AttributeError:
             return None
 
+    @staticmethod
+    def set_rate_limit(headers: dict = None):
+        try:
+            return headers['x-amzn-RateLimit-Limit']
+        except (AttributeError, KeyError, TypeError):
+            return None

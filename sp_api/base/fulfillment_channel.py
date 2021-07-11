@@ -1,6 +1,6 @@
 from enum import Enum
 
 
-class FulfillmentChannel(Enum):
+class FulfillmentChannel(str, Enum):
     AFN = 'AFN'
     MFN = 'MFN'

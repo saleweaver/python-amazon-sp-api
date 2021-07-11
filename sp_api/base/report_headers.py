@@ -1,6 +1,8 @@
 """
 Enums for header row for report responses. See reportTypes.py for all available report requests.
 """
+from enum import Enum
+
 
 class ReportHeaders(str, Enum):
     """Headers will inherit from this class for optional type checking purposes."""

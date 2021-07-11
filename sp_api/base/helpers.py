@@ -19,8 +19,10 @@ def sp_endpoint(path, method='GET'):
                 'method': method
             })
             return function(*args, **kwargs)
+
         wrapper.__doc__ = function.__doc__
         return wrapper
+
     return decorator
 
 
@@ -106,4 +108,3 @@ def _nest_dict_rec(k, v, out):
         _nest_dict_rec(rest[0], v, out.setdefault(k, {}))
     else:
         out[k] = v
-

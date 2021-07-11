@@ -15,6 +15,7 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    endpoints
    responses
    exceptions
+   utils
    testing
 
 

@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.5.3',
+    version='0.6.0',
     install_requires=[
         "requests",
         "six~=1.15.0",
@@ -33,50 +33,29 @@ setup(
               'sp_api.api.fulfillment_inbound',
               'sp_api.auth',
               'sp_api.base',
+              'sp_api.util',
                 ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               'sp_api.api.catalog_items',
-    
               'sp_api.api.product_type_definitions',
-    
               'sp_api.api.listings_items',
-    
               'sp_api.api.vendor_transaction_status',
-    
               'sp_api.api.vendor_shipments',
-    
               'sp_api.api.vendor_orders',
-    
               'sp_api.api.vendor_invoices',
-    
               'sp_api.api.vendor_direct_fulfillment_transactions',
-    
               'sp_api.api.vendor_direct_fulfillment_shipping',
-    
               'sp_api.api.vendor_direct_fulfillment_payments',
-    
               'sp_api.api.vendor_direct_fulfillment_orders',
-    
               'sp_api.api.vendor_direct_fulfillment_inventory',
-    
               'sp_api.api.tokens',
-    
               'sp_api.api.solicitations',
-    
               'sp_api.api.shipping',
-    
               'sp_api.api.services',
-    
               'sp_api.api.fba_small_and_light',
-    
               'sp_api.api.fba_inbound_eligibility',
-    
               'sp_api.api.authorization',
-    
               'sp_api.api.aplus_content',
-    
               'sp_api.api.fulfillment_outbound',
-    
-
               ],
     url='https://github.com/saleweaver/python-amazon-sp-api',
     license='MIT',
