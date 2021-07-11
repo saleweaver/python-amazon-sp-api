@@ -1,6 +1,6 @@
 import urllib.parse
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, deprecated
 
 
 class FbaSmallAndLight(Client):
@@ -11,9 +11,12 @@ class FbaSmallAndLight(Client):
     The Selling Partner API for FBA Small and Light lets you help sellers manage their listings in the Small and Light program. The program reduces the cost of fulfilling orders for small and lightweight FBA inventory. You can enroll or remove items from the program and check item eligibility and enrollment status. You can also preview the estimated program fees charged to a seller for items sold while enrolled in the program.
     """
 
+    @deprecated
+    def get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+        return self.get_small_and_light_enrollment_by_seller_s_k_u(sellerSKU, **kwargs)
 
     @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='GET')
-    def get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def get_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
         """
         get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
@@ -29,7 +32,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
          Args:
         
-            sellerSKU:string | * REQUIRED The seller SKU that identifies the item.
+            seller_sku:string | * REQUIRED The seller SKU that identifies the item.
         
             key marketplaceIds:array | * REQUIRED The marketplace for which the enrollment status is retrieved. Note: Accepts a single marketplace only.
         
@@ -38,11 +41,14 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), params=kwargs)
-    
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
+
+    @deprecated
+    def put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+        return self.put_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
     @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='PUT')
-    def put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def put_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
         """
         put_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
@@ -58,7 +64,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
          Args:
         
-            sellerSKU:string | * REQUIRED The seller SKU that identifies the item.
+            seller_sku:string | * REQUIRED The seller SKU that identifies the item.
         
             key marketplaceIds:array | * REQUIRED The marketplace in which to enroll the item. Note: Accepts a single marketplace only.
         
@@ -67,11 +73,14 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), data=kwargs, params={'marketplaceIds': kwargs.get('marketplaceIds') or self.marketplace_id})
-    
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs, params={'marketplaceIds': kwargs.get('marketplaceIds') or self.marketplace_id})
+
+    @deprecated
+    def delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+        return self.delete_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
     @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='DELETE')
-    def delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def delete_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
         """
         delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
@@ -87,7 +96,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
          Args:
         
-            sellerSKU:string | * REQUIRED The seller SKU that identifies the item.
+            seller_sku:string | * REQUIRED The seller SKU that identifies the item.
         
             key marketplaceIds:array | * REQUIRED The marketplace in which to remove the item from the Small and Light program. Note: Accepts a single marketplace only.
         
@@ -96,11 +105,14 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), data=kwargs)
-    
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
+
+    @deprecated
+    def get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+        return self.get_small_and_light_eligibility_by_seller_sku(sellerSKU, **kwargs)
 
     @sp_endpoint('/fba/smallAndLight/v1/eligibilities/{}', method='GET')
-    def get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
+    def get_small_and_light_eligibility_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
         """
         get_small_and_light_eligibility_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse
 
@@ -116,7 +128,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
          Args:
         
-            sellerSKU:string | * REQUIRED The seller SKU that identifies the item.
+            seller_sku:string | * REQUIRED The seller SKU that identifies the item.
         
             key marketplaceIds:array | * REQUIRED The marketplace for which the eligibility status is retrieved. NOTE: Accepts a single marketplace only.
         
@@ -125,7 +137,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), sellerSKU), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
     
 
     @sp_endpoint('/fba/smallAndLight/v1/feePreviews', method='POST')
