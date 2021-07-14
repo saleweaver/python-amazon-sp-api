@@ -5,7 +5,7 @@ setup(
     version='0.6.2',
     install_requires=[
         "requests",
-        "six~=1.15.0",
+        "six>=1.15,<2",
         "boto3~=1.16.39",
         "cachetools~=4.2.0",
         "pycryptodome",
