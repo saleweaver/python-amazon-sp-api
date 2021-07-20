@@ -80,12 +80,12 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
-    
+
 
     @sp_endpoint('/vendor/directFulfillment/orders/v1/acknowledgements', method='POST')
-    def submit_acknowledgement(self, **kwargs) -> ApiResponse:
+    def submit_acknowledgement(self, add_marketplace: bool = True, **kwargs) -> ApiResponse:
         """
-        submit_acknowledgement(self, **kwargs) -> ApiResponse
+        submit_acknowledgement(self, add_marketplace, **kwargs) -> ApiResponse
 
         Submits acknowledgements for one or more purchase orders.
 
@@ -103,11 +103,12 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             body: | * REQUIRED {'description': 'The request schema for the submitAcknowledgement operation.',
  'properties': {'orderAcknowledgements': {'description': 'A list of one or more purchase orders.', 'items': {'$ref': '#/definitions/OrderAcknowledgementItem'}, 'type': 'array'}},
  'type': 'object'}
-        
+
+            add_marketplace:bool | * OPTIONAL Flag to add marketplace params to request data
 
          Returns:
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=add_marketplace)
     

@@ -13,9 +13,9 @@ class VendorDirectFulfillmentInventory(Client):
 
 
     @sp_endpoint('/vendor/directFulfillment/inventory/v1/warehouses/{}/items', method='POST')
-    def submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse:
+    def submit_inventory_update(self, warehouseId, add_marketplace: bool= True, **kwargs) -> ApiResponse:
         """
-        submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse
+        submit_inventory_update(self, warehouseId, add_marketplace, **kwargs) -> ApiResponse
 
         Submits inventory updates for the specified warehouse for either a partial or full feed of inventory items.
 
@@ -35,11 +35,13 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
  'type': 'object'}
         
             warehouseId:string | * REQUIRED Identifier for the warehouse for which to update inventory.
+
+            add_marketplace:bool | * OPTIONAL Flag to add marketplace params to request data
         
 
          Returns:
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs)
-    
+        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs, add_marketplace=add_marketplace)
+
