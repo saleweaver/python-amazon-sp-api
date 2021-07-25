@@ -2,7 +2,7 @@ import time
 
 
 def make_sleep_time(rate_limit):
-    return 1 / rate_limit
+    return 1 / float(rate_limit)
 
 
 def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken', use_rate_limit_header: bool = False):
