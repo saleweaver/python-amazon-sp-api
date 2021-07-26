@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='python-amazon-sp-api',
+    name='python-amazon-sp-api-onestic',
     version='0.5.3.1_onestic',
     install_requires=[
         "requests==2.22.0",
