@@ -1,4 +1,4 @@
-class SellingApiException(BaseException):
+class SellingApiException(Exception):
     """
     Generic Exception
 
