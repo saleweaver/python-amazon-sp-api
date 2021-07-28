@@ -31,11 +31,21 @@ class Client(BaseClient):
             credentials=None
     ):
         super().__init__(account, credentials)
-        self.boto3_client = boto3.client(
-            'sts',
-            aws_access_key_id=self.credentials.aws_access_key,
-            aws_secret_access_key=self.credentials.aws_secret_key
-        )
+        if credentials.get('use_instance_profile'):
+            session = boto3.Session()
+            session_credentials = session.get_credentials()
+            self.boto3_client = boto3.client(
+                'sts',
+                aws_access_key_id=session_credentials.access_key,
+                aws_secret_access_key=session_credentials.secret_key,
+                aws_session_token=session_credentials.token
+            )
+        else:
+            self.boto3_client = boto3.client(
+                'sts',
+                aws_access_key_id=self.credentials.aws_access_key,
+                aws_secret_access_key=self.credentials.aws_secret_key
+            )
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
