@@ -117,7 +117,6 @@ class CredentialProvider:
             self.aws_access_key = aws_access_key
             self.aws_secret_key = aws_secret_key
             self.role_arn = role_arn
-            self.use_instance_profile = use_instance_profile
 
         def check_config(self):
             errors = []
