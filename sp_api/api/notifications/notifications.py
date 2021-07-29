@@ -113,7 +113,7 @@ class Notifications(Client):
             params={**kwargs})
 
     @sp_endpoint(path='/notifications/v1/destinations', method='POST')
-    def create_destination(self, name: str, arn: str, account_id: str = None, region: str = None, **kwargs) -> ApiResponse:
+    def create_destination(self, name: str, arn: str = None, account_id: str = None, region: str = None, **kwargs) -> ApiResponse:
         """
         create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse
         Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
