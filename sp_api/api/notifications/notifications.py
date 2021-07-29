@@ -145,7 +145,7 @@ class Notifications(Client):
                     'arn': arn
                 } if not account_id else {
                     'region': region if region else self.region,
-                    'account_id': account_id
+                    'accountId': account_id
                 }
             },
             'name': name,
