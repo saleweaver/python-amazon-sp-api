@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Schedules(Enum):
+class Schedules(str, Enum):
     MINUTES_5 = "PT5M"
     MINUTES_15 = "PT15M"
     MINUTES_30 = "PT30M"

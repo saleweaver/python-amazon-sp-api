@@ -23,4 +23,3 @@ def test_get_subscriptions():
     res = Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
     assert res.payload.get('destinationId') == 'TEST_CASE_200_DESTINATION_ID'
     assert res.payload.get('subscriptionId') == 'TEST_CASE_200_SUBSCRIPTION_ID'
-
