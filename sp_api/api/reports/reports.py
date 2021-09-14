@@ -67,9 +67,9 @@ class Reports(Client):
         return self._request(fill_query_params(kwargs.pop('path'), report_id), add_marketplace=False)
 
     @sp_endpoint('/reports/2020-09-04/documents/{}')
-    def get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs) -> ApiResponse:
+    def get_report_document(self, document_id, decrypt: bool = False, file=None, character_code: str = 'iso-8859-1', ** kwargs) -> ApiResponse:
         """
-        get_report_document(self, document_id, decrypt: bool = False, file=None, ** kwargs) -> ApiResponse
+        get_report_document(self, document_id, decrypt: bool = False, file=None, character_code: str = 'iso-8859-1', ** kwargs) -> ApiResponse
         Returns the information required for retrieving a report document's contents. This includes a presigned URL for the report document as well as the information required to decrypt the document's contents.
 
         If decrypt = True the report will automatically be loaded and decrypted/unpacked
@@ -93,6 +93,7 @@ class Reports(Client):
             document_id: str | the document to load
             decrypt: bool | flag to automatically decrypt a report
             file: If passed, will save the document to the file specified. Only valid if decrypt=True
+            character_code: If passed, will be a file with the specified character code.  The default is 'iso-8859-1'. Only valid if decrypt=True
 
         Returns:
              ApiResponse
@@ -104,6 +105,7 @@ class Reports(Client):
                     res.payload.get('encryptionDetails').get('initializationVector'),
                     res.payload.get('encryptionDetails').get('key'),
                     res.payload.get('encryptionDetails').get('standard'),
+                    character_code,
                     res.payload
                 )
             res.payload.update({
@@ -261,15 +263,15 @@ class Reports(Client):
         return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
 
     @staticmethod
-    def decrypt_report_document(url, initialization_vector, key, encryption_standard, payload):
+    def decrypt_report_document(url, initialization_vector, key, encryption_standard, character_code, payload):
         """
         Decrypts and unpacks a report document, currently AES encryption is implemented
         """
         if encryption_standard == 'AES':
             decrypted = decrypt_aes(requests.get(url).content, key, initialization_vector)
             if 'compressionAlgorithm' in payload:
-                return zlib.decompress(bytearray(decrypted), 15 + 32).decode('iso-8859-1')
-            return decrypted.decode('iso-8859-1')
+                return zlib.decompress(bytearray(decrypted), 15 + 32).decode(character_code)
+            return decrypted.decode(character_code)
         raise SellingApiException([{
             'message': 'Only AES decryption is implemented. Contribute: https://github.com/saleweaver/python-sp-api'
         }])
