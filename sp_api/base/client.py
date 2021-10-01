@@ -1,3 +1,4 @@
+import hashlib
 import json
 from datetime import datetime
 import logging
@@ -41,12 +42,18 @@ class Client(BaseClient):
         self.region = marketplace.region
         self._auth = AccessTokenClient(refresh_token=refresh_token, account=account, credentials=credentials)
 
-    def set_role(self):
+    def _get_cache_key(self, token_flavor=''):
+        return 'role_' + hashlib.md5(
+            (token_flavor + self._auth.cred.refresh_token).encode('utf-8')
+        ).hexdigest()
+
+    def set_role(self, cache_key='role'):
+
         role = self.boto3_client.assume_role(
             RoleArn=self.credentials.role_arn,
             RoleSessionName='guid'
         )
-        role_cache['role'] = role
+        role_cache[cache_key] = role
         return role
 
     @property
@@ -71,10 +78,12 @@ class Client(BaseClient):
 
     @property
     def role(self):
+        cache_key = self._get_cache_key()
+
         try:
-            role = role_cache['role']
+            role = role_cache[cache_key]
         except KeyError:
-            role = self.set_role()
+            role = self.set_role(cache_key)
         return role.get('Credentials')
 
     def _sign_request(self):
