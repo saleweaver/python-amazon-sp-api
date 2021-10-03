@@ -8,9 +8,5 @@ class BaseClient:
     user_agent = 'python-sp-api'
 
     def __init__(self, account='default', credentials=None):
-        try:
-            from sp_api.base import __version__
-            self.user_agent += f'-{__version__}'
-        except:
-            pass
+        self.user_agent += '0.6.5'
         self.credentials = CredentialProvider(account, credentials).credentials
