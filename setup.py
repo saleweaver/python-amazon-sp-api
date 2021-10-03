@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.6.5',
+    version='0.6.6',
     install_requires=[
         "requests",
         "six>=1.15,<2",
