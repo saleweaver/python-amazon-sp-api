@@ -59,12 +59,6 @@ Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
 
-### Support & Consultation
-
-We offer consultation on everything SP-API related. Book your meeting here:
-
-[![Book Meeting](https://img.shields.io/badge/meeting-book%20now-blue?style=for-the-badge)](https://calendly.com/saleweaver/)
-
 
 ### DISCLAIMER
 
