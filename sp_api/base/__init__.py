@@ -22,6 +22,8 @@ from .processing_status import ProcessingStatus
 from .reportTypes import ReportType
 from sp_api.auth import AccessTokenClient
 
+__version__ = '0.6.5'
+
 __all__ = [
     'AccessTokenClient',
     'ReportType',
@@ -51,6 +53,6 @@ __all__ = [
     'encrypt_aes',
     'NotificationType',
     'CredentialProvider',
-    'MissingCredentials'
-
+    'MissingCredentials',
+    '__version__'
 ]

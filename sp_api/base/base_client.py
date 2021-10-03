@@ -9,9 +9,8 @@ class BaseClient:
 
     def __init__(self, account='default', credentials=None):
         try:
-            import pkg_resources
-            version = pkg_resources.require("python-amazon-sp-api")[0].version
-            self.user_agent += f'-{version}'
+            from sp_api.base import __version__
+            self.user_agent += f'-{__version__}'
         except:
             pass
         self.credentials = CredentialProvider(account, credentials).credentials
