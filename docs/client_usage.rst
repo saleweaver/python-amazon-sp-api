@@ -16,5 +16,6 @@ All endpoint's clients have the following signature and default values:
         marketplace=Marketplaces.US, *,
         refresh_token=None,
         account='default',
-        credentials=None
+        credentials=None,
+        restricted_data_token=None
     )

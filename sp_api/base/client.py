@@ -29,7 +29,8 @@ class Client(BaseClient):
             *,
             refresh_token=None,
             account='default',
-            credentials=None
+            credentials=None,
+            restricted_data_token=None
     ):
         super().__init__(account, credentials)
         self.boto3_client = boto3.client(
@@ -40,6 +41,7 @@ class Client(BaseClient):
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
+        self.restricted_data_token = restricted_data_token
         self._auth = AccessTokenClient(refresh_token=refresh_token, account=account, credentials=credentials)
 
     def _get_cache_key(self, token_flavor=''):
@@ -61,7 +63,7 @@ class Client(BaseClient):
         return {
             'host': self.endpoint[8:],
             'user-agent': self.user_agent,
-            'x-amz-access-token': self.auth.access_token,
+            'x-amz-access-token': self.restricted_data_token or self.auth.access_token,
             'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
             'content-type': 'application/json'
         }
