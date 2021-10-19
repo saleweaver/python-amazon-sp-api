@@ -50,7 +50,13 @@ createReportResponse = Reports().create_report(reportType=ReportType.GET_MERCHAN
 # feeds can be submitted like explained in Amazon's docs, or simply by calling submit_feed
 
 Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/tsv', **kwargs)
+
+# PII Data
+
+Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+
 ```
+
 ---
 
 ### Documentation
