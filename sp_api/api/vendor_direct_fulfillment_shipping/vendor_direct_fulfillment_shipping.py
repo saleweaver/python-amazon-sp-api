@@ -75,7 +75,7 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels/{}', method='GET')
@@ -131,7 +131,7 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates', method='POST')
