@@ -50,7 +50,13 @@ createReportResponse = Reports().create_report(reportType=ReportType.GET_MERCHAN
 # feeds can be submitted like explained in Amazon's docs, or simply by calling submit_feed
 
 Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/tsv', **kwargs)
+
+# PII Data
+
+Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+
 ```
+
 ---
 
 ### Documentation
@@ -58,12 +64,6 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
-
-### Support & Consultation
-
-We offer consultation on everything SP-API related. Book your meeting here:
-
-[![Book Meeting](https://img.shields.io/badge/meeting-book%20now-blue?style=for-the-badge)](https://calendly.com/saleweaver/)
 
 
 ### DISCLAIMER

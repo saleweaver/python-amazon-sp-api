@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.6.4',
+    version='0.7.0',
     install_requires=[
         "requests",
         "six>=1.15,<2",
@@ -10,7 +10,7 @@ setup(
         "cachetools~=4.2.0",
         "pycryptodome",
         "pytz",
-        "confuse~=1.4.0",
+        "confuse~=1.4.0"
     ],
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client',
@@ -35,6 +35,8 @@ setup(
               'sp_api.base',
               'sp_api.util',
                 ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              'sp_api.api.messaging',
+    
               'sp_api.api.catalog_items',
               'sp_api.api.product_type_definitions',
               'sp_api.api.listings_items',
@@ -63,3 +65,4 @@ setup(
     author_email='info@saleweaver.com',
     description='Python wrapper for the Amazon Selling-Partner API'
 )
+

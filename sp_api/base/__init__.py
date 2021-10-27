@@ -52,5 +52,4 @@ __all__ = [
     'NotificationType',
     'CredentialProvider',
     'MissingCredentials'
-
 ]
