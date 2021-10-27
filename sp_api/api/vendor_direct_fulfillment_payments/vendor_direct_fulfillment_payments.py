@@ -37,5 +37,5 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
     
