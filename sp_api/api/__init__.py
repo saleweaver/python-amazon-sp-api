@@ -15,6 +15,8 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .listings_items.listings_items import ListingsItems
+    
 from .messaging.messaging import Messaging
     
 from .catalog_items.catalog_items import CatalogItems
@@ -79,6 +81,8 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "ListingsItems",
+    
     "Messaging",
     
     "CatalogItems",
