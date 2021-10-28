@@ -44,7 +44,40 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
-    
+
+    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='GET')
+    def get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
+        """
+        get_listings_item(self, sellerId, **kwargs) -> ApiResponse
+
+        Returns details about a listings item for a selling partner.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 5 | 10 |
+
+The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
+
+         Args:
+
+            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
+
+            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
+
+            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
+
+            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
+
+            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
+
+
+         Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
 
     @sp_endpoint('/listings/2020-09-01/items/{}/{}', method='PATCH')
     def patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
@@ -84,7 +117,6 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'), params=kwargs)
-    
 
     @sp_endpoint('/listings/2020-09-01/items/{}/{}', method='PUT')
     def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
