@@ -2,6 +2,7 @@ import hashlib
 import json
 from datetime import datetime
 import logging
+import os
 
 import boto3
 from cachetools import TTLCache
@@ -25,7 +26,7 @@ class Client(BaseClient):
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces.US,
+            marketplace: Marketplaces = Marketplaces[os.environ['SP_API_DEFAULT_MARKETPLACE']] if 'SP_API_DEFAULT_MARKETPLACE' in os.environ else Marketplaces.US,
             *,
             refresh_token=None,
             account='default',
