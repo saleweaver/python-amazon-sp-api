@@ -118,11 +118,12 @@ class Client(BaseClient):
 
     @staticmethod
     def _check_response(res) -> ApiResponse:
-        error = res.json().get('errors', None)
+        js = res.json() or {}
+        error = js.get('errors', None)
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
-        return ApiResponse(**res.json(), headers=res.headers)
+        return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
         POST = ['marketplaceIds', 'MarketplaceIds']
