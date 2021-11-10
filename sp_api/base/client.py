@@ -90,12 +90,19 @@ class Client(BaseClient):
         return role.get('Credentials')
 
     def _sign_request(self):
-        role = self.role
+        aws_session_token = None
+        aws_access_key_id = self.credentials.aws_access_key
+        aws_secret_access_key = self.credentials.aws_secret_key
+        if self.credentials.role_arn:
+            role = self.role
+            aws_session_token = role.get('SessionToken')
+            aws_access_key_id = role.get('AccessKeyId')
+            aws_secret_access_key = role.get('SecretAccessKey')
         return AWSSigV4('execute-api',
-                        aws_access_key_id=role.get('AccessKeyId'),
-                        aws_secret_access_key=role.get('SecretAccessKey'),
+                        aws_access_key_id=aws_access_key_id,
+                        aws_secret_access_key=aws_secret_access_key,
                         region=self.region,
-                        aws_session_token=role.get('SessionToken')
+                        aws_session_token=aws_session_token
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
