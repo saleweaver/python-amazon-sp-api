@@ -109,7 +109,7 @@ class CredentialProvider:
                      lwa_client_secret,
                      aws_access_key,
                      aws_secret_key,
-                     role_arn,
+                     role_arn=None,
                      use_instance_profile=None
                      ):
             self.refresh_token = refresh_token
@@ -122,6 +122,6 @@ class CredentialProvider:
         def check_config(self):
             errors = []
             for k, v in self.__dict__.items():
-                if not v and k != 'refresh_token':
+                if not v and k not in ('refresh_token', 'role_arn'):
                     errors.append(k)
             return errors
