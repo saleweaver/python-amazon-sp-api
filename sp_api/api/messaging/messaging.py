@@ -27,18 +27,18 @@ class Messaging(Client):
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which you want a list of available message types.
-        
+
             key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
 
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
-    
+
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmCustomizationDetails', method='POST')
     def confirm_customization_details(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -55,11 +55,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
             body: | * REQUIRED {'description': 'The request schema for the confirmCustomizationDetails operation.',
  'properties': {'attachments': {'description': 'Attachments to include in the message to the buyer.', 'items': {'$ref': '#/definitions/Attachment'}, 'maxLength': 5, 'type': 'array'},
                 'text': {'description': "The text to be sent to the buyer. Only links related to customization details are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
@@ -68,13 +65,15 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmDeliveryDetails', method='POST')
     def create_confirm_delivery_details(self, order_id, **kwargs) -> ApiResponse:
@@ -92,11 +91,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createConfirmDeliveryDetails operation.',
  'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to order delivery are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
                                         'retrieved from the GetAttributes operation.',
@@ -104,13 +101,15 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/legalDisclosure', method='POST')
     def create_legal_disclosure(self, order_id, **kwargs) -> ApiResponse:
@@ -128,11 +127,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createLegalDisclosure operation.',
  'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
                                                'GetAttributes operation.',
@@ -140,13 +137,15 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                                 'maxLength': 5,
                                 'type': 'array'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/negativeFeedbackRemoval', method='POST')
     def create_negative_feedback_removal(self, order_id, **kwargs) -> ApiResponse:
@@ -164,18 +163,17 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
+
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmOrderDetails', method='POST')
     def create_confirm_order_details(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -192,11 +190,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createConfirmOrderDetails operation.',
  'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to order completion are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
                                         'retrieved from the GetAttributes operation.',
@@ -204,14 +200,16 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
+
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmServiceDetails', method='POST')
     def create_confirm_service_details(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -228,11 +226,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createConfirmServiceDetails operation.',
  'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to Home Service calls are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
                                         'retrieved from the GetAttributes operation.',
@@ -240,14 +236,16 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
+
     @sp_endpoint('/messaging/v1/orders/{}/messages/amazonMotors', method='POST')
     def create_amazon_motors(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -264,11 +262,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createAmazonMotors operation.',
  'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
                                                'GetAttributes operation.',
@@ -276,14 +272,16 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                                 'maxLength': 5,
                                 'type': 'array'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
+
     @sp_endpoint('/messaging/v1/orders/{}/messages/warranty', method='POST')
     def create_warranty(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -300,11 +298,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createWarranty operation.',
  'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
                                                'GetAttributes operation.',
@@ -315,14 +311,16 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                 'coverageEndDate': {'description': 'The end date of the warranty coverage to include in the message to the buyer.', 'format': 'date-time', 'type': 'string'},
                 'coverageStartDate': {'description': 'The start date of the warranty coverage to include in the message to the buyer.', 'format': 'date-time', 'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
+
     @sp_endpoint('/messaging/v1/orders/{}/attributes', method='GET')
     def get_attributes(self, order_id, **kwargs) -> ApiResponse:
         """
@@ -337,16 +335,13 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 | 1 | 5 |
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
 
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/digitalAccessKey', method='POST')
@@ -365,11 +360,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createDigitalAccessKey operation.',
  'properties': {'attachments': {'description': 'Attachments to include in the message to the buyer.', 'items': {'$ref': '#/definitions/Attachment'}, 'maxLength': 5, 'type': 'array'},
                 'text': {'description': "The text to be sent to the buyer. Only links related to the digital access key are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can "
@@ -378,13 +371,15 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/unexpectedProblem', method='POST')
     def create_unexpected_problem(self, order_id, **kwargs) -> ApiResponse:
@@ -402,11 +397,9 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
          Args:
-        
+
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-        
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
+
             body: | * REQUIRED {'description': 'The request schema for the createUnexpectedProblem operation.',
  'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to unexpected problem calls are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can "
                                         'be retrieved from the GetAttributes operation.',
@@ -414,10 +407,12 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
                          'minLength': 1,
                          'type': 'string'}},
  'type': 'object'}
-        
+
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+        )
