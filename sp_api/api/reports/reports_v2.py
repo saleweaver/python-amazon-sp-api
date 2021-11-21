@@ -295,7 +295,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
         return self._request(fill_query_params(kwargs.pop('path'), reportScheduleId), params=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/documents/{}', method='GET')
-    def get_report_document(self, reportDocumentId, download: bool = True, file=None,
+    def get_report_document(self, reportDocumentId, download: bool = False, file=None,
                             character_code: str = 'iso-8859-1', **kwargs) -> ApiResponse:
         """
         get_report_document(self, reportDocumentId, **kwargs) -> ApiResponse
@@ -322,7 +322,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             ApiResponse:
         """
         res = self._request(fill_query_params(kwargs.pop('path'), reportDocumentId), add_marketplace=False)
-        if download or file or 'decrypt' in kwargs:
+        if download or file or ('decrypt' in kwargs and kwargs['decrypt']):
             document = requests.get(res.payload.get('url')).content
             if 'compressionAlgorithm' in res.payload:
                 document = zlib.decompress(bytearray(document), 15 + 32)
