@@ -326,6 +326,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             document = requests.get(res.payload.get('url')).content
             if 'compressionAlgorithm' in res.payload:
                 document = zlib.decompress(bytearray(document), 15 + 32)
+            document = document.decode(character_code)
             if download:
                 res.payload.update({
                     'document': document
