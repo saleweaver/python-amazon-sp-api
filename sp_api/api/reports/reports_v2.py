@@ -1,6 +1,9 @@
 import urllib.parse
+import zlib
 from collections import abc
 from datetime import datetime
+
+import requests
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, Marketplaces
 
@@ -12,7 +15,6 @@ class ReportsV2(Client):
 
     The Selling Partner API for Reports lets you retrieve and manage a variety of reports that can help selling partners manage their businesses.
     """
-
 
     @sp_endpoint('/reports/2021-06-30/reports', method='GET')
     def get_reports(self, **kwargs) -> ApiResponse:
@@ -57,13 +59,13 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
             marketplaces = kwargs.get('marketplaceIds')
             if not isinstance(marketplaces, abc.Iterable):
                 marketplaces = [marketplaces]
-            kwargs.update({'marketplaceIds': ','.join([m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
+            kwargs.update({'marketplaceIds': ','.join(
+                [m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
         for k in ['createdSince', 'createdUntil']:
             if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
                 kwargs.update({k: kwargs.get(k).isoformat()})
 
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/reports', method='POST')
     def create_report(self, **kwargs) -> ApiResponse:
@@ -105,9 +107,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/reports/{}', method='DELETE')
     def cancel_report(self, reportId, **kwargs) -> ApiResponse:
@@ -132,9 +133,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), reportId), data=kwargs)
-    
 
     @sp_endpoint('/reports/2021-06-30/reports/{}', method='GET')
     def get_report(self, reportId, **kwargs) -> ApiResponse:
@@ -159,9 +159,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), reportId), params=kwargs)
-    
 
     @sp_endpoint('/reports/2021-06-30/schedules', method='GET')
     def get_report_schedules(self, **kwargs) -> ApiResponse:
@@ -186,9 +185,10 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
+            kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/schedules', method='POST')
     def create_report_schedule(self, **kwargs) -> ApiResponse:
@@ -239,9 +239,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/schedules/{}', method='DELETE')
     def cancel_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse:
@@ -266,9 +265,8 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), reportScheduleId), data=kwargs)
-    
 
     @sp_endpoint('/reports/2021-06-30/schedules/{}', method='GET')
     def get_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse:
@@ -293,12 +291,12 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
          Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), reportScheduleId), params=kwargs)
-    
 
     @sp_endpoint('/reports/2021-06-30/documents/{}', method='GET')
-    def get_report_document(self, reportDocumentId, **kwargs) -> ApiResponse:
+    def get_report_document(self, reportDocumentId, download: bool = True, file=None,
+                            character_code: str = 'iso-8859-1', **kwargs) -> ApiResponse:
         """
         get_report_document(self, reportDocumentId, **kwargs) -> ApiResponse
 
@@ -314,12 +312,25 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
          Args:
         
+            download: bool
+            character_code:
+            file: File(like)
             reportDocumentId:string | * REQUIRED The identifier for the report document.
         
 
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), reportDocumentId), params=kwargs)
-    
+        res = self._request(fill_query_params(kwargs.pop('path'), reportDocumentId), add_marketplace=False)
+        if download or file or 'decrypt' in kwargs:
+            document = requests.get(res.payload.get('url')).content
+            if 'compressionAlgorithm' in res.payload:
+                document = zlib.decompress(bytearray(document), 15 + 32)
+            if download:
+                res.payload.update({
+                    'document': document
+                })
+            if file:
+                file.write(document)
+                file.seek(0)
+        return res

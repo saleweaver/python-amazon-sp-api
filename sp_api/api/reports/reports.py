@@ -4,13 +4,17 @@ import zlib
 
 import requests
 
-from sp_api.base import sp_endpoint, fill_query_params, SellingApiException, ApiResponse, ProcessingStatus, Marketplaces
+from sp_api.base import sp_endpoint, fill_query_params, SellingApiException, ApiResponse, ProcessingStatus, \
+    Marketplaces, deprecated
 from sp_api.base import Client
 from sp_api.base.helpers import decrypt_aes
 
 
 class Reports(Client):
-
+    """Deprecated!
+    Use ReportsV2 instead!
+    """
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/reports', method='POST')
     def create_report(self, **kwargs) -> ApiResponse:
         """
@@ -40,6 +44,7 @@ class Reports(Client):
         """
         return self._request(kwargs.pop('path'), data=kwargs)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/reports/{}')
     def get_report(self, report_id, **kwargs) -> ApiResponse:
         """
@@ -66,6 +71,7 @@ class Reports(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), report_id), add_marketplace=False)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/documents/{}')
     def get_report_document(self, document_id, decrypt: bool = False, file=None, character_code: str = 'iso-8859-1', ** kwargs) -> ApiResponse:
         """
@@ -120,6 +126,7 @@ class Reports(Client):
 
         return res
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/schedules', method='POST')
     def create_report_schedule(self, **kwargs) -> ApiResponse:
         """
@@ -141,6 +148,7 @@ class Reports(Client):
         """
         return self._request(kwargs.pop('path'), data=kwargs)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/schedules/{}', method='DELETE')
     def delete_report_schedule(self, schedule_id, **kwargs) -> ApiResponse:
         """
@@ -166,6 +174,7 @@ class Reports(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/schedules/{}')
     def get_report_schedule(self, schedule_id, **kwargs) -> ApiResponse:
         """
@@ -190,6 +199,7 @@ class Reports(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), schedule_id), params=kwargs)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/schedules')
     def get_report_schedules(self, **kwargs) -> ApiResponse:
         """
@@ -216,6 +226,7 @@ class Reports(Client):
 
         return self._request(kwargs.pop('path'), params=kwargs)
 
+    @deprecated
     @sp_endpoint('/reports/2020-09-04/reports')
     def get_reports(self, **kwargs) -> ApiResponse:
         """
