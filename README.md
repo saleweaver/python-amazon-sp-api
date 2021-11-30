@@ -61,9 +61,9 @@ Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow
 
 ### Documentation
 
-Documentation is available [here](https://sp-api-docs.saleweaver.com/)
+Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=text)
 
-[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/)
+[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
 
 
 ### DISCLAIMER
