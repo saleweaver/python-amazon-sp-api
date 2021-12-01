@@ -22,7 +22,6 @@ class Products(Client):
         ======================================  ==============
 
         Args:
-
             seller_sku_list: [str]
             item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
             **kwargs:
@@ -49,13 +48,12 @@ class Products(Client):
         1                                       1
         ======================================  ==============
 
+        Args:
+            asin_list: [str]
+            item_condition: str | ("New", "Used", "Collectible", "Refurbished", "Club") Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club. Available values : New, Used, Collectible, Refurbished, Club
 
-        :param asin_list: [str]
-        :param item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
-           Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
-           Available values : New, Used, Collectible, Refurbished, Club
-        :param kwargs:
-        :return: ApiResponse
+        Returns:
+            ApiResponse
         """
         if item_condition is not None:
             kwargs['ItemCondition'] = item_condition
@@ -77,9 +75,11 @@ class Products(Client):
         ======================================  ==============
 
 
-        :param seller_sku_list: [str]
-        :param kwargs:
-        :return: ApiResponse
+        Args:
+            seller_sku_list: [str]
+
+        Returns:
+            ApiResponse
         """
         return self._create_get_pricing_request(seller_sku_list, 'Sku', **kwargs)
 
@@ -98,9 +98,11 @@ class Products(Client):
         ======================================  ==============
 
 
-        :param asin_list: [str]
-        :param kwargs:
-        :return:
+        Args:
+            asin_list: [str]
+
+        Returns:
+            ApiResponse
 
         """
         return self._create_get_pricing_request(asin_list, 'Asin', **kwargs)
@@ -120,12 +122,12 @@ class Products(Client):
         ======================================  ==============
 
         Args:
-            :param seller_sku: str
+            seller_sku: str
             key ItemCondition: str | Possible values: New, Used, Collectible, Refurbished, Club.
             key MarketplaceId: str
 
         Returns:
-            GetOffersResponse:
+            ApiResponse
 
         """
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params={**kwargs})       
@@ -145,12 +147,12 @@ class Products(Client):
         ======================================  ==============
 
         Args:
-            :param seller_sku: str
+            seller_sku: str
             key ItemCondition: str | Possible values: New, Used, Collectible, Refurbished, Club.
             key MarketplaceId: str
 
         Returns:
-            GetOffersResponse:
+            ApiResponse
 
         """
         return self._request(fill_query_params(kwargs.pop('path'), asin), params={**kwargs})
