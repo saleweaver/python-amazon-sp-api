@@ -21,6 +21,9 @@ class Products(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Products().get_product_pricing_for_skus(['sku', 'sku1'], MarketplaceId="ATVPDKIKX0DER")
+
         Args:
             seller_sku_list: [str]
             item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
@@ -48,6 +51,9 @@ class Products(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Products().get_product_pricing_for_asins(['asin1', 'asin2'], MarketplaceId="ATVPDKIKX0DER")
+
         Args:
             asin_list: [str]
             item_condition: str | ("New", "Used", "Collectible", "Refurbished", "Club") Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club. Available values : New, Used, Collectible, Refurbished, Club
@@ -74,6 +80,8 @@ class Products(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Products().get_competitive_pricing_for_skus([], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             seller_sku_list: [str]
@@ -97,6 +105,8 @@ class Products(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Products().get_competitive_pricing_for_asins([], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             asin_list: [str]

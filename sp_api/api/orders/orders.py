@@ -26,6 +26,9 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
+
         Args:
             key CreatedAfter: date
             key CreatedBefore: date
@@ -67,6 +70,9 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Orders().get_order('TEST_CASE_200')
+
         Args:
             order_id: str
             **kwargs:
@@ -106,6 +112,9 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Orders().get_order_items('TEST_CASE_200')
+
         Args:
             order_id: str
             **kwargs:
@@ -133,6 +142,8 @@ class Orders(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Orders().get_order_address('TEST_CASE_200')
 
         Args:
             order_id: str
@@ -163,6 +174,9 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Orders().get_order_buyer_info('TEST_CASE_200')
+
         Args:
             order_id: str
             **kwargs:
@@ -189,6 +203,9 @@ class Orders(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            Orders().get_order_items_buyer_info('TEST_CASE_200')
 
         Args:
             order_id: str

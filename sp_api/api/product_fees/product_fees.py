@@ -15,6 +15,16 @@ class ProductFees(Client):
 
         Returns fees for sku
 
+        Examples:
+            ProductFees().get_product_fees_estimate_for_sku("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
+                                                          points={
+                                                              "PointsNumber": 0,
+                                                              "PointsMonetaryValue": {
+                                                                  "CurrencyCode": "USD",
+                                                                  "Amount": 0
+                                                              }
+                                                          })
+
         Args:
             seller_sku:
             price:
@@ -39,6 +49,16 @@ class ProductFees(Client):
         get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,  points: dict = dict, **kwargs) -> ApiResponse
 
         Returns fees for asin
+
+        Examples:
+            ProductFees().get_product_fees_estimate_for_asin("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
+                                                           points={
+                                                               "PointsNumber": 0,
+                                                               "PointsMonetaryValue": {
+                                                                   "CurrencyCode": "USD",
+                                                                   "Amount": 0
+                                                               }
+                                                           })
 
         Args:
             asin:

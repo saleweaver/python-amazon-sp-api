@@ -37,6 +37,12 @@ class Inventories(Client):
         When the sellerSkus parameter is provided, the operation returns inventory summaries for only the specified sellerSkus.
         Usage Plan:
 
+        Examples:
+            Inventories().get_inventory_summary_marketplace(**{
+                    "details": True,
+                    "marketplaceIds": ["ATVPDKIKX0DER"]
+                })
+
         Args:
             key details: bool | true to return inventory summaries with additional summarized inventory details and quantities. Otherwise, returns inventory summaries only (default value).	boolean	"false"
             key granularityType: Granularity Type | The granularity type for the inventory aggregation level.	enum (GranularityType)	-

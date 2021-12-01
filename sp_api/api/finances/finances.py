@@ -9,6 +9,8 @@ class Finances(Client):
         """
         get_financial_events_for_order(self, order_id, **kwargs) -> ApiResponse
 
+        Examples:
+            Finances().get_financial_events_for_order('485-734-5434857', MaxResultsPerPage=10)
 
         Args:
             order_id:

@@ -28,6 +28,15 @@ class Sales(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            from sp_api.api import Sales
+            from sp_api.base import Granularity
+
+            Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central')
+            Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
+            Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central', asin='B008OLKVEW')
+            Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central', asin='B008OLKVEW')
+
         Args:
             key marketplaceIds: [str]
             interval: tuple | A time interval used for selecting order metrics. This takes the form of two dates separated by two hyphens (first date is inclusive; second date is exclusive).  Dates are in ISO8601 format and must represent absolute time (either Z notation or offset notation). Example: 2018-09-01T00:00:00-07:00--2018-09-04T00:00:00-07:00 requests order metrics for Sept 1st, 2nd and 3rd in the -07:00 zone.	string	-       Query	granularityTimeZone

@@ -33,6 +33,15 @@ class Tokens(Client):
 
         The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Tokens().create_restricted_data_token(restrictedResources=[
+                 {
+                     "method": "GET",
+                     "path": "/orders/v0/orders",
+                     "dataElements": ["buyerInfo", "shippingAddress"]
+                 }
+              ])
+
         Args:
             body: {
               "targetApplication": "string",

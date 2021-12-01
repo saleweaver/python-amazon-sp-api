@@ -30,6 +30,14 @@ class Authorization(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            res = Authorization().get_authorization_code(
+                mwsAuthToken='test',
+                developerId='test',
+                sellingPartnerId='test'
+            )
+
+
         Args:
             key sellingPartnerId:string | * REQUIRED The seller ID of the seller for whom you are requesting Selling Partner API authorization. This must be the seller ID of the seller who authorized your application on the Marketplace Appstore.
             key developerId:string | * REQUIRED Your developer ID. This must be one of the developer ID values that you provided when you registered your application in Developer Central.

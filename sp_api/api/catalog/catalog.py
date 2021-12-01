@@ -24,6 +24,8 @@ class Catalog(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        Examples:
+            res = Catalog().get_item('ASIN_200', MarketplaceId='TEST_CASE_200')
 
         Args:
             asin: str
@@ -51,6 +53,9 @@ class Catalog(Client):
 
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            res = Catalog().list_items(MarketplaceId='TEST_CASE_200', SellerSKU='SKU_200')
 
         Args:
             key MarketplaceId: str
