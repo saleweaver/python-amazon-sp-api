@@ -32,7 +32,7 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            feed_type: https://github.com/amzn/selling-partner-api-docs/blob/main/references/feeds-api/feedType_string_array_values.md
+            feed_type: https://github.com/amzn/selling-partner-api-docs/blob/main/references/feeds-api/feedtype-values.md
             input_feed_document_id: str
             **kwargs:
 
