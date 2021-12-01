@@ -189,14 +189,14 @@ class Services(Client):
         Args:
             serviceJobId:string | * REQUIRED An Amazon defined service job identifier.
             appointmentId:string | * REQUIRED An existing appointment identifier for the Service Job.
-            kwargs: Example | {
-                  "appointmentTime": {
-                    "startTime": "2019-08-24T14:15:22Z",
-                    "durationInMinutes": 0
-                  },
-                  "rescheduleReasonCode": "string"
+            kwargs: Example |
+                {
+                    "appointmentTime": {
+                        "startTime": "2019-08-24T14:15:22Z",
+                        "durationInMinutes": 0
+                    },
+                    "rescheduleReasonCode": "string"
                 }
-        
 
         Returns:
             ApiResponse:
