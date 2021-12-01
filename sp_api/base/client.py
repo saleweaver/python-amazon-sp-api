@@ -126,6 +126,8 @@ class Client(BaseClient):
     @staticmethod
     def _check_response(res) -> ApiResponse:
         js = res.json() or {}
+        if isinstance(js, list):
+            js = js[0]
         error = js.get('errors', None)
         if error:
             exception = get_exception_for_code(res.status_code)
