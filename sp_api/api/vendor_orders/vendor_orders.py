@@ -95,6 +95,73 @@ class VendorOrders(Client):
 
         The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                {
+                    "acknowledgements": [
+                        {
+                            "purchaseOrderNumber": "string",
+                            "sellingParty": {
+                                "partyId": "string",
+                                "address": {
+                                    "name": "string",
+                                    "addressLine1": "string",
+                                    "addressLine2": "string",
+                                    "addressLine3": "string",
+                                    "city": "string",
+                                    "county": "string",
+                                    "district": "string",
+                                    "stateOrRegion": "string",
+                                    "postalCode": "string",
+                                    "countryCode": "st",
+                                    "phone": "string"
+                                },
+                                "taxInfo": {
+                                    "taxRegistrationType": "VAT",
+                                    "taxRegistrationNumber": "string"
+                                }
+                            },
+                            "acknowledgementDate": "2019-08-24T14:15:22Z",
+                            "items": [
+                                {
+                                    "itemSequenceNumber": "string",
+                                    "amazonProductIdentifier": "string",
+                                    "vendorProductIdentifier": "string",
+                                    "orderedQuantity": {
+                                        "amount": 0,
+                                        "unitOfMeasure": "Cases",
+                                        "unitSize": 0
+                                    },
+                                    "netCost": {
+                                        "currencyCode": "str",
+                                        "amount": "string"
+                                    },
+                                    "listPrice": {
+                                        "currencyCode": "str",
+                                        "amount": "string"
+                                    },
+                                    "discountMultiplier": "string",
+                                    "itemAcknowledgements": [
+                                        {
+                                            "acknowledgementCode": "Accepted",
+                                            "acknowledgedQuantity": {
+                                                "amount": 0,
+                                                "unitOfMeasure": "Cases",
+                                                "unitSize": 0
+                                            },
+                                            "scheduledShipDate": "2019-08-24T14:15:22Z",
+                                            "scheduledDeliveryDate": "2019-08-24T14:15:22Z",
+                                            "rejectionReason": "TemporarilyUnavailable"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+
+
         Args:
             body: {
               "acknowledgements": [
