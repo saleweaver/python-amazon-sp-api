@@ -29,6 +29,47 @@ class FulfillmentOutbound(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                {
+                      "marketplaceId": "string",
+                      "address": {
+                        "name": "string",
+                        "addressLine1": "string",
+                        "addressLine2": "string",
+                        "addressLine3": "string",
+                        "city": "string",
+                        "districtOrCounty": "string",
+                        "stateOrRegion": "string",
+                        "postalCode": "string",
+                        "countryCode": "string",
+                        "phone": "string"
+                      },
+                      "items": [
+                        {
+                          "sellerSku": "string",
+                          "quantity": 0,
+                          "perUnitDeclaredValue": {
+                            "currencyCode": "string",
+                            "value": "string"
+                          },
+                          "sellerFulfillmentOrderItemId": "string"
+                        }
+                      ],
+                      "shippingSpeedCategories": [
+                        "Standard"
+                      ],
+                      "includeCODFulfillmentPreview": true,
+                      "includeDeliveryWindows": true,
+                      "featureConstraints": [
+                        {
+                          "featureName": "string",
+                          "featureFulfillmentPolicy": "Required"
+                        }
+                      ]
+                    }
+
         Args:
             body: {
               "marketplaceId": "string",
@@ -121,6 +162,87 @@ class FulfillmentOutbound(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                {
+                      "marketplaceId": "string",
+                      "sellerFulfillmentOrderId": "string",
+                      "displayableOrderId": "string",
+                      "displayableOrderDate": "2019-08-24T14:15:22Z",
+                      "displayableOrderComment": "string",
+                      "shippingSpeedCategory": "Standard",
+                      "deliveryWindow": {
+                        "startDate": "2019-08-24T14:15:22Z",
+                        "endDate": "2019-08-24T14:15:22Z"
+                      },
+                      "destinationAddress": {
+                        "name": "string",
+                        "addressLine1": "string",
+                        "addressLine2": "string",
+                        "addressLine3": "string",
+                        "city": "string",
+                        "districtOrCounty": "string",
+                        "stateOrRegion": "string",
+                        "postalCode": "string",
+                        "countryCode": "string",
+                        "phone": "string"
+                      },
+                      "fulfillmentAction": "Ship",
+                      "fulfillmentPolicy": "FillOrKill",
+                      "codSettings": {
+                        "isCodRequired": true,
+                        "codCharge": {
+                          "currencyCode": "string",
+                          "value": "string"
+                        },
+                        "codChargeTax": {
+                          "currencyCode": "string",
+                          "value": "string"
+                        },
+                        "shippingCharge": {
+                          "currencyCode": "string",
+                          "value": "string"
+                        },
+                        "shippingChargeTax": {
+                          "currencyCode": "string",
+                          "value": "string"
+                        }
+                      },
+                      "shipFromCountryCode": "string",
+                      "notificationEmails": [
+                        "string"
+                      ],
+                      "featureConstraints": [
+                        {
+                          "featureName": "string",
+                          "featureFulfillmentPolicy": "Required"
+                        }
+                      ],
+                      "items": [
+                        {
+                          "sellerSku": "string",
+                          "sellerFulfillmentOrderItemId": "string",
+                          "quantity": 0,
+                          "giftMessage": "string",
+                          "displayableComment": "string",
+                          "fulfillmentNetworkSku": "string",
+                          "perUnitDeclaredValue": {
+                            "currencyCode": "string",
+                            "value": "string"
+                          },
+                          "perUnitPrice": {
+                            "currencyCode": "string",
+                            "value": "string"
+                          },
+                          "perUnitTax": {
+                            "currencyCode": "string",
+                            "value": "string"
+                          }
+                        }
+                      ]
+                    }
 
         Args:
             body: {
@@ -285,6 +407,21 @@ class FulfillmentOutbound(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                {
+                  "items": [
+                    {
+                      "sellerReturnItemId": "string",
+                      "sellerFulfillmentOrderItemId": "string",
+                      "amazonShipmentId": "string",
+                      "returnReasonCode": "string",
+                      "returnComment": "string"
+                    }
+                  ]
+                }
+
         Args:
             sellerFulfillmentOrderId:string | * REQUIRED An identifier assigned by the seller to the fulfillment order at the time it was created. The seller uses their own records to find the correct SellerFulfillmentOrderId value based on the buyer's request to return items.
             body: {
@@ -351,6 +488,64 @@ class FulfillmentOutbound(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                {
+                  "marketplaceId": "string",
+                  "displayableOrderId": "string",
+                  "displayableOrderDate": "2019-08-24T14:15:22Z",
+                  "displayableOrderComment": "string",
+                  "shippingSpeedCategory": "Standard",
+                  "destinationAddress": {
+                    "name": "string",
+                    "addressLine1": "string",
+                    "addressLine2": "string",
+                    "addressLine3": "string",
+                    "city": "string",
+                    "districtOrCounty": "string",
+                    "stateOrRegion": "string",
+                    "postalCode": "string",
+                    "countryCode": "string",
+                    "phone": "string"
+                  },
+                  "fulfillmentAction": "Ship",
+                  "fulfillmentPolicy": "FillOrKill",
+                  "shipFromCountryCode": "string",
+                  "notificationEmails": [
+                    "string"
+                  ],
+                  "featureConstraints": [
+                    {
+                      "featureName": "string",
+                      "featureFulfillmentPolicy": "Required"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "sellerSku": "string",
+                      "sellerFulfillmentOrderItemId": "string",
+                      "quantity": 0,
+                      "giftMessage": "string",
+                      "displayableComment": "string",
+                      "fulfillmentNetworkSku": "string",
+                      "orderItemDisposition": "string",
+                      "perUnitDeclaredValue": {
+                        "currencyCode": "string",
+                        "value": "string"
+                      },
+                      "perUnitPrice": {
+                        "currencyCode": "string",
+                        "value": "string"
+                      },
+                      "perUnitTax": {
+                        "currencyCode": "string",
+                        "value": "string"
+                      }
+                    }
+                  ]
+                }
 
         Args:
             sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.

@@ -16,7 +16,9 @@ class ProductFees(Client):
         Returns fees for sku
 
         Examples:
-            ProductFees().get_product_fees_estimate_for_sku("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
+            literal blocks::
+
+                ProductFees().get_product_fees_estimate_for_sku("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
                                                           points={
                                                               "PointsNumber": 0,
                                                               "PointsMonetaryValue": {
@@ -51,7 +53,9 @@ class ProductFees(Client):
         Returns fees for asin
 
         Examples:
-            ProductFees().get_product_fees_estimate_for_asin("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
+            literal blocks::
+
+                ProductFees().get_product_fees_estimate_for_asin("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
                                                            points={
                                                                "PointsNumber": 0,
                                                                "PointsMonetaryValue": {

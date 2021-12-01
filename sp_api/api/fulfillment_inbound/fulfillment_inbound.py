@@ -12,36 +12,38 @@ class FulfillmentInbound(Client):
         plans(self, data, **kwargs) -> ApiResponse
 
         Examples:
-            res = FulfillmentInbound().plans({
-                    "ShipFromAddress": {
-                        "Name": "Name",
-                        "AddressLine1": "123 any st",
-                        "AddressLine2": "AddressLine2",
-                        "DistrictOrCounty": "Washtenaw",
-                        "City": "Ann Arbor",
-                        "StateOrProvinceCode": "MI",
-                        "CountryCode": "US",
-                        "PostalCode": "48188"
-                    },
-                    "LabelPrepPreference": "SELLER_LABEL",
-                    "ShipToCountryCode": "ShipToCountryCode",
-                    "ShipToCountrySubdivisionCode": "ShipToCountrySubdivisionCode",
-                    "InboundShipmentPlanRequestItems": [
-                        {
-                            "SellerSKU": "SellerSKU",
-                            "ASIN": "ASIN",
-                            "Condition": "NewItem",
-                            "Quantity": 1,
-                            "QuantityInCase": 1,
-                            "PrepDetailsList": [
-                                {
-                                    "PrepInstruction": "Polybagging",
-                                    "PrepOwner": "AMAZON"
-                                }
-                            ]
-                        }
-                    ]
-                })
+            literal blocks::
+
+                res = FulfillmentInbound().plans({
+                        "ShipFromAddress": {
+                            "Name": "Name",
+                            "AddressLine1": "123 any st",
+                            "AddressLine2": "AddressLine2",
+                            "DistrictOrCounty": "Washtenaw",
+                            "City": "Ann Arbor",
+                            "StateOrProvinceCode": "MI",
+                            "CountryCode": "US",
+                            "PostalCode": "48188"
+                        },
+                        "LabelPrepPreference": "SELLER_LABEL",
+                        "ShipToCountryCode": "ShipToCountryCode",
+                        "ShipToCountrySubdivisionCode": "ShipToCountrySubdivisionCode",
+                        "InboundShipmentPlanRequestItems": [
+                            {
+                                "SellerSKU": "SellerSKU",
+                                "ASIN": "ASIN",
+                                "Condition": "NewItem",
+                                "Quantity": 1,
+                                "QuantityInCase": 1,
+                                "PrepDetailsList": [
+                                    {
+                                        "PrepInstruction": "Polybagging",
+                                        "PrepOwner": "AMAZON"
+                                    }
+                                ]
+                            }
+                        ]
+                    })
 
         Args:
             data:
@@ -58,43 +60,45 @@ class FulfillmentInbound(Client):
         create_shipment(self, shipment_id, data, **kwargs)
 
         Examples:
-            FulfillmentInbound().create_shipment('123', {
-                    "InboundShipmentHeader": {
-                        "ShipmentName": "43545345",
-                        "ShipFromAddress": {
-                            "Name": "35435345",
-                            "AddressLine1": "123 any st",
-                            "DistrictOrCounty": "Washtenaw",
-                            "City": "Ann Arbor",
-                            "StateOrProvinceCode": "Test",
-                            "CountryCode": "US",
-                            "PostalCode": "48103"
+            literal blocks::
+
+                FulfillmentInbound().create_shipment('123', {
+                        "InboundShipmentHeader": {
+                            "ShipmentName": "43545345",
+                            "ShipFromAddress": {
+                                "Name": "35435345",
+                                "AddressLine1": "123 any st",
+                                "DistrictOrCounty": "Washtenaw",
+                                "City": "Ann Arbor",
+                                "StateOrProvinceCode": "Test",
+                                "CountryCode": "US",
+                                "PostalCode": "48103"
+                            },
+                            "DestinationFulfillmentCenterId": "AEB2",
+                            "AreCasesRequired": True,
+                            "ShipmentStatus": "WORKING",
+                            "LabelPrepPreference": "SELLER_LABEL",
+                            "IntendedBoxContentsSource": "NONE"
                         },
-                        "DestinationFulfillmentCenterId": "AEB2",
-                        "AreCasesRequired": True,
-                        "ShipmentStatus": "WORKING",
-                        "LabelPrepPreference": "SELLER_LABEL",
-                        "IntendedBoxContentsSource": "NONE"
-                    },
-                    "InboundShipmentItems": [
-                        {
-                            "ShipmentId": "345453",
-                            "SellerSKU": "34534545",
-                            "FulfillmentNetworkSKU": "435435435",
-                            "QuantityShipped": 0,
-                            "QuantityReceived": 0,
-                            "QuantityInCase": 0,
-                            "ReleaseDate": "2020-04-23",
-                            "PrepDetailsList": [
-                                {
-                                    "PrepInstruction": "Polybagging",
-                                    "PrepOwner": "AMAZON"
-                                }
-                            ]
-                        }
-                    ],
-                    "MarketplaceId": "MarketplaceId"
-                })
+                        "InboundShipmentItems": [
+                            {
+                                "ShipmentId": "345453",
+                                "SellerSKU": "34534545",
+                                "FulfillmentNetworkSKU": "435435435",
+                                "QuantityShipped": 0,
+                                "QuantityReceived": 0,
+                                "QuantityInCase": 0,
+                                "ReleaseDate": "2020-04-23",
+                                "PrepDetailsList": [
+                                    {
+                                        "PrepInstruction": "Polybagging",
+                                        "PrepOwner": "AMAZON"
+                                    }
+                                ]
+                            }
+                        ],
+                        "MarketplaceId": "MarketplaceId"
+                    })
 
         Args:
             shipment_id:
@@ -112,31 +116,33 @@ class FulfillmentInbound(Client):
         update_shipment(self, shipment_id, data, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().update_shipment('123', {
-                    "MarketplaceId": "ATVPDKIKX0DER",
-                    "InboundShipmentHeader": {
-                        "ShipmentName": "Shipment for FBA15DJCQ1ZF",
-                        "ShipFromAddress": {
-                            "Name": "Uma Test",
-                            "AddressLine1": "123 any st",
-                            "AddressLine2": "",
-                            "DistrictOrCounty": "Washtenaw",
-                            "City": "Ann Arbor",
-                            "StateOrProvinceCode": "CO",
-                            "CountryCode": "US",
-                            "PostalCode": "48104"
+            literal blocks::
+
+                FulfillmentInbound().update_shipment('123', {
+                        "MarketplaceId": "ATVPDKIKX0DER",
+                        "InboundShipmentHeader": {
+                            "ShipmentName": "Shipment for FBA15DJCQ1ZF",
+                            "ShipFromAddress": {
+                                "Name": "Uma Test",
+                                "AddressLine1": "123 any st",
+                                "AddressLine2": "",
+                                "DistrictOrCounty": "Washtenaw",
+                                "City": "Ann Arbor",
+                                "StateOrProvinceCode": "CO",
+                                "CountryCode": "US",
+                                "PostalCode": "48104"
+                            },
+                            "DestinationFulfillmentCenterId": "ABE2",
+                            "ShipmentStatus": "WORKING",
+                            "LabelPrepPreference": "SELLER_LABEL"
                         },
-                        "DestinationFulfillmentCenterId": "ABE2",
-                        "ShipmentStatus": "WORKING",
-                        "LabelPrepPreference": "SELLER_LABEL"
-                    },
-                    "InboundShipmentItems": [
-                        {
-                            "SellerSKU": "PSMM-TEST-SKU-Apr-03_21_17_20-0379",
-                            "QuantityShipped": 1
-                        }
-                    ]
-                })
+                        "InboundShipmentItems": [
+                            {
+                                "SellerSKU": "PSMM-TEST-SKU-Apr-03_21_17_20-0379",
+                                "QuantityShipped": 1
+                            }
+                        ]
+                    })
 
         Args:
             shipment_id:
@@ -154,7 +160,9 @@ class FulfillmentInbound(Client):
         preorder(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().preorder('shipmentId1', MarketplaceId='MarketplaceId1')
+            literal blocks::
+
+                FulfillmentInbound().preorder('shipmentId1', MarketplaceId='MarketplaceId1')
 
         Args:
             shipment_id:
@@ -175,7 +183,9 @@ class FulfillmentInbound(Client):
         prep_instruction(self, data, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+            literal blocks::
+
+                FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
 
         Args:
             data:
@@ -192,7 +202,9 @@ class FulfillmentInbound(Client):
         get_transport_information(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().get_transport_information('shipmentId1')
+            literal blocks::
+
+                FulfillmentInbound().get_transport_information('shipmentId1')
 
         Args:
             shipment_id:
@@ -223,7 +235,9 @@ class FulfillmentInbound(Client):
         void_transport(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().void_transport('shipmentId1')
+            literal blocks::
+
+                FulfillmentInbound().void_transport('shipmentId1')
 
         Args:
             shipment_id:
@@ -240,7 +254,9 @@ class FulfillmentInbound(Client):
         estimate_transport(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().estimate_transport('shipmentId1')
+            literal blocks::
+
+                FulfillmentInbound().estimate_transport('shipmentId1')
 
         Args:
             shipment_id:
@@ -265,7 +281,9 @@ class FulfillmentInbound(Client):
         bill_of_lading(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().bill_of_lading('shipmentId')
+            literal blocks::
+
+                FulfillmentInbound().bill_of_lading('shipmentId')
 
         Args:
             shipment_id:
@@ -282,7 +300,9 @@ class FulfillmentInbound(Client):
         get_shipments(self, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().get_shipments(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                FulfillmentInbound().get_shipments(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             **kwargs:
@@ -298,7 +318,9 @@ class FulfillmentInbound(Client):
         shipment_items_by_shipment(self, shipment_id, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().shipment_items_by_shipment('FBA15DJ9SVVD', MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                FulfillmentInbound().shipment_items_by_shipment('FBA15DJ9SVVD', MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             shipment_id:
@@ -315,7 +337,9 @@ class FulfillmentInbound(Client):
         shipment_items(self, **kwargs) -> ApiResponse
 
         Examples:
-            FulfillmentInbound().shipment_items(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER", NextToken='NextToken')
+            literal blocks::
+
+                FulfillmentInbound().shipment_items(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER", NextToken='NextToken')
 
         Args:
             **kwargs:

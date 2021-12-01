@@ -32,7 +32,9 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Feeds().create_feed('POST_PRODUCT_DATA', '3d4e42b5-1d6e-44e8-a89c-2abfca0625bb',
+            literal blocks::
+
+                Feeds().create_feed('POST_PRODUCT_DATA', '3d4e42b5-1d6e-44e8-a89c-2abfca0625bb',
                               marketplaceIds=["ATVPDKIKX0DER", "A1F83G8C2ARO7P"])
 
         Args:
@@ -136,7 +138,9 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Feeds().get_feed(feed_id)
+            literal blocks::
+
+                Feeds().get_feed(feed_id)
 
         Args:
             feed_id: str

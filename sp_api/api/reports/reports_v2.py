@@ -34,9 +34,11 @@ class ReportsV2(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            report_types = ["FEE_DISCOUNTS_REPORT", "GET_AFN_INVENTORY_DATA"]
-            processing_status = ["IN_QUEUE", "IN_PROGRESS"]
-            res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
+            literal blocks::
+
+                report_types = ["FEE_DISCOUNTS_REPORT", "GET_AFN_INVENTORY_DATA"]
+                processing_status = ["IN_QUEUE", "IN_PROGRESS"]
+                res = Reports().get_reports(reportTypes=report_types, processingStatuses=processing_status)
 
         Args:
             key reportTypes: str[] or ReportType[] | optional  A list of report types used to filter reports. When reportTypes is provided, the other filter parameters (processingStatuses, marketplaceIds, createdSince, createdUntil) and pageSize may also be provided. Either reportTypes or nextToken is required.
@@ -84,13 +86,15 @@ class ReportsV2(Client):
         ======================================  ==============
 
         Examples:
-            res = Reports().create_report(
-                reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA,
-                dataStartTime='2019-12-10T20:11:24.000Z',
-                marketplaceIds=[
-                    "A1PA6795UKMFR9",
-                    "ATVPDKIKX0DER"
-                ])
+            literal blocks::
+
+                res = Reports().create_report(
+                    reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA,
+                    dataStartTime='2019-12-10T20:11:24.000Z',
+                    marketplaceIds=[
+                        "A1PA6795UKMFR9",
+                        "ATVPDKIKX0DER"
+                    ])
 
         Args:
             key reportOptions: optional	Additional information passed to reports. This varies by report type.	ReportOptions
@@ -148,7 +152,9 @@ class ReportsV2(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Reports().get_report('ID323')
+            literal blocks::
+
+                Reports().get_report('ID323')
 
         Args:
             reportId: str
@@ -202,7 +208,9 @@ class ReportsV2(Client):
         ======================================  ==============
 
         Examples:
-            Reports().create_report_schedule(reportType='FEE_DISCOUNTS_REPORT',
+            literal blocks::
+
+                Reports().create_report_schedule(reportType='FEE_DISCOUNTS_REPORT',
                                            period=Schedules.MINUTES_5.value,
                                            nextReportCreationTime="2019-12-10T20:11:24.000Z",
                                            marketplaceIds=["A1PA6795UKMFR9", "ATVPDKIKX0DER"])
@@ -246,7 +254,9 @@ class ReportsV2(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Reports().cancel_report_schedule('ID')
+            literal blocks::
+
+                Reports().cancel_report_schedule('ID')
 
         Args:
             reportScheduleId: str
@@ -275,7 +285,9 @@ class ReportsV2(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Reports().get_report_schedule('ID323')
+            literal blocks::
+
+                Reports().get_report_schedule('ID323')
 
         Args:
             schedule_id: str | required The identifier for the report schedule. This identifier is unique only in combination with a seller ID.
@@ -311,7 +323,9 @@ class ReportsV2(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Reports().get_report_document('0356cf79-b8b0-4226-b4b9-0ee058ea5760', download=True, file=file)
+            literal blocks::
+
+                Reports().get_report_document('0356cf79-b8b0-4226-b4b9-0ee058ea5760', download=True, file=file)
 
         Args:
             reportDocumentId: str | the document to load

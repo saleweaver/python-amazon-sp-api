@@ -31,11 +31,13 @@ class Authorization(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            res = Authorization().get_authorization_code(
-                mwsAuthToken='test',
-                developerId='test',
-                sellingPartnerId='test'
-            )
+            literal blocks::
+
+                res = Authorization().get_authorization_code(
+                    mwsAuthToken='test',
+                    developerId='test',
+                    sellingPartnerId='test'
+                )
 
 
         Args:

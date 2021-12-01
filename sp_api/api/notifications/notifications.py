@@ -32,7 +32,9 @@ class Notifications(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
+            literal blocks::
+
+                Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
 
         Args:
             notification_type: NotificationType or str
@@ -70,7 +72,9 @@ class Notifications(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
+            literal blocks::
+
+                Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
 
         Args:
             notification_type: NotificationType or str
@@ -135,7 +139,9 @@ class Notifications(Client):
         ======================================  ==============
 
         Examples:
-            Notifications().create_destination(name='test', arn='arn:aws:sqs:us-east-2:444455556666:queue1')
+            literal blocks::
+
+                Notifications().create_destination(name='test', arn='arn:aws:sqs:us-east-2:444455556666:queue1')
 
         Args:
             account_id:

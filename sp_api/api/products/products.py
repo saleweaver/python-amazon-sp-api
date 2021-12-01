@@ -22,7 +22,9 @@ class Products(Client):
         ======================================  ==============
 
         Examples:
-            Products().get_product_pricing_for_skus(['sku', 'sku1'], MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                Products().get_product_pricing_for_skus(['sku', 'sku1'], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             seller_sku_list: [str]
@@ -52,7 +54,9 @@ class Products(Client):
         ======================================  ==============
 
         Examples:
-            Products().get_product_pricing_for_asins(['asin1', 'asin2'], MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                Products().get_product_pricing_for_asins(['asin1', 'asin2'], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             asin_list: [str]
@@ -81,7 +85,9 @@ class Products(Client):
         ======================================  ==============
 
         Examples:
-            Products().get_competitive_pricing_for_skus([], MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                Products().get_competitive_pricing_for_skus([], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             seller_sku_list: [str]
@@ -106,7 +112,9 @@ class Products(Client):
         ======================================  ==============
 
         Examples:
-            Products().get_competitive_pricing_for_asins([], MarketplaceId="ATVPDKIKX0DER")
+            literal blocks::
+
+                Products().get_competitive_pricing_for_asins([], MarketplaceId="ATVPDKIKX0DER")
 
         Args:
             asin_list: [str]

@@ -55,7 +55,9 @@ class Catalog(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            res = Catalog().list_items(MarketplaceId='TEST_CASE_200', SellerSKU='SKU_200')
+            literal blocks::
+
+                res = Catalog().list_items(MarketplaceId='TEST_CASE_200', SellerSKU='SKU_200')
 
         Args:
             key MarketplaceId: str

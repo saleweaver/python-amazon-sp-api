@@ -38,10 +38,12 @@ class Inventories(Client):
         Usage Plan:
 
         Examples:
-            Inventories().get_inventory_summary_marketplace(**{
-                    "details": True,
-                    "marketplaceIds": ["ATVPDKIKX0DER"]
-                })
+            literal blocks::
+
+                Inventories().get_inventory_summary_marketplace(**{
+                        "details": True,
+                        "marketplaceIds": ["ATVPDKIKX0DER"]
+                    })
 
         Args:
             key details: bool | true to return inventory summaries with additional summarized inventory details and quantities. Otherwise, returns inventory summaries only (default value).	boolean	"false"
