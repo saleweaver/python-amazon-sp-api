@@ -29,15 +29,16 @@ class Sales(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            ```python
-            from sp_api.api import Sales
-            from sp_api.base import Granularity
+            literal blocks::
 
-            Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central')
-            Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
-            Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central', asin='B008OLKVEW')
-            Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central', asin='B008OLKVEW')
-            ```
+                from sp_api.api import Sales
+                from sp_api.base import Granularity
+
+                Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central')
+                Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central')
+                Sales().get_order_metrics(interval, Granularity.TOTAL, granularityTimeZone='US/Central', asin='B008OLKVEW')
+                Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central', asin='B008OLKVEW')
+
 
         Args:
             key marketplaceIds: [str]
