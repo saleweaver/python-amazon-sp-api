@@ -29,7 +29,6 @@ class Sales(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Examples:
-            literal blocks::
 
                 from sp_api.api import Sales
                 from sp_api.base import Granularity
