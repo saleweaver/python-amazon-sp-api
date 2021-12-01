@@ -215,22 +215,14 @@ class ReportsV2(Client):
                                            nextReportCreationTime="2019-12-10T20:11:24.000Z",
                                            marketplaceIds=["A1PA6795UKMFR9", "ATVPDKIKX0DER"])
 
-         Args:
-            body: {
-              "reportType": "string",
-              "marketplaceIds": [
-                "string"
-              ],
-              "reportOptions": {
-                "property1": "string",
-                "property2": "string"
-              },
-              "period": "PT5M",
-              "nextReportCreationTime": "2019-08-24T14:15:22Z"
-            }
-        
+        Args:
+            key reportType: str
+            key marketplaceIds: str
+            key reportOptions: dict
+            period: Schedules
+            nextReportCreationTime: str datetime isoformat
 
-         Returns:
+        Returns:
             ApiResponse:
         """
 
