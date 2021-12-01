@@ -19,24 +19,24 @@ class FbaInboundEligibility(Client):
 
         This operation gets an eligibility preview for an item that you specify. You can specify the type of eligibility preview that you want (INBOUND or COMMINGLING). For INBOUND previews, you can specify the marketplace in which you want to determine the item's eligibility.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 1 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
 
-         Args:
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
             key marketplaceIds:array |  The identifier for the marketplace in which you want to determine eligibility. Required only when program=INBOUND.
-        
             key asin:string | * REQUIRED The ASIN of the item for which you want an eligibility preview.
-        
             key program:string | * REQUIRED The program that you want to check eligibility against.
         
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     

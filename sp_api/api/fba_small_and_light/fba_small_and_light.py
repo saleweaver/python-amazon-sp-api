@@ -22,22 +22,21 @@ class FbaSmallAndLight(Client):
 
         Returns the Small and Light enrollment status for the item indicated by the specified seller SKU in the specified marketplace.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 2 | 10 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       10
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             seller_sku:string | * REQUIRED The seller SKU that identifies the item.
-        
             key marketplaceIds:array | * REQUIRED The marketplace for which the enrollment status is retrieved. Note: Accepts a single marketplace only.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -54,22 +53,22 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Enrolls the item indicated by the specified seller SKU in the Small and Light program in the specified marketplace. If the item is not eligible, the ineligibility reasons are returned.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 2 | 5 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       5
+        ======================================  ==============
 
-         Args:
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
             seller_sku:string | * REQUIRED The seller SKU that identifies the item.
-        
             key marketplaceIds:array | * REQUIRED The marketplace in which to enroll the item. Note: Accepts a single marketplace only.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -86,22 +85,21 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Removes the item indicated by the specified seller SKU from the Small and Light program in the specified marketplace. If the item is not eligible for disenrollment, the ineligibility reasons are returned.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 2 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             seller_sku:string | * REQUIRED The seller SKU that identifies the item.
-        
             key marketplaceIds:array | * REQUIRED The marketplace in which to remove the item from the Small and Light program. Note: Accepts a single marketplace only.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -118,22 +116,22 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Returns the Small and Light program eligibility status of the item indicated by the specified seller SKU in the specified marketplace. If the item is not eligible, the ineligibility reasons are returned.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 2 | 10 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       10
+        ======================================  ==============
 
-         Args:
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
             seller_sku:string | * REQUIRED The seller SKU that identifies the item.
-        
             key marketplaceIds:array | * REQUIRED The marketplace for which the eligibility status is retrieved. NOTE: Accepts a single marketplace only.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -147,23 +145,33 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Returns the Small and Light fee estimates for the specified items. You must include a marketplaceId parameter to retrieve the proper fee estimates for items to be sold in that marketplace. The ordering of items in the response will mirror the order of the items in the request. Duplicate ASIN/price combinations are removed.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 3 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       3
+        ======================================  ==============
 
-         Args:
-        
-            body: | * REQUIRED {'description': 'Request schema for submitting items for which to retrieve fee estimates.',
- 'properties': {'items': {'description': 'A list of items for which to retrieve fee estimates (limit: 25).', 'items': {'$ref': '#/definitions/Item'}, 'maxItems': 25, 'type': 'array'}, 'marketplaceId': {'$ref': '#/definitions/MarketplaceId'}},
- 'required': ['items', 'marketplaceId'],
- 'type': 'object'}
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Returns:
+        Args:
+            body:  REQUIRED
+            {
+              "marketplaceId": "string",
+              "items": [
+                {
+                  "asin": "string",
+                  "price": {
+                    "currencyCode": "string",
+                    "amount": 0
+                  }
+                }
+              ]
+            }
+
+        Returns:
             ApiResponse:
         """
     

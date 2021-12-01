@@ -18,22 +18,21 @@ class Messaging(Client):
 
         Returns a list of message types that are available for an order that you specify. A message type is represented by an actions object, which contains a path and query parameter(s). You can use the path and parameter(s) to call an operation that sends a message.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which you want a list of available message types.
-
             key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -46,28 +45,29 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message asking a buyer to provide or verify customization details such as name spelling, images, initials, etc.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-            body: | * REQUIRED {'description': 'The request schema for the confirmCustomizationDetails operation.',
- 'properties': {'attachments': {'description': 'Attachments to include in the message to the buyer.', 'items': {'$ref': '#/definitions/Attachment'}, 'maxLength': 5, 'type': 'array'},
-                'text': {'description': "The text to be sent to the buyer. Only links related to customization details are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
-                                        'retrieved from the GetAttributes operation.',
-                         'maxLength': 800,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
+            body: {
+              "text": "string",
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ]
+            }
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -82,28 +82,24 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to a buyer to arrange a delivery or to confirm contact information for making a delivery.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-
-            body: | * REQUIRED {'description': 'The request schema for the createConfirmDeliveryDetails operation.',
- 'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to order delivery are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
-                                        'retrieved from the GetAttributes operation.',
-                         'maxLength': 2000,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
+            body: {
+              "text": "string"
+            }
 
 
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -118,28 +114,29 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a critical message that contains documents that a seller is legally obligated to provide to the buyer. This message should only be used to deliver documents that are required by law.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ]
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createLegalDisclosure operation.',
- 'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
-                                               'GetAttributes operation.',
-                                'items': {'$ref': '#/definitions/Attachment'},
-                                'maxLength': 5,
-                                'type': 'array'}},
- 'type': 'object'}
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -154,19 +151,20 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a non-critical message that asks a buyer to remove their negative feedback. This message should only be sent after the seller has resolved the buyer's problem.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
 
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -181,28 +179,23 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to ask a buyer an order-related question prior to shipping their order.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body:{
+              "text": "string"
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createConfirmOrderDetails operation.',
- 'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to order completion are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
-                                        'retrieved from the GetAttributes operation.',
-                         'maxLength': 2000,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
-
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -217,28 +210,24 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to contact a Home Service customer to arrange a service call or to gather information prior to a service call.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
-
-            body: | * REQUIRED {'description': 'The request schema for the createConfirmServiceDetails operation.',
- 'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to Home Service calls are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can be "
-                                        'retrieved from the GetAttributes operation.',
-                         'maxLength': 2000,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
+            body: {
+              "text": "string"
+            }
 
 
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -253,28 +242,29 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to a buyer to provide details about an Amazon Motors order. This message can only be sent by Amazon Motors sellers.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ]
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createAmazonMotors operation.',
- 'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
-                                               'GetAttributes operation.',
-                                'items': {'$ref': '#/definitions/Attachment'},
-                                'maxLength': 5,
-                                'type': 'array'}},
- 'type': 'object'}
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -289,31 +279,32 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to a buyer to provide details about warranty information on a purchase in their order.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-         Args:
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ],
+              "coverageStartDate": "2019-08-24T14:15:22Z",
+              "coverageEndDate": "2019-08-24T14:15:22Z"
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createWarranty operation.',
- 'properties': {'attachments': {'description': "Attachments to include in the message to the buyer. If any text is included in the attachment, the text must be written in the buyer's language of preference, which can be retrieved from the "
-                                               'GetAttributes operation.',
-                                'items': {'$ref': '#/definitions/Attachment'},
-                                'maxLength': 5,
-                                'minLength': 1,
-                                'type': 'array'},
-                'coverageEndDate': {'description': 'The end date of the warranty coverage to include in the message to the buyer.', 'format': 'date-time', 'type': 'string'},
-                'coverageStartDate': {'description': 'The start date of the warranty coverage to include in the message to the buyer.', 'format': 'date-time', 'type': 'string'}},
- 'type': 'object'}
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -328,17 +319,18 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Returns a response containing attributes related to an order. This includes buyer preferences.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
 
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -351,29 +343,30 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a message to a buyer to share a digital access key needed to utilize digital content in their order.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-         Args:
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "text": "string",
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ]
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createDigitalAccessKey operation.',
- 'properties': {'attachments': {'description': 'Attachments to include in the message to the buyer.', 'items': {'$ref': '#/definitions/Attachment'}, 'maxLength': 5, 'type': 'array'},
-                'text': {'description': "The text to be sent to the buyer. Only links related to the digital access key are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can "
-                                        'be retrieved from the GetAttributes operation.',
-                         'maxLength': 400,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
-
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -388,28 +381,23 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a critical message to a buyer that an unexpected problem was encountered affecting the completion of the order.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-
+        Args:
             order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "text": "string"
+            }
 
-            body: | * REQUIRED {'description': 'The request schema for the createUnexpectedProblem operation.',
- 'properties': {'text': {'description': "The text to be sent to the buyer. Only links related to unexpected problem calls are allowed. Do not include HTML or email addresses. The text must be written in the buyer's language of preference, which can "
-                                        'be retrieved from the GetAttributes operation.',
-                         'maxLength': 2000,
-                         'minLength': 1,
-                         'type': 'string'}},
- 'type': 'object'}
-
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 

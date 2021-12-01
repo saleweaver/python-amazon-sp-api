@@ -19,27 +19,23 @@ class ListingsItems(Client):
 
         Delete a listings item for a selling partner.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 5 | 10 |
-|Selling partner specific| Variable | Variable |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       10
+        ======================================  ==============
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-        
             sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-        
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-        
             key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -52,28 +48,25 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
 
         Returns details about a listings item for a selling partner.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 10 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       10
+        ======================================  ==============
 
-         Args:
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
 
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-
+        Args:
+            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code
             sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-
             key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-
             key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
 
-
-         Returns:
+        Returns:
             ApiResponse:
         """
 
@@ -86,30 +79,34 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 5 | 10 |
-|Selling partner specific| Variable | Variable |
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       10
+        ======================================  ==============
 
-         Args:
-        
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
             sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-        
             sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-        
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-        
             key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-        
-            body: | * REQUIRED {'description': 'The request body schema for the patchListingsItem operation.',
- 'properties': {'patches': {'description': 'One or more JSON Patch operations to perform on the listings item.', 'items': {'$ref': '#/definitions/PatchOperation'}, 'minItems': 1, 'type': 'array'},
-                'productType': {'description': 'The Amazon product type of the listings item.', 'type': 'string'}},
- 'required': ['productType', 'patches'],
- 'type': 'object'}
+            body: {
+              "productType": "string",
+              "patches": [
+                {
+                  "op": "add",
+                  "path": "string",
+                  "value": [
+                    {}
+                  ]
+                }
+              ]
+            }
         
 
          Returns:
@@ -125,39 +122,29 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
 
         Creates a new or fully-updates an existing listings item for a selling partner.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 5 | 10 |
-|Selling partner specific| Variable | Variable |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       10
+        ======================================  ==============
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-        
             sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-        
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-        
             key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-        
-            body: | * REQUIRED {'description': 'The request body schema for the putListingsItem operation.',
- 'properties': {'attributes': {'additionalProperties': True, 'description': 'JSON object containing structured listings item attribute data keyed by attribute name.', 'type': 'object'},
-                'productType': {'description': 'The Amazon product type of the listings item.', 'type': 'string'},
-                'requirements': {'description': 'The name of the requirements set for the provided data.',
-                                 'enum': ['LISTING', 'LISTING_PRODUCT_ONLY', 'LISTING_OFFER_ONLY'],
-                                 'type': 'string',
-                                 'x-docgen-enum-table-extension': [{'description': 'Indicates the submitted data contains product facts and sales terms.', 'value': 'LISTING'},
-                                                                   {'description': 'Indicates the submitted data contains product facts only.', 'value': 'LISTING_PRODUCT_ONLY'},
-                                                                   {'description': 'Indicates the submitted data contains sales terms only.', 'value': 'LISTING_OFFER_ONLY'}]}},
- 'required': ['productType', 'attributes'],
- 'type': 'object'}
+            body: {
+              "productType": "string",
+              "requirements": "LISTING",
+              "attributes": {}
+            }
         
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
