@@ -163,9 +163,9 @@ class VendorOrders(Client):
 
 
         Args:
-            kwargs: Example
+            kwargs: acknowledgements | See Example
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
