@@ -111,22 +111,22 @@ class Services(Client):
         10                                      40
         ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            key serviceOrderIds:array |  List of service order ids for the query you want to perform.Max values supported 20.
-            key serviceJobStatus:array |  A list of one or more job status by which to filter the list of jobs.
-            key pageToken:string |  String returned in the response of your previous request.
-            key pageSize:integer |  A non-negative integer that indicates the maximum number of jobs to return in the list, Value must be 1 - 20. Default 20.
-            key sortField:string |  Sort fields on which you want to sort the output.
-            key sortOrder:string |  Sort order for the query you want to perform.
-            key createdAfter:string |  A date used for selecting jobs created after (or at) a specified time must be in ISO 8601 format. Required if LastUpdatedAfter is not specified.Specifying both CreatedAfter and LastUpdatedAfter returns an error.
-            key createdBefore:string |  A date used for selecting jobs created before (or at) a specified time must be in ISO 8601 format.
-            key lastUpdatedAfter:string |  A date used for selecting jobs updated after (or at) a specified time must be in ISO 8601 format. Required if createdAfter is not specified.Specifying both CreatedAfter and LastUpdatedAfter returns an error.
-            key lastUpdatedBefore:string |  A date used for selecting jobs updated before (or at) a specified time must be in ISO 8601 format.
-            key scheduleStartDate:string |  A date used for filtering jobs schedule after (or at) a specified time must be in ISO 8601 format. schedule end date should not be earlier than schedule start date.
-            key scheduleEndDate:string |  A date used for filtering jobs schedule before (or at) a specified time must be in ISO 8601 format. schedule end date should not be earlier than schedule start date.
-            key marketplaceIds:array | * REQUIRED Used to select jobs that were placed in the specified marketplaces.
+            key serviceOrderIds: array |  List of service order ids for the query you want to perform.Max values supported 20.
+            key serviceJobStatus: array |  A list of one or more job status by which to filter the list of jobs.
+            key pageToken: string |  String returned in the response of your previous request.
+            key pageSize: integer |  A non-negative integer that indicates the maximum number of jobs to return in the list, Value must be 1 - 20. Default 20.
+            key sortField: string |  Sort fields on which you want to sort the output.
+            key sortOrder: string |  Sort order for the query you want to perform.
+            key createdAfter: string |  A date used for selecting jobs created after (or at) a specified time must be in ISO 8601 format. Required if LastUpdatedAfter is not specified.Specifying both CreatedAfter and LastUpdatedAfter returns an error.
+            key createdBefore: string |  A date used for selecting jobs created before (or at) a specified time must be in ISO 8601 format.
+            key lastUpdatedAfter: string |  A date used for selecting jobs updated after (or at) a specified time must be in ISO 8601 format. Required if createdAfter is not specified.Specifying both CreatedAfter and LastUpdatedAfter returns an error.
+            key lastUpdatedBefore: string |  A date used for selecting jobs updated before (or at) a specified time must be in ISO 8601 format.
+            key scheduleStartDate: string |  A date used for filtering jobs schedule after (or at) a specified time must be in ISO 8601 format. schedule end date should not be earlier than schedule start date.
+            key scheduleEndDate: string |  A date used for filtering jobs schedule before (or at) a specified time must be in ISO 8601 format. schedule end date should not be earlier than schedule start date.
+            key marketplaceIds: array | * REQUIRED Used to select jobs that were placed in the specified marketplaces.
 
         Returns:
             ApiResponse:
@@ -189,7 +189,11 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
         Args:
             serviceJobId:string | * REQUIRED An Amazon defined service job identifier.
             appointmentId:string | * REQUIRED An existing appointment identifier for the Service Job.
-            body: {
+            body:
+
+            .. code-block:: json
+
+            {
               "appointmentTime": {
                 "startTime": "2019-08-24T14:15:22Z",
                 "durationInMinutes": 0
