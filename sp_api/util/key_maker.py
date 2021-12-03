@@ -7,28 +7,33 @@ class KeyMaker:
 
 
     Examples:
-        key_mapping = {
-            'sku': ['seller_sku', 'sellerSku'],
-            'title': ['product_name']
-        }
+        literal blocks::
 
-        KeyMaker(key_mapping, deep=True).convert_keys({
-            'goo': {'x': {}},
-            'seller_sku': 1,
-            'product_name': {
-                'sellerSku': [
-                    'seller_sku',
-                    3,
-                    {
-                        'sellerSku': 22,
-                        'product_name': {
-                            'title': 'Foo',
-                            'x': 'bar'
-                        }
-                    }
-                ]
+            key_mapping = {
+                'sku': ['seller_sku', 'sellerSku'],
+                'title': ['product_name']
             }
-        })
+
+            res = KeyMaker(key_mapping, deep=True).convert_keys({
+                'seller_sku': 1,
+                'product_name': {
+                    'sellerSku': [
+                        'seller_sku',
+                        3,
+                        {
+                            'sellerSku': 22,
+                            'product_name': {
+                                'title': 'Foo',
+                                'x': 'bar'
+                            }
+                        }
+                    ]
+                }
+            })
+
+            res
+
+            {'sku': 1, 'title': {'sku': ['seller_sku', 3, {'sku': 22, 'title': {'title': 'Foo', 'x': 'bar'}}]}}
     """
 
     def __init__(self, key_mapping=None, *, deep=True):

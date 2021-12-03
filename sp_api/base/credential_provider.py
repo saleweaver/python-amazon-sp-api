@@ -162,11 +162,11 @@
 
 import json
 import os
+
 import confuse
 import boto3
 from botocore.exceptions import ClientError
 from cachetools import Cache
-
 
 class MissingCredentials(Exception):
     """

@@ -35,3 +35,4 @@ def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken',
 
     return decorator
 
+
