@@ -58,6 +58,11 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 
 Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
 
+# or use the shortcut
+orders = Orders().get_orders(
+    RestrictedResources=['buyerInfo', 'shippingAddress'],
+    LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+)
 ```
 
 ---
