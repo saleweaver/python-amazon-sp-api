@@ -13,7 +13,7 @@ class FbaSmallAndLight(Client):
 
     @deprecated
     def get_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
-        return self.get_small_and_light_enrollment_by_seller_s_k_u(sellerSKU, **kwargs)
+        return self.get_small_and_light_enrollment_by_seller_sku(sellerSKU, **kwargs)
 
     @sp_endpoint('/fba/smallAndLight/v1/enrollments/{}', method='GET')
     def get_small_and_light_enrollment_by_seller_sku(self, seller_sku, **kwargs) -> ApiResponse:
