@@ -46,7 +46,7 @@ class Orders(Client):
             key EasyShipShipmentStatuses: [str]
             key NextToken: str
             key AmazonOrderIds: [str]
-
+            key RestrictedResources: [str]
 
         Returns:
             ApiResponse:
@@ -81,6 +81,7 @@ class Orders(Client):
 
         Args:
             order_id: str
+            key RestrictedResources: [str]
             **kwargs:
 
         Returns:
@@ -128,6 +129,7 @@ class Orders(Client):
 
         Args:
             order_id: str
+            key RestrictedResources: [str]
             **kwargs:
 
         Returns:
