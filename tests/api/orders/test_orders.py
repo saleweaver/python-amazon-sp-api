@@ -47,18 +47,3 @@ def test_get_orders_400_error():
     except SellingApiBadRequestException as sep:
         assert sep.code == 400
         assert sep.amzn_code == 'InvalidInput'
-
-
-def test_get_orders_restricted_resources():
-    try:
-        orders = Orders().get_orders(
-            RestrictedResources=['buyerInfo', 'shippingAddress'],
-            LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
-        )
-        order = Orders().get_order(
-            'order-id',
-            RestrictedResources=['buyerInfo', 'shippingAddress'],
-            )
-        order_items = Orders().get_order_items('order-id', RestrictedResources=['buyerInfo'])
-    except SellingApiException:
-        pass

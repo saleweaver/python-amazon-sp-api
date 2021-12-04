@@ -247,7 +247,8 @@ class Orders(Client):
     def _access_restricted(self, kwargs):
         if 'original_path' not in kwargs:
             kwargs.update({'original_path': kwargs['path']})
-        self.restricted_data_token = self._get_token(**kwargs).payload['restrictedDataToken']
+        token = self._get_token(**kwargs).payload
+        self.restricted_data_token = token['restrictedDataToken']
         r = self._request(kwargs.pop('original_path'), params={**kwargs})
         self.restricted_data_token = None
         return r
