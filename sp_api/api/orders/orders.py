@@ -1,4 +1,4 @@
-from sp_api.base import sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
 from sp_api.base import Client, Marketplaces
 
 
