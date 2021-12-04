@@ -53,6 +53,8 @@ class Orders(Client):
 
 
         """
+        if 'RestrictedResources' in kwargs:
+            return self._access_restricted(kwargs)
         return self._request(kwargs.pop('path'), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}')
@@ -86,6 +88,9 @@ class Orders(Client):
 
 
         """
+        if 'RestrictedResources' in kwargs:
+            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+            return self._access_restricted(kwargs)
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False)
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
@@ -129,6 +134,9 @@ class Orders(Client):
             ApiResponse:
 
         """
+        if 'RestrictedResources' in kwargs:
+            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+            return self._access_restricted(kwargs)
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}/address')
@@ -223,3 +231,23 @@ class Orders(Client):
             ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
+
+    @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
+    def _get_token(self, **kwargs):
+        data_elements = kwargs.pop('RestrictedResources')
+
+        restricted_resources = [{
+            "method": "GET",
+            "path": kwargs.get('original_path'),
+            "dataElements": data_elements
+        }]
+
+        return self._request(kwargs.pop('path'), data={'restrictedResources': restricted_resources, **kwargs})
+
+    def _access_restricted(self, kwargs):
+        if 'original_path' not in kwargs:
+            kwargs.update({'original_path': kwargs['path']})
+        self.restricted_data_token = self._get_token(**kwargs).payload['restrictedDataToken']
+        r = self._request(kwargs.pop('original_path'), params={**kwargs})
+        self.restricted_data_token = None
+        return r
