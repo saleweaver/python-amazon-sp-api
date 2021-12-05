@@ -9,6 +9,7 @@ from .products.products import Products
 from .sales.sales import Sales
 from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
+from .feeds.feeds_v2 import FeedsV2
 from .inventories.inventories import Inventories
 from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
 from .upload.upload import Upload
@@ -16,6 +17,7 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+
 
 from .messaging.messaging import Messaging
     
@@ -74,6 +76,7 @@ __all__ = [
     "Finances",
     "Catalog",
     "Feeds",
+    "FeedsV2",
     "Inventories",
     "FulfillmentInbound",
     'Upload',
@@ -81,6 +84,8 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "Feeds",
+    
     "ReportsV2",
     
     "Messaging",
