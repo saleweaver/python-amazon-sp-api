@@ -81,11 +81,22 @@ class SellingApiTemporarilyUnavailableException(SellingApiException):
         super(SellingApiTemporarilyUnavailableException, self).__init__(error, headers)
 
 
+class SellingApiGatewayTimeoutException(SellingApiException):
+    """
+    503	Temporary overloading or maintenance of the server.
+    """
+    code = 504
+
+    def __init__(self, error, headers=None):
+        super(SellingApiGatewayTimeoutException, self).__init__(error, headers)
+
+
 def get_exception_for_code(code: int):
     return {
         400: SellingApiBadRequestException,
         403: SellingApiForbiddenException,
         429: SellingApiRequestThrottledException,
         500: SellingApiServerException,
-        503: SellingApiTemporarilyUnavailableException
+        503: SellingApiTemporarilyUnavailableException,
+        504: SellingApiGatewayTimeoutException
     }.get(code, SellingApiException)
