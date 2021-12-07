@@ -129,7 +129,7 @@ class Client(BaseClient):
         if isinstance(js, list):
             js = js[0]
         error = js.get('errors', None)
-        if error:
+        if error or res.status_code > 305:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
         return ApiResponse(**js, headers=res.headers)
