@@ -91,6 +91,10 @@ class SellingApiGatewayTimeoutException(SellingApiException):
         super(SellingApiGatewayTimeoutException, self).__init__(error, headers)
 
 
+class MissingScopeException(Exception):
+    pass
+
+
 def get_exception_for_code(code: int):
     return {
         400: SellingApiBadRequestException,

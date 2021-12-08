@@ -11,7 +11,7 @@ from requests import request
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
 from .ApiResponse import ApiResponse
 from .base_client import BaseClient
-from .exceptions import get_exception_for_code, SellingApiBadRequestException
+from .exceptions import get_exception_for_code, MissingScopeException
 from .marketplaces import Marketplaces
 from sp_api.base import AWSSigV4
 
@@ -76,7 +76,7 @@ class Client(BaseClient):
     @property
     def grantless_auth(self) -> AccessTokenResponse:
         if not self.grantless_scope:
-            raise Exception("Grantless operations require scope")
+            raise MissingScopeException("Grantless operations require scope")
         return self._auth.get_grantless_auth(self.grantless_scope)
 
     @property
