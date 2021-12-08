@@ -155,12 +155,14 @@ class Notifications(Client):
 
         """
         resource_name = 'sqs' if not account_id else 'eventBridge'
+        region = region if region else self.region
+
         data = {
             'resourceSpecification': {
                 resource_name: {
                     'arn': arn
                 } if not account_id else {
-                    'region': region if region else self.region,
+                    'region': region,
                     'accountId': account_id
                 }
             },

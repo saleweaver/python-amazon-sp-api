@@ -217,7 +217,7 @@ class CredentialProvider:
                 role_arn=secret.get('SP_API_ROLE_ARN')
             )
             self.cache['account_data'] = json.dumps(account_data)
-        except ClientError as client_error:
+        except ClientError:
             return
         else:
             self.credentials = self.Config(**account_data)
