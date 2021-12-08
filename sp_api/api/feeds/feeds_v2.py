@@ -52,7 +52,7 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
     
 
     @sp_endpoint('/feeds/2021-06-30/feeds', method='POST')
-    def create_feed(self, **kwargs) -> ApiResponse:
+    def create_feed(self, feed_type, input_feed_document_id, **kwargs) -> ApiResponse:
         """
         create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse
 
@@ -83,7 +83,12 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
         Returns:
             CreateFeedResponse:
         """
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        data = {
+            'feedType': feed_type,
+            'inputFeedDocumentId': input_feed_document_id,
+            **kwargs
+        }
+        return self._request(kwargs.pop('path'),  data=data)
     
 
     @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='DELETE')
