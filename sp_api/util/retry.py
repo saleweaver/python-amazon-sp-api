@@ -40,6 +40,11 @@ def retry(exception_classes=None, tries=10, delay=5, rate=1.3):
                 })
                 time.sleep(delay_now)
                 return wrapper(*args, **kwargs)
+            finally:
+                tries_counter.update({
+                    'count': 1,
+                    'last_delay': delay
+                })
 
         wrapper.__doc__ = function.__doc__
         return wrapper
