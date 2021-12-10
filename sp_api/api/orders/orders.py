@@ -1,4 +1,4 @@
-from sp_api.base import sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
 from sp_api.base import Client, Marketplaces
 
 
@@ -26,6 +26,11 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
+
         Args:
             key CreatedAfter: date
             key CreatedBefore: date
@@ -41,13 +46,15 @@ class Orders(Client):
             key EasyShipShipmentStatuses: [str]
             key NextToken: str
             key AmazonOrderIds: [str]
-
+            key RestrictedResources: [str]
 
         Returns:
             ApiResponse:
 
 
         """
+        if 'RestrictedResources' in kwargs:
+            return self._access_restricted(kwargs)
         return self._request(kwargs.pop('path'), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}')
@@ -67,8 +74,14 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Orders().get_order('TEST_CASE_200')
+
         Args:
             order_id: str
+            key RestrictedResources: [str]
             **kwargs:
 
         Returns:
@@ -76,6 +89,9 @@ class Orders(Client):
 
 
         """
+        if 'RestrictedResources' in kwargs:
+            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+            return self._access_restricted(kwargs)
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs}, add_marketplace=False)
 
     @sp_endpoint('/orders/v0/orders/{}/orderItems')
@@ -106,14 +122,23 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Orders().get_order_items('TEST_CASE_200')
+
         Args:
             order_id: str
+            key RestrictedResources: [str]
             **kwargs:
 
         Returns:
             ApiResponse:
 
         """
+        if 'RestrictedResources' in kwargs:
+            kwargs.update({'original_path': fill_query_params(kwargs.get('path'), order_id)})
+            return self._access_restricted(kwargs)
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params={**kwargs})
 
     @sp_endpoint('/orders/v0/orders/{}/address')
@@ -133,6 +158,8 @@ class Orders(Client):
         1                                       1
         ======================================  ==============
 
+        Examples:
+            Orders().get_order_address('TEST_CASE_200')
 
         Args:
             order_id: str
@@ -163,6 +190,9 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Orders().get_order_buyer_info('TEST_CASE_200')
+
         Args:
             order_id: str
             **kwargs:
@@ -190,6 +220,11 @@ class Orders(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Orders().get_order_items_buyer_info('TEST_CASE_200')
+
         Args:
             order_id: str
             key NextToken: str | retrieve data by next token
@@ -198,3 +233,24 @@ class Orders(Client):
             ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
+
+    @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
+    def _get_token(self, **kwargs):
+        data_elements = kwargs.pop('RestrictedResources')
+
+        restricted_resources = [{
+            "method": "GET",
+            "path": kwargs.get('original_path'),
+            "dataElements": data_elements
+        }]
+
+        return self._request(kwargs.pop('path'), data={'restrictedResources': restricted_resources, **kwargs})
+
+    def _access_restricted(self, kwargs):
+        if 'original_path' not in kwargs:
+            kwargs.update({'original_path': kwargs['path']})
+        token = self._get_token(**kwargs).payload
+        self.restricted_data_token = token['restrictedDataToken']
+        r = self._request(kwargs.pop('original_path'), params={**kwargs})
+        self.restricted_data_token = None
+        return r

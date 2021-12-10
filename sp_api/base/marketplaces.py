@@ -30,15 +30,15 @@ from enum import Enum
 import os
 
 
-class AWS_ENV(Enum):
+class AwsEnv(Enum):
     PRODUCTION = "PRODUCTION"
     SANDBOX = "SANDBOX"
 
 
-AWS_ENVIRONMENT = os.getenv("AWS_ENV", AWS_ENV.PRODUCTION.name)
+AWS_ENVIRONMENT = os.getenv("AWS_ENV", AwsEnv.PRODUCTION.name)
 BASE_URL = "https://sellingpartnerapi"
 
-if AWS_ENV(AWS_ENVIRONMENT) is AWS_ENV.SANDBOX:
+if AwsEnv(AWS_ENVIRONMENT) is AwsEnv.SANDBOX:
     BASE_URL = "https://sandbox.sellingpartnerapi"
 
 

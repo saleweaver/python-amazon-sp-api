@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.7.0',
+    version='0.9.0',
     install_requires=[
         "requests",
         "six>=1.15,<2",
@@ -35,8 +35,7 @@ setup(
               'sp_api.base',
               'sp_api.util',
                 ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
-              'sp_api.api.messaging',
-    
+
               'sp_api.api.catalog_items',
               'sp_api.api.product_type_definitions',
               'sp_api.api.listings_items',

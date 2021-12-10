@@ -19,28 +19,90 @@ class Shipping(Client):
 
         Create a new shipment.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-            body: | * REQUIRED {'description': 'The request schema for the createShipment operation.',
- 'properties': {'clientReferenceId': {'$ref': '#/definitions/ClientReferenceId'}, 'containers': {'$ref': '#/definitions/ContainerList'}, 'shipFrom': {'$ref': '#/definitions/Address'}, 'shipTo': {'$ref': '#/definitions/Address'}},
- 'required': ['clientReferenceId', 'containers', 'shipFrom', 'shipTo'],
- 'type': 'object'}
-        
+        Args:
+            body: {
+              "clientReferenceId": "string",
+              "shipTo": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "shipFrom": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "containers": [
+                {
+                  "containerType": "PACKAGE",
+                  "containerReferenceId": "string",
+                  "value": {
+                    "value": 0,
+                    "unit": "str"
+                  },
+                  "dimensions": {
+                    "length": 0,
+                    "width": 0,
+                    "height": 0,
+                    "unit": "IN"
+                  },
+                  "items": [
+                    {
+                      "quantity": 0,
+                      "unitPrice": {
+                        "value": 0,
+                        "unit": "str"
+                      },
+                      "unitWeight": {
+                        "unit": "g",
+                        "value": 0
+                      },
+                      "title": "string"
+                    }
+                  ],
+                  "weight": {
+                    "unit": "g",
+                    "value": 0
+                  }
+                }
+              ]
+            }
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
         return self._request(kwargs.pop('path'),  data=kwargs)
-    
 
     @sp_endpoint('/shipping/v1/shipments/{}', method='GET')
     def get_shipment(self, shipmentId, **kwargs) -> ApiResponse:
@@ -49,25 +111,24 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Return the entire shipment object for the shipmentId.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-            shipmentId:string | * REQUIRED 
-        
+        Args:
+            shipmentId:string | * REQUIRED
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), shipmentId), params=kwargs)
-    
 
     @sp_endpoint('/shipping/v1/shipments/{}/cancel', method='POST')
     def cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse:
@@ -76,20 +137,21 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Cancel a shipment by the given shipmentId.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-         Args:
-        
-            shipmentId:string | * REQUIRED 
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Returns:
+        Args:
+            shipmentId:string | * REQUIRED
+
+        Returns:
             ApiResponse:
         """
     
@@ -103,25 +165,29 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Purchase shipping labels based on a given rate.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-         Args:
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
+            shipmentId:string | * REQUIRED
+            body: {
+              "rateId": "string",
+              "labelSpecification": {
+                "labelFormat": "PNG",
+                "labelStockSize": "4x6"
+              }
+            }
         
-            shipmentId:string | * REQUIRED 
-        
-            body: | * REQUIRED {'description': 'The request schema for the purchaseLabels operation.',
- 'properties': {'labelSpecification': {'$ref': '#/definitions/LabelSpecification'}, 'rateId': {'$ref': '#/definitions/RateId'}},
- 'required': ['labelSpecification', 'rateId'],
- 'type': 'object'}
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -135,24 +201,27 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Retrieve shipping label based on the shipment id and tracking id.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-            shipmentId:string | * REQUIRED 
-        
-            trackingId:string | * REQUIRED 
-        
-            body: | * REQUIRED {'description': 'The request schema for the retrieveShippingLabel operation.', 'properties': {'labelSpecification': {'$ref': '#/definitions/LabelSpecification'}}, 'required': ['labelSpecification'], 'type': 'object'}
-        
+        Args:
+            shipmentId:string | * REQUIRED
+            trackingId:string | * REQUIRED
+            body: {
+              "labelSpecification": {
+                "labelFormat": "PNG",
+                "labelStockSize": "4x6"
+              }
+            }
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -166,29 +235,92 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Purchase shipping labels.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-            body: | * REQUIRED {'description': 'The payload schema for the purchaseShipment operation.',
- 'properties': {'clientReferenceId': {'$ref': '#/definitions/ClientReferenceId'},
-                'containers': {'$ref': '#/definitions/ContainerList'},
-                'labelSpecification': {'$ref': '#/definitions/LabelSpecification'},
-                'serviceType': {'$ref': '#/definitions/ServiceType'},
-                'shipDate': {'description': 'The start date and time. This defaults to the current date and time.', 'format': 'date-time', 'type': 'string'},
-                'shipFrom': {'$ref': '#/definitions/Address'},
-                'shipTo': {'$ref': '#/definitions/Address'}},
- 'required': ['clientReferenceId', 'containers', 'labelSpecification', 'serviceType', 'shipFrom', 'shipTo'],
- 'type': 'object'}
-        
+        Args:
+            body: {
+              "clientReferenceId": "string",
+              "shipTo": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "shipFrom": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "shipDate": "2019-08-24T14:15:22Z",
+              "serviceType": "Amazon Shipping Ground",
+              "containers": [
+                {
+                  "containerType": "PACKAGE",
+                  "containerReferenceId": "string",
+                  "value": {
+                    "value": 0,
+                    "unit": "str"
+                  },
+                  "dimensions": {
+                    "length": 0,
+                    "width": 0,
+                    "height": 0,
+                    "unit": "IN"
+                  },
+                  "items": [
+                    {
+                      "quantity": 0,
+                      "unitPrice": {
+                        "value": 0,
+                        "unit": "str"
+                      },
+                      "unitWeight": {
+                        "unit": "g",
+                        "value": 0
+                      },
+                      "title": "string"
+                    }
+                  ],
+                  "weight": {
+                    "unit": "g",
+                    "value": 0
+                  }
+                }
+              ],
+              "labelSpecification": {
+                "labelFormat": "PNG",
+                "labelStockSize": "4x6"
+              }
+            }
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -202,27 +334,69 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Get service rates.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-            body: | * REQUIRED {'description': 'The payload schema for the getRates operation.',
- 'properties': {'containerSpecifications': {'$ref': '#/definitions/ContainerSpecificationList'},
-                'serviceTypes': {'$ref': '#/definitions/ServiceTypeList'},
-                'shipDate': {'description': 'The start date and time. This defaults to the current date and time.', 'format': 'date-time', 'type': 'string'},
-                'shipFrom': {'$ref': '#/definitions/Address'},
-                'shipTo': {'$ref': '#/definitions/Address'}},
- 'required': ['containerSpecifications', 'serviceTypes', 'shipFrom', 'shipTo'],
- 'type': 'object'}
-        
+        Args:
+            body:{
+              "shipTo": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "shipFrom": {
+                "name": "string",
+                "addressLine1": "string",
+                "addressLine2": "string",
+                "addressLine3": "string",
+                "stateOrRegion": "string",
+                "city": "string",
+                "countryCode": "st",
+                "postalCode": "string",
+                "email": "string",
+                "copyEmails": [
+                  "string"
+                ],
+                "phoneNumber": "string"
+              },
+              "serviceTypes": [
+                "Amazon Shipping Ground"
+              ],
+              "shipDate": "2019-08-24T14:15:22Z",
+              "containerSpecifications": [
+                {
+                  "dimensions": {
+                    "length": 0,
+                    "width": 0,
+                    "height": 0,
+                    "unit": "IN"
+                  },
+                  "weight": {
+                    "unit": "g",
+                    "value": 0
+                  }
+                }
+              ]
+            }
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -236,18 +410,17 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Verify if the current account is valid.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 5 | 15 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
-
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -261,20 +434,21 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Return the tracking information of a shipment.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 1 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       1
+        ======================================  ==============
 
-         Args:
-        
-            trackingId:string | * REQUIRED 
-        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Returns:
+        Args:
+            trackingId:string | * REQUIRED
+
+        Returns:
             ApiResponse:
         """
     

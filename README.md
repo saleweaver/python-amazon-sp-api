@@ -15,6 +15,9 @@ If you have questions, please ask them in GitHub discussions
 
 [![discussions](https://img.shields.io/badge/github-discussions-brightgreen?style=for-the-badge&logo=github)](https://github.com/saleweaver/python-amazon-sp-api/discussions)
 
+or
+
+[![join on slack](https://img.shields.io/badge/slack-join%20on%20slack-orange?style=for-the-badge&logo=slack)](https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ)
 
 ---
 
@@ -55,15 +58,20 @@ Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/ts
 
 Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
 
+# or use the shortcut
+orders = Orders().get_orders(
+    RestrictedResources=['buyerInfo', 'shippingAddress'],
+    LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+)
 ```
 
 ---
 
 ### Documentation
 
-Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
+Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=text)
 
-[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
 
 
 ### DISCLAIMER

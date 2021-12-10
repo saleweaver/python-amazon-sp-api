@@ -19,35 +19,27 @@ class VendorDirectFulfillmentOrders(Client):
 
         Returns a list of purchase orders created during the time frame that you specify. You define the time frame using the createdAfter and createdBefore parameters. You must use both parameters. You can choose to get only the purchase order numbers by setting the includeDetails parameter to false. In that case, the operation returns a list of purchase order numbers. You can then call the getOrder operation to return the details of a specific order.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 10 | 10 |
-|Selling partner specific| Variable | Variable |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        10                                      10
+        ======================================  ==============
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             key shipFromPartyId:string |  The vendor warehouse identifier for the fulfillment warehouse. If not specified, the result will contain orders for all warehouses.
-        
             key status:string |  Returns only the purchase orders that match the specified status. If not specified, the result will contain orders that match any status.
-        
             key limit:integer |  The limit to the number of purchase orders returned.
-        
             key createdAfter:string | * REQUIRED Purchase orders that became available after this date and time will be included in the result. Must be in ISO-8601 date/time format.
-        
             key createdBefore:string | * REQUIRED Purchase orders that became available before this date and time will be included in the result. Must be in ISO-8601 date/time format.
-        
             key sortOrder:string |  Sort the list in ascending or descending order by order creation date.
-        
             key nextToken:string |  Used for pagination when there are more orders than the specified result size limit. The token value is returned in the previous API call.
-        
             key includeDetails:string |  When true, returns the complete purchase order details. Otherwise, only purchase order numbers are returned.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -61,21 +53,20 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
 
         Returns purchase order information for the purchaseOrderNumber that you specify.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 10 | 10 |
-|Selling partner specific| Variable | Variable |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        10                                       10
+        ======================================  ==============
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             purchaseOrderNumber:string | * REQUIRED The order identifier for the purchase order that you want. Formatting Notes: alpha-numeric code.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
@@ -89,23 +80,116 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
 
         Submits acknowledgements for one or more purchase orders.
 
-**Usage Plans:**
+        **Usage Plans:**
 
-| Plan type | Rate (requests per second) | Burst |
-| ---- | ---- | ---- |
-|Default| 10 | 10 |
-|Selling partner specific| Variable | Variable |
 
-The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        10                                      10
+        ======================================  ==============
 
-         Args:
-        
-            body: | * REQUIRED {'description': 'The request schema for the submitAcknowledgement operation.',
- 'properties': {'orderAcknowledgements': {'description': 'A list of one or more purchase orders.', 'items': {'$ref': '#/definitions/OrderAcknowledgementItem'}, 'type': 'array'}},
- 'type': 'object'}
-        
+        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Returns:
+        Args:
+            body: {
+              "orderAcknowledgements": [
+                {
+                  "purchaseOrderNumber": "string",
+                  "vendorOrderNumber": "string",
+                  "acknowledgementDate": "2019-08-24T14:15:22Z",
+                  "acknowledgementStatus": {
+                    "code": "string",
+                    "description": "string"
+                  },
+                  "sellingParty": {
+                    "partyId": "string",
+                    "address": {
+                      "name": "string",
+                      "attention": "string",
+                      "addressLine1": "string",
+                      "addressLine2": "string",
+                      "addressLine3": "string",
+                      "city": "string",
+                      "county": "string",
+                      "district": "string",
+                      "stateOrRegion": "string",
+                      "postalCode": "string",
+                      "countryCode": "string",
+                      "phone": "string"
+                    },
+                    "taxInfo": {
+                      "taxRegistrationType": "VAT",
+                      "taxRegistrationNumber": "string",
+                      "taxRegistrationAddress": {
+                        "name": "string",
+                        "attention": "string",
+                        "addressLine1": "string",
+                        "addressLine2": "string",
+                        "addressLine3": "string",
+                        "city": "string",
+                        "county": "string",
+                        "district": "string",
+                        "stateOrRegion": "string",
+                        "postalCode": "string",
+                        "countryCode": "string",
+                        "phone": "string"
+                      },
+                      "taxRegistrationMessages": "string"
+                    }
+                  },
+                  "shipFromParty": {
+                    "partyId": "string",
+                    "address": {
+                      "name": "string",
+                      "attention": "string",
+                      "addressLine1": "string",
+                      "addressLine2": "string",
+                      "addressLine3": "string",
+                      "city": "string",
+                      "county": "string",
+                      "district": "string",
+                      "stateOrRegion": "string",
+                      "postalCode": "string",
+                      "countryCode": "string",
+                      "phone": "string"
+                    },
+                    "taxInfo": {
+                      "taxRegistrationType": "VAT",
+                      "taxRegistrationNumber": "string",
+                      "taxRegistrationAddress": {
+                        "name": "string",
+                        "attention": "string",
+                        "addressLine1": "string",
+                        "addressLine2": "string",
+                        "addressLine3": "string",
+                        "city": "string",
+                        "county": "string",
+                        "district": "string",
+                        "stateOrRegion": "string",
+                        "postalCode": "string",
+                        "countryCode": "string",
+                        "phone": "string"
+                      },
+                      "taxRegistrationMessages": "string"
+                    }
+                  },
+                  "itemAcknowledgements": [
+                    {
+                      "itemSequenceNumber": "string",
+                      "buyerProductIdentifier": "string",
+                      "vendorProductIdentifier": "string",
+                      "acknowledgedQuantity": {
+                        "amount": 0,
+                        "unitOfMeasure": "Each"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+
+        Returns:
             ApiResponse:
         """
     

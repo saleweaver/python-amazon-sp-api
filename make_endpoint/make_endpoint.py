@@ -47,7 +47,7 @@ def make_endpoint_name(s):
 
 
 def make_directory(endpoint):
-    directory = f'../sp_api/api/{sub(endpoint)}'
+    directory = f'../sp_api/api/{sub(endpoint)}_f'
     if os.path.exists(directory):
         raise Exception('Directory exists')
     os.mkdir(directory)
@@ -154,7 +154,9 @@ if __name__ == '__main__':
         # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/listings-items-api-model/listingsItems_2020-09-01.json',
         # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/product-type-definitions-api-model/definitionsProductTypes_2020-09-01.json',
         # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/catalog-items-api-model/catalogItems_2020-12-01.json'
-        'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/messaging-api-model/messaging.json'
+        # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/messaging-api-model/messaging.json'
+        # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/reports-api-model/reports_2021-06-30.json'
+        'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/feeds-api-model/feeds_2021-06-30.json'
     ]:
         try:
             create_endpoint_file(model_json_url)

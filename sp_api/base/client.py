@@ -2,6 +2,7 @@ import hashlib
 import json
 from datetime import datetime
 import logging
+import os
 
 import boto3
 from cachetools import TTLCache
@@ -10,7 +11,7 @@ from requests import request
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
 from .ApiResponse import ApiResponse
 from .base_client import BaseClient
-from .exceptions import get_exception_for_code, SellingApiBadRequestException
+from .exceptions import get_exception_for_code, MissingScopeException
 from .marketplaces import Marketplaces
 from sp_api.base import AWSSigV4
 
@@ -25,7 +26,7 @@ class Client(BaseClient):
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces.US,
+            marketplace: Marketplaces = Marketplaces[os.environ['SP_API_DEFAULT_MARKETPLACE']] if 'SP_API_DEFAULT_MARKETPLACE' in os.environ else Marketplaces.US,
             *,
             refresh_token=None,
             account='default',
@@ -75,7 +76,7 @@ class Client(BaseClient):
     @property
     def grantless_auth(self) -> AccessTokenResponse:
         if not self.grantless_scope:
-            raise Exception("Grantless operations require scope")
+            raise MissingScopeException("Grantless operations require scope")
         return self._auth.get_grantless_auth(self.grantless_scope)
 
     @property
@@ -89,12 +90,19 @@ class Client(BaseClient):
         return role.get('Credentials')
 
     def _sign_request(self):
-        role = self.role
+        aws_session_token = None
+        aws_access_key_id = self.credentials.aws_access_key
+        aws_secret_access_key = self.credentials.aws_secret_key
+        if self.credentials.role_arn:
+            role = self.role
+            aws_session_token = role.get('SessionToken')
+            aws_access_key_id = role.get('AccessKeyId')
+            aws_secret_access_key = role.get('SecretAccessKey')
         return AWSSigV4('execute-api',
-                        aws_access_key_id=role.get('AccessKeyId'),
-                        aws_secret_access_key=role.get('SecretAccessKey'),
+                        aws_access_key_id=aws_access_key_id,
+                        aws_secret_access_key=aws_secret_access_key,
                         region=self.region,
-                        aws_session_token=role.get('SessionToken')
+                        aws_session_token=aws_session_token
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
@@ -117,11 +125,14 @@ class Client(BaseClient):
 
     @staticmethod
     def _check_response(res) -> ApiResponse:
-        error = res.json().get('errors', None)
+        js = res.json() or {}
+        if isinstance(js, list):
+            js = js[0]
+        error = js.get('errors', None)
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
-        return ApiResponse(**res.json(), headers=res.headers)
+        return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
         POST = ['marketplaceIds', 'MarketplaceIds']

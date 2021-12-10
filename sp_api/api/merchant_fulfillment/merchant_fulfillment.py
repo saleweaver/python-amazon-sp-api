@@ -24,6 +24,44 @@ class MerchantFulfillment(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                MerchantFulfillment().get_eligible_shipment_services_old({
+                        "AmazonOrderId": "903-5563053-5647845",
+                        "ItemList": [
+                            {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                            }
+                        ],
+                        "ShipFromAddress": {
+                            "Name": "John Doe",
+                            "AddressLine1": "300 Turnbull Ave",
+                            "Email": "jdoeasdfllkj@yahoo.com",
+                            "City": "Detroit",
+                            "StateOrProvinceCode": "MI",
+                            "PostalCode": "48123",
+                            "CountryCode": "US",
+                            "Phone": "7132341234"
+                        },
+                        "PackageDimensions": {
+                            "Length": 10,
+                            "Width": 10,
+                            "Height": 10,
+                            "Unit": "inches"
+                        },
+                        "Weight": {
+                            "Value": 10,
+                            "Unit": "oz"
+                        },
+                        "ShippingServiceOptions": {
+                            "DeliveryExperience": "NoTracking",
+                            "CarrierWillPickUp": False,
+                            "CarrierWillPickUpOption": "ShipperWillDropOff"
+                        }
+                    })
+
         Args:
             shipment_request_details: dict:
 
@@ -53,6 +91,44 @@ class MerchantFulfillment(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                MerchantFulfillment().get_eligible_shipment_services({
+                        "AmazonOrderId": "903-5563053-5647845",
+                        "ItemList": [
+                            {
+                                "OrderItemId": "52986411826454",
+                                "Quantity": 1
+                            }
+                        ],
+                        "ShipFromAddress": {
+                            "Name": "John Doe",
+                            "AddressLine1": "300 Turnbull Ave",
+                            "Email": "jdoeasdfllkj@yahoo.com",
+                            "City": "Detroit",
+                            "StateOrProvinceCode": "MI",
+                            "PostalCode": "48123",
+                            "CountryCode": "US",
+                            "Phone": "7132341234"
+                        },
+                        "PackageDimensions": {
+                            "Length": 10,
+                            "Width": 10,
+                            "Height": 10,
+                            "Unit": "inches"
+                        },
+                        "Weight": {
+                            "Value": 10,
+                            "Unit": "oz"
+                        },
+                        "ShippingServiceOptions": {
+                            "DeliveryExperience": "NoTracking",
+                            "CarrierWillPickUp": False,
+                            "CarrierWillPickUpOption": "ShipperWillDropOff"
+                        }
+                    })
 
         Args:
             shipment_request_details: dict:
@@ -84,6 +160,11 @@ class MerchantFulfillment(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                MerchantFulfillment().get_shipment("abcddcba-00c3-4f6f-a63a-639f76ee9253")
 
         Args:
             shipment_id: str:
@@ -156,6 +237,52 @@ class MerchantFulfillment(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                MerchantFulfillment().create_shipment(
+                        shipment_request_details={
+                            "AmazonOrderId": "903-5563053-5647845",
+                            "ItemList": [
+                                {
+                                    "OrderItemId": "52986411826454",
+                                    "Quantity": 1
+                                }
+                            ],
+                            "ShipFromAddress": {
+                                "Name": "John Doe",
+                                "AddressLine1": "300 Turnbull Ave",
+                                "Email": "jdoeasdfllkj@yahoo.com",
+                                "City": "Detroit",
+                                "StateOrProvinceCode": "MI",
+                                "PostalCode": "48123",
+                                "CountryCode": "US",
+                                "Phone": "7132341234"
+                            },
+                            "PackageDimensions": {
+                                "Length": 10,
+                                "Width": 10,
+                                "Height": 10,
+                                "Unit": "inches"
+                            },
+                            "Weight": {
+                                "Value": 10,
+                                "Unit": "oz"
+                            },
+                            "ShippingServiceOptions": {
+                                "DeliveryExperience": "NoTracking",
+                                "CarrierWillPickUp": False,
+                                "CarrierWillPickUpOption": "ShipperWillDropOff"
+                            }
+                        },
+                        shipping_service_id="UPS_PTP_2ND_DAY_AIR",
+                        ShippingServiceOfferId="WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0"
+                                               "+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER"
+                                               "/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52"
+                                               "+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW"
+                                               "/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t"
+                    )
 
         Args:
             shipment_request_details: dict

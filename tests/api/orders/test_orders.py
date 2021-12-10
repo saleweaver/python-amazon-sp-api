@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 from sp_api.api import Orders
-from sp_api.base import Marketplaces
+from sp_api.base import Marketplaces, SellingApiForbiddenException, SellingApiException
 
 
 def test_get_orders():
@@ -47,4 +47,3 @@ def test_get_orders_400_error():
     except SellingApiBadRequestException as sep:
         assert sep.code == 400
         assert sep.amzn_code == 'InvalidInput'
-

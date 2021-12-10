@@ -31,6 +31,11 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
+
         Args:
             notification_type: NotificationType or str
             destination_id: str
@@ -66,6 +71,10 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
 
         Args:
             notification_type: NotificationType or str
@@ -97,6 +106,9 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Notifications().delete_notification_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, 'subscription_id')
+
         Args:
             notification_type: NotificationType or str
             subscription_id: str
@@ -126,6 +138,10 @@ class Notifications(Client):
         1                                       5
         ======================================  ==============
 
+        Examples:
+            literal blocks::
+
+                Notifications().create_destination(name='test', arn='arn:aws:sqs:us-east-2:444455556666:queue1')
 
         Args:
             account_id:
@@ -139,12 +155,14 @@ class Notifications(Client):
 
         """
         resource_name = 'sqs' if not account_id else 'eventBridge'
+        region = region if region else self.region
+
         data = {
             'resourceSpecification': {
                 resource_name: {
                     'arn': arn
                 } if not account_id else {
-                    'region': region if region else self.region,
+                    'region': region,
                     'accountId': account_id
                 }
             },
