@@ -1,5 +1,7 @@
 import urllib.parse
 
+import requests
+
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
@@ -146,31 +148,42 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
     
 
     @sp_endpoint('/feeds/2021-06-30/documents', method='POST')
-    def create_feed_document(self, **kwargs) -> ApiResponse:
+    def create_feed_document(self, file, content_type, **kwargs) -> ApiResponse:
         """
         create_feed_document(self, **kwargs) -> ApiResponse
 
         Creates a feed document for the feed type that you specify. This operation returns a presigned URL for uploading the feed document contents. It also returns a feedDocumentId value that you can pass in with a subsequent call to the createFeed operation.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 0.0083 | 15 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.0083 | 15 |
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
+            file: File or File like object
+            content_type: str
             body: | * REQUIRED {'description': 'Specifies the content type for the createFeedDocument operation.', 'properties': {'contentType': {'description': 'The content type of the feed.', 'type': 'string'}}, 'required': ['contentType'], 'type': 'object'}
         
 
-         Returns:
+        Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+        data = {
+            'contentType': kwargs.get('contentType', content_type)
+        }
+        response = self._request(kwargs.get('path'), data={**data, **kwargs})
+        upload = requests.put(
+            response.payload.get('url'),
+            data=file.read().decode('iso-8859-1'),
+            headers={'Content-Type': content_type}
+        )
+        if 200 <= upload.status_code < 300:
+            return response
+        from sp_api.base.exceptions import SellingApiException
+        raise SellingApiException(upload.headers)
 
     @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
     def get_feed_document(self, feedDocumentId, **kwargs) -> ApiResponse:
