@@ -211,3 +211,36 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
     
         return self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs)
     
+    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
+        """
+        submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
+        Combines `create_feed_document` and `create_feed`, uploads the encrypted file and sends the feed to amazon.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.0083                                  15
+        ======================================  ==============
+
+        Examples:
+            literal blocks::
+
+                feed = BytesIO
+                feed.write(<your feed>)
+                feed.seek(0)
+                Feeds().submit_feed('POST_FBA_INBOUND_CARTON_CONTENTS', feed, 'text/xml')
+
+
+        Args:
+            feed_type:
+            file:
+            content_type:
+            **kwargs:
+
+        Returns:
+            [CreateFeedDocumentResponse, CreateFeedResponse]:
+        """
+        document_response = self.create_feed_document(file, content_type)
+        return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
