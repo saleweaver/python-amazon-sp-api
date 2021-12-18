@@ -1,9 +1,11 @@
 import os
+import pytest
 
 from sp_api.api import FulfillmentInbound
 from sp_api.base import Marketplaces, MissingCredentials
 from sp_api.base.credential_provider import FromCodeCredentialProvider, FromEnvironmentVariablesCredentialProvider, \
     FromSecretsCredentialProvider, FromConfigFileCredentialProvider, required_credentials
+
 
 refresh_token = '<refresh_token>'
 lwa_app_id = '<lwa_app_id>'
@@ -62,6 +64,7 @@ def test_from_code_credential_provider_no_role_no_refresh_token():
     assert p.credentials.get('refresh_token') is None
 
 
+@pytest.mark.order(-2)
 def test_env_vars_provider():
     os.environ['SP_API_REFRESH_TOKEN'] = 'foo'
     os.environ['LWA_APP_ID'] = 'foo'
@@ -81,6 +84,7 @@ def test_env_vars_provider():
     os.environ.pop('SP_API_ROLE_ARN')
 
 
+@pytest.mark.order(-1)
 def test_from_secrets():
     os.environ['SP_API_AWS_SECRET_ID'] = 'testing/sp-api-foo'
     p = FromSecretsCredentialProvider()()
