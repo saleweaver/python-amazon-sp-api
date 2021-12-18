@@ -200,4 +200,3 @@ class FeedsV2(Client):
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs)
-    
