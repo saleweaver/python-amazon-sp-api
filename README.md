@@ -2,7 +2,6 @@
 
 ![CodeQL](https://github.com/saleweaver/python-amazon-sp-api/workflows/CodeQL/badge.svg)
 ![Tests](https://codebuild.eu-central-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUXZBQ29Jd3NaNE45elZGRmdveVZMa0JCank4OGY4dnBMNDA3WGpsZXdpRXRTRHBKK1BvYmtneG00My8yYkdjdXc2S2VOeFBYcGN0VmxmVnhvZVIxZCtNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlnQUxNNlFZOVNWd0lRRlUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
-![Coverage](https://img.shields.io/codeclimate/coverage/saleweaver/python-amazon-sp-api)
 
 ## Amazon Selling-Partner API
 
@@ -85,5 +84,17 @@ We are not affiliated with Amazon
 
 
 ---
-![Maintainability](https://img.shields.io/codeclimate/maintainability/saleweaver/python-amazon-sp-api?style=for-the-badge)
-![Tech](https://img.shields.io/codeclimate/tech-debt/saleweaver/python-amazon-sp-api?style=for-the-badge)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=saleweaver_python-amazon-sp-api)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=coverage)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
