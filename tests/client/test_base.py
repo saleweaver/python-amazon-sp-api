@@ -103,3 +103,4 @@ def test_from_config_file_provider():
 
 def test_req():
     assert len(required_credentials) == 4
+
