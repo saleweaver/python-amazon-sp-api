@@ -39,7 +39,7 @@ class FbaSmallAndLight(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
 
     @deprecated
@@ -71,8 +71,9 @@ class FbaSmallAndLight(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs, params={'marketplaceIds': kwargs.get('marketplaceIds') or self.marketplace_id})
+
+        return self._request(fill_query_params(kwargs.pop('path'), seller_sku),
+                             params={'marketplaceIds': kwargs.get('marketplaceIds', self.marketplace_id)})
 
     @deprecated
     def delete_small_and_light_enrollment_by_seller_s_k_u(self, sellerSKU, **kwargs) -> ApiResponse:
@@ -102,7 +103,7 @@ class FbaSmallAndLight(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
 
     @deprecated
@@ -134,9 +135,8 @@ class FbaSmallAndLight(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), params=kwargs)
-    
 
     @sp_endpoint('/fba/smallAndLight/v1/feePreviews', method='POST')
     def get_small_and_light_fee_preview(self, **kwargs) -> ApiResponse:
@@ -174,6 +174,5 @@ class FbaSmallAndLight(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)

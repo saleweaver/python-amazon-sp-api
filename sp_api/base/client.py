@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 import logging
 import os
+from json import JSONDecodeError
 
 import boto3
 from cachetools import TTLCache
@@ -119,12 +120,16 @@ class Client(BaseClient):
         res = request(self.method, self.endpoint + path, params=params,
                       data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None, headers=headers or self.headers,
                       auth=self._sign_request())
-
         return self._check_response(res)
 
-    @staticmethod
-    def _check_response(res) -> ApiResponse:
-        js = res.json() or {}
+    def _check_response(self, res) -> ApiResponse:
+        if self.method == 'DELETE' and 200 <= res.status_code < 300:
+            try:
+                js = res.json()
+            except JSONDecodeError:
+                js = {'status_code': res.status_code}
+        else:
+            js = res.json() or {}
         if isinstance(js, list):
             js = js[0]
         error = js.get('errors', None)

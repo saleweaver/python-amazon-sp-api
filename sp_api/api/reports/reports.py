@@ -219,8 +219,8 @@ class Reports(Client):
             key reportType: str
             key marketplaceIds: str
             key reportOptions: dict
-            period: Schedules
-            nextReportCreationTime: str datetime isoformat
+            key period: Schedules
+            key nextReportCreationTime: str datetime isoformat
 
         Returns:
             ApiResponse:
@@ -312,7 +312,7 @@ class Reports(Client):
                 Reports().get_report_schedule('ID323')
 
         Args:
-            schedule_id: str | required The identifier for the report schedule. This identifier is unique only in combination with a seller ID.
+            reportScheduleId: str | required The identifier for the report schedule. This identifier is unique only in combination with a seller ID.
             kwargs:
 
         Returns:
