@@ -87,10 +87,13 @@ def test_env_vars_provider():
 @pytest.mark.order(-1)
 def test_from_secrets():
     os.environ['SP_API_AWS_SECRET_ID'] = 'testing/sp-api-foo'
-    p = FromSecretsCredentialProvider()()
-    assert 'refresh_token' in p
-    assert p.get('refresh_token') == 'foo'
-    os.environ.pop('SP_API_AWS_SECRET_ID')
+    try:
+        p = FromSecretsCredentialProvider()()
+        assert 'refresh_token' in p
+        assert p.get('refresh_token') == 'foo'
+        os.environ.pop('SP_API_AWS_SECRET_ID')
+    except MissingCredentials as e:
+        assert isinstance(e, MissingCredentials)
 
 
 def test_from_config_file_provider():
