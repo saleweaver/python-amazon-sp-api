@@ -1,4 +1,4 @@
-from sp_api.api import Feeds
+from sp_api.api import FeedsV2 as Feeds
 from sp_api.base import SellingApiBadRequestException, SellingApiServerException
 
 

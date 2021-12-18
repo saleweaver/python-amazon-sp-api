@@ -4,12 +4,14 @@ from .orders.orders import Orders
 from .product_fees.product_fees import ProductFees
 from .sellers.sellers import Sellers
 from .reports.reports import Reports
-from .reports.reports_v2 import ReportsV2
+from .reports.reports import Reports as ReportsV2
+
 from .products.products import Products
 from .sales.sales import Sales
 from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
-from .feeds.feeds_v2 import FeedsV2
+from .feeds.feeds import Feeds as FeedsV2
+
 from .inventories.inventories import Inventories
 from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
 from .upload.upload import Upload
@@ -78,7 +80,6 @@ __all__ = [
     "Finances",
     "Catalog",
     "Feeds",
-    "FeedsV2",
     "Inventories",
     "FulfillmentInbound",
     'Upload',
@@ -89,7 +90,7 @@ __all__ = [
     "ListingsRestrictions",
     
     "Feeds",
-    
+    "FeedsV2",
     "ReportsV2",
     
     "Messaging",

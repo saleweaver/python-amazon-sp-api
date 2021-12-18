@@ -2,13 +2,12 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.9.4',
+    version='0.10.0',
     install_requires=[
         "requests",
         "six>=1.15,<2",
         "boto3>=1.16.39,<2",
         "cachetools~=4.2.0",
-        "pycryptodome",
         "pytz",
         "confuse~=1.4.0"
     ],

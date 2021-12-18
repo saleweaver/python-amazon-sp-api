@@ -2,6 +2,33 @@ import pprint
 
 
 class ApiResponse:
+    """
+    Api Response
+
+    Wrapper around all responses from the API.
+
+    Examples:
+        literal blocks::
+            response = Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
+    
+            print(response.payload) # original response data
+            # Access one of `payload`s properties using `__getattr__`
+            print(response.Orders) # Array of orders
+            # Access one of `payload`s properties using `__call__`
+            print(response('Orders')) # Array of orders
+            # Shorthand for response.payload
+            print(response()) # original response data
+
+    Args:
+        payload: dict or list | original response from Amazon
+        errors: any | contains possible error messages
+        pagination: any | information about an endpoints pagination
+        headers: any | headers returned by the API
+        rate_limit: number | The `x-amzn-RateLimit-Limit` header, if available
+        next_token: str | The next token used to retrieve the next page, if any
+        kwargs: any
+
+    """
     def __init__(self, payload=None, errors=None, pagination=None, headers=None, nextToken=None, **kwargs):
         self.payload = payload or kwargs
         self.errors = errors
@@ -29,3 +56,11 @@ class ApiResponse:
             return headers['x-amzn-RateLimit-Limit']
         except (AttributeError, KeyError, TypeError):
             return None
+
+    def __call__(self, item=None, **kwargs):
+        if not item:
+            return self.payload
+        return self.payload.get(item)
+
+    def __getattr__(self, item):
+        return self.payload.get(item)

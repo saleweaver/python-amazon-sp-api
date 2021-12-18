@@ -1,20 +1,78 @@
-import requests
-from sp_api.base import Client, sp_endpoint, Marketplaces, fill_query_params, ApiResponse
-
+import urllib.parse
 import zlib
 
-from sp_api.base.helpers import encrypt_aes, decrypt_aes
+import requests
+
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
 class Feeds(Client):
     """
-    The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
+    Feeds SP-API Client
+    :link: 
 
-    :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/feeds-api
+    The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
     """
 
-    @sp_endpoint('/feeds/2020-09-04/feeds', method='POST')
-    def create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse:
+    @sp_endpoint('/feeds/2021-06-30/feeds', method='GET')
+    def get_feeds(self, **kwargs) -> ApiResponse:
+        """
+        get_feeds(self, **kwargs) -> ApiResponse
+
+        Returns feed details for the feeds that match the filters that you specify.
+
+        Args:
+            key feedTypes:array |  A list of feed types used to filter feeds. When feedTypes is provided, the other filter parameters (processingStatuses, marketplaceIds, createdSince, createdUntil) and pageSize may also be provided. Either feedTypes or nextToken is required.
+            key marketplaceIds:array |  A list of marketplace identifiers used to filter feeds. The feeds returned will match at least one of the marketplaces that you specify.
+            key pageSize:integer |  The maximum number of feeds to return in a single call.
+            key processingStatuses:array |  A list of processing statuses used to filter feeds.
+            key createdSince:string |  The earliest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is 90 days ago. Feeds are retained for a maximum of 90 days.
+            key createdUntil:string |  The latest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is now.
+            key nextToken:string |  A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getFeeds operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.
+        
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), params=kwargs)
+
+    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
+        """
+        submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
+        Combines `create_feed_document` and `create_feed`, uploads the file and sends the feed to amazon.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.0083                                  15
+        ======================================  ==============
+
+        Examples:
+            literal blocks::
+
+                feed = BytesIO
+                feed.write(<your feed>)
+                feed.seek(0)
+                Feeds().submit_feed('POST_FBA_INBOUND_CARTON_CONTENTS', feed, 'text/xml')
+
+
+        Args:
+            feed_type:
+            file:
+            content_type:
+            **kwargs:
+
+        Returns:
+            [CreateFeedDocumentResponse, CreateFeedResponse]:
+        """
+        document_response = self.create_feed_document(file, content_type)
+        return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
+
+    @sp_endpoint('/feeds/2021-06-30/feeds', method='POST')
+    def create_feed(self, feed_type, input_feed_document_id, **kwargs) -> ApiResponse:
         """
         create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse
 
@@ -50,33 +108,61 @@ class Feeds(Client):
             'inputFeedDocumentId': input_feed_document_id,
             **kwargs
         }
-        return self._request(kwargs.get('path'), data=data)
+        return self._request(kwargs.pop('path'), data=data)
 
-    @sp_endpoint('/feeds/2020-09-04/documents', method='POST')
-    def create_feed_document(self, file, content_type='text/tsv', **kwargs) -> ApiResponse:
+    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='DELETE')
+    def cancel_feed(self, feedId, **kwargs) -> ApiResponse:
         """
-        create_feed_document(self, file: File or FileLike, content_type='text/tsv', **kwargs) -> ApiResponse
-        Creates a feed document for the feed type that you specify.
-        This method also encrypts and uploads the file you specify.
+        cancel_feed(self, feedId, **kwargs) -> ApiResponse
 
-        **Usage Plan:**
+        Cancels the feed that you specify. Only feeds with processingStatus=IN_QUEUE can be cancelled. Cancelled feeds are returned in subsequent calls to the getFeed and getFeeds operations.
 
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        0.0083                                  15
-        ======================================  ==============
+        Args:
+        
+            feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
+        
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), feedId), data=kwargs)
+
+    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='GET')
+    def get_feed(self, feedId, **kwargs) -> ApiResponse:
+        """
+        get_feed(self, feedId, **kwargs) -> ApiResponse
+
+        Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
+
+        Args:
+        
+            feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
+        
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), feedId), params=kwargs, add_marketplace=False)
+
+    @sp_endpoint('/feeds/2021-06-30/documents', method='POST')
+    def create_feed_document(self, file, content_type, **kwargs) -> ApiResponse:
+        """
+        create_feed_document(self, **kwargs) -> ApiResponse
+
+        Creates a feed document for the feed type that you specify. This operation returns a presigned URL for uploading the feed document contents. It also returns a feedDocumentId value that you can pass in with a subsequent call to the createFeed operation.
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
             file: File or File like object
             content_type: str
-            **kwargs:
+            body: | * REQUIRED {'description': 'Specifies the content type for the createFeedDocument operation.', 'properties': {'contentType': {'description': 'The content type of the feed.', 'type': 'string'}}, 'required': ['contentType'], 'type': 'object'}
+        
 
         Returns:
-            CreateFeedDocumentResponse:
-
+            ApiResponse:
         """
         data = {
             'contentType': kwargs.get('contentType', content_type)
@@ -84,104 +170,54 @@ class Feeds(Client):
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
         upload = requests.put(
             response.payload.get('url'),
-            data=encrypt_aes(file,
-                             response.payload.get('encryptionDetails').get('key'),
-                             response.payload.get('encryptionDetails').get('initializationVector')
-                             ),
+            data=file.read().decode('iso-8859-1'),
             headers={'Content-Type': content_type}
         )
         if 200 <= upload.status_code < 300:
             return response
         from sp_api.base.exceptions import SellingApiException
-        raise SellingApiException(upload.headers)
+        raise SellingApiException(headers=upload.headers, error=upload.json().get('errors'))
 
-    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
+    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
+    def get_feed_document(self, feedDocumentId, **kwargs) -> str:
         """
-        submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
-        Combines `create_feed_document` and `create_feed`, uploads the encrypted file and sends the feed to amazon.
+        get_feed_document(self, feedDocumentId, **kwargs) -> ApiResponse
 
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        0.0083                                  15
-        ======================================  ==============
-
-
-        Args:
-            feed_type:
-            file:
-            content_type:
-            **kwargs:
-
-        Returns:
-            [CreateFeedDocumentResponse, CreateFeedResponse]:
-        """
-        document_response = self.create_feed_document(file, content_type)
-        return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
-
-    @sp_endpoint('/feeds/2020-09-04/feeds/{}')
-    def get_feed(self, feed_id: str, **kwargs) -> ApiResponse:
-        """
-        get_feed(self, feed_id: str, **kwargs) -> ApiResponse
-        Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        2                                       15
-        ======================================  ==============
+        Returns the information required for retrieving a feed document's contents.
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-        Examples:
-            literal blocks::
+        Args:
+        
+            feedDocumentId:string | * REQUIRED The identifier of the feed document.
+        
 
-                Feeds().get_feed(feed_id)
+        Returns:
+            ApiResponse:
+        """
+
+        return self.get_feed_result_document(feedDocumentId)
+
+    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
+    def get_feed_result_document(self, feedDocumentId, **kwargs) -> str:
+        """
+        get_feed_result_document(self, feedDocumentId, **kwargs) -> str
+
+        Returns the information required for retrieving a feed document's contents.
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            feed_id: str
+            feedDocumentId: str
             **kwargs:
 
         Returns:
-            GetFeedResponse:
+            ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
-                             add_marketplace=False)
-
-    @sp_endpoint('/feeds/2020-09-04/documents/{}')
-    def get_feed_result_document(self, feed_id, **kwargs) -> str:
-        """
-        Returns the decrypted, unpacked FeedResponse
-
-         **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        0.0222                                  10
-        ======================================  ==============
-
-
-        Args:
-            feed_id: str
-            **kwargs:
-
-        Returns:
-            str: The feed results' contents
-        """
-        response = self._request(fill_query_params(kwargs.pop('path'), feed_id), params=kwargs,
+        response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
         url = response.payload.get('url')
-        decrypted = decrypt_aes(
-            requests.get(url).content,
-            response.payload.get('encryptionDetails').get('key'),
-            response.payload.get('encryptionDetails').get('initializationVector')
-        )
-
+        content = requests.get(url).content
         if 'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(decrypted), 15 + 32).decode('iso-8859-1')
-        return decrypted.decode('iso-8859-1')
+            return zlib.decompress(bytearray(content), 15 + 32).decode('iso-8859-1')
+        return content.decode('iso-8859-1')
