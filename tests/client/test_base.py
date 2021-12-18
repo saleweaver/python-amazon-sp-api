@@ -73,12 +73,20 @@ def test_env_vars_provider():
     p = FromEnvironmentVariablesCredentialProvider()()
     assert 'refresh_token' in p
 
+    os.environ.pop('SP_API_REFRESH_TOKEN')
+    os.environ.pop('LWA_APP_ID')
+    os.environ.pop('LWA_CLIENT_SECRET')
+    os.environ.pop('SP_API_ACCESS_KEY')
+    os.environ.pop('SP_API_SECRET_KEY')
+    os.environ.pop('SP_API_ROLE_ARN')
+
 
 def test_from_secrets():
     os.environ['SP_API_AWS_SECRET_ID'] = 'testing/sp-api-foo'
     p = FromSecretsCredentialProvider()()
     assert 'refresh_token' in p
     assert p.get('refresh_token') == 'foo'
+    os.environ.pop('SP_API_AWS_SECRET_ID')
 
 
 def test_from_config_file_provider():
