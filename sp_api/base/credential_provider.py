@@ -33,7 +33,7 @@ class BaseCredentialProvider:
         return self.check_credentials()
 
     def load_credentials(self):
-        pass
+        raise NotImplementedError()
 
     def check_credentials(self) -> list[str] or dict:
         try:
@@ -47,6 +47,9 @@ class BaseCredentialProvider:
 
 
 class FromCodeCredentialProvider(BaseCredentialProvider):
+    def load_credentials(self):
+        return None
+
     def __init__(self, credentials: dict, *args, **kwargs):
         super(FromCodeCredentialProvider, self).__init__('default', credentials)
         self.credentials = credentials
