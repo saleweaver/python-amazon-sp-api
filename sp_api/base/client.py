@@ -125,7 +125,7 @@ class Client(BaseClient):
     def _check_response(self, res) -> ApiResponse:
         if self.method == 'DELETE' and 200 <= res.status_code < 300:
             try:
-                js = res.json()
+                js = res.json() or {}
             except JSONDecodeError:
                 js = {'status_code': res.status_code}
         else:
