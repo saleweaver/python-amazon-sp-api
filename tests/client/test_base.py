@@ -3,8 +3,7 @@ import os
 from sp_api.api import FulfillmentInbound
 from sp_api.base import Marketplaces, MissingCredentials
 from sp_api.base.credential_provider import FromCodeCredentialProvider, FromEnvironmentVariablesCredentialProvider, \
-    FromSecretsCredentialProvider, FromConfigFileCredentialProvider
-
+    FromSecretsCredentialProvider, FromConfigFileCredentialProvider, required_credentials
 
 refresh_token = '<refresh_token>'
 lwa_app_id = '<lwa_app_id>'
@@ -88,3 +87,7 @@ def test_from_config_file_provider():
         assert p.get('refresh_token') is not None
     except MissingCredentials as e:
         assert isinstance(e, MissingCredentials)
+
+
+def test_req():
+    assert len(required_credentials) == 4
