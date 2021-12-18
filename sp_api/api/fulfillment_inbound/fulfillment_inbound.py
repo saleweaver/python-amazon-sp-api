@@ -175,6 +175,16 @@ class FulfillmentInbound(Client):
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/preorder/confirm", method='PUT')
     def confirm_preorder(self, shipment_id, **kwargs):
+        """
+        confirm_preorder(self, shipment_id, **kwargs)
+
+        Args:
+            shipment_id:
+            **kwargs:
+
+        Returns:
+
+        """
         return self._request(fill_query_params(kwargs.pop('path'), shipment_id), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/prepInstructions")
@@ -273,6 +283,16 @@ class FulfillmentInbound(Client):
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/labels")
     def get_labels(self, shipment_id, **kwargs):
+        """
+        get_labels(self, shipment_id, **kwargs)
+
+        Args:
+            shipment_id:
+            **kwargs:
+
+        Returns:
+
+        """
         return self._request(fill_query_params(kwargs.pop('path'), shipment_id), params=kwargs, add_marketplace=False)
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/billOfLading")
