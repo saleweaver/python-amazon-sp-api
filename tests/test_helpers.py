@@ -1,4 +1,7 @@
-from sp_api.util import KeyMaker
+import os
+
+from sp_api.api import FulfillmentInbound, Orders
+from sp_api.util import KeyMaker, load_all_pages, throttle_retry
 
 key_mapping = {
     'sku': ['seller_sku', 'sellerSku'],
@@ -49,3 +52,23 @@ def test_key_maker_from_dict_not_deep():
     assert r.get('seller_sku') is None
     assert isinstance(r.get('title'), dict)
     assert isinstance(r.get('title').get('sellerSku'), list)
+
+
+def test_load_all_pages():
+    @throttle_retry()
+    @load_all_pages(extras=dict(QueryType='NEXT_TOKEN'))
+    def load_shipments(**kwargs):
+        return FulfillmentInbound().get_shipments(**kwargs)
+
+    for x in load_shipments(QueryType='SHIPMENT'):
+        assert x.payload is not None
+
+
+def test_load_all_pages_orders():
+    @throttle_retry()
+    @load_all_pages()
+    def load_all_orders(**kwargs):
+        return Orders().get_orders(**kwargs)
+
+    for x in load_all_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"]):
+        assert x.payload is not None

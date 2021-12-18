@@ -74,7 +74,6 @@ class Marketplaces(Enum):
     MX = (f"{BASE_URL}-na.amazon.com", "A1AM78C64UM0Y8", "us-east-1")
 
     def __init__(self, endpoint, marketplace_id, region):
-        """Easy dot access like: Marketplaces.endpoint ."""
         self.endpoint = endpoint
         self.marketplace_id = marketplace_id
         self.region = region

@@ -24,9 +24,8 @@ class AccessTokenClient(BaseClient):
     grant_type = 'refresh_token'
     path = '/auth/o2/token'
 
-    def __init__(self, refresh_token=None, account='default', credentials=None):
-        super().__init__(account, credentials)
-        self.cred = Credentials(refresh_token, self.credentials)
+    def __init__(self, refresh_token=None, credentials=None):
+        self.cred = Credentials(refresh_token, credentials)
 
     def _request(self, url, data, headers):
         response = requests.post(url, data=data, headers=headers)

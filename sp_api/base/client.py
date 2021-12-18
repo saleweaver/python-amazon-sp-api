@@ -14,6 +14,7 @@ from .base_client import BaseClient
 from .exceptions import get_exception_for_code, MissingScopeException
 from .marketplaces import Marketplaces
 from sp_api.base import AWSSigV4
+from sp_api.base.credential_provider import CredentialProvider
 
 log = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ class Client(BaseClient):
             credentials=None,
             restricted_data_token=None
     ):
-        super().__init__(account, credentials)
+        self.credentials = CredentialProvider(account, credentials).credentials
         self.boto3_client = boto3.client(
             'sts',
             aws_access_key_id=self.credentials.aws_access_key,
@@ -43,7 +44,7 @@ class Client(BaseClient):
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
-        self._auth = AccessTokenClient(refresh_token=refresh_token, account=account, credentials=credentials)
+        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
 
     def _get_cache_key(self, token_flavor=''):
         return 'role_' + hashlib.md5(
@@ -51,7 +52,6 @@ class Client(BaseClient):
         ).hexdigest()
 
     def set_role(self, cache_key='role'):
-
         role = self.boto3_client.assume_role(
             RoleArn=self.credentials.role_arn,
             RoleSessionName='guid'
@@ -82,7 +82,6 @@ class Client(BaseClient):
     @property
     def role(self):
         cache_key = self._get_cache_key()
-
         try:
             role = role_cache[cache_key]
         except KeyError:
