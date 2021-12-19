@@ -13,5 +13,4 @@ exclude_lines =
     (.*)except Exception as e:(.*)
     if 0:
     if __name__ == .__main__.:
-    return self._request(kwargs.pop('path')
-    return self._request(fill_query_params(kwargs.pop('path')
+    (.*)return self\._request(.*)
