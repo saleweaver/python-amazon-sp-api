@@ -1,5 +1,5 @@
 from sp_api.api import FeedsV2 as Feeds
-from sp_api.base import SellingApiBadRequestException, SellingApiServerException
+from sp_api.base import SellingApiBadRequestException, SellingApiServerException, SellingApiForbiddenException
 
 
 def test_create_feed():
@@ -30,3 +30,9 @@ def test_get_feed_expect_500():
         assert type(br) == SellingApiServerException
         assert br.code == 500
 
+
+def test_request():
+    try:
+        Feeds()._request('', data={})
+    except SellingApiForbiddenException:
+        assert True

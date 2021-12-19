@@ -1,3 +1,17 @@
 [run]
 omit =
     */venv/*
+
+[report]
+# Regexes for lines to exclude from consideration
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if self.debug:
+    raise AssertionError
+    raise NotImplementedError
+    (.*)except Exception as e:(.*)
+    if 0:
+    if __name__ == .__main__.:
+    return self._request(kwargs.pop('path')
+    return self._request(fill_query_params(kwargs.pop('path')
