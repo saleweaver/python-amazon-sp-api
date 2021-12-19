@@ -1,3 +1,4 @@
+import enum
 import os
 from io import BytesIO
 
@@ -113,3 +114,4 @@ def test_nest_dict():
         "ShipFromAddress.AddressLine1": "Street",
     })
     assert x['ShipFromAddress']['AddressLine1'] == 'Street'
+
