@@ -2,10 +2,11 @@ import os
 import pytest
 
 from sp_api.api import FulfillmentInbound
+from sp_api.base import AccessTokenClient
 from sp_api.base import Marketplaces, MissingCredentials, Client, SellingApiForbiddenException
 from sp_api.base.credential_provider import FromCodeCredentialProvider, FromEnvironmentVariablesCredentialProvider, \
     FromSecretsCredentialProvider, FromConfigFileCredentialProvider, required_credentials
-
+from sp_api.base.exceptions import MissingScopeException
 
 refresh_token = '<refresh_token>'
 lwa_app_id = '<lwa_app_id>'
@@ -13,6 +14,17 @@ lwa_client_secret = '<lwa_client_secret>'
 aws_secret_key = '<aws_secret_access_key>'
 aws_access_key = '<aws_access_key_id>'
 role_arn = '<role_arn>'
+
+
+class Res:
+    status_code = 200
+    method = 'GET'
+    headers = {}
+    def json(self):
+        return {'foo': 'bar'}
+
+    def __getattr__(self, item):
+        return item
 
 
 def test_client_request():
@@ -114,3 +126,65 @@ def test_from_config_file_provider():
 def test_req():
     assert len(required_credentials) == 4
 
+
+def test_client():
+    client = Client(marketplace=Marketplaces.UK)
+    assert client.marketplace_id == Marketplaces.UK.marketplace_id
+    assert client.credentials is not None
+    assert client.endpoint == Marketplaces.UK.endpoint
+    assert client.region == Marketplaces.UK.region
+    assert client.boto3_client is not None
+    assert client.restricted_data_token is None
+    assert isinstance(client._auth, AccessTokenClient)
+
+    assert isinstance(client._get_cache_key(), str)
+    assert isinstance(client._get_cache_key('test'), str)
+
+    assert client.set_role() is not None
+
+    assert client.headers['host'] == client.endpoint[8:]
+    assert len(client.headers.keys()) == 5
+
+    assert client.auth is not None
+    try:
+        x = client.grantless_auth
+    except MissingScopeException as e:
+        assert isinstance(e, MissingScopeException)
+
+    assert client.role is not None
+    assert client._sign_request is not None
+
+    try:
+        client._request('', data={})
+    except SellingApiForbiddenException as e:
+        assert isinstance(e, SellingApiForbiddenException)
+    try:
+        client._request('', params={})
+    except SellingApiForbiddenException as e:
+        assert isinstance(e, SellingApiForbiddenException)
+
+    check = client._check_response(Res())
+    assert check.payload['foo'] == 'bar'
+
+    r = Res()
+    r.method = 'POST'
+    check = client._check_response(r)
+    assert check.payload['foo'] == 'bar'
+    assert check('foo') == 'bar'
+    assert check.foo == 'bar'
+    assert check()['foo'] == 'bar'
+
+    r.method = 'DELETE'
+    check = client._check_response(r)
+    assert check.payload['foo'] == 'bar'
+    assert check('foo') == 'bar'
+    assert check.foo == 'bar'
+    assert check()['foo'] == 'bar'
+
+    client.grantless_scope = 'sellingpartnerapi::notifications'
+    assert client.grantless_auth is not None
+
+    try:
+        client._request_grantless_operation('')
+    except SellingApiForbiddenException as e:
+        assert isinstance(e, SellingApiForbiddenException)
