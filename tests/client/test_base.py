@@ -2,7 +2,7 @@ import os
 import pytest
 
 from sp_api.api import FulfillmentInbound
-from sp_api.base import Marketplaces, MissingCredentials
+from sp_api.base import Marketplaces, MissingCredentials, Client, SellingApiForbiddenException
 from sp_api.base.credential_provider import FromCodeCredentialProvider, FromEnvironmentVariablesCredentialProvider, \
     FromSecretsCredentialProvider, FromConfigFileCredentialProvider, required_credentials
 
@@ -13,6 +13,13 @@ lwa_client_secret = '<lwa_client_secret>'
 aws_secret_key = '<aws_secret_access_key>'
 aws_access_key = '<aws_access_key_id>'
 role_arn = '<role_arn>'
+
+
+def test_client_request():
+    try:
+        foo = Client()._request('', data=dict())
+    except SellingApiForbiddenException as e:
+        assert isinstance(e, SellingApiForbiddenException)
 
 
 def test_api_response_has_next_token():
