@@ -22,8 +22,8 @@ class MissingCredentials(Exception):
 
 
 class BaseCredentialProvider:
-    errors: list[str] = []
-    credentials: dict
+    errors = []
+    credentials = None
 
     def __init__(self, account: str = 'default', *args, **kwargs):
         self.account = account
