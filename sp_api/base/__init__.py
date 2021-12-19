@@ -1,7 +1,7 @@
 from .aws_sig_v4 import AWSSigV4
 from .base_client import BaseClient
 from .client import Client
-from .helpers import fill_query_params, sp_endpoint, create_md5
+from .helpers import fill_query_params, sp_endpoint, create_md5, nest_dict, _nest_dict_rec
 from .marketplaces import Marketplaces
 from .exceptions import SellingApiException
 from .exceptions import SellingApiBadRequestException
@@ -52,5 +52,7 @@ __all__ = [
     'deprecated',
     'NotificationType',
     'CredentialProvider',
-    'MissingCredentials'
+    'MissingCredentials',
+    'nest_dict',
+    '_nest_dict_rec'
 ]
