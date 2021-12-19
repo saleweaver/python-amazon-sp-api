@@ -57,10 +57,9 @@ class Reports(Client):
             kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
         if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable):
             kwargs.update({'processingStatuses': ','.join(kwargs.get('processingStatuses'))})
+        print(kwargs, kwargs.get('marketplaceIds'))
         if kwargs.get('marketplaceIds', None) and isinstance(kwargs.get('marketplaceIds'), abc.Iterable):
             marketplaces = kwargs.get('marketplaceIds')
-            if not isinstance(marketplaces, abc.Iterable):
-                marketplaces = [marketplaces]
             kwargs.update({'marketplaceIds': ','.join(
                 [m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
         for k in ['createdSince', 'createdUntil']:
