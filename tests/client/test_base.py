@@ -17,7 +17,7 @@ role_arn = '<role_arn>'
 
 def test_client_request():
     try:
-        foo = Client()._request('', data=dict())
+        Client()._request('', data=dict())
     except SellingApiForbiddenException as e:
         assert isinstance(e, SellingApiForbiddenException)
 
