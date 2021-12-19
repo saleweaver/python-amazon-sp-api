@@ -3,7 +3,7 @@ import os
 from io import BytesIO
 
 from sp_api.api import FulfillmentInbound, Orders
-from sp_api.base import fill_query_params, sp_endpoint, create_md5, nest_dict
+from sp_api.base import fill_query_params, sp_endpoint, create_md5, nest_dict, deprecated
 from sp_api.util import KeyMaker, load_all_pages, throttle_retry
 from sp_api.util.load_all_pages import make_sleep_time
 
@@ -115,3 +115,6 @@ def test_nest_dict():
     })
     assert x['ShipFromAddress']['AddressLine1'] == 'Street'
 
+
+def test_deprecated():
+    assert deprecated(lambda x: x + 1)(1) == 2
