@@ -35,7 +35,7 @@ class BaseCredentialProvider:
     def load_credentials(self):
         raise NotImplementedError()
 
-    def check_credentials(self) -> list[str] or dict:
+    def check_credentials(self):
         try:
             self.errors = [c for c in required_credentials if
                            c not in self.credentials.keys() or not self.credentials[c]]
