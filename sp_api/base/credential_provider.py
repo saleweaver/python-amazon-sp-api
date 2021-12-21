@@ -124,6 +124,7 @@ class CredentialProvider:
         for cp in self.CREDENTIAL_PROVIDERS:
             try:
                 self.credentials = cp(account=account, credentials=credentials)()
+                break
             except MissingCredentials:
                 continue
         if self.credentials:

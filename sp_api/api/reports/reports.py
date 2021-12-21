@@ -74,7 +74,7 @@ class Reports(Client):
         create_report(self, **kwargs) -> ApiResponse
 
         See report types at
-        :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/reports-api/reportType_string_array_values.md
+        :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/reports-api/reporttype-values.md
 
         **Usage Plan:**
 
@@ -97,7 +97,7 @@ class Reports(Client):
 
         Args:
             key reportOptions: optional	Additional information passed to reports. This varies by report type.	ReportOptions
-            key reportType: required	The report type. :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/reports-api/reportType_string_array_values.md
+            key reportType: required	The report type. :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/reports-api/reporttype-values.md
             key dataStartTime: optional	The start of a date and time range, in ISO 8601 date time format, used for selecting the data to report. The default is now. The value must be prior to or equal to the current date and time. Not all report types make use of this.	string (date-time)
             key dataEndTime: optional	The end of a date and time range, in ISO 8601 date time format, used for selecting the data to report. The default is now. The value must be prior to or equal to the current date and time. Not all report types make use of this.	string (date-time)
             key marketplaceIds: optional, defaults to the client's marketplace  A list of marketplace identifiers. The report document's contents will contain data for all of the specified marketplaces, unless the report type indicates otherwise.	< string > array
