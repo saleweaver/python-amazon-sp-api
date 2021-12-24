@@ -11,7 +11,7 @@ class ApiResponse:
         literal blocks::
 
             response = Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
-    
+
             print(response.payload) # original response data
             # Access one of `payload`s properties using `__getattr__`
             print(response.Orders) # Array of orders
@@ -31,14 +31,27 @@ class ApiResponse:
 
     """
 
-    def __init__(self, payload=None, errors=None, pagination=None, headers=None, nextToken=None, **kwargs):
+    def __init__(
+        self,
+        payload=None,
+        errors=None,
+        pagination=None,
+        headers=None,
+        nextToken=None,
+        **kwargs
+    ):
         self.payload = payload or kwargs
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
-        self.rate_limit = headers.get('x-amzn-RateLimit-Limit')
+        self.rate_limit = headers.get("x-amzn-RateLimit-Limit")
         try:
-            self.next_token = nextToken or self.payload.get('NextToken', None)
+            self.next_token = (
+                nextToken
+                or self.payload.get("NextToken", None)
+                or self.pagination.get("nextToken", None)
+            )
+
         except AttributeError:
             self.next_token = None
         if kwargs != self.payload:
