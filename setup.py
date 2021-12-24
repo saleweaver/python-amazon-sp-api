@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='python-amazon-sp-api',
-    version='0.10.4',
+    version='0.11.0',
     install_requires=[
         "requests",
         "six>=1.15,<2",
@@ -59,6 +59,7 @@ setup(
               'sp_api.api.aplus_content',
               'sp_api.api.fulfillment_outbound',
               ],
+    scripts=['make_endpoint/make_endpoint'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
     license='MIT',
     author='Michael',

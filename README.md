@@ -73,6 +73,16 @@ Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
 
 
+### New endpoints
+
+You can create a new endpoint file by running `make_endpoint <model_json_url>`
+
+```bash
+make_endpoint https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/listings-restrictions-api-model/listingsRestrictions_2021-08-01.json
+```
+
+This creates a ready to use client. Please consider creating a pull request with the new code.
+
 ### DISCLAIMER
 
 We are not affiliated with Amazon

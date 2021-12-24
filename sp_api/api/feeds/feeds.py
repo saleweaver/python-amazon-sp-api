@@ -66,7 +66,7 @@ class Feeds(Client):
             **kwargs:
 
         Returns:
-            [CreateFeedDocumentResponse, CreateFeedResponse]:
+            [ApiResponse:, ApiResponse:]
         """
         document_response = self.create_feed_document(file, content_type)
         return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
@@ -101,7 +101,7 @@ class Feeds(Client):
             **kwargs:
 
         Returns:
-            CreateFeedResponse:
+            ApiResponse:
         """
         data = {
             'feedType': feed_type,
@@ -212,7 +212,7 @@ class Feeds(Client):
             **kwargs:
 
         Returns:
-            ApiResponse
+            ApiResponse:
         """
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)

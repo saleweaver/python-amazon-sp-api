@@ -28,7 +28,7 @@ class Client(BaseClient):
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces[os.environ['SP_API_DEFAULT_MARKETPLACE']] if 'SP_API_DEFAULT_MARKETPLACE' in os.environ else Marketplaces.US,
+            marketplace: Marketplaces = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)],
             *,
             refresh_token=None,
             account='default',
@@ -117,8 +117,10 @@ class Client(BaseClient):
         if add_marketplace:
             self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
 
-        res = request(self.method, self.endpoint + path, params=params,
-                      data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None, headers=headers or self.headers,
+        res = request(self.method, self.endpoint + path,
+                      params=params,
+                      data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
+                      headers=headers or self.headers,
                       auth=self._sign_request())
         return self._check_response(res)
 
