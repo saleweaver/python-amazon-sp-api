@@ -4,23 +4,22 @@ from sp_api.base import sp_endpoint, fill_query_params
 
 class FulfillmentInbound(Client):
     @sp_endpoint("/fba/inbound/v0/itemsGuidance")
-    def item_guidance(self, data, **kwargs):
+    def item_guidance(self, **kwargs):
         """
-        item_guidance(self, data, **kwargs) -> ApiResponse
+        item_guidance(self, **kwargs) -> ApiResponse
 
         Examples:
             literal blocks::
 
-                FulfillmentInbound().item_guidance({"MarkeplaceId": "US", "ASINList": ["ASIN1"]})
+                FulfillmentInbound().item_guidance(**{"MarkeplaceId": "US", "ASINList": ["ASIN1"]})
 
         Args:
-            data:
             **kwargs:
 
         Returns:
             ApiResponse
         """
-        return self._request(kwargs.pop("path"), params={**data, **kwargs})
+        return self._request(kwargs.pop("path"), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/plans", method="POST")
     def plans(self, data, **kwargs):
