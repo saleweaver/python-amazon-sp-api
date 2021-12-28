@@ -369,7 +369,7 @@ class Reports(Client):
                 })
             if file:
                 if isinstance(file, str):
-                    with open(file, "w", encoding=character_code) as text_file:
+                    with open(file, "w+", encoding=character_code) as text_file:
                         text_file.write(document)
                 else:
                     file.write(document)
