@@ -368,6 +368,10 @@ class Reports(Client):
                     'document': document
                 })
             if file:
-                file.write(document)
-                file.seek(0)
+                if isinstance(file, str):
+                    with open(file, "w", encoding=character_code) as text_file:
+                        text_file.write(document)
+                else:
+                    file.write(document)
+                    file.seek(0)
         return res
