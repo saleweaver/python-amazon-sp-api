@@ -11,7 +11,6 @@ class VendorInvoices(Client):
     The Selling Partner API for Retail Procurement Payments provides programmatic access to vendors payments data.
     """
 
-
     @sp_endpoint('/vendor/payments/v1/invoices', method='POST')
     def submit_invoices(self, data, **kwargs) -> ApiResponse:
         """
