@@ -13,9 +13,9 @@ class VendorInvoices(Client):
 
 
     @sp_endpoint('/vendor/payments/v1/invoices', method='POST')
-    def submit_invoices(self, **kwargs) -> ApiResponse:
+    def submit_invoices(self, data, **kwargs) -> ApiResponse:
         """
-        submit_invoices(self, **kwargs) -> ApiResponse
+        submit_invoices(self, data, **kwargs) -> ApiResponse
 
         Submit new invoices to Amazon.
 
@@ -30,7 +30,8 @@ class VendorInvoices(Client):
         The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            body: {
+            data:
+            {
               "invoices": [
                 {
                   "invoiceType": "Invoice",
@@ -289,5 +290,4 @@ class VendorInvoices(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+        return self._request(kwargs.pop('path'),  data={**data, **kwargs})
