@@ -8,6 +8,12 @@
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
 
+### Playground
+
+[![playground](https://img.shields.io/badge/Playground-test%20all%20Endpoints-red?style=for-the-badge)](https://sp-api-playground.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
+
+This is a work in progress and currently in alpha. Please report bugs in this repository
+
 ### Q & A
 
 If you have questions, please ask them in GitHub discussions 
