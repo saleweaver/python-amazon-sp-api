@@ -8,11 +8,6 @@
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
 
-### Playground
-
-[![playground](https://img.shields.io/badge/Playground-test%20all%20Endpoints-red?style=for-the-badge)](https://sp-api-playground.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
-
-This is a work in progress and currently in alpha. Please report bugs in this repository
 
 ### Q & A
 
@@ -77,6 +72,13 @@ orders = Orders().get_orders(
 Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=text)
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
+
+
+### Playground
+
+[![playground](https://img.shields.io/badge/Playground-alpha-red?style=for-the-badge)](https://sp-api-playground.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
+
+<sub>_The playground is a work in progress and currently in alpha. Please report bugs in this repository_</sub>
 
 
 ### New endpoints
