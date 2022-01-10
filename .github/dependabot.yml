@@ -13,5 +13,5 @@ updates:
     assignees:
       - "saleweaver"
     commit-message:
-      prefix: "DependencyUpdate"
+      prefix: "DEP"
       include: "scope"
