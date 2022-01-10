@@ -9,7 +9,7 @@ setup(
         "boto3>=1.16.39,<2",
         "cachetools~=4.2.0",
         "pytz",
-        "confuse~=1.4.0"
+        "confuse>=1.4,<1.8"
     ],
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client',
