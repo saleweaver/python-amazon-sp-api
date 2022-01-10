@@ -1,5 +1,5 @@
 pytest
-requests~=2.25.1
+requests~=2.27.1
 six>=1.15,<2
 boto3~=1.16.39
 cachetools~=4.2.0
