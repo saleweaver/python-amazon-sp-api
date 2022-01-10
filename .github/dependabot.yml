@@ -7,7 +7,7 @@ version: 2
 updates:
   - package-ecosystem: "pip" # See documentation for possible values
     directory: "/" # Location of package manifests
-    target-branch: "dependencies"
+    target-branch: "master"
     schedule:
       interval: "daily"
     assignees:
