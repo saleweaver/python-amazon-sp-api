@@ -170,7 +170,7 @@ class Feeds(Client):
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
         upload = requests.put(
             response.payload.get('url'),
-            data=file.read().decode('iso-8859-1'),
+            data=file.read().encode('iso-8859-1'),
             headers={'Content-Type': content_type}
         )
         if 200 <= upload.status_code < 300:
