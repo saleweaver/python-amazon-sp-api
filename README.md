@@ -100,6 +100,13 @@ We are not affiliated with Amazon
 
 ![License](https://img.shields.io/github/license/saleweaver/python-amazon-sp-api?style=for-the-badge)
 
+---
+
+### Base Client
+
+The client is pretty extensible and can be used for any other API. Check it out here:
+
+[Rapid-Rest-Client](https://github.com/saleweaver/rapid_rest_client)
 
 ---
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=saleweaver_python-amazon-sp-api)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
