@@ -1,7 +1,7 @@
 pytest
 requests~=2.27.1
 six>=1.15,<2
-boto3~=1.20.32
+boto3~=1.20.33
 cachetools~=5.0.0
 setuptools~=60.5.0
 pytz~=2021.3
