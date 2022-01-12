@@ -168,9 +168,13 @@ class Feeds(Client):
             'contentType': kwargs.get('contentType', content_type)
         }
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
+        try:
+            upload_data = file.read().decode('iso-8859-1')
+        except AttributeError:
+            upload_data = file.read()
         upload = requests.put(
             response.payload.get('url'),
-            data=file.read().encode('iso-8859-1'),
+            data=upload_data,
             headers={'Content-Type': content_type}
         )
         if 200 <= upload.status_code < 300:
