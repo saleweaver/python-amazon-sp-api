@@ -7,6 +7,7 @@ from .reports.reports import Reports
 from .reports.reports import Reports as ReportsV2
 
 from .products.products import Products
+from .product_pricing.product_pricing import ProductPricing
 from .sales.sales import Sales
 from .catalog.catalog import Catalog
 from .feeds.feeds import Feeds
@@ -72,6 +73,7 @@ from .fulfillment_outbound.fulfillment_outbound import FulfillmentOutbound
 __all__ = [
     "Sales",
     "Products",
+    "ProductPricing",
     "Reports",
     "Orders",
     "Sellers",
