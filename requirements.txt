@@ -6,5 +6,5 @@ cachetools~=5.0.0
 setuptools~=60.5.0
 pytz~=2021.3
 confuse~=1.7.0
-
+jinja2
 
