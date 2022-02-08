@@ -105,6 +105,10 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
+        if isinstance(kwargs.get('dataStartTime', None), datetime):
+            kwargs.update({'dataStartTime': kwargs.get('dataStartTime').isoformat()})
+        if isinstance(kwargs.get('dataEndTime', None), datetime):
+            kwargs.update({'dataEndTime': kwargs.get('dataEndTime').isoformat()})
         return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/reports/{}', method='DELETE')

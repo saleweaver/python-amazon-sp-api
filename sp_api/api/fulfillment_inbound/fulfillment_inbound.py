@@ -255,6 +255,8 @@ class FulfillmentInbound(Client):
         """
         update_transport_information(self, shipment_id, **kwargs) -> ApiResponse
 
+        putTransportDetails
+
         Args:
             shipment_id:
             **kwargs:
