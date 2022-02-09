@@ -1,10 +1,11 @@
 import enum
 import os
+from datetime import datetime, timedelta
 from io import BytesIO
 
 from sp_api.api import FulfillmentInbound, Orders
 from sp_api.base import fill_query_params, sp_endpoint, create_md5, nest_dict, deprecated
-from sp_api.util import KeyMaker, load_all_pages, throttle_retry
+from sp_api.util import KeyMaker, load_all_pages, throttle_retry, load_date_bound
 from sp_api.util.load_all_pages import make_sleep_time
 
 key_mapping = {
@@ -118,3 +119,17 @@ def test_nest_dict():
 
 def test_deprecated():
     assert deprecated(lambda x: x + 1)(1) == 2
+
+
+@load_date_bound()
+def dummy(**kwargs):
+    return lambda: kwargs
+
+
+def test_load_date_bound():
+    start = datetime.now() - timedelta(days=70)
+    end = datetime.now()
+    x = list(dummy(dataStartTime=start, dataEndTime=end))
+    assert len(x) == 3
+    assert x[1]()['dataStartTime'] == start + timedelta(days=30)
+    assert x[1]()['dataEndTime'] == start + timedelta(days=60)
