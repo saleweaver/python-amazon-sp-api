@@ -19,7 +19,7 @@ def load_date_bound(interval_days: int = 30):
         def wrapper(*args, **kwargs):
             date_range.update({
                 'dataStartTime': parse_if_needed(kwargs['dataStartTime']),
-                'dataEndTime': parse_if_needed(kwargs['dataEndTime'])
+                'dataEndTime': parse_if_needed(kwargs.get('dataEndTime', datetime.datetime.utcnow()))
             })
             kwargs.update({
                 'dataEndTime': make_end_date(date_range['dataStartTime'], date_range['dataEndTime'], interval_days)
