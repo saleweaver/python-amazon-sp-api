@@ -200,3 +200,5 @@ def test_get_additional_seller_inputs():
         )
         assert res.errors is None
         assert res.payload.get('ShipmentLevelFields') is not None
+
+
