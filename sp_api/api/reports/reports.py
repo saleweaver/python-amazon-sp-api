@@ -2,6 +2,7 @@ import urllib.parse
 import zlib
 from collections import abc
 from datetime import datetime
+from io import BytesIO, StringIO
 
 import requests
 
@@ -375,7 +376,10 @@ class Reports(Client):
                 if isinstance(file, str):
                     with open(file, "w+", encoding=character_code) as text_file:
                         text_file.write(document)
-                else:
+                if isinstance(file, BytesIO):
+                    file.write(document.encode(character_code))
+                    file.seek(0)
+                elif isinstance(file, StringIO):
                     file.write(document)
                     file.seek(0)
         return res

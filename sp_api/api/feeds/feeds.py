@@ -168,10 +168,11 @@ class Feeds(Client):
             'contentType': kwargs.get('contentType', content_type)
         }
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
+        upload_data = file.read()
         try:
-            upload_data = file.read().decode('iso-8859-1')
+            upload_data = upload_data.decode('iso-8859-1')
         except AttributeError:
-            upload_data = file.read()
+            pass
         upload = requests.put(
             response.payload.get('url'),
             data=upload_data,
