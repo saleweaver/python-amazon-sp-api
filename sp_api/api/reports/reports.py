@@ -373,13 +373,17 @@ class Reports(Client):
                     'document': document
                 })
             if file:
-                if isinstance(file, str):
-                    with open(file, "w+", encoding=character_code) as text_file:
-                        text_file.write(document)
-                if isinstance(file, BytesIO):
-                    file.write(document.encode(character_code))
-                    file.seek(0)
-                elif isinstance(file, StringIO):
-                    file.write(document)
-                    file.seek(0)
+                self._handle_file(file, document, character_code)
         return res
+
+    @staticmethod
+    def _handle_file(file, document, encoding):
+        if isinstance(file, str):
+            with open(file, "w+", encoding=encoding) as text_file:
+                text_file.write(document)
+        if isinstance(file, BytesIO):
+            file.write(document.encode(encoding))
+            file.seek(0)
+        elif isinstance(file, StringIO):
+            file.write(document)
+            file.seek(0)
