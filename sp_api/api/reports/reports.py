@@ -381,9 +381,11 @@ class Reports(Client):
         if isinstance(file, str):
             with open(file, "w+", encoding=encoding) as text_file:
                 text_file.write(document)
-        if isinstance(file, BytesIO):
+        elif isinstance(file, BytesIO):
             file.write(document.encode(encoding))
             file.seek(0)
         elif isinstance(file, StringIO):
             file.write(document)
             file.seek(0)
+        else:
+            file.write(document)
