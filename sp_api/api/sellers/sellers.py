@@ -6,4 +6,4 @@ class Sellers(Client):
 
     @sp_endpoint('/sellers/v1/marketplaceParticipations')
     def get_marketplace_participation(self, **kwargs) -> ApiResponse:
-        return self._request(kwargs.pop('path'))
+        return self._request(kwargs.pop('path'), add_marketplace=False)
