@@ -182,4 +182,6 @@ class Products(Client):
                                      'ItemType': item_type,
                                      **({'ItemCondition': kwargs.pop(
                                          'ItemCondition')} if 'ItemCondition' in kwargs else {}),
+                                     **({'CustomerType': kwargs.pop(
+                                         'CustomerType')} if 'CustomerType' in kwargs else {}),
                                      'MarketplaceId': kwargs.get('MarketplaceId', self.marketplace_id)})
