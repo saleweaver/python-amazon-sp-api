@@ -90,6 +90,12 @@ make_endpoint https://raw.githubusercontent.com/amzn/selling-partner-api-models/
 
 This creates a ready to use client. Please consider creating a pull request with the new code.
 
+
+### ADVERTISING API
+
+You can use nearly the same client for the Amazon Advertising API. [@denisneuf](https://github.com/denisneuf) has built [Python-Amazon-Advertising-API](https://github.com/denisneuf/python-amazon-ad-api) on top of this client.
+Check it out [here](https://github.com/denisneuf/python-amazon-ad-api)
+
 ### DISCLAIMER
 
 We are not affiliated with Amazon
