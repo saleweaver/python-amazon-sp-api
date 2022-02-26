@@ -22,6 +22,7 @@ from .processing_status import ProcessingStatus
 from .reportTypes import ReportType
 from sp_api.auth import AccessTokenClient, Credentials
 from sp_api.auth.exceptions import AuthorizationError
+from sp_api.base.inegibility_reasons import IneligibilityReasonList
 
 __all__ = [
     'Credentials',
@@ -54,5 +55,6 @@ __all__ = [
     'CredentialProvider',
     'MissingCredentials',
     'nest_dict',
-    '_nest_dict_rec'
+    '_nest_dict_rec',
+    'IneligibilityReasonList'
 ]
