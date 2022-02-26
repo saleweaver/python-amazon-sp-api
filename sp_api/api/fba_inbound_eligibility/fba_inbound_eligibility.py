@@ -84,4 +84,3 @@ class FbaInboundEligibility(Client):
             })
 
         return api_response
-

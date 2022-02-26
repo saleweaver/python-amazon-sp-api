@@ -36,7 +36,7 @@ class IneligibilityReasonList(str, Enum):
     FBA_INB_0097 = "Fully regulated dangerous good."
     FBA_INB_0098 = "Merchant is not authorized to send item to destination marketplace."
     FBA_INB_0099 = "Seller account previously terminated."
-    FBA_INB_0100 = "You do not have the required tax information to send inventory to fulfillment centers in Mexico."
+    FBA_INB_0100 = "You do not have the required tax information to send inventory to fulfillment  centers in Mexico."
     FBA_INB_0103 = "This is an expiration-dated/lot-controlled product that cannot be handled at this time."
     FBA_INB_0104 = "Item Requires Manufacturer Barcode. Only NEW products can be stored in our fulfillment centers without product labels."
     UNKNOWN_INB_ERROR_CODE = "Unknown Ineligibility Reason."
