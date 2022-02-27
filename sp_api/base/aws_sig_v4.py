@@ -47,6 +47,7 @@ class AWSSigV4(AuthBase):
         else:
             ordered_query_parameters = list()
 
+        ordered_query_parameters = [[elm[0], elm[1].replace('+', '%20')] for elm in ordered_query_parameters] # hack to get around amazon bug
         canonical_querystring = "&".join(map(lambda param: "=".join(param), ordered_query_parameters))
 
         headers_to_sign = {'host': host, 'x-amz-date': self.amzdate}
