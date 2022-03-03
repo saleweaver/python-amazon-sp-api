@@ -36,7 +36,8 @@ class Client(BaseClient):
             restricted_data_token=None
     ):
         self.credentials = CredentialProvider(account, credentials).credentials
-        self.boto3_client = boto3.client(
+        session = boto3.session.Session()
+        self.boto3_client = session.client(
             'sts',
             aws_access_key_id=self.credentials.aws_access_key,
             aws_secret_access_key=self.credentials.aws_secret_key
