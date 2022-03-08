@@ -33,7 +33,8 @@ class Client(BaseClient):
             refresh_token=None,
             account='default',
             credentials=None,
-            restricted_data_token=None
+            restricted_data_token=None,
+            proxies=None
     ):
         self.credentials = CredentialProvider(account, credentials).credentials
         session = boto3.session.Session()
@@ -47,6 +48,7 @@ class Client(BaseClient):
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
         self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
+        self.proxies = proxies
 
     def _get_cache_key(self, token_flavor=''):
         return 'role_' + hashlib.md5(
@@ -122,7 +124,8 @@ class Client(BaseClient):
                       params=params,
                       data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
                       headers=headers or self.headers,
-                      auth=self._sign_request())
+                      auth=self._sign_request(),
+                      proxies=self.proxies)
         return self._check_response(res)
 
     def _check_response(self, res) -> ApiResponse:
