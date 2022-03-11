@@ -72,7 +72,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmDeliveryDetails', method='POST')
@@ -104,7 +104,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/legalDisclosure', method='POST')
@@ -141,7 +141,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/negativeFeedbackRemoval', method='POST')
@@ -169,7 +169,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmOrderDetails', method='POST')
@@ -200,7 +200,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/confirmServiceDetails', method='POST')
@@ -232,7 +232,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/amazonMotors', method='POST')
@@ -269,7 +269,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/warranty', method='POST')
@@ -309,7 +309,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/attributes', method='GET')
@@ -371,7 +371,7 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
 
     @sp_endpoint('/messaging/v1/orders/{}/messages/unexpectedProblem', method='POST')
@@ -402,5 +402,5 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs, params={"marketplaceIds": self.marketplace_id}
+            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
         )
