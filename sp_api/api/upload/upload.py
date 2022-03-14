@@ -13,7 +13,3 @@ class Upload(Client):
             'marketplaceIds': self.marketplace_id
         })
         return self._request(fill_query_params(kwargs.pop('path'), resource), params=kwargs)
-
-    def upload_file(self, method, url, pdf, headers):
-        return self._upload(method, url, pdf, headers, params={"marketplaceIds": self.marketplace_id, "method": method})
-
