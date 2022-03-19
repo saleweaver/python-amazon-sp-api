@@ -66,8 +66,9 @@ class Reports(Client):
         for k in ['createdSince', 'createdUntil']:
             if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
                 kwargs.update({k: kwargs.get(k).isoformat()})
-
-        return self._request(kwargs.pop('path'), params=kwargs)
+        if not kwargs.get('nextToken'):
+            return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
 
     @sp_endpoint('/reports/2021-06-30/reports', method='POST')
     def create_report(self, **kwargs) -> ApiResponse:
