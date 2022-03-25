@@ -1,5 +1,4 @@
 import urllib.parse
-
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
@@ -67,8 +66,8 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
+
+        return self._request(kwargs.pop('path'), data=kwargs.pop('body'), params=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}', method='GET')
@@ -126,7 +125,7 @@ class AplusContent(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/asins', method='GET')
@@ -184,7 +183,7 @@ class AplusContent(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentAsinValidations', method='POST')
@@ -212,8 +211,8 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
+
+        return self._request(kwargs.pop('path'), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentPublishRecords', method='GET')
@@ -241,7 +240,7 @@ class AplusContent(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop('path'), params=kwargs)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/approvalSubmissions', method='POST')
@@ -268,7 +267,7 @@ class AplusContent(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), params=kwargs)
     
 
     @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/suspendSubmissions', method='POST')
@@ -296,4 +295,3 @@ class AplusContent(Client):
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs)
-
