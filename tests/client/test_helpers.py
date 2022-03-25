@@ -105,7 +105,7 @@ def test_create_md5():
     b.write(b'foo')
     b.seek(0)
     m = create_md5(b)
-    assert m == 'acbd18db4cc2f85cedef654fccc4a4d8'
+    assert m == 'rL0Y20zC+Fzt72VPzMSk2A=='
 
 
 def test_nest_dict():
