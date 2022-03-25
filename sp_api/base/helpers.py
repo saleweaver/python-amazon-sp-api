@@ -3,7 +3,6 @@ import hashlib
 import base64
 import warnings
 import functools
-import logging
 
 
 def fill_query_params(query, *args):
