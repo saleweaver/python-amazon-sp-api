@@ -1,9 +1,9 @@
 from io import BytesIO
 import hashlib
-
+import base64
 import warnings
 import functools
-
+import logging
 
 
 def fill_query_params(query, *args):
@@ -31,15 +31,15 @@ def create_md5(file):
         for chunk in iter(lambda: file.read(4096), b''):
             hash_md5.update(chunk)
         file.seek(0)
-        return hash_md5.hexdigest()
+        return base64.b64encode(hash_md5.digest()).decode()
     if isinstance(file, str):
         with open(file, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b''):
                 hash_md5.update(chunk)
-        return hash_md5.hexdigest()
+        return base64.b64encode(hash_md5.digest()).decode()
     for chunk in iter(lambda: file.read(4096), b''):
         hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+    return base64.b64encode(hash_md5.digest()).decode()
 
 
 def nest_dict(flat: dict()):
