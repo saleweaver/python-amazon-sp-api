@@ -1,3 +1,5 @@
+from urllib.parse import quote_plus
+
 from sp_api.base.helpers import sp_endpoint, fill_query_params
 from sp_api.base import Client, ApiResponse
 
@@ -10,7 +12,7 @@ class ProductFees(Client):
     @sp_endpoint('/products/fees/v0/listings/{}/feesEstimate', method='POST')
     def get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD',
                                           is_fba=False, points: dict = None, marketplace_id: str = None,
-                                          optional_fulfillment_program: str = None,
+                                          optional_fulfillment_program: str = None, force_safe_sku: bool = True,
                                           **kwargs) -> ApiResponse:
         """
         get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD', is_fba=False, points: dict = dict, **kwargs) -> ApiResponse
@@ -38,12 +40,18 @@ class ProductFees(Client):
             points:
             marketplace_id: str | Defaults to self.marketplace_id
             optional_fulfillment_program:
+            force_safe_sku: bool | Force user SKU quote
             **kwargs:
 
         Returns:
             ApiResponse:
 
         """
+
+        if force_safe_sku:
+            #handle `forward slash` issue in SKU
+            seller_sku = quote_plus(seller_sku)
+
         kwargs.update(self._create_body(price, shipping_price, currency, is_fba, seller_sku, points, marketplace_id, optional_fulfillment_program))
         return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
 
