@@ -1,10 +1,10 @@
 pytest
 requests~=2.27.1
 six>=1.15,<2
-boto3~=1.21.19
+boto3~=1.21.25
 cachetools~=5.0.0
-setuptools~=60.9.3
-pytz~=2021.3
+setuptools~=60.10.0
+pytz~=2022.1
 confuse~=1.7.0
 jinja2
 
