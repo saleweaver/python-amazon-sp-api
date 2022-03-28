@@ -20,6 +20,7 @@ from .credential_provider import CredentialProvider, MissingCredentials
 from .ApiResponse import ApiResponse
 from .processing_status import ProcessingStatus
 from .reportTypes import ReportType
+from .feedTypes import FeedType
 from sp_api.auth import AccessTokenClient, Credentials
 from sp_api.auth.exceptions import AuthorizationError
 from sp_api.base.inegibility_reasons import IneligibilityReasonList
@@ -29,6 +30,7 @@ __all__ = [
     'AuthorizationError',
     'AccessTokenClient',
     'ReportType',
+    'FeedType',
     'ProcessingStatus',
     'ApiResponse',
     'Client',

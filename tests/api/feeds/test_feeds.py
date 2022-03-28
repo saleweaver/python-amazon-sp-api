@@ -1,10 +1,14 @@
 from sp_api.api import FeedsV2 as Feeds
 from sp_api.base import SellingApiBadRequestException, SellingApiServerException, SellingApiForbiddenException
+from sp_api.base.feedTypes import FeedType
 
 
 def test_create_feed():
-    res = Feeds().create_feed('POST_PRODUCT_DATA', '3d4e42b5-1d6e-44e8-a89c-2abfca0625bb',
-                              marketplaceIds=["ATVPDKIKX0DER", "A1F83G8C2ARO7P"])
+    res = Feeds().create_feed(
+        FeedType.POST_PRODUCT_DATA,
+        '3d4e42b5-1d6e-44e8-a89c-2abfca0625bb',
+         marketplaceIds=["ATVPDKIKX0DER", "A1F83G8C2ARO7P"]
+    )
     assert res.payload.get('feedId') == '3485934'
 
 
