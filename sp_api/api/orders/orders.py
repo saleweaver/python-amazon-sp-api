@@ -252,5 +252,6 @@ class Orders(Client):
         token = self._get_token(**kwargs).payload
         self.restricted_data_token = token['restrictedDataToken']
         r = self._request(kwargs.pop('original_path'), params={**kwargs})
-        self.restricted_data_token = None
+        if not self.keep_restricted_data_token:
+            self.restricted_data_token = None
         return r

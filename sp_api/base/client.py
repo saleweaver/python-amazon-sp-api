@@ -24,7 +24,8 @@ role_cache = TTLCache(maxsize=10, ttl=3600)
 
 class Client(BaseClient):
     boto3_client = None
-    grantless_scope = ''
+    grantless_scope: str = ''
+    keep_restricted_data_token: bool = False
 
     def __init__(
             self,
@@ -166,3 +167,11 @@ class Client(BaseClient):
         }
 
         return self._request(path, data=data, params=params, headers=headers)
+
+    def __enter__(self):
+        self.keep_restricted_data_token = True
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        self.restricted_data_token = None
+        self.keep_restricted_data_token = False
