@@ -3,7 +3,7 @@ requests~=2.27.1
 six>=1.15,<2
 boto3~=1.21.36
 cachetools~=5.0.0
-setuptools~=62.0.0
+setuptools~=62.1.0
 pytz~=2022.1
 confuse~=1.7.0
 jinja2
