@@ -1,4 +1,4 @@
-class SellingApiException(BaseException):
+class SellingApiException(Exception):
     """
     Generic Exception
 
@@ -11,13 +11,14 @@ class SellingApiException(BaseException):
     """
     code = 999
 
-    def __init__(self, error):
+    def __init__(self, error, headers):
         try:
             self.message = error[0].get('message')
             self.amzn_code = error[0].get('code')
         except IndexError:
             pass
         self.error = error
+        self.headers = headers
 
 
 class SellingApiBadRequestException(SellingApiException):
@@ -26,8 +27,8 @@ class SellingApiBadRequestException(SellingApiException):
     """
     code = 400
 
-    def __init__(self, error):
-        super(SellingApiBadRequestException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiBadRequestException, self).__init__(error, headers)
 
 
 class SellingApiForbiddenException(SellingApiException):
@@ -36,8 +37,8 @@ class SellingApiForbiddenException(SellingApiException):
     """
     code = 403
 
-    def __init__(self, error):
-        super(SellingApiForbiddenException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiForbiddenException, self).__init__(error, headers)
 
 
 class SellingApiNotFoundException(SellingApiException):
@@ -46,8 +47,8 @@ class SellingApiNotFoundException(SellingApiException):
     """
     code = 404
 
-    def __init__(self, error):
-        super(SellingApiNotFoundException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiNotFoundException, self).__init__(error, headers)
 
 
 class SellingApiRequestThrottledException(SellingApiException):
@@ -56,8 +57,8 @@ class SellingApiRequestThrottledException(SellingApiException):
     """
     code = 429
 
-    def __init__(self, error):
-        super(SellingApiRequestThrottledException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiRequestThrottledException, self).__init__(error, headers)
 
 
 class SellingApiServerException(SellingApiException):
@@ -66,8 +67,8 @@ class SellingApiServerException(SellingApiException):
     """
     code = 500
 
-    def __init__(self, error):
-        super(SellingApiServerException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiServerException, self).__init__(error, headers)
 
 
 class SellingApiTemporarilyUnavailableException(SellingApiException):
@@ -76,8 +77,22 @@ class SellingApiTemporarilyUnavailableException(SellingApiException):
     """
     code = 503
 
-    def __init__(self, error):
-        super(SellingApiTemporarilyUnavailableException, self).__init__(error)
+    def __init__(self, error, headers=None):
+        super(SellingApiTemporarilyUnavailableException, self).__init__(error, headers)
+
+
+class SellingApiGatewayTimeoutException(SellingApiException):
+    """
+    503	Temporary overloading or maintenance of the server.
+    """
+    code = 504
+
+    def __init__(self, error, headers=None):
+        super(SellingApiGatewayTimeoutException, self).__init__(error, headers)
+
+
+class MissingScopeException(Exception):
+    pass
 
 
 def get_exception_for_code(code: int):
@@ -86,5 +101,6 @@ def get_exception_for_code(code: int):
         403: SellingApiForbiddenException,
         429: SellingApiRequestThrottledException,
         500: SellingApiServerException,
-        503: SellingApiTemporarilyUnavailableException
+        503: SellingApiTemporarilyUnavailableException,
+        504: SellingApiGatewayTimeoutException
     }.get(code, SellingApiException)

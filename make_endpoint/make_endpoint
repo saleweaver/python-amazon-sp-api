@@ -1,0 +1,178 @@
+#!/usr/bin/env python
+
+import argparse
+import os
+import pprint
+import re
+
+import jinja2
+import requests
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description='Create new endpoint.')
+    parser.add_argument('model_url', type=str,
+                        help='The endpoint definition file provided by Amazon')
+    args = parser.parse_args()
+    return args
+
+
+def get_model(url):
+    res = requests.get(url).json()
+    return res
+
+
+def make_query(p):
+    r = r'{.*}'
+    try:
+        return re.sub(r, '{}', p), p[p.index('{') + 1:p.index('}')], True
+    except ValueError:
+        return re.sub(r, '{}', p), None, False
+
+
+def make_py(endpoint, operations, description, directory):
+    context = {
+        'endpoint': endpoint,
+        'operations': operations,
+        'description': description
+    }
+    loader = jinja2.FileSystemLoader(searchpath="./make_endpoint")
+    env = jinja2.Environment(loader=loader)
+    file = "template.py.jinja2"
+    template = env.get_template(file)
+    out = template.render(context)
+
+    with open(os.path.join(directory, f'{sub(endpoint)}.py'), 'w+') as f:
+        f.write(out)
+    f.close()
+
+
+def sub(e):
+    return re.sub(r'([A-Z])', lambda match: r'_{}'.format(match.group(1).lower()), e[0].lower() + e[1:])
+
+
+def make_endpoint_name(s):
+    return re.sub(r'-([a-zA-Z])', lambda match: r'{}'.format(match.group(1).upper()), s[0].upper() + s[1:])
+
+
+def make_directory(endpoint):
+    directory = f'./sp_api/api/{sub(endpoint)}'
+    if os.path.exists(directory):
+        raise Exception('Directory exists')
+    os.mkdir(directory)
+    open(os.path.join(directory, '__init__.py'), 'a').close()
+    return directory
+
+
+def make_params(params, model):
+    if not params:
+        return []
+    new_params = []
+    for param in params:
+        if param.get('in') == 'body':
+            body = model.get('definitions').get(param.get('schema').get('$ref')[param.get('schema').get('$ref').rindex('/') + 1:])
+            body_example = pprint.pformat(body, width=250, compact=False)
+            param.update({'description': body_example})
+        new_params.append(param)
+    return new_params
+
+
+def add_to_init(endpoint):
+    e = sub(endpoint)
+    import_template = f'''##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .{e}.{e} import {endpoint}
+    '''
+    append_template = f'''##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "{endpoint}",
+    '''
+    with open('./sp_api/api/__init__.py', 'r') as f:
+        content = f.read()
+        content = import_template.join(content.split('##### DO NOT DELETE ########## INSERT IMPORT HERE #######'))
+        content = append_template.join(content.split('##### DO NOT DELETE ########## INSERT TITLE HERE #######'))
+    f.close()
+    with open('./sp_api/api/__init__.py', 'w+') as f1:
+        f1.write(content)
+    f1.close()
+
+
+def add_to_setup_py(endpoint):
+    package = f"'sp_api.api.{sub(endpoint)}'"
+    append_template = f"""##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              {package},
+    """
+    with open('../setup.py', 'r') as f:
+        content = f.read()
+        content = append_template.join(content.split('##### DO NOT DELETE ########## INSERT PACKAGE HERE #######'))
+    f.close()
+    with open('./setup.py', 'w+') as f1:
+        f1.write(content)
+    f1.close()
+
+
+def create_endpoint_file(model_json):
+    model = get_model(model_json)
+    endpoint = get_endpoint_from_url(model_json)
+    directory = make_directory(endpoint)
+    operations = []
+    for k, v in model.get('paths').items():
+        for method, val in v.items():
+            if method == 'parameters':
+                continue
+            uri, param, has_query_params = make_query(k)
+            operation = {
+                'uri': uri,
+                'method': method.upper(),
+                'has_query_params': has_query_params,
+                'query_param': param,
+                'params_or_data': 'params' if method == 'get' else 'data',
+                'title': sub(val.get('operationId')),
+                'description': val.get('description'),
+                'params': make_params(val.get('parameters'), model)
+            }
+            operations.append(operation)
+
+    make_py(endpoint, operations, model.get('info').get('description'), directory)
+    # add_to_init(endpoint)
+    # add_to_setup_py(endpoint)
+
+
+def get_endpoint_from_url(url):
+    n = url.split('/')[-2][:-10]
+    return make_endpoint_name(n)
+
+
+if __name__ == '__main__':
+    args = parse_args()
+
+    create_endpoint_file(args.model_url)
+    # for model_json_url in [
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/fulfillment-outbound-api-model/fulfillmentOutbound_2020-07-01.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/aplus-content-api-model/aplusContent_2020-11-01.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/authorization-api-model/authorization.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/fba-inbound-eligibility-api-model/fbaInbound.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/fba-small-and-light-api-model/fbaSmallandLight.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/services-api-model/services.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/shipping-api-model/shipping.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/solicitations-api-model/solicitations.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/tokens-api-model/tokens_2021-03-01.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-direct-fulfillment-inventory-api-model/vendorDirectFulfillmentInventoryV1.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-direct-fulfillment-orders-api-model/vendorDirectFulfillmentOrdersV1.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-direct-fulfillment-payments-api-model/vendorDirectFulfillmentPaymentsV1.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-direct-fulfillment-shipping-api-model/vendorDirectFulfillmentShippingV1.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-direct-fulfillment-transactions-api-model/vendorDirectFulfillmentTransactionsV1.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-invoices-api-model/vendorInvoices.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-orders-api-model/vendorOrders.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-shipments-api-model/vendorShipments.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/vendor-transaction-status-api-model/vendorTransactionStatus.json'
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/listings-items-api-model/listingsItems_2020-09-01.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/product-type-definitions-api-model/definitionsProductTypes_2020-09-01.json',
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/catalog-items-api-model/catalogItems_2020-12-01.json'
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/messaging-api-model/messaging.json'
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/reports-api-model/reports_2021-06-30.json'
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/feeds-api-model/feeds_2021-06-30.json'
+    #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/listings-restrictions-api-model/listingsRestrictions_2021-08-01.json'
+    # ]:
+    #     try:
+    #         create_endpoint_file(model_json_url)
+    #     except Exception as e:
+    #         print(e)

@@ -6,6 +6,7 @@ class Notifications(Client):
     """
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/notifications-api/notifications.md
     """
+    grantless_scope = 'sellingpartnerapi::notifications'
 
     @deprecated
     def add_subscription(self, notification_type: NotificationType or str, **kwargs):
@@ -29,6 +30,11 @@ class Notifications(Client):
         ======================================  ==============
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
 
         Args:
             notification_type: NotificationType or str
@@ -65,6 +71,10 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
 
         Args:
             notification_type: NotificationType or str
@@ -96,6 +106,9 @@ class Notifications(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            Notifications().delete_notification_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, 'subscription_id')
+
         Args:
             notification_type: NotificationType or str
             subscription_id: str
@@ -112,7 +125,7 @@ class Notifications(Client):
             params={**kwargs})
 
     @sp_endpoint(path='/notifications/v1/destinations', method='POST')
-    def create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse:
+    def create_destination(self, name: str, arn: str = None, account_id: str = None, region: str = None, **kwargs) -> ApiResponse:
         """
         create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse
         Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
@@ -125,8 +138,14 @@ class Notifications(Client):
         1                                       5
         ======================================  ==============
 
+        Examples:
+            literal blocks::
+
+                Notifications().create_destination(name='test', arn='arn:aws:sqs:us-east-2:444455556666:queue1')
 
         Args:
+            account_id:
+            region:
             name: str
             arn: str
             **kwargs:
@@ -135,11 +154,16 @@ class Notifications(Client):
             ApiResponse:
 
         """
+        resource_name = 'sqs' if not account_id else 'eventBridge'
+        region = region if region else self.region
 
         data = {
             'resourceSpecification': {
-                'sqs': {
+                resource_name: {
                     'arn': arn
+                } if not account_id else {
+                    'region': region,
+                    'accountId': account_id
                 }
             },
             'name': name,

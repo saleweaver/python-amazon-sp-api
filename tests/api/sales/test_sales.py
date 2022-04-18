@@ -3,8 +3,7 @@ from datetime import datetime, timedelta, timezone
 import pytz
 
 from sp_api.api import Sales
-from sp_api.base import Granularity, Marketplaces, CredentialProvider
-import logging
+from sp_api.base import Granularity
 
 tz = pytz.timezone('US/Central')
 fmt = '%Y-%m-%dT%H:%M:%S%z'
@@ -30,5 +29,4 @@ def test_sales_granularity_total_by_asin():
 def test_sales_granularity_day_by_asin():
     res = Sales().get_order_metrics(interval, Granularity.DAY, granularityTimeZone='US/Central', asin='B008OLKVEW')
     assert res.payload[0].get('unitCount') == 1
-
 

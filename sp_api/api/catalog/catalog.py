@@ -25,6 +25,11 @@ class Catalog(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                res = Catalog().get_item('ASIN_200', MarketplaceId='TEST_CASE_200')
+
         Args:
             asin: str
             key MarketplaceId: str
@@ -52,6 +57,11 @@ class Catalog(Client):
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
+        Examples:
+            literal blocks::
+
+                res = Catalog().list_items(MarketplaceId='TEST_CASE_200', SellerSKU='SKU_200')
+
         Args:
             key MarketplaceId: str
             key Query: str
@@ -64,6 +74,35 @@ class Catalog(Client):
 
         Returns:
             ListCatalogItemsResponse:
+        """
+        if 'Query' in kwargs:
+            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
+        return self._request(kwargs.pop('path'), params=kwargs)
+
+    @sp_endpoint('/catalog/v0/categories')
+    def list_categories(self, **kwargs) -> ApiResponse:
+        """
+        list_categories(self, **kwargs) -> ApiResponse
+        Returns the parent categories to which an item belongs, based on the specified ASIN or SellerSKU
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       40
+        ======================================  ==============
+
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
+            key MarketplaceId: str
+            key ASIN: str
+            key SellerSKU: str
+
+        Returns:
+            ListCatalogCategoriesResponse:
         """
         if 'Query' in kwargs:
             kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
