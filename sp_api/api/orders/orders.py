@@ -266,7 +266,7 @@ class Orders(Client):
         Returns:
             ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), res_no_data=True, data=kwargs)
 
     @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
     def _get_token(self, **kwargs):
