@@ -9,7 +9,7 @@ setup(
         "requests",
         "six>=1.15,<2",
         "boto3>=1.16.39,<2",
-        "cachetools>=4.2,<5.1",
+        "cachetools>=4.2,<5.2",
         "pytz",
         "confuse>=1.4,<1.8"
     ],
