@@ -110,7 +110,7 @@ class Client(BaseClient):
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
-                 add_marketplace=True) -> ApiResponse:
+                 add_marketplace=True, res_no_data: bool = False) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
@@ -127,10 +127,10 @@ class Client(BaseClient):
                       headers=headers or self.headers,
                       auth=self._sign_request(),
                       proxies=self.proxies)
-        return self._check_response(res)
+        return self._check_response(res, res_no_data)
 
-    def _check_response(self, res) -> ApiResponse:
-        if self.method == 'DELETE' and 200 <= res.status_code < 300:
+    def _check_response(self, res, res_no_data: bool = False) -> ApiResponse:
+        if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
             try:
                 js = res.json() or {}
             except JSONDecodeError:
