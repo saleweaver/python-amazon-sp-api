@@ -13,8 +13,8 @@ from .credentials import Credentials
 from .access_token_response import AccessTokenResponse
 from .exceptions import AuthorizationError
 
-cache = TTLCache(maxsize=10, ttl=3600)
-grantless_cache = TTLCache(maxsize=10, ttl=3600)
+cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=3600)
+grantless_cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=3600)
 
 logger = logging.getLogger(__name__)
 
