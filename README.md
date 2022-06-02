@@ -22,7 +22,8 @@ or
 
 ### Donate
 
-[:heart: Sponsor](https://github.com/sponsors/saleweaver)
+
+[:heart: Donate](https://github.com/sponsors/saleweaver)
 
 
 ### Installation
