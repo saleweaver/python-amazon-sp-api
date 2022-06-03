@@ -78,6 +78,12 @@ Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
 
+### Consultation
+
+Do you need help implementing? I offer consultation for everything SP-API related. 
+
+[![Consultation](https://img.shields.io/badge/consultation-book-blue?style=for-the-badge)](https://calendly.com/michaelprimke/sp-api)
+
 
 ### Playground
 
