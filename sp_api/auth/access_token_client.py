@@ -127,6 +127,6 @@ class AccessTokenClient(BaseClient):
 
     def _get_cache_key(self, token_flavor=''):
         return 'access_token_' + hashlib.md5(
-            (token_flavor + self.cred.refresh_token).encode('utf-8')
+            (token_flavor + (self.cred.refresh_token or '__grantless__')).encode('utf-8')
         ).hexdigest()
 
