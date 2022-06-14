@@ -39,11 +39,16 @@ class Client(BaseClient):
     ):
         self.credentials = CredentialProvider(account, credentials).credentials
         session = boto3.session.Session()
-        self.boto3_client = session.client(
-            'sts',
-            aws_access_key_id=self.credentials.aws_access_key,
-            aws_secret_access_key=self.credentials.aws_secret_key
-        )
+        if not (self.credentials.aws_access_key and self.credentials.aws_secret_key):
+            # if no credentials are provided, allow boto to use env variables or no auth at all
+            self.boto3_client = session.client('sts')
+        else:
+            self.boto3_client = session.client(
+                'sts',
+                aws_access_key_id=self.credentials.aws_access_key,
+                aws_secret_access_key=self.credentials.aws_secret_key,
+                aws_session_token=self.credentials.aws_session_token,
+            )
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region

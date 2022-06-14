@@ -7,8 +7,6 @@ from botocore.exceptions import ClientError
 from cachetools import Cache
 
 required_credentials = [
-    'aws_access_key',
-    'aws_secret_key',
     'lwa_app_id',
     'lwa_client_secret'
 ]
@@ -83,6 +81,7 @@ class FromSecretsCredentialProvider(BaseCredentialProvider):
                 lwa_client_secret=secret.get('LWA_CLIENT_SECRET'),
                 aws_secret_key=secret.get('SP_API_SECRET_KEY'),
                 aws_access_key=secret.get('SP_API_ACCESS_KEY'),
+                aws_session_token=secret.get('SP_API_SESSION_TOKEN'),
                 role_arn=secret.get('SP_API_ROLE_ARN')
             )
         except ClientError:
@@ -99,6 +98,7 @@ class FromEnvironmentVariablesCredentialProvider(BaseCredentialProvider):
             lwa_client_secret=self._get_env('LWA_CLIENT_SECRET'),
             aws_secret_key=self._get_env('SP_API_SECRET_KEY'),
             aws_access_key=self._get_env('SP_API_ACCESS_KEY'),
+            aws_session_token=self._get_env('SP_API_SESSION_TOKEN'),
             role_arn=self._get_env('SP_API_ROLE_ARN')
         )
         self.credentials = account_data
@@ -139,4 +139,5 @@ class CredentialProvider:
             self.lwa_client_secret = kwargs.get('lwa_client_secret')
             self.aws_access_key = kwargs.get('aws_access_key')
             self.aws_secret_key = kwargs.get('aws_secret_key')
+            self.aws_session_token = kwargs.get('aws_session_token')
             self.role_arn = kwargs.get('role_arn')
