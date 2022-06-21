@@ -1,5 +1,6 @@
 import hashlib
 import json
+import re
 from datetime import datetime
 import logging
 import os
@@ -19,23 +20,26 @@ from sp_api.base.credential_provider import CredentialProvider
 
 log = logging.getLogger(__name__)
 
-role_cache = TTLCache(maxsize=10, ttl=3600)
+role_cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=3200)
 
 
 class Client(BaseClient):
     boto3_client = None
     grantless_scope: str = ''
     keep_restricted_data_token: bool = False
+    version = None
 
     def __init__(
             self,
-            marketplace: Marketplaces = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)],
+            marketplace: Marketplaces = Marketplaces[
+                os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)],
             *,
             refresh_token=None,
             account='default',
             credentials=None,
             restricted_data_token=None,
-            proxies=None
+            proxies=None,
+            version=None
     ):
         self.credentials = CredentialProvider(account, credentials).credentials
         session = boto3.session.Session()
@@ -50,6 +54,7 @@ class Client(BaseClient):
         self.restricted_data_token = restricted_data_token
         self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
         self.proxies = proxies
+        self.version = version
 
     def _get_cache_key(self, token_flavor=''):
         return 'role_' + hashlib.md5(
@@ -110,7 +115,7 @@ class Client(BaseClient):
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
-                 add_marketplace=True, res_no_data: bool = False) -> ApiResponse:
+                 add_marketplace=True, res_no_data: bool = False, bulk: bool = False) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
@@ -122,15 +127,15 @@ class Client(BaseClient):
             self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
 
         res = request(self.method,
-                      self.endpoint + path,
+                      self.endpoint + self._check_version(path),
                       params=params,
                       data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
                       headers=headers or self.headers,
                       auth=self._sign_request(),
                       proxies=self.proxies)
-        return self._check_response(res, res_no_data)
+        return self._check_response(res, res_no_data, bulk)
 
-    def _check_response(self, res, res_no_data: bool = False) -> ApiResponse:
+    def _check_response(self, res, res_no_data: bool = False, bulk: bool = False) -> ApiResponse:
         if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
             try:
                 js = res.json() or {}
@@ -140,7 +145,9 @@ class Client(BaseClient):
             js = res.json() or {}
         if isinstance(js, list):
             js = js[0]
+
         error = js.get('errors', None)
+
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
@@ -168,6 +175,11 @@ class Client(BaseClient):
         }
 
         return self._request(path, data=data, params=params, headers=headers)
+
+    def _check_version(self, path):
+        if '<version>' not in path:
+            return path
+        return path.replace('<version>', self.version)
 
     def __enter__(self):
         self.keep_restricted_data_token = True
