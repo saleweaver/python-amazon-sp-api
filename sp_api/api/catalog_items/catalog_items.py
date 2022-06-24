@@ -1,18 +1,30 @@
-import urllib.parse
+import enum
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+
+
+class CatalogItemsVersion(str, enum.Enum):
+    V_2020_12_01 = "2020-12-01"
+    V_2022_04_01 = "2022-04-01"
+    LATEST = "2022-04-01"
 
 
 class CatalogItems(Client):
     """
     CatalogItems SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Catalog Items provides programmatic access to information about items in the Amazon catalog.
     """
 
+    version: CatalogItemsVersion = CatalogItemsVersion.V_2020_12_01
 
-    @sp_endpoint('/catalog/2020-12-01/items', method='GET')
+    def __init__(self, *args, **kwargs):
+        if 'version' in kwargs:
+            self.version = kwargs.get('version', CatalogItemsVersion.V_2020_12_01)
+        super().__init__(*args, **{**kwargs, 'version': self.version})
+
+    @sp_endpoint('/catalog/<version>/items', method='GET')
     def search_catalog_items(self, **kwargs) -> ApiResponse:
         """
         search_catalog_items(self, **kwargs) -> ApiResponse
@@ -43,11 +55,10 @@ class CatalogItems(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/catalog/2020-12-01/items/{}', method='GET')
+        return self._request(kwargs.pop('path'),  params=kwargs)
+
+    @sp_endpoint('/catalog/<version>/items/{}', method='GET')
     def get_catalog_item(self, asin, **kwargs) -> ApiResponse:
         """
         get_catalog_item(self, asin, **kwargs) -> ApiResponse
@@ -72,6 +83,5 @@ class CatalogItems(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
-    
