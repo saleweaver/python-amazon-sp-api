@@ -17,7 +17,7 @@ class CatalogItems(Client):
     The Selling Partner API for Catalog Items provides programmatic access to information about items in the Amazon catalog.
     """
 
-    version: CatalogItemsVersion = CatalogItemsVersion.V_2020_12_01
+    version = CatalogItemsVersion.V_2020_12_01
 
     def __init__(self, *args, **kwargs):
         if 'version' in kwargs:

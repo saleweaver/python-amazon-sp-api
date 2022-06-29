@@ -40,10 +40,10 @@ class BaseCredentialProvider:
             self.errors = [c for c in required_credentials if
                            c not in self.credentials.keys() or not self.credentials[c]]
         except (AttributeError, TypeError):
-            raise MissingCredentials(f'Credentials are missing: {", ".join(required_credentials)}')
+            raise MissingCredentials('Credentials are missing: {}'.format(", ".join(required_credentials)))
         if not len(self.errors):
             return self.credentials
-        raise MissingCredentials(f'Credentials are missing: {", ".join(self.errors)}')
+        raise MissingCredentials('Credentials are missing: {}'.format(", ".join(self.errors)))
 
 
 class FromCodeCredentialProvider(BaseCredentialProvider):
@@ -130,7 +130,7 @@ class CredentialProvider:
         if self.credentials:
             self.credentials = self.Config(**self.credentials)
         else:
-            raise MissingCredentials(f'Credentials are missing: {", ".join(required_credentials)}')
+            raise MissingCredentials('Credentials are missing: {}'.format(", ".join(required_credentials)))
 
     class Config:
         def __init__(self, **kwargs):

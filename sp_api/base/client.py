@@ -25,8 +25,8 @@ role_cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)),
 
 class Client(BaseClient):
     boto3_client = None
-    grantless_scope: str = ''
-    keep_restricted_data_token: bool = False
+    grantless_scope = ''
+    keep_restricted_data_token = False
     version = None
 
     def __init__(
