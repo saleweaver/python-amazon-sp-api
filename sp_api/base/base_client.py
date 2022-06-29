@@ -5,4 +5,4 @@ class BaseClient:
     scheme = 'https://'
     method = 'GET'
     content_type = 'application/x-www-form-urlencoded;charset=UTF-8'
-    user_agent = f'python-sp-api-{__version__}'
+    user_agent = 'python-sp-api-{}'.format(__version__)
