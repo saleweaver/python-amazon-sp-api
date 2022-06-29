@@ -47,11 +47,13 @@ class AWSSigV4(AuthBase):
         else:
             ordered_query_parameters = list()
 
+        ordered_query_parameters = [[elm[0], elm[1].replace('+', '%20')] for elm in ordered_query_parameters] # hack to get around amazon bug
         canonical_querystring = "&".join(map(lambda param: "=".join(param), ordered_query_parameters))
 
         headers_to_sign = {'host': host, 'x-amz-date': self.amzdate}
         if self.aws_session_token is not None:
             headers_to_sign['x-amz-security-token'] = self.aws_session_token
+            r.headers['x-amz-security-token'] = self.aws_session_token
 
         ordered_headers = OrderedDict(sorted(headers_to_sign.items(), key=lambda t: t[0]))
         canonical_headers = ''.join(map(lambda h: ":".join(h) + '\n', ordered_headers.items()))
@@ -60,10 +62,9 @@ class AWSSigV4(AuthBase):
         if r.method == 'GET':
             payload_hash = hashlib.sha256(''.encode('utf-8')).hexdigest()
         else:
-            if r.body:
-                payload_hash = hashlib.sha256(r.body.encode('utf-8')).hexdigest()
-            else:
-                payload_hash = hashlib.sha256(''.encode('utf-8')).hexdigest()
+            if not r.body:
+                r.body = ""
+            payload_hash = hashlib.sha256(r.body.encode('utf-8')).hexdigest()
 
         canonical_request = '\n'.join([r.method, uri, canonical_querystring,
                                        canonical_headers, signed_headers, payload_hash])
@@ -85,6 +86,5 @@ class AWSSigV4(AuthBase):
             'host': host,
             'x-amz-date': self.amzdate,
             'Authorization': authorization_header,
-            'x-amz-security-token': self.aws_session_token
         })
         return r

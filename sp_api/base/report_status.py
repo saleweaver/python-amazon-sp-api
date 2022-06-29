@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ReportStatus(Enum):
+class ReportStatus(str, Enum):
     CANCELLED = "CANCELLED"
     DONE = "DONE"
     FATAL = "FATAL"

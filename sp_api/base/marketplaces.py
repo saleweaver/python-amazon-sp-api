@@ -28,19 +28,17 @@ Japan	A1VC38T7YXB528	JP
 import sys
 from enum import Enum
 import os
-import logging
-l = logging.getLogger(__name__)
 
 
-class AWS_ENV(Enum):
+class AwsEnv(Enum):
     PRODUCTION = "PRODUCTION"
     SANDBOX = "SANDBOX"
 
 
-AWS_ENVIRONMENT = os.getenv("AWS_ENV", AWS_ENV.PRODUCTION.name)
+AWS_ENVIRONMENT = os.getenv("AWS_ENV", AwsEnv.PRODUCTION.name)
 BASE_URL = "https://sellingpartnerapi"
 
-if AWS_ENV(AWS_ENVIRONMENT) is AWS_ENV.SANDBOX:
+if AwsEnv(AWS_ENVIRONMENT) == AwsEnv.SANDBOX:
     BASE_URL = "https://sandbox.sellingpartnerapi"
 
 
@@ -76,7 +74,6 @@ class Marketplaces(Enum):
     MX = ("{}-na.amazon.com".format(BASE_URL), "A1AM78C64UM0Y8", "us-east-1")
 
     def __init__(self, endpoint, marketplace_id, region):
-        """Easy dot access like: Marketplaces.endpoint ."""
         self.endpoint = endpoint
         self.marketplace_id = marketplace_id
         self.region = region

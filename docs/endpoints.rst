@@ -43,3 +43,7 @@ Endpoints
     endpoints/listings_items
     endpoints/product_type_definitions
     endpoints/catalog_items
+    endpoints/listings_items
+    endpoints/product_type_definitions
+    endpoints/catalog_items
+    endpoints/listings_restrictions

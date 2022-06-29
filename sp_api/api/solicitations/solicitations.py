@@ -19,27 +19,25 @@ class Solicitations(Client):
 
         Returns a list of solicitation types that are available for an order that you specify. A solicitation type is represented by an actions object, which contains a path and query parameter(s). You can use the path and parameter(s) to call an operation that sends a solicitation. Currently only the productReviewAndSellerFeedbackSolicitation solicitation type is available.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             amazonOrderId:string | * REQUIRED An Amazon order identifier. This specifies the order for which you want a list of available solicitation types.
-        
             key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), amazonOrderId), params=kwargs)
-    
 
     @sp_endpoint('/solicitations/v1/orders/{}/solicitations/productReviewAndSellerFeedback', method='POST')
     def create_product_review_and_seller_feedback_solicitation(self, amazonOrderId, **kwargs) -> ApiResponse:
@@ -48,22 +46,21 @@ For more information, see "Usage Plans and Rate Limits" in the Selling Partner A
 
         Sends a solicitation to a buyer asking for seller feedback and a product review for the specified order. Send only one productReviewAndSellerFeedback or free form proactive message per order.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
 
-For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
-         Args:
-        
+        Args:
             amazonOrderId:string | * REQUIRED An Amazon order identifier. This specifies the order for which a solicitation is sent.
-        
             key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-        
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     

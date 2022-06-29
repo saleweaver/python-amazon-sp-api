@@ -1,10 +1,8 @@
 from io import BytesIO
-
-from Crypto.Util.Padding import pad
 import hashlib
-
 import base64
-from Crypto.Cipher import AES
+import warnings
+import functools
 
 
 def fill_query_params(query, *args):
@@ -19,34 +17,11 @@ def sp_endpoint(path, method='GET'):
                 'method': method
             })
             return function(*args, **kwargs)
+
         wrapper.__doc__ = function.__doc__
         return wrapper
+
     return decorator
-
-
-def encrypt_aes(file_or_bytes_io, key, iv):
-    key = base64.b64decode(key)
-    iv = base64.b64decode(iv)
-    aes = AES.new(key, AES.MODE_CBC, iv)
-    try:
-        if isinstance(file_or_bytes_io, BytesIO):
-            return aes.encrypt(pad(file_or_bytes_io.read(), 16))
-        return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='iso-8859-1'), 16))
-    except UnicodeEncodeError:
-        file_or_bytes_io.seek(0)
-        return aes.encrypt(pad(bytes(file_or_bytes_io.read(), encoding='utf-8'), 16))
-    except TypeError:
-        file_or_bytes_io.seek(0)
-        return aes.encrypt(pad(file_or_bytes_io.read(), 16))
-
-
-def decrypt_aes(content, key, iv):
-    key = base64.b64decode(key)
-    iv = base64.b64decode(iv)
-    decrypter = AES.new(key, AES.MODE_CBC, iv)
-    decrypted = decrypter.decrypt(content)
-    padding_bytes = decrypted[-1]
-    return decrypted[:-padding_bytes]
 
 
 def create_md5(file):
@@ -55,15 +30,15 @@ def create_md5(file):
         for chunk in iter(lambda: file.read(4096), b''):
             hash_md5.update(chunk)
         file.seek(0)
-        return hash_md5.hexdigest()
+        return base64.b64encode(hash_md5.digest()).decode()
     if isinstance(file, str):
         with open(file, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b''):
                 hash_md5.update(chunk)
-        return hash_md5.hexdigest()
+        return base64.b64encode(hash_md5.digest()).decode()
     for chunk in iter(lambda: file.read(4096), b''):
         hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+    return base64.b64encode(hash_md5.digest()).decode()
 
 
 def nest_dict(flat: dict()):
@@ -107,3 +82,17 @@ def _nest_dict_rec(k, v, out):
     else:
         out[k] = v
 
+
+def deprecated(func):
+    """This is a decorator which can be used to mark functions
+    as deprecated. It will result in a warning being emitted
+    when the function is used."""
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+        warnings.simplefilter('always', DeprecationWarning)  # turn off filter
+        warnings.warn("Call to deprecated function {}.".format(func.__name__),
+                      category=DeprecationWarning,
+                      stacklevel=2)
+        warnings.simplefilter('default', DeprecationWarning)  # reset filter
+        return func(*args, **kwargs)
+    return new_func

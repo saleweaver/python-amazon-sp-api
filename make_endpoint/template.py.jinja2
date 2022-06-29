@@ -19,12 +19,12 @@ class {{ endpoint }}(Client):
 
         {{ operation.description }}
 
-         Args:
+        Args:
         {% for arg in operation.params %}
             {{ 'key ' if arg['in'] == 'query' else ''}}{{ arg.name }}:{{ arg.type }} | {{ '* REQUIRED' if arg.required else '' }} {{ arg.description }}
         {% endfor %}
 
-         Returns:
+        Returns:
             ApiResponse:
         """
     {% if operation.has_query_params %}

@@ -2,9 +2,7 @@ import os
 import re
 
 dirs = [
-    'listings_items',
-    'product_type_definitions',
-    'catalog_items'
+    'listings_restrictions'
 ]
 
 

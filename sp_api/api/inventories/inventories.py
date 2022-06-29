@@ -26,7 +26,7 @@ class Inventories(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        90                                      150
+        2                                       2
         ======================================  ==============
 
 
@@ -36,6 +36,14 @@ class Inventories(Client):
         When startDateTime is provided, the operation returns inventory summaries that have had changes after the date and time specified. The sellerSkus parameter is ignored.
         When the sellerSkus parameter is provided, the operation returns inventory summaries for only the specified sellerSkus.
         Usage Plan:
+
+        Examples:
+            literal blocks::
+
+                Inventories().get_inventory_summary_marketplace(**{
+                        "details": True,
+                        "marketplaceIds": ["ATVPDKIKX0DER"]
+                    })
 
         Args:
             key details: bool | true to return inventory summaries with additional summarized inventory details and quantities. Otherwise, returns inventory summaries only (default value).	boolean	"false"
