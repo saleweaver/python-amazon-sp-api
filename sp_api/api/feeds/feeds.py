@@ -34,6 +34,7 @@ class Feeds(Client):
         Returns:
             ApiResponse:
         """
+
         return self._request(kwargs.pop('path'), params=kwargs)
 
     def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
