@@ -35,7 +35,8 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        add_marketplace = not 'nextToken' in kwargs
+        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=add_marketplace)
 
     def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
         """
