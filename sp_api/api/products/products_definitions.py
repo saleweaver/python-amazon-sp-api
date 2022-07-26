@@ -9,9 +9,9 @@ class ItemOffersRequest:
     uri: str
     method: str
     MarketplaceId: str
-    ItemCondition: str
-    headers: Dict = None
+    ItemCondition: str = None
     CustomerType: str = None
+    headers: Dict = None
 
 
 @dataclass
