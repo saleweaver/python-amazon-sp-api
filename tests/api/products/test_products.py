@@ -27,3 +27,8 @@ def test_competitive_pricing_for_sku():
 def test_competitive_pricing_for_asin():
     res = Products().get_competitive_pricing_for_asins([], MarketplaceId="ATVPDKIKX0DER")
     assert res.payload[0].get('status') == 'Success'
+
+
+def test_get_item_offers_batch():
+    res = Products().get_item_offers_batch([], MarketplaceId="ATVPDKIKX0DER")
+    assert res.payload[0].get('status') == 'Success'
