@@ -25,16 +25,18 @@ def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken',
 
     def decorator(function):
         def wrapper(*args, **kwargs):
-            res = function(*args, **kwargs)
-            yield res
-            if res.next_token:
-                kwargs.clear()
-                kwargs.update({next_token_param: res.next_token, **extras})
-                sleep_time = make_sleep_time(res.rate_limit, use_rate_limit_header, throttle_by_seconds)
-                for x in wrapper(*args, **kwargs):
-                    yield x
+            done = False
+            kwargs.update(extras)
+            while not done:
+                res = function(*args, **kwargs)
+                yield res
+                if res.next_token:
+                    sleep_time = make_sleep_time(res.rate_limit, use_rate_limit_header, throttle_by_seconds)
                     if sleep_time > 0:
                         time.sleep(sleep_time)
+                    kwargs.update({next_token_param: res.next_token})
+                else:
+                    done = True
 
         wrapper.__doc__ = function.__doc__
         return wrapper
