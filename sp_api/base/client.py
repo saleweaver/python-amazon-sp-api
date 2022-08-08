@@ -41,6 +41,8 @@ class Client(BaseClient):
             proxies=None,
             version=None
     ):
+        if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
+            marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
         self.credentials = CredentialProvider(account, credentials).credentials
         session = boto3.session.Session()
         self.boto3_client = session.client(
