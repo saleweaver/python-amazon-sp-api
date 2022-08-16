@@ -1,6 +1,6 @@
 import os
 import pytest
-
+from unittest.mock import MagicMock
 from sp_api.api import FulfillmentInbound
 from sp_api.base import AccessTokenClient
 from sp_api.base import Marketplaces, MissingCredentials, Client, SellingApiForbiddenException
@@ -185,3 +185,18 @@ def test_client():
         client._request_grantless_operation('')
     except SellingApiForbiddenException as e:
         assert isinstance(e, SellingApiForbiddenException)
+
+
+@pytest.mark.parametrize(
+    "specific_role",
+    ("arn:aws:iam::123:role/some-role", "arn:aws:iam::123:user/some-role")
+)
+def test_client_with_different_roles_arn(monkeypatch, specific_role):
+    client = Client()
+    monkeypatch.setattr(client, "boto3_client", MagicMock())
+
+    class FooCredentials:
+        role_arn = specific_role
+
+    monkeypatch.setattr(client, "credentials", FooCredentials())
+    assert client.set_role() is not None
