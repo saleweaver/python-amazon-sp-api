@@ -85,6 +85,8 @@ def test_from_code_credential_provider_no_role_no_refresh_token():
 
 @pytest.mark.order(-2)
 def test_env_vars_provider():
+
+    previous_env = os.environ.copy()
     os.environ['SP_API_REFRESH_TOKEN'] = 'foo'
     os.environ['LWA_APP_ID'] = 'foo'
     os.environ['LWA_CLIENT_SECRET'] = 'foo'
@@ -95,12 +97,7 @@ def test_env_vars_provider():
     p = FromEnvironmentVariablesCredentialProvider()()
     assert 'refresh_token' in p
 
-    os.environ.pop('SP_API_REFRESH_TOKEN')
-    os.environ.pop('LWA_APP_ID')
-    os.environ.pop('LWA_CLIENT_SECRET')
-    os.environ.pop('SP_API_ACCESS_KEY')
-    os.environ.pop('SP_API_SECRET_KEY')
-    os.environ.pop('SP_API_ROLE_ARN')
+    os.environ = previous_env
 
 
 @pytest.mark.order(-1)
