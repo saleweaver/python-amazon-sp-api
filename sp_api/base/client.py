@@ -117,13 +117,16 @@ class Client(BaseClient):
                         )
 
     def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
-                 add_marketplace=True, res_no_data: bool = False, bulk: bool = False) -> ApiResponse:
+                 add_marketplace=True, res_no_data: bool = False, bulk: bool = False,
+                 wrap_list: bool = False) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
             data = {}
 
-        self.method = params.pop('method', data.pop('method', 'GET'))
+        # Note: The use of isinstance here is to support request schemas that are an array at the
+        # top level, eg get_product_fees_estimate 
+        self.method = params.pop('method', data.pop('method', 'GET') if isinstance(data, dict) else 'GET')
 
         if add_marketplace:
             self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
@@ -135,9 +138,10 @@ class Client(BaseClient):
                       headers=headers or self.headers,
                       auth=self._sign_request(),
                       proxies=self.proxies)
-        return self._check_response(res, res_no_data, bulk)
+        return self._check_response(res, res_no_data, bulk, wrap_list)
 
-    def _check_response(self, res, res_no_data: bool = False, bulk: bool = False) -> ApiResponse:
+    def _check_response(self, res, res_no_data: bool = False, bulk: bool = False,
+                        wrap_list: bool = False) -> ApiResponse:
         if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
             try:
                 js = res.json() or {}
@@ -145,8 +149,13 @@ class Client(BaseClient):
                 js = {'status_code': res.status_code}
         else:
             js = res.json() or {}
+
         if isinstance(js, list):
-            js = js[0]
+            if wrap_list:
+                # Support responses that are an array at the top level, eg get_product_fees_estimate
+                js = dict(payload = js)
+            else:
+                js = js[0]
 
         error = js.get('errors', None)
 
