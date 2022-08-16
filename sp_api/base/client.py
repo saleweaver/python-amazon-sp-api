@@ -64,10 +64,18 @@ class Client(BaseClient):
         ).hexdigest()
 
     def set_role(self, cache_key='role'):
-        role = self.boto3_client.assume_role(
-            RoleArn=self.credentials.role_arn,
-            RoleSessionName='guid'
-        )
+        *_, arn_resource = self.credentials.role_arn.split(":")
+        if arn_resource.startswith("user"):
+            role = self.boto3_client.get_session_token()
+        elif arn_resource.startswith("role"):
+            role = self.boto3_client.assume_role(
+                RoleArn=self.credentials.role_arn,
+                RoleSessionName='guid'
+            )
+        else:
+            raise ValueError(
+                "Invalid ARN, your ARN is not for a user or a role"
+            )
         role_cache[cache_key] = role
         return role
 
