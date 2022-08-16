@@ -1,5 +1,5 @@
 from sp_api.api.products.products import Products
-from sp_api.base import Marketplaces, SellingApiBadRequestException
+from sp_api.base import ApiResponse, Marketplaces, SellingApiBadRequestException
 
 
 def test_pricing_for_sku():
@@ -31,4 +31,6 @@ def test_competitive_pricing_for_asin():
 
 def test_get_item_offers_batch():
     res = Products().get_item_offers_batch([])
-    assert res.payload[0].get('status') == 'Success'
+    assert res.errors is None
+    assert isinstance(res, ApiResponse)
+
