@@ -34,6 +34,13 @@ def test_client_request():
         assert isinstance(e, SellingApiForbiddenException)
 
 
+def test_client_timeout():
+    client = Client(timeout=1)
+    assert client.timeout == 1
+    client = Client()
+    assert client.timeout is None
+
+
 def test_api_response_has_next_token():
     res = FulfillmentInbound().get_shipments(QueryType='SHIPMENT')
     assert res.next_token is not None
