@@ -39,6 +39,7 @@ class Client(BaseClient):
             credentials=None,
             restricted_data_token=None,
             proxies=None,
+            timeout=None,
             version=None
     ):
         if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
@@ -56,6 +57,7 @@ class Client(BaseClient):
         self.restricted_data_token = restricted_data_token
         self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
         self.proxies = proxies
+        self.timeout = timeout
         self.version = version
 
     def _get_cache_key(self, token_flavor=''):
@@ -137,6 +139,7 @@ class Client(BaseClient):
                       data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
                       headers=headers or self.headers,
                       auth=self._sign_request(),
+                      timeout=self.timeout,
                       proxies=self.proxies)
         return self._check_response(res, res_no_data, bulk, wrap_list)
 
