@@ -377,6 +377,7 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
+        print(kwargs)
         return self._request(kwargs.pop("path"), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/items")
@@ -417,3 +418,19 @@ class FulfillmentInbound(Client):
             ApiResponse
         """
         return self._request(kwargs.pop("path"), params=kwargs)
+
+    def get_shipments_by_id(self, shipment_id_list, **kwargs) -> ApiResponse:
+        """
+        get_shipments_by_id(self, shipment_id_list, **kwargs) -> ApiResponse
+
+            FulfillmentInbound().get_shipments_by_id('FBA16TBYQ6J6')
+        Args:
+            shipment_id_list: str or [str]
+            **kwargs:
+
+        Returns:
+            ApiResponse
+        """
+        if not isinstance(shipment_id_list, str):
+            shipment_id_list = ','.join(shipment_id_list)
+        return self.get_shipments(QueryType='SHIPMENT', ShipmentIdList=shipment_id_list, **kwargs)
