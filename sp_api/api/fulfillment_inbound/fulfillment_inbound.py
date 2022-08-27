@@ -377,7 +377,6 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        print(kwargs)
         return self._request(kwargs.pop("path"), params=kwargs)
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/items")
