@@ -97,7 +97,7 @@ class ProductFees(Client):
         return self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs)
 
 
-    def get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse:
+    def get_product_fees_estimate(self, estimate_requests: List) -> ApiResponse:
         """
         get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse
 
