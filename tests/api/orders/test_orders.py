@@ -68,3 +68,27 @@ def test_get_order_api_response_call2():
     assert res.errors is None
     assert res.payload.get('AmazonOrderId') is not None
 
+
+def test_update_shipment_status():
+    res = Orders().update_shipment_status(
+        order_id='123-1234567-1234567',
+        marketplaceId='ATVPDKIKX0DER',
+        shipmentStatus='ReadyForPickup'
+    )
+    assert res() is not None
+    assert isinstance(res(), dict)
+    assert res.errors is None
+    assert res.payload.get("status_code") == 204
+
+
+def test_update_shipment_status_400_error():
+    from sp_api.base import SellingApiBadRequestException
+    try:
+        Orders().update_shipment_status(
+            order_id='123-1234567-1234567',
+            marketplaceId='1',
+            shipmentStatus='ReadyForPickup'
+        )
+    except SellingApiBadRequestException as sep:
+        assert sep.code == 400
+        assert sep.amzn_code == 'InvalidInput'

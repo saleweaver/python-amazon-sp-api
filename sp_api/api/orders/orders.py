@@ -234,6 +234,32 @@ class Orders(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
 
+    @sp_endpoint('/orders/v0/orders/{}/shipment', method='POST')
+    def update_shipment_status(self, order_id: str, **kwargs) -> ApiResponse:
+        """
+        update_shipment_status(self, order_id: str, **kwargs) -> ApiResponse
+        Update the shipment status.
+        **Usage Plan:**
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       15
+        ======================================  ==============
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        Examples:
+            literal blocks::
+                Orders().update_shipment_status(
+                    order_id='123-1234567-1234567',
+                    marketplaceId='ATVPDKIKX0DER',
+                    shipmentStatus='ReadyForPickup'
+                )
+        Args:
+            order_id: str
+        Returns:
+            ApiResponse
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), res_no_data=True, data=kwargs)
+
     @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
     def _get_token(self, **kwargs):
         data_elements = kwargs.pop('RestrictedResources')
