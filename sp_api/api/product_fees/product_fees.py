@@ -1,3 +1,4 @@
+from typing import List
 from urllib.parse import quote_plus
 
 from sp_api.base.helpers import sp_endpoint, fill_query_params
@@ -96,9 +97,9 @@ class ProductFees(Client):
         return self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs)
 
 
-    def get_product_fees_estimate(self, estimate_requests: list[dict]) -> ApiResponse:
+    def get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse:
         """
-        get_product_fees_estimate(self, estimate_requests: list[dict]) -> ApiResponse
+        get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse
 
         Return fees for multiple products
 
