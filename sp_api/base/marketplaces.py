@@ -9,6 +9,7 @@ Europe
 Country	marketplaceId	Country code
 Spain	A1RKKUPIHCS9HS	ES
 United Kingdom	A1F83G8C2ARO7P	GB
+Belgium AMEN7PMS3EDWL BE
 France	A13V1IB3VIYZZH	FR
 Netherlands	A1805IZSGTT6HS	NL
 Germany	A1PA6795UKMFR9	DE
@@ -50,6 +51,7 @@ class Marketplaces(Enum):
     """
 
     AE = (f"{BASE_URL}-eu.amazon.com", "A2VIGQ35RCS4UG", "eu-west-1")
+    BE = (f"{BASE_URL}-eu.amazon.com", "AMEN7PMS3EDWL", "eu-west-1")
     DE = (f"{BASE_URL}-eu.amazon.com", "A1PA6795UKMFR9", "eu-west-1")
     PL = (f"{BASE_URL}-eu.amazon.com", "A1C3SOZRARQ6R3", "eu-west-1")
     EG = (f"{BASE_URL}-eu.amazon.com", "ARBP9OOSHTCHU", "eu-west-1")
