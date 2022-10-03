@@ -4,7 +4,7 @@ six>=1.15,<2
 boto3~=1.24.84
 cachetools~=5.2.0
 setuptools~=65.4.1
-pytz~=2022.2
+pytz~=2022.4
 confuse~=2.0.0
 jinja2
 
