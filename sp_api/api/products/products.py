@@ -1,5 +1,4 @@
 from typing import Optional, List, Dict, Union
-import urllib.parse
 
 from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
 from sp_api.api.products.products_definitions import GetItemOffersBatchRequest, ItemOffersRequest
