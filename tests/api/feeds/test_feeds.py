@@ -40,3 +40,9 @@ def test_request():
         Feeds()._request('', data={})
     except SellingApiForbiddenException:
         assert True
+
+
+def test_get_feed_document():
+    feed_document_id = '0356cf79-b8b0-4226-b4b9-0ee058ea5760'
+    res = Feeds().get_feed_document(feed_document_id)
+    assert 'TestSku102XmlParentã\x81\x8cã\x82\x93ã\x81°ã\x81£ã\x81¦' in res

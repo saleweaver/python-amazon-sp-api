@@ -223,7 +223,14 @@ class Feeds(Client):
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
         url = response.payload.get('url')
+        docResponse = requests.get(url)
+        content = docResponse.content
+
+        encoding = docResponse.encoding if docResponse.encoding else 'iso-8859-1'
+        if encoding.lower() == 'windows-31j':
+            encoding = 'cp932'
+
         content = requests.get(url).content
         if 'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(content), 15 + 32).decode('iso-8859-1')
-        return content.decode('iso-8859-1')
+            return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
+        return content.decode(encoding)
