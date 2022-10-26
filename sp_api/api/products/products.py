@@ -1,5 +1,4 @@
 from typing import Optional, List, Dict, Union
-import urllib.parse
 
 from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
 from sp_api.api.products.products_definitions import GetItemOffersBatchRequest, ItemOffersRequest
@@ -239,8 +238,7 @@ class Products(Client):
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
-                             params={**{f"{item_type}s": ','.join(
-                                 [urllib.parse.quote_plus(s) for s in item_list])},
+                             params={**{f"{item_type}s": ','.join(item_list)},
                                      'ItemType': item_type,
                                      **({'ItemCondition': kwargs.pop(
                                          'ItemCondition')} if 'ItemCondition' in kwargs else {}),
