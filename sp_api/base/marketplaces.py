@@ -79,3 +79,4 @@ class Marketplaces(Enum):
         self.endpoint = endpoint
         self.marketplace_id = marketplace_id
         self.region = region
+
