@@ -177,7 +177,9 @@ class Feeds(Client):
         upload = requests.put(
             response.payload.get('url'),
             data=upload_data,
-            headers={'Content-Type': content_type}
+            headers={'Content-Type': content_type},
+            proxies=self.proxies,
+            verify=self.verify,
         )
         if 200 <= upload.status_code < 300:
             return response
@@ -223,14 +225,22 @@ class Feeds(Client):
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
         url = response.payload.get('url')
-        docResponse = requests.get(url)
+        docResponse = requests.get(
+            url,
+            proxies=self.proxies,
+            verify=self.verify,
+        )
         content = docResponse.content
 
         encoding = docResponse.encoding if docResponse.encoding else 'iso-8859-1'
         if encoding.lower() == 'windows-31j':
             encoding = 'cp932'
 
-        content = requests.get(url).content
+        content = requests.get(
+            url,
+            proxies=self.proxies,
+            verify=self.verify,
+        ).content
         if 'compressionAlgorithm' in response.payload:
             return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
         return content.decode(encoding)
