@@ -62,7 +62,7 @@ class Client(BaseClient):
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
-        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
+        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials, proxies=proxies, verify=verify)
         self.proxies = proxies
         self.timeout = timeout
         self.version = version
