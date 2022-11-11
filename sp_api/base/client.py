@@ -7,6 +7,7 @@ import os
 from json import JSONDecodeError
 
 import boto3
+from botocore.config import Config
 from cachetools import TTLCache
 from requests import request
 
@@ -39,26 +40,33 @@ class Client(BaseClient):
             credentials=None,
             restricted_data_token=None,
             proxies=None,
+            verify=True,
             timeout=None,
             version=None
     ):
         if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
             marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
         self.credentials = CredentialProvider(account, credentials).credentials
+        boto_config = Config(
+            proxies=proxies,
+        )
         session = boto3.session.Session()
         self.boto3_client = session.client(
             'sts',
             aws_access_key_id=self.credentials.aws_access_key,
-            aws_secret_access_key=self.credentials.aws_secret_key
+            aws_secret_access_key=self.credentials.aws_secret_key,
+            config=boto_config,
+            verify=verify,
         )
         self.endpoint = marketplace.endpoint
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
-        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials)
+        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials, proxies=proxies, verify=verify)
         self.proxies = proxies
         self.timeout = timeout
         self.version = version
+        self.verify = verify
 
     def _get_cache_key(self, token_flavor=''):
         return 'role_' + hashlib.md5(
@@ -140,7 +148,8 @@ class Client(BaseClient):
                       headers=headers or self.headers,
                       auth=self._sign_request(),
                       timeout=self.timeout,
-                      proxies=self.proxies)
+                      proxies=self.proxies,
+                      verify=self.verify)
         return self._check_response(res, res_no_data, bulk, wrap_list)
 
     def _check_response(self, res, res_no_data: bool = False, bulk: bool = False,

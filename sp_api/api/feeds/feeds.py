@@ -9,7 +9,7 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Feeds(Client):
     """
     Feeds SP-API Client
-    :link:
+    :link: 
 
     The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
     """
@@ -29,7 +29,7 @@ class Feeds(Client):
             key createdSince:string |  The earliest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is 90 days ago. Feeds are retained for a maximum of 90 days.
             key createdUntil:string |  The latest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is now.
             key nextToken:string |  A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getFeeds operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.
-
+        
 
         Returns:
             ApiResponse:
@@ -119,9 +119,9 @@ class Feeds(Client):
         Cancels the feed that you specify. Only feeds with processingStatus=IN_QUEUE can be cancelled. Cancelled feeds are returned in subsequent calls to the getFeed and getFeeds operations.
 
         Args:
-
+        
             feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
-
+        
 
         Returns:
             ApiResponse:
@@ -137,9 +137,9 @@ class Feeds(Client):
         Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
 
         Args:
-
+        
             feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
-
+        
 
         Returns:
             ApiResponse:
@@ -160,7 +160,7 @@ class Feeds(Client):
             file: File or File like object
             content_type: str
             body: | * REQUIRED {'description': 'Specifies the content type for the createFeedDocument operation.', 'properties': {'contentType': {'description': 'The content type of the feed.', 'type': 'string'}}, 'required': ['contentType'], 'type': 'object'}
-
+        
 
         Returns:
             ApiResponse:
@@ -194,9 +194,9 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-
+        
             feedDocumentId:string | * REQUIRED The identifier of the feed document.
-
+        
 
         Returns:
             ApiResponse:
@@ -224,6 +224,7 @@ class Feeds(Client):
                                  add_marketplace=False)
         url = response.payload.get('url')
         docResponse = requests.get(url)
+        content = docResponse.content
 
         encoding = docResponse.encoding if docResponse.encoding else 'iso-8859-1'
         if encoding.lower() == 'windows-31j':

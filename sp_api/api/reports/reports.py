@@ -364,7 +364,11 @@ class Reports(Client):
         """
         res = self._request(fill_query_params(kwargs.pop('path'), reportDocumentId), add_marketplace=False)
         if download or file or ('decrypt' in kwargs and kwargs['decrypt']):
-            document = requests.get(res.payload.get('url')).content
+            document = requests.get(
+                res.payload.get('url'),
+                proxies=self.proxies,
+                verify=self.verify,
+            ).content
             if 'compressionAlgorithm' in res.payload:
                 document = zlib.decompress(bytearray(document), 15 + 32)
             document = document.decode(character_code)
