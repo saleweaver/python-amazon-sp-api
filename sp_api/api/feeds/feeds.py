@@ -223,9 +223,9 @@ class Feeds(Client):
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
         url = response.payload.get('url')
-        docResponse = requests.get(url)
+        doc_response = requests.get(url)
 
-        encoding = docResponse.encoding if docResponse.encoding else 'iso-8859-1'
+        encoding = doc_response.encoding if doc_response and doc_response.encoding else 'iso-8859-1'
         if encoding.lower() == 'windows-31j':
             encoding = 'cp932'
 
