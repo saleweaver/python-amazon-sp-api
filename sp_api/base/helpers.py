@@ -11,6 +11,7 @@ def fill_query_params(query, *args):
 
 def sp_endpoint(path, method='GET'):
     def decorator(function):
+        @functools.wraps(function)
         def wrapper(*args, **kwargs):
             kwargs.update({
                 'path': path,
@@ -18,7 +19,6 @@ def sp_endpoint(path, method='GET'):
             })
             return function(*args, **kwargs)
 
-        wrapper.__doc__ = function.__doc__
         return wrapper
 
     return decorator
