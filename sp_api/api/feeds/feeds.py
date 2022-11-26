@@ -1,4 +1,3 @@
-import urllib.parse
 import zlib
 
 import requests
@@ -229,7 +228,7 @@ class Feeds(Client):
         if encoding.lower() == 'windows-31j':
             encoding = 'cp932'
 
-        content = requests.get(url).content
+        content = doc_response.content
         if 'compressionAlgorithm' in response.payload:
             return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
         return content.decode(encoding)
