@@ -1,6 +1,5 @@
 import hashlib
 import json
-import re
 from datetime import datetime
 import logging
 import os
@@ -160,12 +159,15 @@ class Client(BaseClient):
             except JSONDecodeError:
                 js = {'status_code': res.status_code}
         else:
-            js = res.json() or {}
+            try:
+                js = res.json() or {}
+            except JSONDecodeError:
+                js = {}
 
         if isinstance(js, list):
             if wrap_list:
                 # Support responses that are an array at the top level, eg get_product_fees_estimate
-                js = dict(payload = js)
+                js = dict(payload=js)
             else:
                 js = js[0]
 
