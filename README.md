@@ -7,7 +7,6 @@
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
 
-
 ### Q & A
 
 If you have questions, please ask them in GitHub discussions 
@@ -35,7 +34,7 @@ pip install python-amazon-sp-api
 ---
 ### Usage
 
-```
+```python
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
