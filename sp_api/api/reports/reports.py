@@ -398,7 +398,7 @@ class Reports(Client):
     @staticmethod
     def _handle_file(file, document, encoding):
         if isinstance(file, str):
-            with open(file, "w+", encoding=encoding) as text_file:
+            with open(file, "w+", encoding=encoding, newline="\n") as text_file:
                 text_file.write(document)
         elif isinstance(file, BytesIO):
             file.write(document.encode(encoding))
