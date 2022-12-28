@@ -167,8 +167,9 @@ class Reports(Client):
             ApiResponse
 
         """
-
-        return self._request(fill_query_params(kwargs.pop('path'), reportId), params=kwargs)
+        add_marketplace = kwargs.pop("add_marketplace") if "add_marketplace" in kwargs else False
+        
+        return self._request(fill_query_params(kwargs.pop('path'), reportId), params=kwargs, add_marketplace=add_marketplace)
 
     @sp_endpoint('/reports/2021-06-30/schedules', method='GET')
     def get_report_schedules(self, **kwargs) -> ApiResponse:
