@@ -1,5 +1,7 @@
+import abc
 import json
 import os
+from typing import Dict
 
 import confuse
 import boto3
@@ -21,7 +23,7 @@ class MissingCredentials(Exception):
     pass
 
 
-class BaseCredentialProvider:
+class BaseCredentialProvider(abc.ABC):
     errors = []
     credentials = None
 
@@ -32,8 +34,9 @@ class BaseCredentialProvider:
         self.load_credentials()
         return self.check_credentials()
 
+    @abc.abstractmethod
     def load_credentials(self):
-        raise NotImplementedError()
+        ...
 
     def check_credentials(self):
         try:
@@ -67,28 +70,36 @@ class FromConfigFileCredentialProvider(BaseCredentialProvider):
             return
 
 
-class FromSecretsCredentialProvider(BaseCredentialProvider):
+class BaseFromSecretsCredentialProvider(BaseCredentialProvider):
     def load_credentials(self):
-        if not os.environ.get('SP_API_AWS_SECRET_ID', None):
+        secret_id = os.environ.get('SP_API_AWS_SECRET_ID')
+        if not secret_id:
             return
+        secret = self.get_secret_content(secret_id)
+        if not secret:
+            return
+        self.credentials = dict(
+            refresh_token=secret.get('SP_API_REFRESH_TOKEN'),
+            lwa_app_id=secret.get('LWA_APP_ID'),
+            lwa_client_secret=secret.get('LWA_CLIENT_SECRET'),
+            aws_secret_key=secret.get('SP_API_SECRET_KEY'),
+            aws_access_key=secret.get('SP_API_ACCESS_KEY'),
+            role_arn=secret.get('SP_API_ROLE_ARN')
+        )
+
+    @abc.abstractmethod
+    def get_secret_content(self, secret_id: str) -> Dict[str, str]:
+        ...
+
+
+class FromSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
+    def get_secret_content(self, secret_id: str) -> Dict[str, str]:
         try:
             client = boto3.client('secretsmanager')
-            response = client.get_secret_value(
-                SecretId=os.environ.get('SP_API_AWS_SECRET_ID')
-            )
-            secret = json.loads(response.get('SecretString'))
-            account_data = dict(
-                refresh_token=secret.get('SP_API_REFRESH_TOKEN'),
-                lwa_app_id=secret.get('LWA_APP_ID'),
-                lwa_client_secret=secret.get('LWA_CLIENT_SECRET'),
-                aws_secret_key=secret.get('SP_API_SECRET_KEY'),
-                aws_access_key=secret.get('SP_API_ACCESS_KEY'),
-                role_arn=secret.get('SP_API_ROLE_ARN')
-            )
+            response = client.get_secret_value(SecretId=secret_id)
+            return json.loads(response.get('SecretString'))
         except ClientError:
-            return
-        else:
-            self.credentials = account_data
+            return {}
 
 
 class FromEnvironmentVariablesCredentialProvider(BaseCredentialProvider):
