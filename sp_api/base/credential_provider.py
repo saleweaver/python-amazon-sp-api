@@ -1,4 +1,5 @@
 import abc
+import functools
 import json
 import os
 from typing import Dict
@@ -7,6 +8,12 @@ import confuse
 import boto3
 from botocore.exceptions import ClientError
 from cachetools import Cache
+
+try:
+    from aws_secretsmanager_caching import SecretCache
+except ImportError:
+    SecretCache = None
+
 
 required_credentials = [
     'aws_access_key',
@@ -102,6 +109,26 @@ class FromSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
             return {}
 
 
+class FromCachedSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
+    def get_secret_content(self, secret_id: str) -> Dict[str, str]:
+        # If caching library is not available, return.
+        secret_cache = self._get_secret_cache()
+        if not secret_cache:
+            return {}
+        try:
+            response = secret_cache.get_secret_string(secret_id=secret_id)
+            return json.loads(response.get('SecretString'))
+        except ClientError:
+            return {}
+
+    @classmethod
+    @functools.lru_cache(maxsize=None)
+    def _get_secret_cache(cls):
+        if SecretCache is None:
+            return None
+        return SecretCache()
+
+
 class FromEnvironmentVariablesCredentialProvider(BaseCredentialProvider):
     def load_credentials(self):
         account_data = dict(
@@ -126,6 +153,7 @@ class CredentialProvider:
     CREDENTIAL_PROVIDERS = [
         FromCodeCredentialProvider,
         FromEnvironmentVariablesCredentialProvider,
+        FromCachedSecretsCredentialProvider,
         FromSecretsCredentialProvider,
         FromConfigFileCredentialProvider
     ]
