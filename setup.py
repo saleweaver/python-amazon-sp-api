@@ -7,7 +7,6 @@ setup(
     version=__version__,
     install_requires=[
         "requests",
-        "six>=1.15,<2",
         "boto3>=1.16.39,<2",
         "cachetools>=4.2,<5.3",
         "pytz",
