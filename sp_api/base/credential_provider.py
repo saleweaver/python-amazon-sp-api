@@ -2,7 +2,8 @@ import abc
 import functools
 import json
 import os
-from typing import Dict
+
+from typing import Dict, Iterable, Optional, Type
 
 import confuse
 import boto3
@@ -150,17 +151,23 @@ class CredentialProvider:
     credentials = None
     cache = Cache(maxsize=10)
 
-    CREDENTIAL_PROVIDERS = [
+    CREDENTIAL_PROVIDERS: Iterable[Type[BaseCredentialProvider]] = (
         FromCodeCredentialProvider,
         FromEnvironmentVariablesCredentialProvider,
         FromCachedSecretsCredentialProvider,
         FromSecretsCredentialProvider,
         FromConfigFileCredentialProvider
-    ]
+    )
 
-    def __init__(self, account='default', credentials=None):
+    def __init__(
+        self,
+        account: str = 'default',
+        credentials: Optional[Dict[str, str]] = None,
+        credential_providers: Optional[Iterable[Type[BaseCredentialProvider]]] = None,
+    ):
         self.account = account
-        for cp in self.CREDENTIAL_PROVIDERS:
+        providers = self.CREDENTIAL_PROVIDERS if credential_providers is None else credential_providers
+        for cp in providers:
             try:
                 self.credentials = cp(account=account, credentials=credentials)()
                 break
