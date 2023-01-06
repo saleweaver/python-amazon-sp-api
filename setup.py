@@ -12,6 +12,9 @@ setup(
         "pytz",
         "confuse>=1.4,<2.1"
     ],
+    extras_require={
+        "aws-caching": ["aws-secretsmanager-caching"],
+    },
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client',
               'sp_api',
@@ -36,7 +39,7 @@ setup(
               'sp_api.util',
                 ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               'sp_api.api.listings_restrictions',
-    
+
 
               'sp_api.api.catalog_items',
               'sp_api.api.product_type_definitions',
