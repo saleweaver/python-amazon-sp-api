@@ -1,13 +1,10 @@
-import json
 import os
 
 import requests
-from botocore.exceptions import ClientError
 import hashlib
 import logging
 from cachetools import TTLCache
-import boto3
-from sp_api.base import BaseClient, CredentialProvider
+from sp_api.base import BaseClient
 
 from .credentials import Credentials
 from .access_token_response import AccessTokenResponse
@@ -25,8 +22,6 @@ class AccessTokenClient(BaseClient):
     path = '/auth/o2/token'
 
     def __init__(self, refresh_token=None, credentials=None, proxies=None, verify=True):
-        if not isinstance(credentials, CredentialProvider):
-            raise TypeError('credentials must be instance of CredentialProvider')
         self.cred = Credentials(refresh_token, credentials)
         self.proxies = proxies
         self.verify = verify
