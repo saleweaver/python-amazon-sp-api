@@ -118,7 +118,7 @@ class FromCachedSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
             return {}
         try:
             response = secret_cache.get_secret_string(secret_id=secret_id)
-            return json.loads(response.get('SecretString'))
+            return json.loads(response)
         except ClientError:
             return {}
 
