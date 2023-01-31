@@ -8,7 +8,7 @@ setup(
     install_requires=[
         "requests",
         "boto3>=1.16.39,<2",
-        "cachetools>=4.2,<5.3",
+        "cachetools>=4.2,<5.4",
         "pytz",
         "confuse>=1.4,<2.1"
     ],
