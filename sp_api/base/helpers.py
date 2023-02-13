@@ -7,7 +7,7 @@ from urllib import parse
 
 
 def fill_query_params(query, *args):
-    return query.format(*[parse.quote(arg, safe="") for arg in args])
+    return query.format(*[parse.quote(arg, safe='') for arg in args])
 
 
 def sp_endpoint(path, method='GET'):
