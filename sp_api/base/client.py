@@ -158,15 +158,12 @@ class Client(BaseClient):
 
     def _check_response(self, res, res_no_data: bool = False, bulk: bool = False,
                         wrap_list: bool = False) -> ApiResponse:
-        if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
-            try:
-                js = res.json() or {}
-            except JSONDecodeError:
+        try:
+            js = res.json() or {}
+        except JSONDecodeError:
+            if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
                 js = {'status_code': res.status_code}
-        else:
-            try:
-                js = res.json() or {}
-            except JSONDecodeError:
+            else:
                 js = {}
 
         if isinstance(js, list):
@@ -184,16 +181,17 @@ class Client(BaseClient):
         return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
-        POST = ['marketplaceIds', 'MarketplaceIds']
-        GET = ['MarketplaceId', 'MarketplaceIds', 'marketplace_ids', 'marketplaceIds']
-
         if self.method == 'POST':
-            if any(x in data.keys() for x in POST):
-                return
-            return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in POST})
-        if any(x in data.keys() for x in GET):
+            __marketplaces = ['marketplaceIds', 'MarketplaceIds']
+        else:
+            __marketplaces = ['MarketplaceId', 'MarketplaceIds', 'marketplace_ids', 'marketplaceIds']
+
+        if any(x in data.keys() for x in __marketplaces):
             return
-        return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in GET})
+
+        return data.update(
+            {k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in __marketplaces}
+        )
 
     def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
         headers = {
