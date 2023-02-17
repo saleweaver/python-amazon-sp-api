@@ -156,7 +156,7 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            file: File or File like object
+            file: File or File like object. Setting this to None will skip the upload.
             content_type: str
             body: | * REQUIRED {'description': 'Specifies the content type for the createFeedDocument operation.', 'properties': {'contentType': {'description': 'The content type of the feed.', 'type': 'string'}}, 'required': ['contentType'], 'type': 'object'}
 
@@ -168,6 +168,10 @@ class Feeds(Client):
             'contentType': kwargs.get('contentType', content_type)
         }
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
+
+        if(file is None):
+            return response
+
         upload_data = file.read()
         try:
             upload_data = upload_data.decode('iso-8859-1')
