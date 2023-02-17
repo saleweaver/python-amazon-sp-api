@@ -44,7 +44,12 @@ class ApiResponse:
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
-        self.rate_limit = headers.get("x-amzn-RateLimit-Limit")
+
+        try:
+            self.rate_limit = headers.get("x-amzn-RateLimit-Limit", None)
+        except AttributeError:
+            self.rate_limit = None
+
         try:
             self.next_token = (
                 nextToken
