@@ -7,10 +7,10 @@ setup(
     version=__version__,
     install_requires=[
         "requests",
-        "boto3>=1.16.39,<2",
-        "cachetools>=4.2,<5.4",
+        "boto3>=1.16.39",
+        "cachetools>=4.2",
         "pytz",
-        "confuse>=1.4,<2.1"
+        "confuse>=1.4"
     ],
     extras_require={
         "aws-caching": ["aws-secretsmanager-caching"],
