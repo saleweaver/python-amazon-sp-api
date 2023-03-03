@@ -62,7 +62,7 @@ class Sales(Client):
         if granularityTimeZone:
             kwargs.update({'granularityTimeZone': granularityTimeZone})
         if 'sku' in kwargs:
-            kwargs.update({'sku': urllib.parse.quote_plus(kwargs.pop('sku'))})
+            kwargs.update({'sku': urllib.parse.quote(kwargs.pop('sku'), safe='')})
         return self._request(kwargs.pop('path'), params=kwargs)
 
     @staticmethod
