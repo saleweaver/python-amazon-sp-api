@@ -139,3 +139,8 @@ The client is pretty extensible and can be used for any other API. Check it out 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+
+---
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api)](https://pepy.tech/project/python-amazon-sp-api)
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/month)](https://pepy.tech/project/python-amazon-sp-api)
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/week)](https://pepy.tech/project/python-amazon-sp-api)
