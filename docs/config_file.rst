@@ -6,7 +6,7 @@ Config File
 An example config file is provided in this repository, it supports multiple accounts.
 The programm looks for a file called `credentials.yml`_
 
-The config is parsed by `confused`_, see their docs for more in depth information.
+The config is parsed by `confuse`_, see their docs for more in depth information.
 Search paths are:
 
 ..  code-block:: bash
@@ -72,6 +72,6 @@ References
 .. target-notes::
 
 .. _`credentials.yml`: https://github.com/saleweaver/python-amazon-sp-api/blob/master/credentials.yml
-.. _`confused`: https://confuse.readthedocs.io/en/latest/usage.html#search-paths
+.. _`confuse`: https://confuse.readthedocs.io/en/latest/usage.html#search-paths
 
 
