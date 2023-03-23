@@ -103,7 +103,7 @@ def test_confirm_shipment():
             ]
         }
     )
-    assert res() is not Nonexw
+    assert res() is not None
     assert isinstance(res(), dict)
     assert res.errors is None
     assert res.payload.get("status_code") == 204
