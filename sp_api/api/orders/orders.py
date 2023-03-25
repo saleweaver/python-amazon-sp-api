@@ -260,6 +260,49 @@ class Orders(Client):
         """
         return self._request(fill_query_params(kwargs.pop('path'), order_id), res_no_data=True, data=kwargs)
 
+    @sp_endpoint('/orders/v0/orders/{}/shipmentConfirmation', method='POST')
+    def confirm_shipment(self, order_id: str, **kwargs) -> ApiResponse:
+        """
+        confirm_shipment(self, order_id: str, **kwargs) -> ApiResponse
+        Updates the shipment confirmation status for a specified order.
+        **Usage Plan:**
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       10
+        ======================================  ==============
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        Examples:
+            literal blocks::
+                Orders().confirm_shipment(
+                    order_id='123-1234567-1234567',
+                    marketplaceId='ATVPDKIKX0DER',
+                    packageDetail={
+                        'packageReferenceId': '0001',
+                        'carrierCode': 'DHL',
+                        "shippingMethod": 'Paket',
+                        'trackingNumber': '1234567890',
+                        'shipDate': '2023-03-19T12:00:00Z',
+                        'orderItems': [
+                            {
+                                'orderItemId': '123456789',
+                                'quantity': 1
+                            },
+                            {
+                                'orderItemId': '2345678901',
+                                'quantity': 2
+                            },
+                        ]
+                    }
+                )
+        Args:
+            order_id: str
+        Returns:
+            ApiResponse
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), order_id), add_marketplace=False, res_no_data=True,
+                             data=kwargs)
+
     @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
     def _get_token(self, **kwargs):
         data_elements = kwargs.pop('RestrictedResources')

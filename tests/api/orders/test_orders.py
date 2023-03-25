@@ -81,6 +81,34 @@ def test_update_shipment_status():
     assert res.payload.get("status_code") == 204
 
 
+def test_confirm_shipment():
+    res = Orders().confirm_shipment(
+        order_id='123-1234567-1234567',
+        marketplaceId='ATVPDKIKX0DER',
+        packageDetail={
+            'packageReferenceId': '0001',
+            'carrierCode': 'DHL',
+            "shippingMethod": 'Paket',
+            'trackingNumber': '1234567890',
+            'shipDate': '2023-03-19T12:00:00Z',
+            'orderItems': [
+                {
+                    'orderItemId': '123456789',
+                    'quantity': 1
+                },
+                {
+                    'orderItemId': '2345678901',
+                    'quantity': 2
+                },
+            ]
+        }
+    )
+    assert res() is not None
+    assert isinstance(res(), dict)
+    assert res.errors is None
+    assert res.payload.get("status_code") == 204
+
+
 def test_update_shipment_status_400_error():
     from sp_api.base import SellingApiBadRequestException
     try:
