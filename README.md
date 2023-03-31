@@ -18,6 +18,10 @@ or
 [![join on slack](https://img.shields.io/badge/slack-join%20on%20slack-orange?style=for-the-badge&logo=slack)](https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ)
 
 ---
+### Freelance Work
+
+The library's author is looking for freelance work. [Contact](mailto:michael@saleweaver.com)
+
 
 ### Donate
 
