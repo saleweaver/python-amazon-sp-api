@@ -44,7 +44,7 @@ class CatalogItems(Client):
         Args:
             key keywords:array | * REQUIRED A comma-delimited list of words or item identifiers to search the Amazon catalog for.
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
+            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
             key brandNames:array |  A comma-delimited list of brand names to limit the search to.
             key classificationIds:array |  A comma-delimited list of classification identifiers to limit the search to.
             key pageSize:integer |  Number of results to be returned per page.
@@ -56,6 +56,9 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
+        if type(kwargs['includedData']) is list:
+            for i in kwargs['includedData']:
+                kwargs['includedData'] += f'{i},'
         return self._request(kwargs.pop('path'),  params=kwargs)
 
     @sp_endpoint('/catalog/<version>/items/{}', method='GET')
@@ -77,11 +80,14 @@ class CatalogItems(Client):
         Args:
             asin:string | * REQUIRED The Amazon Standard Identification Number (ASIN) of the item.
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers. Data sets in the response contain data only for the specified marketplaces.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
+            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
             key locale:string |  Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.
 
         Returns:
             ApiResponse:
         """
 
+        if type(kwargs['includedData']) is list:
+            for i in kwargs['includedData']:
+                kwargs['includedData'] += f'{i},'
         return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
