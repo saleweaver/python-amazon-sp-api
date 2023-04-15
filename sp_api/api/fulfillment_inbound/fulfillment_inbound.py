@@ -218,7 +218,8 @@ class FulfillmentInbound(Client):
         Examples:
             literal blocks::
 
-                FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+                FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": "ASIN1,ASIN2,ASIN3"})
+                FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "SellerSKUList": "SellerSKU1,SellerSKU2,SellerSKU3"})
 
         Args:
             data:
