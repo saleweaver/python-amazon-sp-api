@@ -125,8 +125,8 @@ def test_preorder():
 #     assert res.errors is None
 
 
-def test_get_prep_orders():
-    res = FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": ["ASIN1"]})
+def test_prep_instruction():
+    res = FulfillmentInbound().prep_instruction({"ShipToCountryCode": "US", "ASINList": "ASIN1,ASIN2"})
     assert res.errors is None
 
 
