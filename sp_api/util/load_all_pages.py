@@ -36,6 +36,8 @@ def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken',
                     if sleep_time > 0:
                         time.sleep(sleep_time)
                     kwargs.update({next_token_param: res.next_token})
+                    if kwargs['QueryType'] == 'DATE_RANGE':
+                        kwargs['QueryType'] = 'NEXT_TOKEN'                    
                 else:
                     done = True
 
