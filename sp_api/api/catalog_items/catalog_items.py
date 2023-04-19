@@ -21,7 +21,7 @@ class CatalogItems(Client):
 
     def __init__(self, *args, **kwargs):
         if 'version' in kwargs:
-            self.version = kwargs.get('version', CatalogItemsVersion.V_2020_12_01)
+            self.version = kwargs.get('version', CatalogItemsVersion.V_2022_04_01)
         super().__init__(*args, **{**kwargs, 'version': self.version})
 
     @sp_endpoint('/catalog/<version>/items', method='GET')
@@ -42,7 +42,9 @@ class CatalogItems(Client):
         The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            key keywords:array | * REQUIRED A comma-delimited list of words or item identifiers to search the Amazon catalog for.
+            key keywords:array | A comma-delimited list of words to search the Amazon catalog for. Note: Cannot be used with identifiers.
+            key identifiers:array | A comma-delimited list of product identifiers to search the Amazon catalog for. Note: Cannot be used with keywords.
+            key identifiersType:string | Type of product identifiers to search the Amazon catalog for. Note: Required when identifiers are provided.
             key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
             key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
             key brandNames:array |  A comma-delimited list of brand names to limit the search to.
