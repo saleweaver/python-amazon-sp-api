@@ -34,3 +34,8 @@ def test_get_item_offers_batch():
     assert res.errors is None
     assert isinstance(res, ApiResponse)
 
+
+def test_get_listing_offers_batch():
+    res = Products().get_listing_offers_batch([])
+    assert res.errors is None
+    assert isinstance(res, ApiResponse)
