@@ -1,4 +1,6 @@
 """
+Source: https://developer-docs.amazon.com/sp-api/docs/marketplace-ids
+
 Country	marketplaceId	Country code
 Canada	A2EUQ1WTGCTBG2	CA
 United States of America	ATVPDKIKX0DER	US
@@ -65,6 +67,7 @@ class Marketplaces(Enum):
     SE = (f"{BASE_URL}-eu.amazon.com", "A2NODRKZP88ZB9", "eu-west-1")
     TR = (f"{BASE_URL}-eu.amazon.com", "A33AVAJ2PDY3EV", "eu-west-1")
     UK = (f"{BASE_URL}-eu.amazon.com", "A1F83G8C2ARO7P", "eu-west-1")  # alias for GB
+    ZA = (f"{BASE_URL}-eu.amazon.com", "AE08WJ6YKNBMC", "eu-west-1")
 
     AU = (f"{BASE_URL}-fe.amazon.com", "A39IBJ37TRP1C6", "us-west-2")
     JP = (f"{BASE_URL}-fe.amazon.com", "A1VC38T7YXB528", "us-west-2")
