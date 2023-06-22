@@ -7,7 +7,6 @@
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
 
-
 ### Q & A
 
 If you have questions, please ask them in GitHub discussions 
@@ -19,6 +18,10 @@ or
 [![join on slack](https://img.shields.io/badge/slack-join%20on%20slack-orange?style=for-the-badge&logo=slack)](https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ)
 
 ---
+### Freelance Work
+
+The library's author is looking for freelance work. [Contact](mailto:michael@saleweaver.com)
+
 
 ### Donate
 
@@ -35,7 +38,7 @@ pip install python-amazon-sp-api
 ---
 ### Usage
 
-```
+```python
 from sp_api.api import Orders
 from sp_api.api import Reports
 from sp_api.api import Feeds
@@ -140,3 +143,8 @@ The client is pretty extensible and can be used for any other API. Check it out 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=saleweaver_python-amazon-sp-api&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=saleweaver_python-amazon-sp-api)
+
+---
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api)](https://pepy.tech/project/python-amazon-sp-api)
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/month)](https://pepy.tech/project/python-amazon-sp-api)
+[![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/week)](https://pepy.tech/project/python-amazon-sp-api)

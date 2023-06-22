@@ -48,6 +48,7 @@ class ApiResponse:
         try:
             self.next_token = (
                 nextToken
+                or self.payload.get('pagination', {}).get("nextToken", None)
                 or self.payload.get("NextToken", None)
                 or self.pagination.get("nextToken", None)
             )

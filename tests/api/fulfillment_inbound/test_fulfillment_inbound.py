@@ -163,3 +163,14 @@ def test_get_shipment_items():
 def test_get_items():
     res = FulfillmentInbound().shipment_items(QueryType='SHIPMENT', MarketplaceId="ATVPDKIKX0DER", NextToken='NextToken')
     assert res.errors is None
+
+
+def test_get_shipments_by_id_str():
+    res = FulfillmentInbound().get_shipments_by_id('FBA15DJ9SVVD')
+    assert res.errors is None
+
+
+def test_get_shipments_by_id_list():
+    res = FulfillmentInbound().get_shipments_by_id(['FBA15DJ9SVVD'])
+    assert res.errors is None
+

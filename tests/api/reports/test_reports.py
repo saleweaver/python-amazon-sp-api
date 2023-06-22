@@ -17,7 +17,7 @@ def test_create_report():
 
 def test_create_report_expect_400():
     try:
-        res = Reports().create_report(
+        Reports().create_report(
             reportType="BAD_FEE_DISCOUNTS_REPORT",
             dataStartTime="2019-12-10T20:11:24.000Z",
             marketplaceIds=[
@@ -30,7 +30,7 @@ def test_create_report_expect_400():
 
 def test_create_report_expect_500():
     try:
-        res = Reports().create_report(
+        Reports().create_report(
             reportType="BAD_FEE_DISCasdafsdsfsdfsdOUNTS_REPORT",
             dataStartTime="2019-12-10T20:11:24.000Z",
             marketplaceIds=[

@@ -99,6 +99,13 @@ def test_fill_query_params():
 def test_sp_endpoint_():
     assert sp_endpoint('foo') is not None
 
+    @sp_endpoint('/api/call', method='POST')
+    def my_endpoint(**kwargs):
+        assert kwargs['path'] == '/api/call'
+        assert kwargs['method'] == 'POST'
+    my_endpoint()
+    assert my_endpoint.__name__ == 'my_endpoint'
+
 
 def test_create_md5():
     b = BytesIO()

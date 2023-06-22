@@ -10,6 +10,9 @@ from .exceptions import SellingApiForbiddenException
 from .exceptions import SellingApiRequestThrottledException
 from .exceptions import SellingApiServerException
 from .exceptions import SellingApiTemporarilyUnavailableException
+from .exceptions import SellingApiTooLargeException
+from .exceptions import SellingApiStateConflictException
+from .exceptions import SellingApiUnsupportedFormatException
 from .schedules import Schedules
 from .report_status import ReportStatus
 from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
@@ -42,10 +45,14 @@ __all__ = [
     'SellingApiException',
     'SellingApiBadRequestException',
     'SellingApiNotFoundException',
+    'SellingApiServerException',
     'SellingApiForbiddenException',
     'SellingApiBadRequestException',
     'SellingApiRequestThrottledException',
     'SellingApiTemporarilyUnavailableException',
+    'SellingApiTooLargeException',
+    'SellingApiStateConflictException',
+    'SellingApiUnsupportedFormatException',
     'Schedules',
     'ReportStatus',
     'FirstDayOfWeek',

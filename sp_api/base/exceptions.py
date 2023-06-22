@@ -51,6 +51,36 @@ class SellingApiNotFoundException(SellingApiException):
         super(SellingApiNotFoundException, self).__init__(error, headers)
 
 
+class SellingApiStateConflictException(SellingApiException):
+    """
+    409	The resource specified conflicts with the current state.
+    """
+    code = 409
+
+    def __init__(self, error, headers=None):
+        super(SellingApiStateConflictException, self).__init__(error, headers)
+
+
+class SellingApiTooLargeException(SellingApiException):
+    """
+    413	The request size exceeded the maximum accepted size.
+    """
+    code = 413
+
+    def __init__(self, error, headers=None):
+        super(SellingApiTooLargeException, self).__init__(error, headers)
+
+
+class SellingApiUnsupportedFormatException(SellingApiException):
+    """
+    415	The request payload is in an unsupported format.
+    """
+    code = 415
+
+    def __init__(self, error, headers=None):
+        super(SellingApiUnsupportedFormatException, self).__init__(error, headers)
+
+
 class SellingApiRequestThrottledException(SellingApiException):
     """
     429	The frequency of requests was greater than allowed.
@@ -99,6 +129,10 @@ def get_exception_for_code(code: int):
     return {
         400: SellingApiBadRequestException,
         403: SellingApiForbiddenException,
+        404: SellingApiNotFoundException,
+        409: SellingApiStateConflictException,
+        413: SellingApiTooLargeException,
+        415: SellingApiUnsupportedFormatException,
         429: SellingApiRequestThrottledException,
         500: SellingApiServerException,
         503: SellingApiTemporarilyUnavailableException,

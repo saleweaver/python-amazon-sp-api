@@ -1,4 +1,3 @@
-import urllib.parse
 import zlib
 
 import requests
@@ -9,7 +8,7 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Feeds(Client):
     """
     Feeds SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
     """
@@ -29,13 +28,14 @@ class Feeds(Client):
             key createdSince:string |  The earliest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is 90 days ago. Feeds are retained for a maximum of 90 days.
             key createdUntil:string |  The latest feed creation date and time for feeds included in the response, in ISO 8601 format. The default is now.
             key nextToken:string |  A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getFeeds operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.
-        
+
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        add_marketplace = not 'nextToken' in kwargs
+        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=add_marketplace)
 
     def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
         """
@@ -118,9 +118,9 @@ class Feeds(Client):
         Cancels the feed that you specify. Only feeds with processingStatus=IN_QUEUE can be cancelled. Cancelled feeds are returned in subsequent calls to the getFeed and getFeeds operations.
 
         Args:
-        
+
             feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
-        
+
 
         Returns:
             ApiResponse:
@@ -136,9 +136,9 @@ class Feeds(Client):
         Returns feed details (including the resultDocumentId, if available) for the feed that you specify.
 
         Args:
-        
+
             feedId:string | * REQUIRED The identifier for the feed. This identifier is unique only in combination with a seller ID.
-        
+
 
         Returns:
             ApiResponse:
@@ -156,10 +156,10 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-            file: File or File like object
+            file: File or File like object. Setting this to None will skip the upload.
             content_type: str
             body: | * REQUIRED {'description': 'Specifies the content type for the createFeedDocument operation.', 'properties': {'contentType': {'description': 'The content type of the feed.', 'type': 'string'}}, 'required': ['contentType'], 'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -168,6 +168,10 @@ class Feeds(Client):
             'contentType': kwargs.get('contentType', content_type)
         }
         response = self._request(kwargs.get('path'), data={**data, **kwargs})
+
+        if(file is None):
+            return response
+
         upload_data = file.read()
         try:
             upload_data = upload_data.decode('iso-8859-1')
@@ -193,9 +197,9 @@ class Feeds(Client):
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
         Args:
-        
+
             feedDocumentId:string | * REQUIRED The identifier of the feed document.
-        
+
 
         Returns:
             ApiResponse:
@@ -222,7 +226,13 @@ class Feeds(Client):
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
         url = response.payload.get('url')
-        content = requests.get(url).content
+        doc_response = requests.get(url)
+
+        encoding = doc_response.encoding if doc_response and doc_response.encoding else 'iso-8859-1'
+        if encoding.lower() == 'windows-31j':
+            encoding = 'cp932'
+
+        content = doc_response.content
         if 'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(content), 15 + 32).decode('iso-8859-1')
-        return content.decode('iso-8859-1')
+            return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
+        return content.decode(encoding)

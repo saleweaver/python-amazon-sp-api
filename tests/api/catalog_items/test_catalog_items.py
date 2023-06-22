@@ -18,3 +18,8 @@ def test_list_catalog_items():
     res = Catalog().search_catalog_items(keywords='test')
     assert res.errors is None
 
+
+def test_get_catalog_item_foo():
+    res = Catalog(version=CatalogItemsVersion.V_2020_12_01).get_catalog_item('B07Z95MG3S')
+    assert res.errors is None
+    assert isinstance(res, ApiResponse)

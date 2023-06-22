@@ -1,6 +1,7 @@
-import urllib.parse
+from typing import Optional, List, Dict, Union
 
 from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
+from sp_api.api.products.products_definitions import GetItemOffersBatchRequest, ItemOffersRequest
 
 
 class Products(Client):
@@ -19,7 +20,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        .5                                      1
         ======================================  ==============
 
         Examples:
@@ -54,7 +55,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        .5                                      1
         ======================================  ==============
 
         Examples:
@@ -87,7 +88,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        .5                                      1
         ======================================  ==============
 
         Examples:
@@ -119,7 +120,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        .5                                      1
         ======================================  ==============
 
         Examples:
@@ -151,7 +152,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        1                                       2
         ======================================  ==============
 
         Args:
@@ -183,7 +184,7 @@ class Products(Client):
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        5                                       10
+        .5                                      1
         ======================================  ==============
 
         Args:
@@ -204,10 +205,40 @@ class Products(Client):
 
         return self._request(fill_query_params(kwargs.pop('path'), asin), params={**kwargs})
 
+    @sp_endpoint('/batches/products/pricing/v0/itemOffers', method='POST')
+    def get_item_offers_batch(self, requests_: Optional[Union[List[Dict], GetItemOffersBatchRequest]] = None,
+                              **kwargs) -> ApiResponse:
+        """
+        get_item_offers_batch(self, requests_: Optional[List[Union[Dict, ItemOffersRequest]]], **kwargs) -> ApiResponse
+        Returns the lowest priced offers for a batch of items based on ASIN.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        .5                                       1
+        ======================================  ==============
+
+        Args:
+            requests_: Optional (Body) [dict] The request associated with the getItemOffersBatch API call.
+
+
+        Returns:
+            ApiResponse
+
+        """
+        if isinstance(requests_, GetItemOffersBatchRequest):
+            get_item_offers_batch_request = requests_.to_dict()
+        else:
+            get_item_offers_batch_request = {"requests": requests_}
+
+        return self._request(kwargs.pop('path'), data=get_item_offers_batch_request, params={**kwargs},
+                             add_marketplace=False)
+
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
         return self._request(kwargs.pop('path'),
-                             params={**{f"{item_type}s": ','.join(
-                                 [urllib.parse.quote_plus(s) for s in item_list])},
+                             params={**{f"{item_type}s": ','.join(item_list)},
                                      'ItemType': item_type,
                                      **({'ItemCondition': kwargs.pop(
                                          'ItemCondition')} if 'ItemCondition' in kwargs else {}),
@@ -216,3 +247,4 @@ class Products(Client):
                                      **({'OfferType': kwargs.pop(
                                          'OfferType')} if 'OfferType' in kwargs else {}),
                                      'MarketplaceId': kwargs.get('MarketplaceId', self.marketplace_id)})
+
