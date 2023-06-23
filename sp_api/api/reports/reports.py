@@ -48,7 +48,7 @@ class Reports(Client):
             key pageSize: int optional	The maximum number of reports to return in a single call.
             key createdSince: str or datetime optional	The earliest report creation date and time for reports to include in the response, in ISO 8601 date time format. The default is 90 days ago. Reports are retained for a maximum of 90 days.	string (date-time)	-
             key	createdUntil: str or datetime optional	The latest report creation date and time for reports to include in the response, in ISO 8601 date time format. The default is now.	string (date-time)	-
-            key nextToken: str optional	A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getReports operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.	string	-
+            key nextToken: str optional	A stringget_report_document token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getReports operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.	string	-
 
 
         Returns:
@@ -385,8 +385,14 @@ class Reports(Client):
                 if character_code.lower() == 'windows-31j':
                     character_code = 'cp932'
             if 'compressionAlgorithm' in res.payload:
-                document = zlib.decompress(bytearray(document), 15 + 32)
-            decoded_document = document.decode(character_code)
+                try:
+                    document = zlib.decompress(bytearray(document), 15 + 32)
+                except Exception as e:
+                    document = document
+
+            if character_code:
+                document = document.decode(character_code)
+
             if download:
                 res.payload.update({
                     'document': decoded_document,
