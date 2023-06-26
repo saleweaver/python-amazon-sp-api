@@ -391,7 +391,10 @@ class Reports(Client):
                     document = document
 
             if character_code:
-                document = document.decode(character_code)
+                try:
+                    decoded_document = document.decode(character_code)
+                except Exception as e:
+                    decoded_document = document
 
             if download:
                 res.payload.update({
