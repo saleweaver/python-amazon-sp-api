@@ -388,10 +388,13 @@ class Reports(Client):
                 try:
                     document = zlib.decompress(bytearray(document), 15 + 32)
                 except Exception as e:
-                    document = document
+                    pass
 
             if character_code:
-                document = document.decode(character_code)
+                try:
+                    decoded_document = document.decode(character_code)
+                except Exception as e:
+                    decoded_document = document
 
             if download:
                 res.payload.update({
