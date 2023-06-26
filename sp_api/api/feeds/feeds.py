@@ -234,5 +234,8 @@ class Feeds(Client):
 
         content = doc_response.content
         if 'compressionAlgorithm' in response.payload:
-            return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
+            try:
+                return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
+            except Exception:
+                return content.decode(encoding)
         return content.decode(encoding)
