@@ -17,8 +17,6 @@ except ImportError:
 
 
 required_credentials = [
-    'aws_access_key',
-    'aws_secret_key',
     'lwa_app_id',
     'lwa_client_secret'
 ]
