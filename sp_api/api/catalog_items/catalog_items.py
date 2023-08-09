@@ -56,8 +56,9 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        if isinstance(kwargs['includedData'], list):
-            kwargs['includedData'] = ",".join(kwargs['includedData'])
+        includedData = kwargs.get('includedData', [])
+        if includedData and isinstance(includedData, list):
+            kwargs['includedData'] = ','.join(includedData)
         return self._request(kwargs.pop('path'),  params=kwargs)
 
     @sp_endpoint('/catalog/<version>/items/{}', method='GET')
@@ -86,6 +87,7 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        if isinstance(kwargs['includedData'], list):
-            kwargs['includedData'] = ",".join(kwargs['includedData'])
+        includedData = kwargs.get('includedData', [])
+        if includedData and isinstance(includedData, list):
+            kwargs['includedData'] = ','.join(includedData)
         return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
