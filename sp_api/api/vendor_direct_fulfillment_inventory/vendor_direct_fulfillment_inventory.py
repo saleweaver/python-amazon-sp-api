@@ -55,5 +55,5 @@ class VendorDirectFulfillmentInventory(Client):
             ApiResponse:
         """
     
-        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs, add_marketplace=False)
     
