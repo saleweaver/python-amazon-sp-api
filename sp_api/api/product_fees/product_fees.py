@@ -135,7 +135,7 @@ class ProductFees(Client):
         return self._request('/products/fees/v0/feesEstimate', data=data, params=dict(method='POST'), wrap_list=True)
 
 
-    def _create_body(self, price, id_type, id_value, shipping_price=None, currency='USD', is_fba=False, identifier=None,
+    def _create_body(self, price, id_type=None, id_value=None, shipping_price=None, currency='USD', is_fba=False, identifier=None,
                      points: dict = None, marketplace_id: str = None, optional_fulfillment_program: str=None):
         """
         Create request body
@@ -151,9 +151,7 @@ class ProductFees(Client):
         Returns:
 
         """
-        return {
-            "IdType": id_type,
-            "IdValue" : id_value,
+        body = {
             'FeesEstimateRequest': {
                 'Identifier': identifier or str(price),
                 'PriceToEstimateFees': {
@@ -172,6 +170,12 @@ class ProductFees(Client):
                 'MarketplaceId': marketplace_id or self.marketplace_id
             }
         }
+        
+        if id_type and id_value:
+            body["IdType"] = id_type
+            body["IdValue"] = id_value
+
+        return body
 
 
     def _add_marketplaces(self, data):
