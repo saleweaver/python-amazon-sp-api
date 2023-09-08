@@ -128,8 +128,6 @@ class ProductFees(Client):
         """
         data = [
             dict(
-                IdType = er.pop('id_type'),
-                IdValue = er.pop('id_value'),
                 **self._create_body(**er)
             )
             for er in estimate_requests
@@ -137,7 +135,7 @@ class ProductFees(Client):
         return self._request('/products/fees/v0/feesEstimate', data=data, params=dict(method='POST'), wrap_list=True)
 
 
-    def _create_body(self, price, shipping_price=None, currency='USD', is_fba=False, identifier=None,
+    def _create_body(self, price, id_type, id_value, shipping_price=None, currency='USD', is_fba=False, identifier=None,
                      points: dict = None, marketplace_id: str = None, optional_fulfillment_program: str=None):
         """
         Create request body
@@ -154,6 +152,8 @@ class ProductFees(Client):
 
         """
         return {
+            "IdType": id_type,
+            "IdValue" : id_value,
             'FeesEstimateRequest': {
                 'Identifier': identifier or str(price),
                 'PriceToEstimateFees': {
