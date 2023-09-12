@@ -1,7 +1,7 @@
 from typing import Optional, List, Dict, Union
 
 from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
-from sp_api.api.products.products_definitions import GetItemOffersBatchRequest, ItemOffersRequest
+from sp_api.api.products.products_definitions import GetItemOffersBatchRequest, GetListingOffersBatchRequest
 
 
 class Products(Client):
@@ -234,6 +234,36 @@ class Products(Client):
             get_item_offers_batch_request = {"requests": requests_}
 
         return self._request(kwargs.pop('path'), data=get_item_offers_batch_request, params={**kwargs},
+                             add_marketplace=False)
+
+    @sp_endpoint('/batches/products/pricing/v0/listingOffers', method='POST')
+    def get_listing_offers_batch(self, requests_: Optional[Union[List[Dict], GetListingOffersBatchRequest]] = None, **kwargs) -> ApiResponse:
+        """
+        get_listing_offers_batch(self, requests_: Optional[Union[List[Dict], GetListingOffersBatchRequest]], **kwargs) -> ApiResponse
+        Returns the lowest priced offers for a batch of listings based on ASIN.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        .5                                       1
+        ======================================  ==============
+
+        Args:
+            requests_: Optional (Body) [dict] The request associated with the getListingOffersBatch API call.
+
+
+        Returns:
+            ApiResponse
+
+        """
+        if isinstance(requests_, GetListingOffersBatchRequest):
+            get_listing_offers_batch_request = requests_.to_dict()
+        else:
+            get_listing_offers_batch_request = {"requests": requests_}
+
+        return self._request(kwargs.pop('path'), data=get_listing_offers_batch_request, params={**kwargs},
                              add_marketplace=False)
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):

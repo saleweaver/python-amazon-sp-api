@@ -40,4 +40,43 @@ class GetItemOffersBatchRequest:
             parsed_requestes.append(request)
 
         return parsed_requestes
+    
+
+@dataclass
+class ListingOffersRequest:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #listingoffersrequest """
+    uri: str
+    MarketplaceId: str
+    ItemCondition: str
+    method: str = "GET"
+    CustomerType: str = "Consumer"
+
+
+@dataclass
+class GetListingOffersBatchRequest:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #getlistingoffersbatchrequest """
+    requests: Optional[List[Union[ListingOffersRequest, Dict]]] = None
+
+    def __post_init__(self):
+        self.requests = self.parse_requests(self.requests)
+
+    def to_dict(self):
+        return asdict(self)
+
+    @staticmethod
+    def parse_requests(requests) -> List[ListingOffersRequest]:
+        parsed_requestes = []
+
+        for request in requests:
+            if isinstance(request, Dict):
+                request = ListingOffersRequest(**request)
+
+            if not isinstance(request, ListingOffersRequest):
+                raise TypeError
+
+            parsed_requestes.append(request)
+
+        return parsed_requestes
 
