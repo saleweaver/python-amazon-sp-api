@@ -251,7 +251,7 @@ class FulfillmentInbound(Client):
         )
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/transport", method="PUT")
-    def update_transport_information(self, shipment_id, **kwargs):
+    def update_transport_information(self, shipment_id, data, **kwargs):
         """
         update_transport_information(self, shipment_id, **kwargs) -> ApiResponse
 
@@ -259,13 +259,14 @@ class FulfillmentInbound(Client):
 
         Args:
             shipment_id:
+            data:
             **kwargs:
 
         Returns:
             ApiResponse
         """
         return self._request(
-            fill_query_params(kwargs.pop("path"), shipment_id), data=kwargs
+            fill_query_params(kwargs.pop("path"), shipment_id), data={**data, **kwargs}
         )
 
     @sp_endpoint("/fba/inbound/v0/shipments/{}/transport/void", method="POST")
