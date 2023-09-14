@@ -44,8 +44,8 @@ class Client(BaseClient):
             version=None,
             credential_providers=None,
     ):
-        if not marketplace and (default_marketplace:=os.environ.get('SP_API_DEFAULT_MARKETPLACE')):
-            marketplace = Marketplaces[default_marketplace]
+        if not marketplace:
+            marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)]
         self.credentials = CredentialProvider(
             account,
             credentials,
