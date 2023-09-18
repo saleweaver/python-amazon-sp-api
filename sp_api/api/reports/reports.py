@@ -54,10 +54,11 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
+        path = kwargs.pop('path')
         if kwargs.get('nextToken'):
             #A string token returned in the response to your previous request. nextToken is returned when the number of results exceeds the specified pageSize value. To get the next page of results, call the getReports operation and include this token as the only parameter. Specifying nextToken with any other parameters will cause the request to fail.
-            kwargs = {'nextToken': kwargs.get('nextToken'), 'method' : kwargs.get('method'), 'path' : kwargs.get('path')}
-            return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
+            kwargs = {'nextToken': kwargs.get('nextToken'), 'method' : kwargs.get('method')}
+            return self._request(path, params=kwargs, add_marketplace=False)
         if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
             kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
         if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable):
@@ -69,7 +70,7 @@ class Reports(Client):
         for k in ['createdSince', 'createdUntil']:
             if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
                 kwargs.update({k: kwargs.get(k).isoformat()})
-        return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(path, params=kwargs)
 
     @sp_endpoint('/reports/2021-06-30/reports', method='POST')
     def create_report(self, **kwargs) -> ApiResponse:
