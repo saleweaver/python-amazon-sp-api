@@ -79,4 +79,4 @@ class Sales(Client):
         if isinstance(datetime_obj, str):
             return datetime_obj
         fmt = '%Y-%m-%dT%H:%M:%S%z'
-        return datetime_obj.strftime(fmt)[:-2] + ':00'
+        return datetime_obj.astimezone().isoformat(timespec="seconds")
