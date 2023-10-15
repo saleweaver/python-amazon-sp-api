@@ -9,7 +9,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ### Version 1 Upgrade notice
 
-Version 1.0.0 removes AWS IAM or AWS Signature Version 4 authentication.
+Version 1 removes AWS IAM or AWS Signature Version 4 authentication.
 You can now use the library without AWS credentials.
 For compatibility reasons, you can still pass AWS credentials, but they are silently ignored unless you use SecretsManager Auth.
 
