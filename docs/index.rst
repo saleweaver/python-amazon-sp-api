@@ -1,7 +1,25 @@
-.. meta::
-   :http-equiv=Refresh: 0; url='https://sp-api-docs.saleweaver.com/'
+.. PYTHON-AMAZON-SP-API documentation master file, created by
+   sphinx-quickstart on Thu Jan 28 17:29:02 2021.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+Welcome to PYTHON-AMAZON-SP-API's documentation!
+================================================
 
-The documentation has moved. Please visit `the new site`_
+.. toctree::
+   :maxdepth: 2
 
-.. _the new site: https://sp-api-docs.saleweaver.com
+   installation
+   credentials
+   client_usage
+   endpoints
+   responses
+   exceptions
+   utils
+   testing
 
+
+Indices and tables
+==================
+*  :ref:`genindex`
+*  :ref:`modindex`
+*  :ref:`search`
