@@ -83,9 +83,9 @@ orders = Orders().get_orders(
 
 ### Documentation
 
-Documentation is available [here](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=text)
+Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
-[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://sp-api-docs.saleweaver.com/?utm_source=github&utm_medium=repo&utm_term=badge)
+[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
 ### Consultation
 
