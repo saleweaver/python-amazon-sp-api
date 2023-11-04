@@ -1,0 +1,25 @@
+.redoc-btn {
+    padding: 5px 15px;
+    background: rgba(3, 73, 126, 1);
+    color: white;
+    border-radius: 7px;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px rgb(255 200 130);
+    border: none;
+    outline: none;
+}
+
+.donate-btn-form {
+    padding: 10px 15px;
+    background: linear-gradient(
+45deg, rgba(3, 73, 126, .65), rgba(3, 73, 126, 1), rgba(3, 73, 126, .4));
+    color: white;
+    border: none;
+    outline: none;
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+}

@@ -1,0 +1,81 @@
+{% extends "!footer.html" %}
+
+{% block extrafooter %}
+<style>
+    .helpful-widget-disabled {
+        pointer-events: none;
+        filter: grayscale(70%);
+    }
+</style>
+<div id="helpful-widget"
+     style="margin-top: 3em; display: flex; padding: 15px 5px;border: 1px solid lightgray; justify-content: center; align-items: center; flex-direction: column;">
+    <span>Was this page helpful?</span>
+    <div style="display: flex; justify-content: space-around; width: 50%; align-items: center; font-size: 4em; margin-top: 1.5rem;">
+        <span data-helpful="true" class="helpful-btn fa fa-check-circle-o"
+              style="color: darkgreen; cursor: pointer;"></span>
+        <span data-helpful="false" class="helpful-btn fa fa-times-circle-o" style="color: red; cursor: pointer;"></span>
+    </div>
+    <div id="helpful-feedback" style="width: 100%;  margin-top: 1.5rem; display: none;">
+        <textarea id="helpful-feedback-textarea" style="width: 100%;" placeholder="What could be better?"></textarea>
+        <button id="send-feedback-msg"
+                style="margin-top: .6rem; width: 100%; display: flex; justify-content: center; align-items: center; background: darkgreen; color: white; padding: 7px">
+            <span class="fa fa-send" style="margin-right: 10px;"></span>Send Feedback
+        </button>
+    </div>
+
+</div>
+
+
+<div style="position: fixed; bottom: 2em; right: 2em; padding: 15px; background: #134113; border-radius: 10px; color: white; display: none;"
+     id="thank-you">
+    Thank you for your feedback!
+</div>
+
+<script>
+    const baseUrl = 'https://u7kb21h077.execute-api.eu-central-1.amazonaws.com/staging/helpful/';
+    let wasClicked = false;
+
+    const thankYouToast = document.getElementById('thank-you');
+    const showThankYou = (hide = false) => {
+        thankYouToast.style.display = hide ? 'none' : 'block';
+        setTimeout(() => showThankYou(true), 3000);
+    }
+
+    const disable = () => {
+        document.getElementById('helpful-widget').classList.add('helpful-widget-disabled');
+    }
+
+    Array.from(document.getElementsByClassName('helpful-btn')).forEach(btn => btn.addEventListener('click', e => {
+        if (!wasClicked) {
+            wasClicked = true;
+            const defaultParams = {page: document.location.href, title: document.title}
+            const dataHelpful = e.currentTarget.getAttribute('data-helpful');
+            window.analytics.track('WAS_HELPFUL', {response: dataHelpful, ...defaultParams});
+            const wasHelpful = dataHelpful === 'true';
+            fetch(`${baseUrl}${dataHelpful}?title=${defaultParams.title}`).then(e => {
+                if (wasHelpful) {
+                    disable();
+                    showThankYou();
+                }
+            }).catch(() => showThankYou());
+            if (!wasHelpful) {
+                const feedbackElement = document.getElementById('helpful-feedback');
+                feedbackElement.style.display = 'block';
+                document.getElementById('send-feedback-msg').addEventListener('click', () => {
+                    const feedbackMessage = document.getElementById('helpful-feedback-textarea').value || 'no-text-filter';
+                    window.analytics.track('WAS_HELPFUL', {response: dataHelpful, feedbackMessage, ...defaultParams})
+                    fetch(`${baseUrl}${dataHelpful}?title=${defaultParams.title}`, {
+                        method: 'POST', body: JSON.stringify({feedbackMessage})
+                    }).then(e => {
+                        disable();
+                        showThankYou();
+                    }).catch(() => showThankYou());
+                    feedbackElement.style.display = 'none';
+                });
+            }
+        }
+    }))
+
+</script>
+
+{% endblock %}

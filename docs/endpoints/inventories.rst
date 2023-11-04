@@ -2,6 +2,9 @@ Inventories
 ===========
 
 
+.. button::
+   :text: View API documentation
+   :link: https://sp-api-docs.saleweaver.com/redoc/fbaInventory.html
 
 
 

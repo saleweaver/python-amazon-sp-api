@@ -1,0 +1,405 @@
+{% extends "!layout.html" %}
+{% block menu %}
+<button id="donate-button" class="donate-btn-form" style="margin-top: -10px !important; display: none;">Donate</button>
+<div id="payment-request-button" style="margin-top: -10px;"></div>
+<div id="payment-form-container" style="margin-bottom: 1em; margin-top: -10px; background: #fff; display: none;">
+    <form id="payment-form"
+          style="display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 10px 7px; width: 100%;">
+        <div id="card-element" style="width: 100%"></div>
+        <div id="card-errors" role="alert" style="width: 100%; display: none; font-weight: 300; color: red;font-size: .7rem;
+    margin-top: 10px;"></div>
+    </form>
+    <button id="submit-donate" class="donate-btn-form" style="margin-top: 1rem;">Donate $3</button>
+</div>
+{{ super() }}
+<div style="display: flex; height: 100%; flex-direction: column;">
+    <div style="margin-top: 5em; width: 100%; height: 4rem; z-index: 999; display: flex; flex-direction: column; padding: 5px">
+        <span style="font-size: 1rem; color: white">Here's a playground to test all endpoints:</span>
+        <span id="playground-btn"
+              style="width:100%; display: flex; align-items: center; margin-top: 1em; cursor: pointer">
+       <img src="https://img.shields.io/badge/Playground-test%20all%20Endpoints-red?style=for-the-badge">
+    </span>
+    </div>
+
+    <div style="margin-top: 5em; width: 100%; height: 4rem; z-index: 999; display: flex; flex-direction: column; padding: 5px">
+        <span style="font-size: 1rem; color: white">Do you have questions?</span>
+        <span id="slack-btn"
+              style="width:100%; display: flex; align-items: center; margin-top: 1em; cursor: pointer">
+       <img src="https://img.shields.io/badge/slack-ask%20on%20slack-orange?style=for-the-badge&logo=slack">
+    </span>
+    </div>
+    <div style="margin-top: 1.5em; width: 100%; height: 4rem; z-index: 999; display: flex; flex-direction: column; padding: 5px">
+        <!-- Place this tag where you want the button to render. -->
+        <div style="display: flex; align-items: center;">
+            <!-- Place this tag where you want the button to render. -->
+            <a class="github-button" href="https://github.com/saleweaver/python-amazon-sp-api"
+               data-color-scheme="no-preference: dark_high_contrast; light: light; dark: dark_high_contrast;"
+               data-icon="octicon-star" data-show-count="true"
+               aria-label="Star saleweaver/python-amazon-sp-api on GitHub">Star</a>
+            <a style="margin-left: 5px" class="github-button"
+               href="https://github.com/saleweaver/python-amazon-sp-api/fork"
+               data-color-scheme="no-preference: dark_high_contrast; light: light; dark: dark_high_contrast;"
+               data-icon="octicon-repo-forked" data-show-count="true"
+               aria-label="Fork saleweaver/python-amazon-sp-api on GitHub">Fork</a>
+            <!-- Place this tag where you want the button to render. -->
+            <a style="margin-left: 5px" class="github-button" href="https://github.com/sponsors/saleweaver"
+               data-color-scheme="no-preference: dark_high_contrast; light: light; dark: dark_high_contrast;"
+               data-icon="octicon-heart" aria-label="Sponsor @saleweaver on GitHub">Sponsor</a>
+        </div>
+        <!-- Place this tag where you want the button to render. -->
+        <div style="display: flex; align-items: center;">
+            <a class="github-button" href="https://github.com/saleweaver/python-amazon-sp-api/discussions"
+               data-color-scheme="no-preference: dark_high_contrast; light: light; dark: dark_high_contrast;"
+               data-icon="octicon-comment-discussion"
+               aria-label="Discuss saleweaver/python-amazon-sp-api on GitHub">Discuss</a>
+            <!-- Place this tag where you want the button to render. -->
+            <a style="margin-left: 5px" class="github-button"
+               href="https://github.com/saleweaver/python-amazon-sp-api/issues"
+               data-color-scheme="no-preference: dark_high_contrast; light: light; dark: dark_high_contrast;"
+               data-icon="octicon-issue-opened" data-show-count="true"
+               aria-label="Issue saleweaver/python-amazon-sp-api on GitHub">Issue</a>
+        </div>
+        <span id="git-btn"
+              style="width:100%; display: flex; align-items: center; margin-top: 1em; cursor: pointer">
+        <img src="https://img.shields.io/badge/github-view%20on%20github-silver?style=for-the-badge&logo=github">
+        </span>
+    </div>
+
+</div>
+<script>
+    const link = (link) => {
+        const el = document.createElement('a');
+        el.href = link;
+        el.target = '_blank';
+        el.click();
+    }
+    document.getElementById('slack-btn').addEventListener('click', () => {
+        window.analytics.track('SLACK', {
+            action: 'askOnSlack',
+            title: document.title,
+            page: document.location.href
+        });
+        link("https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ");
+    })
+    document.getElementById('playground-btn').addEventListener('click', () => {
+        window.analytics.track('PLAYGROUND', {
+            action: 'gotoPlayground'
+        })
+        link('https://sp-api-playground.saleweaver.com/?utm_source=documentation&utm_medium=docs&utm_term=menu')
+    })
+    document.getElementById('git-btn').addEventListener('click', () => {
+        window.analytics.track('GITHUB', {
+            action: 'viewOnGithub',
+            title: document.title,
+            page: document.location.href
+        });
+        link("https://github.com/saleweaver/python-amazon-sp-api");
+    })
+</script>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<div style="position: fixed; bottom: 2em; right: 2em; padding: 15px; background: #134113; border-radius: 10px; color: white; display: none;"
+     id="thank-you-pay">
+    Thank you for your donation!
+</div>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WXLCV6BS2G"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-WXLCV6BS2G');
+</script>
+<script>
+    !function () {
+        var analytics = window.analytics = window.analytics || [];
+        if (!analytics.initialize) if (analytics.invoked) window.console && console.error && console.error("Segment snippet included twice."); else {
+            analytics.invoked = !0;
+            analytics.methods = ["trackSubmit", "trackClick", "trackLink", "trackForm", "pageview", "identify", "reset", "group", "track", "ready", "alias", "debug", "page", "once", "off", "on", "addSourceMiddleware", "addIntegrationMiddleware", "setAnonymousId", "addDestinationMiddleware"];
+            analytics.factory = function (e) {
+                return function () {
+                    var t = Array.prototype.slice.call(arguments);
+                    t.unshift(e);
+                    analytics.push(t);
+                    return analytics
+                }
+            };
+            for (var e = 0; e < analytics.methods.length; e++) {
+                var key = analytics.methods[e];
+                analytics[key] = analytics.factory(key)
+            }
+            analytics.load = function (key, e) {
+                var t = document.createElement("script");
+                t.type = "text/javascript";
+                t.async = !0;
+                t.src = "https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";
+                var n = document.getElementsByTagName("script")[0];
+                n.parentNode.insertBefore(t, n);
+                analytics._loadOptions = e
+            };
+            analytics._writeKey = "0wsJVJMN1I1p2I8Qj10csISdRgR65IHn";
+            ;analytics.SNIPPET_VERSION = "4.15.3";
+            analytics.load("0wsJVJMN1I1p2I8Qj10csISdRgR65IHn");
+            analytics.page();
+        }
+    }();
+</script>
+<script>
+    const el = document.getElementById('redoc-btn');
+    if (el) {
+        el.addEventListener('click', (e) => {
+            window.analytics.track('REDOC', {action: 'open', page: document.location.href, title: document.title});
+            const el = document.createElement('a');
+            el.target = '_blank';
+            el.href = e.target.getAttribute('data-href');
+            el.click();
+        });
+    }
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+    const thankYouToastPay = document.getElementById('thank-you-pay');
+    const showThankYouPay = (hide = false) => {
+        thankYouToastPay.style.display = hide ? 'none' : 'block';
+        link('https://sp-api-docs.saleweaver.com/thank-you-donation');
+    }
+
+    const url = 'https://u7kb21h077.execute-api.eu-central-1.amazonaws.com/staging/paymentintents';
+    const stripe = Stripe('pk_live_5VpoyMNPPGbkELJSJQW0ocmr');
+    const elements = stripe.elements();
+
+    let displayError = document.getElementById('card-errors');
+    const donateBtn = document.getElementById('donate-button');
+    const paymentFormContainer = document.getElementById('payment-form-container');
+
+    donateBtn.addEventListener('click', () => {
+        window.analytics.track('PAYMENT', {
+            action: 'donate_form_button_click',
+            title: document.title,
+            page: document.location.href
+        })
+        paymentFormContainer.style.display = 'block';
+        donateBtn.style.display = 'none';
+        const style = {
+            base: {}
+        };
+        const card = elements.create("card", {style: style});
+        card.mount("#card-element");
+        card.on('change', ({error}) => {
+            if (error) {
+                displayError.style.display = 'block';
+                displayError.textContent = error.message;
+            } else {
+                displayError.style.display = 'none';
+                displayError.textContent = '';
+            }
+        });
+
+        const submitDonateBtn = document.getElementById('submit-donate');
+        submitDonateBtn.addEventListener('click', async (ev) => {
+            window.analytics.track('PAYMENT', {
+                action: 'start_payment',
+                title: document.title,
+                page: document.location.href
+            });
+
+            window.analytics.track('PAYMENT', {
+                action: 'paymentmethod',
+                title: document.title,
+                page: document.location.href
+            });
+            submitDonateBtn.setAttribute('disabled', 'true');
+            submitDonateBtn.style.pointerEvents = 'none';
+            ev.preventDefault();
+            // If the client secret was rendered server-side as a data-secret attribute
+            // on the <form> element, you can retrieve it here by calling `form.dataset.secret`
+            const intent = await fetch(url).then(e => e.json())
+            const clientSecret = intent.client_secret;
+
+            const result = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card
+                }
+            });
+            if (result.error) {
+                // Show error to your customer (for example, insufficient funds)
+                console.log(result.error.message);
+                displayError.style.display = 'block';
+                displayError.textContent = result.error.message;
+                submitDonateBtn.setAttribute('disabled', 'false');
+                submitDonateBtn.style.pointerEvents = 'all';
+            } else {
+                displayError.style.display = 'none';
+
+                // The payment has been processed!
+                if (result.paymentIntent.status === 'succeeded') {
+                    window.analytics.track('PAYMENT', {
+                        action: 'success',
+                        title: document.title,
+                        page: document.location.href
+                    });
+                    displayError.style.display = 'block';
+                    displayError.style.color = 'green';
+                    displayError.textContent = 'Thank you for your donation!';
+                    donateBtn.style.display = 'flex';
+                    paymentFormContainer.style.display = 'none';
+                    showThankYouPay();
+                }
+                if (result.paymentIntent.status === "requires_action") {
+                    // Let Stripe.js handle the rest of the payment flow.
+                    let {error} = await stripe.confirmCardPayment(clientSecret);
+                    if (error) {
+                        submitDonateBtn.setAttribute('disabled', 'false');
+                        submitDonateBtn.style.pointerEvents = 'all';
+                        window.analytics.track('PAYMENT', {
+                            action: 'failure',
+                            title: document.title,
+                            page: document.location.href,
+                            ...error,
+                        })
+                        displayError.style.display = 'block';
+                        displayError.textContent = error.message;
+                    } else {
+                        displayError.style.display = 'none';
+
+                        window.analytics.track('PAYMENT', {
+                            action: 'success',
+                            title: document.title,
+                            page: document.location.href
+                        });
+                        displayError.style.display = 'block';
+                        displayError.style.color = 'green';
+                        displayError.textContent = 'Thank you for your donation!';
+                        showThankYouPay();
+                        donateBtn.style.display = 'flex';
+                        paymentFormContainer.style.display = 'none';
+                    }
+                }
+            }
+        });
+    });
+
+
+    const paymentRequest = stripe.paymentRequest({
+        country: 'US',
+        currency: 'usd',
+        total: {
+            label: 'Donation | Thank you!',
+            amount: 300,
+        },
+        requestPayerName: true
+    });
+    const prButton = elements.create('paymentRequestButton', {
+        paymentRequest,
+        style: {
+            paymentRequestButton: {
+                type: 'donate',
+                // One of 'default', 'book', 'buy', or 'donate'
+                // Defaults to 'default'
+                theme: 'dark'
+                // One of 'dark', 'light', or 'light-outline'
+                // Defaults to 'dark'
+            },
+        },
+    });
+
+    (async () => {
+        // Check the availability of the Payment Request API first.
+        const result = await paymentRequest.canMakePayment();
+        if (result) {
+            donateBtn.style.display = 'none';
+            window.analytics.track('PAYMENT', {
+                action: 'visible',
+                title: document.title,
+                page: document.location.href
+            })
+            prButton.mount('#payment-request-button');
+            prButton.on('click', function (event) {
+                window.analytics.track('PAYMENT', {
+                    action: 'clicked_button',
+                    title: document.title,
+                    page: document.location.href
+                })
+            });
+        } else {
+            donateBtn.style.display = 'flex';
+            document.getElementById('payment-request-button').style.display = 'none';
+            window.analytics.track('PAYMENT', {
+                action: 'not_available',
+                title: document.title,
+                page: document.location.href
+            })
+        }
+    })();
+
+    paymentRequest.on('paymentmethod', async (ev) => {
+        window.analytics.track('PAYMENT', {
+            action: 'paymentmethod',
+            title: document.title,
+            page: document.location.href
+        })
+        // Confirm the PaymentIntent without handling potential next actions (yet).
+        const intent = await fetch(url).then(e => e.json())
+        const clientSecret = intent.client_secret;
+        const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(
+            clientSecret,
+            {payment_method: ev.paymentMethod.id},
+            {handleActions: false}
+        );
+        if (confirmError) {
+            // Report to the browser that the payment failed, prompting it to
+            // re-show the payment interface, or show an error message and close
+            // the payment interface.
+            ev.complete('fail');
+        } else {
+            // Report to the browser that the confirmation was successful, prompting
+            // it to close the browser payment method collection interface.
+            ev.complete('success');
+            // Check if the PaymentIntent requires any actions and if so let Stripe.js
+            // handle the flow. If using an API version older than "2019-02-11"
+            // instead check for: `paymentIntent.status === "requires_source_action"`.
+            if (paymentIntent.status === "requires_action") {
+                // Let Stripe.js handle the rest of the payment flow.
+                const {error} = await stripe.confirmCardPayment(clientSecret);
+                if (error) {
+                    window.analytics.track('PAYMENT', {
+                        action: 'failure',
+                        title: document.title,
+                        page: document.location.href,
+                        ...error,
+                    })
+
+                    // The payment failed -- ask your customer for a new payment method.
+                } else {
+                    window.analytics.track('PAYMENT', {
+                        action: 'success',
+                        title: document.title,
+                        page: document.location.href
+                    })
+                    showThankYouPay();
+                }
+            } else {
+                window.analytics.track('PAYMENT', {
+                    action: 'success',
+                    title: document.title,
+                    page: document.location.href
+                })
+                showThankYouPay();
+            }
+        }
+
+    });
+
+
+</script>
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+{% endblock %}
