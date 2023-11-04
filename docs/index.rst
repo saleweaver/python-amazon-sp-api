@@ -6,12 +6,6 @@
 Welcome to PYTHON-AMAZON-SP-API's documentation!
 ================================================
 
-You can use the playground to test endpoints:
-
-.. button::
-   :text: Visit Playground
-   :link: https://sp-api-playground.saleweaver.com/?utm_source=documentation&utm_medium=docs&utm_term=firstpage
-
 
 .. toctree::
    :maxdepth: 2
