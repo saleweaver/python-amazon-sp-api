@@ -11,8 +11,6 @@ If you pass a value in credentials, other credentials from env variables or from
 
     - lwa_app_id
     - lwa_client_secret
-    - aws_secret_key
-    - aws_access_key
 
     If you don't set the refresh_token, you have to pass it to the client.
 
@@ -32,10 +30,7 @@ If you pass a value in credentials, other credentials from env variables or from
     credentials=dict(
             refresh_token='<refresh_token>',
             lwa_app_id='<lwa_app_id>',
-            lwa_client_secret='<lwa_client_secret>',
-            aws_secret_key='<aws_secret_access_key>',
-            aws_access_key='<aws_access_key_id>',
-            role_arn='<role_arn>',
+            lwa_client_secret='<lwa_client_secret>'
         )
 
 

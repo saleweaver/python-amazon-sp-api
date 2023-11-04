@@ -8,9 +8,6 @@ ENVIRONMENT VARIABLE     DESCRIPTION
 SP_API_REFRESH_TOKEN     The refresh token used obtained via authorization (can be passed to the client instead)
 LWA_APP_ID               Your login with amazon app id
 LWA_CLIENT_SECRET        Your login with amazon client secret
-SP_API_ACCESS_KEY        AWS USER ACCESS KEY
-SP_API_SECRET_KEY        AWS USER SECRET KEY
-SP_API_ROLE_ARN          The role's arn (needs permission to "Assume Role" STS)
 =====================    =========================================================================================================
 
 .. note::
@@ -18,8 +15,7 @@ SP_API_ROLE_ARN          The role's arn (needs permission to "Assume Role" STS)
 
     - lwa_app_id
     - lwa_client_secret
-    - aws_secret_key
-    - aws_access_key
+
 
     If you don't set the refresh_token, you have to pass it to the client.
 

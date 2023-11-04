@@ -14,9 +14,7 @@ This quickstart uses credentials passed as a dict, if you've setup a config file
     credentials = dict(
         refresh_token='your_refresh_token',
         lwa_app_id='your_lwa_app_id',
-        lwa_client_secret='your_lwa_client_secret',
-        aws_access_key='your_aws_access_key',
-        aws_secret_key='your_aws_secret_key'
+        lwa_client_secret='your_lwa_client_secret'
     )
 
 The default Marketplace this library uses is the US.
