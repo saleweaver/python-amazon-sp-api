@@ -83,7 +83,7 @@ orders = Orders().get_orders(
 
 ### Documentation
 
-Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
+Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/)
 
 [![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
