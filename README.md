@@ -1,6 +1,5 @@
 # PYTHON-AMAZON-SP-API
 
-![Tests](https://codebuild.eu-central-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiUXZBQ29Jd3NaNE45elZGRmdveVZMa0JCank4OGY4dnBMNDA3WGpsZXdpRXRTRHBKK1BvYmtneG00My8yYkdjdXc2S2VOeFBYcGN0VmxmVnhvZVIxZCtNPSIsIml2UGFyYW1ldGVyU3BlYyI6ImlnQUxNNlFZOVNWd0lRRlUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 ## Amazon Selling-Partner API
 
@@ -24,10 +23,6 @@ or
 [![join on slack](https://img.shields.io/badge/slack-join%20on%20slack-orange?style=for-the-badge&logo=slack)](https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ)
 
 ---
-### Freelance Work
-
-The library's author is looking for freelance work. [Contact](mailto:michael@saleweaver.com)
-
 
 ### Donate
 
@@ -66,7 +61,7 @@ createReportResponse = Reports().create_report(reportType=ReportType.GET_MERCHAN
 # submit feed
 # feeds can be submitted like explained in Amazon's docs, or simply by calling submit_feed
 
-Feeds().submit_feed(self, <feed_type>, <file_or_bytes_io>, content_type='text/tsv', **kwargs)
+Feeds().submit_feed(<feed_type>, <file_or_bytes_io>, content_type='text/tsv', **kwargs)
 
 # PII Data
 
