@@ -67,6 +67,11 @@ from .aplus_content.aplus_content import AplusContent
 
 from .fulfillment_outbound.fulfillment_outbound import FulfillmentOutbound
 
+from .replenishment.replenishment import Replenishment
+
+from .supply_sources.supply_sources import SupplySources
+
+from .data_kiosk.data_kiosk import DataKiosk
 
 
 __all__ = [
@@ -136,6 +141,11 @@ __all__ = [
     "AplusContent",
 
     "FulfillmentOutbound",
+    
+    "Replenishment",
 
+    "SupplySources",
+
+    "DataKiosk"
 
 ]
