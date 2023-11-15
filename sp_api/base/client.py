@@ -5,7 +5,6 @@ import logging
 import os
 from json import JSONDecodeError
 
-from cachetools import TTLCache
 from requests import request
 
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
@@ -16,8 +15,6 @@ from .marketplaces import Marketplaces
 from sp_api.base.credential_provider import CredentialProvider
 
 log = logging.getLogger(__name__)
-
-role_cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=3200)
 
 
 class Client(BaseClient):
@@ -57,11 +54,6 @@ class Client(BaseClient):
         self.timeout = timeout
         self.version = version
         self.verify = verify
-
-    def _get_cache_key(self, token_flavor=''):
-        return 'role_' + hashlib.md5(
-            (token_flavor + self._auth.cred.refresh_token).encode('utf-8')
-        ).hexdigest()
 
     @property
     def headers(self):

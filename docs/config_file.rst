@@ -29,11 +29,6 @@ If you're only using one account, place it under default. You can pass the accou
 
         Orders(refresh_token='...')
 
-.. warning::
-    If you have assigned the execute-api (STS) permissions to your AWS **user**, omit `role_arn`.
-
-    If you have assigned the permission to a role, the `role_arn` parameter is required.
-
 ..  code-block:: yaml
 
     version: '1.0'
