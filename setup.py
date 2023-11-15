@@ -7,12 +7,12 @@ setup(
     version=__version__,
     install_requires=[
         "requests",
-        "boto3>=1.16.39",
         "cachetools>=4.2",
         "confuse>=1.4"
     ],
     extras_require={
         "aws-caching": ["aws-secretsmanager-caching"],
+        "aws": ["boto3"]
     },
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
               'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client',

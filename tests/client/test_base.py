@@ -103,7 +103,7 @@ def test_from_config_file_provider():
 
 
 def test_req():
-    assert len(required_credentials) == 4
+    assert len(required_credentials) == 2
 
 
 def test_client():

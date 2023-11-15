@@ -6,8 +6,7 @@ import os
 from typing import Dict, Iterable, Optional, Type
 
 import confuse
-import boto3
-from botocore.exceptions import ClientError
+
 from cachetools import Cache
 
 try:
@@ -96,11 +95,18 @@ class BaseFromSecretsCredentialProvider(BaseCredentialProvider):
 
 
 class FromSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
+
     def get_secret_content(self, secret_id: str) -> Dict[str, str]:
         try:
+            import boto3
+            from botocore.exceptions import ClientError
+
             client = boto3.client('secretsmanager')
             response = client.get_secret_value(SecretId=secret_id)
             return json.loads(response.get('SecretString'))
+        except ImportError:
+            print('boto3 not found')
+            return {}
         except ClientError:
             return {}
 
@@ -111,6 +117,7 @@ class FromCachedSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
         secret_cache = self._get_secret_cache()
         if not secret_cache:
             return {}
+        from botocore.exceptions import ClientError
         try:
             response = secret_cache.get_secret_string(secret_id=secret_id)
             return json.loads(response)
