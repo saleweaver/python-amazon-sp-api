@@ -18,14 +18,8 @@ If you pass a value in credentials, other credentials from env variables or from
 
         Orders(refresh_token='...')
 
-.. warning::
-    If you have assigned the execute-api (STS) permissions to your AWS **user**, omit `role_arn`.
-
-    If you have assigned the permissions to a role, the `role_arn` parameter is required.
-
 
 ..  code-block:: python
-
 
     credentials=dict(
             refresh_token='<refresh_token>',

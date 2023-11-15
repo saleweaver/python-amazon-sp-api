@@ -23,12 +23,6 @@ LWA_CLIENT_SECRET        Your login with amazon client secret
 
         Orders(refresh_token='...')
 
-.. warning::
-    If you have assigned the execute-api (STS) permissions to your AWS **user**, omit `role_arn`.
-
-    If you have assigned the permissions to a role, the `role_arn` parameter is required.
-
-
 To set environment variables under linux/mac, use
 
 ..  code-block:: bash
