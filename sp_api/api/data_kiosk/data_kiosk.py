@@ -81,7 +81,7 @@ class DataKiosk(Client):
         return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='DELETE')
-    def cancel_query(self, queryId, **kwargs) -> ApiResponse:
+    def cancel_query(self, query_id, **kwargs) -> ApiResponse:
         """
         cancel_query(self, queryId, **kwargs) -> ApiResponse
 
@@ -97,17 +97,17 @@ class DataKiosk(Client):
 
         Args:
         
-            queryId:string | * REQUIRED The identifier for the query. This identifier is unique only in combination with a selling partner account ID.
+            query_id:string | * REQUIRED The identifier for the query. This identifier is unique only in combination with a selling partner account ID.
         
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), queryId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), query_id), data=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='GET')
-    def get_query(self, queryId, **kwargs) -> ApiResponse:
+    def get_query(self, query_id, **kwargs) -> ApiResponse:
         """
         get_query(self, queryId, **kwargs) -> ApiResponse
 
@@ -123,19 +123,19 @@ class DataKiosk(Client):
 
         Args:
         
-            queryId:string | * REQUIRED The query identifier.
+            query_id:string | * REQUIRED The query identifier.
         
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), queryId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), query_id), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/documents/{}', method='GET')
-    def get_document(self, documentId, **kwargs) -> ApiResponse:
+    def get_document(self, document_id, **kwargs) -> ApiResponse:
         """
-        get_document(self, documentId, **kwargs) -> ApiResponse
+        get_document(self, document_id, **kwargs) -> ApiResponse
 
         Returns the information required for retrieving a Data Kiosk document's contents. See the `createQuery` operation for details about document retention.
 
@@ -149,11 +149,11 @@ class DataKiosk(Client):
 
         Args:
         
-            documentId:string | * REQUIRED The identifier for the Data Kiosk document.
+            document_id:string | * REQUIRED The identifier for the Data Kiosk document.
         
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), documentId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), document_id), params=kwargs)
