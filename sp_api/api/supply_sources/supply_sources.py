@@ -1,5 +1,3 @@
-import urllib.parse
-
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
@@ -10,7 +8,6 @@ class SupplySources(Client):
 
     Manage configurations and capabilities of seller supply sources.
     """
-
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources', method='GET')
     def get_supply_sources(self, **kwargs) -> ApiResponse:
@@ -29,9 +26,8 @@ class SupplySources(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources', method='POST')
     def create_supply_source(self, **kwargs) -> ApiResponse:
@@ -51,9 +47,8 @@ class SupplySources(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources/{}', method='GET')
     def get_supply_source(self, supplySourceId, **kwargs) -> ApiResponse:
@@ -70,9 +65,8 @@ class SupplySources(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), supplySourceId), params=kwargs)
-    
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources/{}', method='PUT')
     def update_supply_source(self, supplySourceId, **kwargs) -> ApiResponse:
@@ -86,16 +80,15 @@ class SupplySources(Client):
             supplySourceId:string | * REQUIRED The unique identitier of a supply source.
         
             payload: |  {'description': 'A request to update the configuration and capabilities of a supply source.',
- 'properties': {'alias': {'$ref': '#/definitions/SupplySourceAlias'}, 'capabilities': {'$ref': '#/definitions/SupplySourceCapabilities'}, 'configuration': {'$ref': '#/definitions/SupplySourceConfiguration'}},
- 'type': 'object'}
+                         'properties': {'alias': {'$ref': '#/definitions/SupplySourceAlias'}, 'capabilities': {'$ref': '#/definitions/SupplySourceCapabilities'}, 'configuration': {'$ref': '#/definitions/SupplySourceConfiguration'}},
+                         'type': 'object'}
         
 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), supplySourceId), data=kwargs)
-    
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources/{}', method='DELETE')
     def archive_supply_source(self, supplySourceId, **kwargs) -> ApiResponse:
@@ -112,9 +105,8 @@ class SupplySources(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), supplySourceId), data=kwargs)
-    
 
     @sp_endpoint('/supplySources/2020-07-01/supplySources/{}/status', method='PUT')
     def update_supply_source_status(self, supplySourceId, **kwargs) -> ApiResponse:
@@ -133,6 +125,5 @@ class SupplySources(Client):
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), supplySourceId), data=kwargs)
-    

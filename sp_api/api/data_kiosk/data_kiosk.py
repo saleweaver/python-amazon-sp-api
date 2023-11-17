@@ -11,7 +11,6 @@ class DataKiosk(Client):
     The Selling Partner API for Data Kiosk lets you submit GraphQL queries from a variety of schemas to help selling partners manage their businesses.
     """
 
-
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='GET')
     def get_queries(self, **kwargs) -> ApiResponse:
         """
@@ -19,13 +18,13 @@ class DataKiosk(Client):
 
         Returns details for the Data Kiosk queries that match the specified filters. See the `createQuery` operation for details about query retention.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 0.0222 | 10 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.0222 | 10 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
         
@@ -43,9 +42,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='POST')
     def create_query(self, **kwargs) -> ApiResponse:
@@ -54,34 +52,33 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         Creates a Data Kiosk query request.
 
-**Note:** The retention of a query varies based on the fields requested. Each field within a schema is annotated with a `@resultRetention` directive that defines how long a query containing that field will be retained. When a query contains multiple fields with different retentions, the shortest (minimum) retention is applied. The retention of a query's resulting documents always matches the retention of the query.
+        **Note:** The retention of a query varies based on the fields requested. Each field within a schema is annotated with a `@resultRetention` directive that defines how long a query containing that field will be retained. When a query contains multiple fields with different retentions, the shortest (minimum) retention is applied. The retention of a query's resulting documents always matches the retention of the query.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 0.0167 | 15 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.0167 | 15 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
         
             body: | * REQUIRED {'description': 'Information required to create the query.',
- 'properties': {'paginationToken': {'description': 'A token to fetch a certain page of query results when there are multiple pages of query results available. The value of this token must be fetched from the `pagination.nextToken` field of the '
-                                                   '`Query` object, and the `query` field for this object must also be set to the `query` field of the same `Query` object. A `Query` object can be retrieved from either the `getQueries` or `getQuery` '
-                                                   'operation. In the absence of this token value, the first page of query results will be requested.',
-                                    'type': 'string'},
-                'query': {'description': 'The GraphQL query to submit. A query must be at most 8000 characters after unnecessary whitespace is removed.', 'type': 'string'}},
- 'required': ['query'],
- 'type': 'object'}
-        
+                     'properties': {'paginationToken': {'description': 'A token to fetch a certain page of query results when there are multiple pages of query results available. The value of this token must be fetched from the `pagination.nextToken` field of the '
+                                                                       '`Query` object, and the `query` field for this object must also be set to the `query` field of the same `Query` object. A `Query` object can be retrieved from either the `getQueries` or `getQuery` '
+                                                                       'operation. In the absence of this token value, the first page of query results will be requested.',
+                                                        'type': 'string'},
+                                    'query': {'description': 'The GraphQL query to submit. A query must be at most 8000 characters after unnecessary whitespace is removed.', 'type': 'string'}},
+                     'required': ['query'],
+                     'type': 'object'}
+
 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='DELETE')
     def cancel_query(self, queryId, **kwargs) -> ApiResponse:
@@ -90,13 +87,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         Cancels the query specified by the `queryId` parameter. Only queries with a non-terminal `processingStatus` (`IN_QUEUE`, `IN_PROGRESS`) can be cancelled. Cancelling a query that already has a `processingStatus` of `CANCELLED` will no-op. Cancelled queries are returned in subsequent calls to the `getQuery` and `getQueries` operations.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 0.0222 | 10 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.0222 | 10 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
         
@@ -106,9 +103,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), queryId), data=kwargs)
-    
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='GET')
     def get_query(self, queryId, **kwargs) -> ApiResponse:
@@ -117,13 +113,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         Returns query details for the query specified by the `queryId` parameter. See the `createQuery` operation for details about query retention.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 2.0 | 15 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 2.0 | 15 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
         
@@ -133,9 +129,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), queryId), params=kwargs)
-    
 
     @sp_endpoint('/dataKiosk/2023-11-15/documents/{}', method='GET')
     def get_document(self, documentId, **kwargs) -> ApiResponse:
@@ -144,13 +139,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         Returns the information required for retrieving a Data Kiosk document's contents. See the `createQuery` operation for details about document retention.
 
-**Usage Plan:**
+        **Usage Plan:**
 
-| Rate (requests per second) | Burst |
-| ---- | ---- |
-| 0.0167 | 15 |
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.0167 | 15 |
 
-The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
         
@@ -160,6 +155,5 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), documentId), params=kwargs)
-    
