@@ -33,12 +33,14 @@ setup(
               'sp_api.api.upload',
               'sp_api.api.merchant_fulfillment',
               'sp_api.api.fulfillment_inbound',
+              'sp_api.api.data_kiosk',
+              'sp_api.api.replenishment',
+              'sp_api.api.supply_sources',
               'sp_api.auth',
               'sp_api.base',
               'sp_api.util',
-                ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               'sp_api.api.listings_restrictions',
-
 
               'sp_api.api.catalog_items',
               'sp_api.api.product_type_definitions',
@@ -69,4 +71,3 @@ setup(
     author_email='info@saleweaver.com',
     description='Python wrapper for the Amazon Selling-Partner API'
 )
-
