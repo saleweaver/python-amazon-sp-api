@@ -51,7 +51,7 @@ class DataKiosk(Client):
         return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='POST')
-    def create_query(self, query, paginationToken=None, **kwargs) -> ApiResponse:
+    def create_query(self, query, pagination_token=None, **kwargs) -> ApiResponse:
         """
         create_query(self, **kwargs) -> ApiResponse
 
@@ -73,14 +73,14 @@ class DataKiosk(Client):
         Args:
         
             query:string | * REQUIRED The query to submit. The query must be a valid GraphQL query in the schema specified by the `schema` parameter.
-            paginationToken:string |  A token to fetch a certain page of results when there are multiple pages of results available. The value of this token is fetched from the `pagination.nextToken` field returned in the `GetQueriesResponse` object. All other parameters must be provided with the same values that were provided with the request that generated this token, with the exception of `pageSize` which can be modified between calls to `getQueries`. In the absence of this token value, `getQueries` returns the first page of results.
+            pagination_token:string |  A token to fetch a certain page of results when there are multiple pages of results available. The value of this token is fetched from the `pagination.nextToken` field returned in the `GetQueriesResponse` object. All other parameters must be provided with the same values that were provided with the request that generated this token, with the exception of `pageSize` which can be modified between calls to `getQueries`. In the absence of this token value, `getQueries` returns the first page of results.
 
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs)
+        return self._request(kwargs.pop('path'), data={"query": query, "paginationToken": pagination_token})
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='DELETE')
     def cancel_query(self, query_id, **kwargs) -> ApiResponse:
