@@ -5,6 +5,9 @@
 
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
+##### Supports [Data Kiosk](https://developer-docs.amazon.com/sp-api/v0/docs/data-kiosk-api-v2023-11-15-use-case-guide)
+
+---
 
 ### Version 1 Upgrade notice
 
@@ -42,10 +45,17 @@ pip install python-amazon-sp-api
 ```python
 from sp_api.api import Orders
 from sp_api.api import Reports
+from sp_api.api import DataKiosk
 from sp_api.api import Feeds
 from sp_api.base import SellingApiException
 from sp_api.base.reportTypes import ReportType
 from datetime import datetime, timedelta
+
+# DATA KIOSK API
+client = DataKiosk()
+
+res = client.create_query(query="{analytics_salesAndTraffic_2023_11_15{salesAndTrafficByAsin(startDate:\"2022-09-01\" endDate:\"2022-09-30\" aggregateBy:SKU marketplaceIds:[\"ATVPDKIKX0DER\"]){childAsin endDate marketplaceId parentAsin sales{orderedProductSales{amount currencyCode}totalOrderItems totalOrderItemsB2B}sku startDate traffic{browserPageViews browserPageViewsB2B browserPageViewsPercentage browserPageViewsPercentageB2B browserSessionPercentage unitSessionPercentageB2B unitSessionPercentage}}}}")
+print(res)
 
 # orders API
 try:
