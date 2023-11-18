@@ -16,6 +16,7 @@ You can use the playground to test endpoints:
     endpoints/authorization
     endpoints/catalog
     endpoints/catalog_items
+    endpoints/data_kiosk
     endpoints/fba_inbound_eligibility
     endpoints/fba_small_and_light
     endpoints/feeds
@@ -32,12 +33,14 @@ You can use the playground to test endpoints:
     endpoints/product_fees
     endpoints/product_type_definitions
     endpoints/products
+    endpoints/replenishment
     endpoints/reports
     endpoints/sales
     endpoints/sellers
     endpoints/services
     endpoints/shipping
     endpoints/solicitations
+    endpoints/supply_sources
     endpoints/tokens
     endpoints/upload
     endpoints/vendor_direct_fulfillment_inventory
