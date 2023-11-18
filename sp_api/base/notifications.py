@@ -64,3 +64,6 @@ class NotificationType(str, Enum):
 
     # REPORT_PROCESSING_FINISHED = "Sent whenever any report that you have requested using the Selling Partner API for Reports reaches a report processing status of DONE, CANCELLED, or FATAL."
     REPORT_PROCESSING_FINISHED = "REPORT_PROCESSING_FINISHED"
+
+    # DATA_KIOSK_QUERY_PROCESSING_FINISHED = "Sent when a Data Kiosk query finishes processing."
+    DATA_KIOSK_QUERY_PROCESSING_FINISHED = "DATA_KIOSK_QUERY_PROCESSING_FINISHED"
