@@ -51,7 +51,7 @@ class DataKiosk(Client):
         return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='POST')
-    def create_query(self, **kwargs) -> ApiResponse:
+    def create_query(self, query, paginationToken=None, **kwargs) -> ApiResponse:
         """
         create_query(self, **kwargs) -> ApiResponse
 
@@ -72,14 +72,8 @@ class DataKiosk(Client):
 
         Args:
         
-            body: | * REQUIRED {'description': 'Information required to create the query.',
-                     'properties': {'paginationToken': {'description': 'A token to fetch a certain page of query results when there are multiple pages of query results available. The value of this token must be fetched from the `pagination.nextToken` field of the '
-                                                                       '`Query` object, and the `query` field for this object must also be set to the `query` field of the same `Query` object. A `Query` object can be retrieved from either the `getQueries` or `getQuery` '
-                                                                       'operation. In the absence of this token value, the first page of query results will be requested.',
-                                                        'type': 'string'},
-                                    'query': {'description': 'The GraphQL query to submit. A query must be at most 8000 characters after unnecessary whitespace is removed.', 'type': 'string'}},
-                     'required': ['query'],
-                     'type': 'object'}
+            query:string | * REQUIRED The query to submit. The query must be a valid GraphQL query in the schema specified by the `schema` parameter.
+            paginationToken:string |  A token to fetch a certain page of results when there are multiple pages of results available. The value of this token is fetched from the `pagination.nextToken` field returned in the `GetQueriesResponse` object. All other parameters must be provided with the same values that were provided with the request that generated this token, with the exception of `pageSize` which can be modified between calls to `getQueries`. In the absence of this token value, `getQueries` returns the first page of results.
 
 
         Returns:
