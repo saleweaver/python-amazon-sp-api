@@ -1,4 +1,6 @@
 import urllib.parse
+from io import BytesIO, StringIO
+from typing import Union, BinaryIO, TextIO
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
@@ -133,9 +135,9 @@ class DataKiosk(Client):
         return self._request(fill_query_params(kwargs.pop('path'), query_id), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/documents/{}', method='GET')
-    def get_document(self, document_id, **kwargs) -> ApiResponse:
+    def get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None, encoding='utf-8', **kwargs) -> ApiResponse:
         """
-        get_document(self, document_id, **kwargs) -> ApiResponse
+        get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None, encoding='utf-8', **kwargs) -> ApiResponse
 
         Returns the information required for retrieving a Data Kiosk document's contents. See the `createQuery` operation for details about document retention.
 
@@ -150,10 +152,45 @@ class DataKiosk(Client):
         Args:
         
             document_id:string | * REQUIRED The identifier for the Data Kiosk document.
-        
+            file: | * OPTIONAL The file to write the response to.
+            download: | * OPTIONAL If True, the file will be downloaded and returned in the payload.
+            encoding: | * OPTIONAL The encoding to use when writing the file. Defaults to utf-8, binary data is written if applicable filemode is passed.
+
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), document_id), params=kwargs)
+        res = self._request(fill_query_params(kwargs.pop('path'), document_id), params=kwargs)
+        if download or file or ('decrypt' in kwargs and kwargs['decrypt']):
+            import requests
+            document_response = requests.get(
+                res.payload.get('documentUrl'),
+                proxies=self.proxies,
+                verify=self.verify,
+            )
+            document = document_response.content
+            if download:
+                res.payload.update({
+                    'document': document,
+                })
+            if file:
+                self._handle_file(file, document, encoding=encoding)
+        return res
+
+    @staticmethod
+    def _handle_file(file, document, encoding='utf-8'):
+        if isinstance(file, str):
+            with open(file, "wb+") as text_file:
+                text_file.write(document)
+        elif isinstance(file, BytesIO):
+            file.write(document)
+            file.seek(0)
+        elif isinstance(file, StringIO):
+            file.write(document.decode(encoding))
+            file.seek(0)
+        else:
+            if 'b' in file.mode:
+                file.write(document)
+            else:
+                file.write(document.decode(encoding))
