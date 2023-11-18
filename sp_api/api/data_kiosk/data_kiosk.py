@@ -53,7 +53,7 @@ class DataKiosk(Client):
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='POST')
     def create_query(self, query, pagination_token=None, **kwargs) -> ApiResponse:
         """
-        create_query(self, **kwargs) -> ApiResponse
+        create_query(self, query, pagination_token=None, **kwargs) -> ApiResponse
 
         Creates a Data Kiosk query request.
 
@@ -79,8 +79,10 @@ class DataKiosk(Client):
         Returns:
             ApiResponse:
         """
-
-        return self._request(kwargs.pop('path'), data={"query": query, "paginationToken": pagination_token})
+        kwargs['query'] = query
+        if pagination_token:
+            kwargs['paginationToken'] = pagination_token
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='DELETE')
     def cancel_query(self, query_id, **kwargs) -> ApiResponse:
@@ -139,7 +141,8 @@ class DataKiosk(Client):
         return self._request(fill_query_params(kwargs.pop('path'), query_id), params=kwargs)
 
     @sp_endpoint('/dataKiosk/2023-11-15/documents/{}', method='GET')
-    def get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None, encoding='utf-8', **kwargs) -> ApiResponse:
+    def get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None,
+                     encoding='utf-8', **kwargs) -> ApiResponse:
         """
         get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None, encoding='utf-8', **kwargs) -> ApiResponse
 
