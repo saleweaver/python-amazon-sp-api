@@ -37,6 +37,8 @@ or
 [![Badge](https://img.shields.io/pypi/v/python-amazon-sp-api?style=for-the-badge)](https://pypi.org/project/python-amazon-sp-api/)
 ```
 pip install python-amazon-sp-api
+pip install "python-amazon-sp-api[aws]" # if you want to use AWS Secret Manager Authentication.
+pip install "python-amazon-sp-api[aws-caching]" # if you want to use the Cached Secrets from AWS
 ```
 
 ---

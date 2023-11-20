@@ -11,7 +11,7 @@ setup(
         "confuse>=1.4"
     ],
     extras_require={
-        "aws-caching": ["aws-secretsmanager-caching"],
+        "aws-caching": ["aws-secretsmanager-caching", "boto3"],
         "aws": ["boto3"]
     },
     packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
