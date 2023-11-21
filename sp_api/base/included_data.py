@@ -9,5 +9,3 @@ class IncludedData(str, Enum):
     OFFERS = 'offers' # Current offers for the listing item.
     FULFILLMENT_AVAILABILITY = 'fulfillmentAvailability' # Fulfillment availability details for the listing item.
     PROCUREMENT = 'procurement' # Vendor procurement details for the listing item.
-
-    _ALL_ = [SUMMARIES, ATTRIBUTES, ISSUES, OFFERS, FULFILLMENT_AVAILABILITY]

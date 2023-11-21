@@ -1,6 +1,6 @@
-import urllib.parse
+from collections import abc
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, IncludedData
 
 
 class ListingsItems(Client):
@@ -57,6 +57,9 @@ For more information, see the [Listings Items API Use Case Guide](https://github
         Returns:
             ApiResponse:
         """
+        if kwargs.get('includedData') and isinstance(kwargs.get('includedData'), abc.Iterable):
+            kwargs['includedData'] = ','.join(
+                [x.value if isinstance(x, IncludedData) else x for x in kwargs['includedData']])
 
         return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
 
@@ -93,7 +96,8 @@ For more information, see the [Listings Items API Use Case Guide](https://github
          Returns:
             ApiResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'),
+                             params=kwargs)
 
     @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='PUT')
     def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
@@ -121,6 +125,6 @@ For more information, see the [Listings Items API Use Case Guide](https://github
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'), params=kwargs)
-    
+
+        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'),
+                             params=kwargs)
