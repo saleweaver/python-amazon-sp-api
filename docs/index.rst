@@ -19,6 +19,7 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    responses
    exceptions
    utils
+   enums
    testing
 
 
