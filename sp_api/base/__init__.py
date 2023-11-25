@@ -26,6 +26,8 @@ from .feedTypes import FeedType
 from sp_api.auth import AccessTokenClient, Credentials
 from sp_api.auth.exceptions import AuthorizationError
 from sp_api.base.inegibility_reasons import IneligibilityReasonList
+from .marketplaces import AwsEnv
+
 
 __all__ = [
     'Credentials',
@@ -64,5 +66,6 @@ __all__ = [
     'nest_dict',
     '_nest_dict_rec',
     'IneligibilityReasonList',
-    'IncludedData'
+    'IncludedData',
+    'AwsEnv'
 ]
