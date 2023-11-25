@@ -55,6 +55,5 @@ Enums
 ..  autoclass:: sp_api.base.Schedules
     :show-inheritance:
 
-
 ..  autoclass:: sp_api.base.AwsEnv
     :show-inheritance:
