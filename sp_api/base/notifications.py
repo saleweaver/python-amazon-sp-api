@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class NotificationType(str, Enum):
+
     #: BRANDED_ITEM_CONTENT_CHANGE = "Sent whenever there is a change to the title, description, bullet points, or images, for any ASIN that the selling partner has a brand relationship with."
     BRANDED_ITEM_CONTENT_CHANGE = "BRANDED_ITEM_CONTENT_CHANGE"
 

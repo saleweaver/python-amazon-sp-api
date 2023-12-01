@@ -36,6 +36,7 @@ author = 'Michael Primke'
 extensions = [
     "sphinx_rtd_theme", 'button', 'cookieconsent',
     'sphinx.ext.autodoc', 'sphinx.ext.coverage', 'sphinx.ext.napoleon',
+    'enum_tools.autoenum',
 
 ]
 
