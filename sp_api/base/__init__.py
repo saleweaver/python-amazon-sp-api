@@ -16,7 +16,7 @@ from .schedules import Schedules
 from .report_status import ReportStatus
 from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
 from .fulfillment_channel import FulfillmentChannel
-from .included_data import IncludedData
+from .included_data import IncludedData, ListingItemsIncludedData, CatalogItemsIncludedData
 from .notifications import NotificationType
 from .credential_provider import CredentialProvider, MissingCredentials
 from .ApiResponse import ApiResponse
@@ -67,5 +67,7 @@ __all__ = [
     '_nest_dict_rec',
     'IneligibilityReasonList',
     'IncludedData',
+    'ListingItemsIncludedData',
+    'CatalogItemsIncludedData',
     'AwsEnv'
 ]
