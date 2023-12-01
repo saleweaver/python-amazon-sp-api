@@ -11,9 +11,9 @@ class Granularity(str, Enum):
 
 
 class BuyerType(str, Enum):
-    B2B = 'B2B' # Business to business.
-    B2C = 'B2C' # Business to customer.
-    ALL = 'All' # Both of above
+    B2B = 'B2B' # doc: Business to business.
+    B2C = 'B2C' # doc: Business to customer.
+    ALL = 'All' # doc: Both of above
 
 
 class FirstDayOfWeek(str, Enum):
