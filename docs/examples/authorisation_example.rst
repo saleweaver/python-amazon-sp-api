@@ -1,7 +1,6 @@
 Initial Authorisation
 =====================
 
-This is obsolete, and not needed anymore. This page is here for historical reasons, should you use a version prior to 1.
 
 Internal Seller Access
 ----------------------

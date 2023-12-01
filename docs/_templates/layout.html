@@ -13,13 +13,7 @@
 </div>
 {{ super() }}
 <div style="display: flex; height: 100%; flex-direction: column;">
-    <div style="margin-top: 5em; width: 100%; height: 4rem; z-index: 999; display: flex; flex-direction: column; padding: 5px">
-        <span style="font-size: 1rem; color: white">Here's a playground to test all endpoints:</span>
-        <span id="playground-btn"
-              style="width:100%; display: flex; align-items: center; margin-top: 1em; cursor: pointer">
-       <img src="https://img.shields.io/badge/Playground-test%20all%20Endpoints-red?style=for-the-badge">
-    </span>
-    </div>
+
 
     <div style="margin-top: 5em; width: 100%; height: 4rem; z-index: 999; display: flex; flex-direction: column; padding: 5px">
         <span style="font-size: 1rem; color: white">Do you have questions?</span>
@@ -81,12 +75,7 @@
         });
         link("https://join.slack.com/t/sellingpartnerapi/shared_invite/zt-zovn6tch-810j9dBPQtJsvw7lEXSuaQ");
     })
-    document.getElementById('playground-btn').addEventListener('click', () => {
-        window.analytics.track('PLAYGROUND', {
-            action: 'gotoPlayground'
-        })
-        link('https://sp-api-playground.saleweaver.com/?utm_source=documentation&utm_medium=docs&utm_term=menu')
-    })
+
     document.getElementById('git-btn').addEventListener('click', () => {
         window.analytics.track('GITHUB', {
             action: 'viewOnGithub',
