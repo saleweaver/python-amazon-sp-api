@@ -19,6 +19,15 @@ Enums
 ..  autoclass:: sp_api.base.IncludedData
     :show-inheritance:
 
+
+..  autoclass:: sp_api.base.ListingItemsIncludedData
+    :show-inheritance:
+
+
+..  autoclass:: sp_api.base.CatalogItemsIncludedData
+    :show-inheritance:
+
+
 ..  autoclass:: sp_api.base.IneligibilityReasonList
     :show-inheritance:
 
