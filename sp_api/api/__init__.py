@@ -21,8 +21,6 @@ from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
 from .listings_restrictions.listings_restrictions import ListingsRestrictions
 
-
-
 from .messaging.messaging import Messaging
 
 from .catalog_items.catalog_items import CatalogItems, CatalogItemsVersion
@@ -39,7 +37,8 @@ from .vendor_orders.vendor_orders import VendorOrders
 
 from .vendor_invoices.vendor_invoices import VendorInvoices
 
-from .vendor_direct_fulfillment_transactions.vendor_direct_fulfillment_transactions import VendorDirectFulfillmentTransactions
+from .vendor_direct_fulfillment_transactions.vendor_direct_fulfillment_transactions import \
+    VendorDirectFulfillmentTransactions
 
 from .vendor_direct_fulfillment_shipping.vendor_direct_fulfillment_shipping import VendorDirectFulfillmentShipping
 
@@ -73,6 +72,7 @@ from .supply_sources.supply_sources import SupplySources
 
 from .data_kiosk.data_kiosk import DataKiosk
 
+from .application_management.application_management import ApplicationManagement
 
 __all__ = [
     "Sales",
@@ -141,11 +141,13 @@ __all__ = [
     "AplusContent",
 
     "FulfillmentOutbound",
-    
+
     "Replenishment",
 
     "SupplySources",
 
-    "DataKiosk"
+    "DataKiosk",
+
+    "ApplicationManagement"
 
 ]

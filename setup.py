@@ -63,6 +63,7 @@ setup(
               'sp_api.api.authorization',
               'sp_api.api.aplus_content',
               'sp_api.api.fulfillment_outbound',
+              'sp_api.api.application_management',
               ],
     scripts=['make_endpoint/make_endpoint'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
