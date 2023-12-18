@@ -10,6 +10,7 @@ You can use the playground to test endpoints:
 
     endpoints/aplus_content
     endpoints/authorization
+    endpoints/application_management
     endpoints/catalog
     endpoints/catalog_items
     endpoints/data_kiosk
@@ -48,3 +49,4 @@ You can use the playground to test endpoints:
     endpoints/vendor_orders
     endpoints/vendor_shipments
     endpoints/vendor_transaction_status
+

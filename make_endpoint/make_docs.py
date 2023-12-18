@@ -2,7 +2,7 @@ import os
 import re
 
 dirs = [
-    'listings_restrictions'
+    'application_management'
 ]
 
 
