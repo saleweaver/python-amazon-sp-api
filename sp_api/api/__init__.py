@@ -19,6 +19,7 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .fba_inventory.fba_inventory import FbaInventory
 from .listings_restrictions.listings_restrictions import ListingsRestrictions
 
 from .messaging.messaging import Messaging
@@ -92,6 +93,7 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "FbaInventory",
     "ListingsRestrictions",
     "CatalogItemsVersion",
     "Feeds",

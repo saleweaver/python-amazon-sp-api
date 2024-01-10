@@ -40,6 +40,7 @@ setup(
               'sp_api.base',
               'sp_api.util',
               ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              'sp_api.api.fba_inventory',
               'sp_api.api.listings_restrictions',
 
               'sp_api.api.catalog_items',
