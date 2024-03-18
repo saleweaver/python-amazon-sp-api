@@ -174,7 +174,7 @@ class Feeds(Client):
 
         upload_data = file.read()
         try:
-            upload_data = upload_data.decode('iso-8859-1')
+            upload_data = upload_data.encode('iso-8859-1')
         except AttributeError:
             pass
         upload = requests.put(
