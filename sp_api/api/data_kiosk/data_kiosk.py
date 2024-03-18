@@ -190,8 +190,12 @@ class DataKiosk(Client):
     @staticmethod
     def _handle_file(file, document, encoding='utf-8'):
         if isinstance(file, str):
-            with open(file, "wb+") as text_file:
-                text_file.write(document)
+            if isinstance(document, bytes):
+                with open(file, "wb+") as f:
+                    f.write(document)
+            else:
+                with open(file, "w+") as text_file:
+                    text_file.write(document)
         elif isinstance(file, BytesIO):
             file.write(document)
             file.seek(0)
