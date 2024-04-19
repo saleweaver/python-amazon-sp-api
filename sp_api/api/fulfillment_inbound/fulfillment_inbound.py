@@ -5,10 +5,12 @@ from sp_api.base import sp_endpoint, fill_query_params
 
 import urllib.parse
 
+
 class FulfillmentInboundVersion(str, enum.Enum):
     V_v0 = "v0"
     V_2024_03_20 = "2024-03-20"
     LATEST = "2024-03-20"
+
 
 class FulfillmentInbound(Client):
     """
@@ -16,14 +18,13 @@ class FulfillmentInbound(Client):
     :link: 
 
     The Selling Partner API for Fulfillment By Amazon (FBA) Inbound. The FBA Inbound API enables building inbound workflows to create, manage, and send shipments into Amazon's fulfillment network. The API has interoperability with the Send-to-Amazon user interface.
-    """    
+    """
     version: FulfillmentInboundVersion = FulfillmentInboundVersion.V_v0
 
     def __init__(self, *args, **kwargs):
         if 'version' in kwargs:
             self.version = kwargs.get('version', FulfillmentInboundVersion.V_v0)
         super().__init__(*args, **{**kwargs, 'version': self.version})
-
 
     @sp_endpoint("/fba/inbound/<version>/itemsGuidance")
     def item_guidance(self, **kwargs):
@@ -488,9 +489,8 @@ class FulfillmentInbound(Client):
             Returns:
                 ApiResponse:
             """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans', method='POST')
     def create_inbound_plan(self, **kwargs) -> ApiResponse:
@@ -534,9 +534,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}', method='GET')
     def get_inbound_plan(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -561,9 +560,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/boxes', method='GET')
     def list_inbound_plan_boxes(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -592,9 +590,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/cancellation', method='PUT')
     def cancel_inbound_plan(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -620,9 +617,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/items', method='GET')
     def list_inbound_plan_items(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -651,9 +647,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/packingInformation', method='POST')
     def set_packing_information(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -692,9 +687,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/packingOptions', method='GET')
     def list_packing_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -723,9 +717,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/packingOptions', method='POST')
     def generate_packing_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -750,9 +743,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/confirmation', method='POST')
     def confirm_packing_option(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -779,9 +771,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/items', method='GET')
     def list_packing_group_items(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -814,9 +805,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/pallets', method='GET')
     def list_inbound_plan_pallets(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -845,9 +835,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/placementOptions', method='GET')
     def list_placement_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -876,9 +865,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/placementOptions', method='POST')
     def generate_placement_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -908,9 +896,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/confirmation', method='POST')
     def confirm_placement_option(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -937,9 +924,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}', method='GET')
     def get_shipment(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -966,9 +952,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/deliveryChallanDocument', method='GET')
     def get_delivery_challan_document(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -995,9 +980,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/deliveryWindow', method='POST')
     def update_shipment_delivery_window(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1030,9 +1014,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/selfShipAppointmentSlots', method='GET')
     def get_self_ship_appointment_slots(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1063,9 +1046,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/selfShipAppointmentSlots', method='POST')
     def generate_self_ship_appointment_slots(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1098,9 +1080,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/cancellation', method='PUT')
     def cancel_self_ship_appointment(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1131,9 +1112,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/schedule', method='POST')
     def schedule_self_ship_appointment(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1164,9 +1144,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/trackingDetails', method='PUT')
     def update_shipment_tracking_details(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1199,9 +1178,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/transportationOptions', method='GET')
     def list_transportation_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1234,9 +1212,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/transportationOptions', method='POST')
     def generate_transportation_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1277,9 +1254,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/transportationOptions/confirmation', method='POST')
     def confirm_transportation_options(self, inboundPlanId, **kwargs) -> ApiResponse:
@@ -1313,9 +1289,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
-    
 
     @sp_endpoint('/inbound/fba/<version>/items/compliance', method='GET')
     def list_item_compliance_details(self, **kwargs) -> ApiResponse:
@@ -1342,9 +1317,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), params=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/items/compliance', method='PUT')
     def update_item_compliance_details(self, **kwargs) -> ApiResponse:
@@ -1375,9 +1349,8 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop('path'), data=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/operations/{}', method='GET')
     def get_inbound_operation_status(self, operationId, **kwargs) -> ApiResponse:
@@ -1402,5 +1375,5 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         Returns:
             ApiResponse:
         """
-    
+
         return self._request(fill_query_params(kwargs.pop('path'), operationId), params=kwargs)
