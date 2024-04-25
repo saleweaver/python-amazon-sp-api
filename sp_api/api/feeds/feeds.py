@@ -212,7 +212,7 @@ class Feeds(Client):
         """
         get_feed_result_document(self, feedDocumentId, **kwargs) -> str
 
-        Returns the information required for retrieving a feed document's contents.
+        Returns the feed result document's contents. First fetches from `getFeedDocument` endpont and then fetchs from the URL returned from it.
 
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
 
@@ -221,7 +221,7 @@ class Feeds(Client):
             **kwargs:
 
         Returns:
-            ApiResponse:
+            str:
         """
         response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
                                  add_marketplace=False)
