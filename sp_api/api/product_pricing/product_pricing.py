@@ -40,7 +40,7 @@ For more information, refer to the [Product Pricing v2022-05-01 Use Case Guide](
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data={"requests": requests_}, params={**kwargs})
+        return self._request(kwargs.pop('path'), data={"requests": requests_}, params={**kwargs})
 
     @sp_endpoint('/batches/products/pricing/2022-05-01/items/competitiveSummary', method='POST')
     def get_competitive_summary(self, requests_: List[Dict], **kwargs) -> ApiResponse:
