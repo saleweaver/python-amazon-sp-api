@@ -74,7 +74,6 @@ from .data_kiosk.data_kiosk import DataKiosk
 
 from .application_management.application_management import ApplicationManagement
 
-from .product_pricing.product_pricing import ProductPricing
 
 __all__ = [
     "Sales",
@@ -150,8 +149,6 @@ __all__ = [
 
     "DataKiosk",
 
-    "ApplicationManagement",
-
-    "ProductPricing"
+    "ApplicationManagement"
 
 ]

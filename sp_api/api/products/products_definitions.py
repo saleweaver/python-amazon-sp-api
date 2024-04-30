@@ -80,3 +80,78 @@ class GetListingOffersBatchRequest:
 
         return parsed_requestes
 
+
+@dataclass
+class FeaturedOfferExpectedPriceRequest:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-reference
+        #FeaturedOfferExpectedPriceRequest """
+    marketplaceId: str
+    sku: str
+    uri: str = "/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice"
+    method: str = "GET"
+
+
+@dataclass
+class GetFeaturedOfferExpectedPriceBatch:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-reference
+        #getFeaturedOfferExpectedPriceBatch """
+    requests: Optional[List[Union[FeaturedOfferExpectedPriceRequest, Dict]]] = None
+
+    def __post_init__(self):
+        self.requests = self.parse_requests(self.requests)
+
+    def to_dict(self):
+        return asdict(self)
+
+    @staticmethod
+    def parse_requests(requests) -> List[FeaturedOfferExpectedPriceRequest]:
+        parsed_requests = []
+
+        for request in requests:
+            if isinstance(request, Dict):
+                request = FeaturedOfferExpectedPriceRequest(**request)
+
+            if not isinstance(request, FeaturedOfferExpectedPriceRequest):
+                raise TypeError
+
+            parsed_requests.append(request)
+
+        return parsed_requests
+
+
+@dataclass
+class CompetitiveSummaryRequest:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-reference
+        #FeaturedOfferExpectedPriceRequest """
+    marketplaceId: str
+    asin: str
+    uri: str = "/products/pricing/2022-05-01/items/competitiveSummary"
+    method: str = "GET"
+
+
+@dataclass
+class CompetitiveSummaryBatchRequest:
+    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-reference
+        #getCompetitiveSummary """
+    requests: Optional[List[Union[CompetitiveSummaryRequest, Dict]]] = None
+
+    def __post_init__(self):
+        self.requests = self.parse_requests(self.requests)
+
+    def to_dict(self):
+        return asdict(self)
+
+    @staticmethod
+    def parse_requests(requests) -> List[CompetitiveSummaryRequest]:
+        parsed_requests = []
+
+        for request in requests:
+            if isinstance(request, Dict):
+                request = CompetitiveSummaryRequest(**request)
+
+            if not isinstance(request, CompetitiveSummaryRequest):
+                raise TypeError
+
+            parsed_requests.append(request)
+
+        return parsed_requests
