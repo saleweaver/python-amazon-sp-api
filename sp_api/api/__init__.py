@@ -74,7 +74,6 @@ from .data_kiosk.data_kiosk import DataKiosk
 
 from .application_management.application_management import ApplicationManagement
 
-
 __all__ = [
     "Sales",
     "Products",
