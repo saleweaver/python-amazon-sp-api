@@ -319,7 +319,8 @@ class Products(Client):
         return self._request(
             kwargs.pop('path'),
             data={"requests": get_featured_offer_expected_price_batch_request},
-            params={**kwargs}
+            params={**kwargs},
+            add_marketplace=False
         )
 
     @sp_endpoint('/batches/products/pricing/2022-05-01/items/competitiveSummary', method='POST')
@@ -351,5 +352,6 @@ class Products(Client):
         return self._request(
             kwargs.pop('path'),
             data={"requests": get_competitive_summary_batch_request},
-            params={**kwargs}
+            params={**kwargs},
+            add_marketplace=False
         )
