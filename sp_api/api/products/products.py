@@ -318,7 +318,7 @@ class Products(Client):
 
         return self._request(
             kwargs.pop('path'),
-            data={"requests": get_featured_offer_expected_price_batch_request},
+            data=get_featured_offer_expected_price_batch_request,
             params={**kwargs},
             add_marketplace=False
         )
@@ -351,7 +351,7 @@ class Products(Client):
 
         return self._request(
             kwargs.pop('path'),
-            data={"requests": get_competitive_summary_batch_request},
+            data=get_competitive_summary_batch_request,
             params={**kwargs},
             add_marketplace=False
         )
