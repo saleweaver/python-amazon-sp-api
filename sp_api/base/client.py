@@ -69,6 +69,7 @@ class Client(BaseClient):
         self.timeout = timeout
         self.version = version
         self.verify = verify
+        show_donation_message()
 
     @property
     def headers(self):
@@ -140,7 +141,7 @@ class Client(BaseClient):
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
-        show_donation_message()
+
         return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
