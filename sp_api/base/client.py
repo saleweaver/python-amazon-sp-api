@@ -17,6 +17,21 @@ from sp_api.base.credential_provider import CredentialProvider
 log = logging.getLogger(__name__)
 
 
+def show_donation_message():
+    import os
+    if os.environ.get('ENV_DISABLE_DONATION_MSG'):
+        return
+    print("🌟 Thank you for using python-amazon-sp-api! 🌟")
+    print("This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace,")
+    print("enabling powerful automations and data management.")
+    print("If you appreciate this project and find it useful, please consider supporting its continued development:")
+    print(" - 🙌 GitHub Sponsors: https://github.com/sponsors/saleweaver")
+    print(" - 🌐 BTC Address: bc1q6uqgczasmnvnc5upumarugw2mksnwneg0f65ws")
+    print(" - 🌐 ETH Address: 0xf59534F7a7F5410DBCD0c779Ac3bB6503bd32Ae5")
+    print("\nYour support helps keep the project alive and evolving, and is greatly appreciated!")
+    print("\nTo disable this donation message, set the ENV_DISABLE_DONATION_MSG=1 environment variable.")
+
+
 class Client(BaseClient):
     grantless_scope: str = ''
     keep_restricted_data_token: bool = False
@@ -125,6 +140,7 @@ class Client(BaseClient):
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
+        show_donation_message()
         return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
