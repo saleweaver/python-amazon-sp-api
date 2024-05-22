@@ -2,7 +2,7 @@
 sphinx_rtd_theme
 point
 pytest
-requests~=2.32.1
+requests~=2.32.2
 
 boto3~=1.34.109
 
