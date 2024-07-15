@@ -19,8 +19,9 @@ log = logging.getLogger(__name__)
 
 def show_donation_message():
     import os
-    if os.environ.get('ENV_DISABLE_DONATION_MSG'):
+    if os.environ.get('ENV_DISABLE_DONATION_MSG', 0) == '1':
         return
+
     print("🌟 Thank you for using python-amazon-sp-api! 🌟")
     print("This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace,")
     print("enabling powerful automations and data management.")
@@ -141,6 +142,8 @@ class Client(BaseClient):
         if error:
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
+
+        show_donation_message()
 
         return ApiResponse(**js, headers=res.headers)
 
