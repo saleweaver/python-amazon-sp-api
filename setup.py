@@ -41,7 +41,7 @@ setup(
               'sp_api.util',
               ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               'sp_api.api.listings_restrictions',
-
+              'sp_api.api.amazon_warehousing_and_distribu'  
               'sp_api.api.catalog_items',
               'sp_api.api.product_type_definitions',
               'sp_api.api.listings_items',

@@ -74,6 +74,9 @@ from .data_kiosk.data_kiosk import DataKiosk
 
 from .application_management.application_management import ApplicationManagement
 
+from .amazon_warehousing_and_distribu.amazon_warehousing_and_distribu import AmazonWarehousingAndDistribution
+
+
 __all__ = [
     "Sales",
     "Products",
@@ -148,6 +151,8 @@ __all__ = [
 
     "DataKiosk",
 
-    "ApplicationManagement"
+    "ApplicationManagement",
+
+    "AmazonWarehousingAndDistribution"
 
 ]
