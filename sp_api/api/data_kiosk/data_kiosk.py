@@ -48,7 +48,7 @@ class DataKiosk(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries', method='POST')
     def create_query(self, query, pagination_token=None, **kwargs) -> ApiResponse:
@@ -82,7 +82,7 @@ class DataKiosk(Client):
         kwargs['query'] = query
         if pagination_token:
             kwargs['paginationToken'] = pagination_token
-        return self._request(kwargs.pop('path'), data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=False)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='DELETE')
     def cancel_query(self, query_id, **kwargs) -> ApiResponse:
@@ -110,7 +110,7 @@ class DataKiosk(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), query_id), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), query_id), data=kwargs, add_marketplace=False)
 
     @sp_endpoint('/dataKiosk/2023-11-15/queries/{}', method='GET')
     def get_query(self, query_id, **kwargs) -> ApiResponse:
@@ -138,7 +138,7 @@ class DataKiosk(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), query_id), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), query_id), params=kwargs, add_marketplace=False)
 
     @sp_endpoint('/dataKiosk/2023-11-15/documents/{}', method='GET')
     def get_document(self, document_id, download: bool = False, file: Union[BytesIO, str, BinaryIO, TextIO] = None,
@@ -170,7 +170,7 @@ class DataKiosk(Client):
             ApiResponse:
         """
 
-        res = self._request(fill_query_params(kwargs.pop('path'), document_id), params=kwargs)
+        res = self._request(fill_query_params(kwargs.pop('path'), document_id), params=kwargs, add_marketplace=False)
         if download or file or ('decrypt' in kwargs and kwargs['decrypt']):
             import requests
             document_response = requests.get(
