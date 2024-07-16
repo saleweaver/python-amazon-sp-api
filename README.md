@@ -27,6 +27,13 @@ Your support helps keep the project alive and evolving, and is greatly appreciat
 
 ----
 
+### Documentation
+
+Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/)
+
+[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
+
+
 ### Q & A
 
 If you have questions, please ask them in GitHub discussions 
@@ -92,12 +99,6 @@ orders = Orders().get_orders(
 ```
 
 ---
-
-### Documentation
-
-Documentation is available [here](https://python-amazon-sp-api.readthedocs.io/en/latest/)
-
-[![Documentation Status](https://img.shields.io/readthedocs/python-amazon-sp-api?style=for-the-badge)](https://python-amazon-sp-api.readthedocs.io/en/latest/index.html)
 
 
 ### New endpoints
