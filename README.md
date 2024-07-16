@@ -80,7 +80,7 @@ except SellingApiException as ex:
 
 
 # report request     
-createReportResponse = Reports().create_report(reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA)
+create_report_response = Reports().create_report(reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA)
 
 # submit feed
 # feeds can be submitted like explained in Amazon's docs, or simply by calling submit_feed
@@ -93,7 +93,6 @@ Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow
 
 # or use the shortcut
 orders = Orders().get_orders(
-    RestrictedResources=['buyerInfo', 'shippingAddress'],
     LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
 )
 ```
