@@ -11,6 +11,7 @@ You can use the playground to test endpoints:
     endpoints/aplus_content
     endpoints/authorization
     endpoints/application_management
+    endpoints/awd
     endpoints/catalog
     endpoints/catalog_items
     endpoints/data_kiosk

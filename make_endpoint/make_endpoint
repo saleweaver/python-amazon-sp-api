@@ -132,8 +132,8 @@ def create_endpoint_file(model_json):
             operations.append(operation)
 
     make_py(endpoint, operations, model.get('info').get('description'), directory)
-    # add_to_init(endpoint)
-    # add_to_setup_py(endpoint)
+    add_to_init(endpoint)
+    add_to_setup_py(endpoint)
 
 
 def get_endpoint_from_url(url):
