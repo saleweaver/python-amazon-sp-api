@@ -927,10 +927,10 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), data=kwargs)
 
-    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}', method='GET')
-    def get_shipment(self, inboundPlanId, **kwargs) -> ApiResponse:
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}', method='GET')
+    def get_shipment(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
         """
-        get_shipment(self, inboundPlanId, **kwargs) -> ApiResponse
+        get_shipment(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
 
         Provides the full details for a specific shipment within an inbound plan. The `transportationOptionId` inside `acceptedTransportationSelection` can be used to retrieve the transportation details for the shipment.
 
@@ -953,7 +953,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), params=kwargs)
 
     @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/deliveryChallanDocument', method='GET')
     def get_delivery_challan_document(self, inboundPlanId, **kwargs) -> ApiResponse:
