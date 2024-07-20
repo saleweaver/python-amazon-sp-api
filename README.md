@@ -3,6 +3,7 @@
 [![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/week)](https://pepy.tech/project/python-amazon-sp-api)
 
 # PYTHON-AMAZON-SP-API
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/saleweaver?logo=GitHub&color=lightgray)](https://github.com/sponsors/saleweaver)
 
 
 ## Amazon Selling-Partner API
