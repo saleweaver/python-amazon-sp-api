@@ -16,6 +16,3 @@ To use the latest version available, you can use the `LATEST` enum.
 
     CatalogItems(version=CatalogItemsVersion.LATEST)
 
-
-.. automclass:: sp_api.api.CatalogItemsVersion
-
