@@ -11,7 +11,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ## Additional tools are available for all $10/month+ sponsors.
 
-All sponsors get access to the python-amazon-sp-api-tools repository, which will contain additional tools and scripts to help you get the most out of the Amazon Selling Partner API.
+All $10/month+ sponsors get access to the python-amazon-sp-api-tools repository, which will contain additional tools and scripts to help you get the most out of the Amazon Selling Partner API.
 Save $$$ on your Amazon Selling Partner API integration by becoming a sponsor today!
 
 ![GitHub Sponsors](https://img.shields.io/github/sponsors/saleweaver?logo=GitHub&color=lightgray)
