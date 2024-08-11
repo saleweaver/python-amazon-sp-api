@@ -29,6 +29,8 @@ jobs:
           release_name: "v${{ env.new_version }}"
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger release workflow
         if: env.new_version != ''
