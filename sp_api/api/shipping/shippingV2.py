@@ -590,8 +590,8 @@ class Shipping(Client):
                 "trackingId": "string",
                 "ndrAction": "RTO",
                 "ndrRequestData": {
-                    rescheduleDate: "2023-12-12T05:24:00.00Z",
-                    additionalAddressNotes: "string"
+                    "rescheduleDate": "2024-12-12T05:24:00.00Z",
+                    "additionalAddressNotes": "string"
                 }
             }
 
