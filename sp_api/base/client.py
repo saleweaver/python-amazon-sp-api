@@ -52,6 +52,7 @@ class Client(BaseClient):
             timeout=None,
             version=None,
             credential_providers=None,
+            auth_token_client_class=AccessTokenClient,
     ):
         if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
             marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
@@ -65,7 +66,7 @@ class Client(BaseClient):
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
-        self._auth = AccessTokenClient(refresh_token=refresh_token, credentials=self.credentials, proxies=proxies, verify=verify)
+        self._auth = auth_token_client_class(refresh_token=refresh_token, credentials=self.credentials, proxies=proxies, verify=verify)
         self.proxies = proxies
         self.timeout = timeout
         self.version = version
