@@ -1,21 +1,26 @@
 import enum
+import os
 import urllib.parse
 from datetime import datetime
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, Marketplaces
 
 
 class AmznShippingBusiness(str, enum.Enum):
-    AmazonShipping_US = "AmazonShipping_US"
-    AmazonShipping_IN = "AmazonShipping_IN"
-    AmazonShipping_UK = "AmazonShipping_UK"
-    AmazonShipping_UAE = "AmazonShipping_UAE"
-    AmazonShipping_SA = "AmazonShipping_SA"
-    AmazonShipping_EG = "AmazonShipping_EG"
-    AmazonShipping_IT = "AmazonShipping_IT"
-    AmazonShipping_ES = "AmazonShipping_ES"
-    AmazonShipping_FR = "AmazonShipping_FR"
-    AmazonShipping_JP = "AmazonShipping_JP"
+    US = "AmazonShipping_US"
+    IN = "AmazonShipping_IN"
+    UK = "AmazonShipping_UK"
+    AE = "AmazonShipping_UAE"
+    SA = "AmazonShipping_SA"
+    IT = "AmazonShipping_IT"
+    EG = "AmazonShipping_EG"
+    ES = "AmazonShipping_ES"
+    FR = "AmazonShipping_FR"
+    JP = "AmazonShipping_JP"
+
+    @classmethod
+    def has_key(cls, name):
+        return name in cls.__members__
 
 
 class Shipping(Client):
@@ -26,11 +31,19 @@ class Shipping(Client):
     Provides programmatic access to Amazon Shipping APIs.
     """
 
-    amzn_shipping_business: AmznShippingBusiness = AmznShippingBusiness.AmazonShipping_UK
+    amzn_shipping_business: AmznShippingBusiness = AmznShippingBusiness.US
 
     def __init__(self, *args, **kwargs):
         if 'amzn_shipping_business' in kwargs:
-            self.amzn_shipping_business = kwargs.pop('amzn_shipping_business', AmznShippingBusiness.AmazonShipping_UK)
+            self.amzn_shipping_business = kwargs.pop('amzn_shipping_business', AmznShippingBusiness.US)
+        else:
+            marketplace = args[0] if len(args) > 0 else Marketplaces.US
+            if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
+                marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
+
+            if AmznShippingBusiness.has_key(marketplace.name):
+                self.amzn_shipping_business = AmznShippingBusiness[marketplace.name]
+
         super().__init__(*args, **kwargs)
 
     @property
