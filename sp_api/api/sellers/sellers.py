@@ -37,3 +37,33 @@ class Sellers(Client):
 
         """
         return self._request(kwargs.pop('path'), add_marketplace=False)
+
+    @sp_endpoint("/sellers/v1/account")
+    def get_account(self, **kwargs) -> ApiResponse:
+        """
+        get_account(self, **kwargs) -> ApiResponse
+        Returns information about a seller account and its marketplaces.
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        .016                                    15
+        ======================================  ==============
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                res = Sellers().get_account()
+
+        Args:
+            **kwargs:
+
+        Returns:
+            GetAccountResponse:
+
+        """
+        return self._request(kwargs.pop('path'), add_marketplace=False)
