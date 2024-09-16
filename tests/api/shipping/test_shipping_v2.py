@@ -5,7 +5,7 @@ from sp_api.base import SellingApiBadRequestException
 
 
 def test_get_rates():
-    res = Shipping().get_rates(
+    res = Shipping(amzn_shipping_business=AmznShippingBusiness.UK).get_rates(
         **{
             "shipTo": {
                 "name": "Arlene Purdy",
@@ -25,7 +25,6 @@ def test_get_rates():
                 "email": "seller@test.com",
                 "phoneNumber": "662-302-7817",
             },
-            "shipDate": "2024-09-11T14:15:22Z",
             "shipperInstruction": {
                 "deliveryNotes": "TEST"
             },
@@ -184,7 +183,7 @@ def test_get_access_points():
 
 
 def test_one_click_shipment():
-    res = Shipping().one_click_shipment(
+    res = Shipping(amzn_shipping_business=AmznShippingBusiness.UK).one_click_shipment(
         **{
             "shipTo": {
                 "name": "Arlene Purdy",
@@ -204,7 +203,6 @@ def test_one_click_shipment():
                 "email": "seller@test.com",
                 "phoneNumber": "662-302-7817",
             },
-            "shipDate": "2024-09-11T14:15:22Z",
             "shipperInstruction": {
                 "deliveryNotes": "TEST"
             },
