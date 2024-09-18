@@ -13,7 +13,7 @@ We actively maintain the following versions of the **python-amazon-sp-api** libr
 
 If you discover a security vulnerability in this project, we appreciate your responsible disclosure. Please follow the steps below to report it:
 
-1. **Email**  
+1. **Slack**  
    Send a detailed report to **Michael** or **saleweaver** in the slack channel. An invite to the channel is available in the readme. Please include the following in your email:
    - A description of the vulnerability.
    - Steps to reproduce the issue.
