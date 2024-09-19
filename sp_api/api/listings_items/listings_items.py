@@ -57,7 +57,7 @@ For more information, see the [Listings Items API Use Case Guide](https://github
         Returns:
             ApiResponse:
         """
-        if kwargs.get('includedData') and isinstance(kwargs.get('includedData'), abc.Iterable):
+        if kwargs.get('includedData') and isinstance(kwargs.get('includedData'), abc.Iterable) and not isinstance(kwargs.get('includedData'), str):
             kwargs['includedData'] = ','.join(
                 [x.value if isinstance(x, IncludedData) else x for x in kwargs['includedData']])
 
