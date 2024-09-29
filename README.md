@@ -139,4 +139,5 @@ The client is pretty extensible and can be used for any other API. Check it out 
 [API Client](https://github.com/saleweaver/rapid_rest_client)
 
 
+![Alt](https://repobeats.axiom.co/api/embed/25e8a3fe715fe68f2996ab99fe2e6188cd96a459.svg "Repobeats analytics image")
 
