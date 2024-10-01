@@ -3,9 +3,9 @@ import json
 from datetime import datetime
 import logging
 import os
-from json import JSONDecodeError
 
 from requests import request
+from requests.exceptions import JSONDecodeError
 
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
 from .ApiResponse import ApiResponse
