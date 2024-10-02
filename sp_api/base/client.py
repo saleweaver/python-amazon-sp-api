@@ -144,7 +144,7 @@ class Client(BaseClient):
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
 
-        show_donation_message()
+        # show_donation_message()
 
         return ApiResponse(**js, headers=res.headers)
 
