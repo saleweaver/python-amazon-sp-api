@@ -54,11 +54,11 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
+        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable) and not isinstance(kwargs.get('reportTypes'), str):
             kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
-        if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable):
+        if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable) and not isinstance(kwargs.get('processingStatuses'), str):
             kwargs.update({'processingStatuses': ','.join(kwargs.get('processingStatuses'))})
-        if kwargs.get('marketplaceIds', None) and isinstance(kwargs.get('marketplaceIds'), abc.Iterable):
+        if kwargs.get('marketplaceIds', None) and isinstance(kwargs.get('marketplaceIds'), abc.Iterable) and not isinstance(kwargs.get('marketplaceIds'), str):
             marketplaces = kwargs.get('marketplaceIds')
             kwargs.update({'marketplaceIds': ','.join(
                 [m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
@@ -191,7 +191,7 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable):
+        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable) and not isinstance(kwargs.get('reportTypes'), str):
             kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
 
         return self._request(kwargs.pop('path'), params=kwargs)
