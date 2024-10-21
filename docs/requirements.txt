@@ -4,7 +4,7 @@ point
 pytest
 requests~=2.32.3
 
-boto3~=1.35.43
+boto3~=1.35.44
 
 cachetools~=5.5.0
 setuptools~=75.2.0
