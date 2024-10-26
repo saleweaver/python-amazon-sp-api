@@ -4,7 +4,7 @@ import urllib.parse
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 
 
-class AmazonWarehousingAndDistributionVersion(enum.Enum):
+class AmazonWarehousingAndDistributionVersion(str, enum.Enum):
     V_2024_05_09 = "2024-05-09"
     LATEST = "2024-05-09"
 

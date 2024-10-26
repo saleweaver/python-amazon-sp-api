@@ -1,3 +1,4 @@
+from collections import abc
 import urllib
 
 from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
@@ -63,7 +64,7 @@ class Inventories(Client):
             'granularityType': kwargs.get('granularityType', InventoryGranularity.MARKETPLACE.value),
             "granularityId": kwargs.get('granularityId', self.marketplace_id)
         })
-        if 'sellerSkus' in kwargs:
+        if 'sellerSkus' in kwargs and isinstance(kwargs.get('sellerSkus'), abc.Iterable) and not isinstance(kwargs.get('sellerSkus'), str):
             kwargs.update({'sellerSkus': ','.join(kwargs.get('sellerSkus'))})
 
         return self._request(kwargs.pop('path'), params=kwargs)

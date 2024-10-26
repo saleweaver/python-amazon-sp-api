@@ -13,7 +13,7 @@ from .feeds.feeds import Feeds
 from .feeds.feeds import Feeds as FeedsV2
 
 from .inventories.inventories import Inventories
-from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound
+from .fulfillment_inbound.fulfillment_inbound import FulfillmentInbound, FulfillmentInboundVersion
 from .upload.upload import Upload
 from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
@@ -74,8 +74,8 @@ from .data_kiosk.data_kiosk import DataKiosk
 
 from .application_management.application_management import ApplicationManagement
 
-from .amazon_warehousing_and_distribu.amazon_warehousing_and_distribu import AmazonWarehousingAndDistribution
-
+from .amazon_warehousing_and_distribu.amazon_warehousing_and_distribu import AmazonWarehousingAndDistribution, \
+    AmazonWarehousingAndDistributionVersion
 
 __all__ = [
     "Sales",
@@ -97,6 +97,8 @@ __all__ = [
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
     "ListingsRestrictions",
     "CatalogItemsVersion",
+    "AmazonWarehousingAndDistributionVersion",
+    "FulfillmentInboundVersion",
     "Feeds",
     "FeedsV2",
     "ReportsV2",

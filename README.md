@@ -3,14 +3,11 @@
 [![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/week)](https://pepy.tech/project/python-amazon-sp-api)
 
 # PYTHON-AMAZON-SP-API
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/saleweaver?logo=GitHub&color=lightgray)](https://github.com/sponsors/saleweaver)
-
 
 ## Amazon Selling-Partner API
 
 A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interface.
 
-##### Supports [Data Kiosk](https://developer-docs.amazon.com/sp-api/v0/docs/data-kiosk-api-v2023-11-15-use-case-guide)
 
 ---
 
@@ -25,6 +22,13 @@ If you appreciate this project and find it useful, please consider supporting it
 - 🌐 ETH Address: `0xf59534F7a7F5410DBCD0c779Ac3bB6503bd32Ae5`
 
 Your support helps keep the project alive and evolving, and is greatly appreciated!
+
+## Additional tools are available for sponsors.
+
+All `$10/month+` sponsors get access to the `python-amazon-sp-api-tools` repository, which will contain additional tools and scripts to help you get the most out of the Amazon Selling Partner API.
+Save $$$ on your Amazon Selling Partner API integration by becoming a sponsor today!
+
+![GitHub Sponsors](https://img.shields.io/github/sponsors/saleweaver?logo=GitHub&color=lightgray)
 
 ----
 
@@ -135,4 +139,5 @@ The client is pretty extensible and can be used for any other API. Check it out 
 [API Client](https://github.com/saleweaver/rapid_rest_client)
 
 
+![Alt](https://repobeats.axiom.co/api/embed/25e8a3fe715fe68f2996ab99fe2e6188cd96a459.svg "Repobeats analytics image")
 
