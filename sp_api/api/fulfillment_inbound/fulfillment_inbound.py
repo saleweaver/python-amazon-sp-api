@@ -1459,3 +1459,83 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         """
 
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId, deliveryWindowOptionId), params=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/labels', method='POST')
+    def create_marketplace_item_labels(self, **kwargs) -> ApiResponse:
+        """
+        create_marketplace_item_labels(self, **kwargs) -> ApiResponse
+
+        For a given marketplace - creates labels for a list of MSKUs.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            height:number | *OPTIONAL The height of the item label.
+            labelType: | *RERQUIRED ndicates the type of print type for a given label.
+            localeCode:string | *OPTIONAL The locale code constructed from ISO 639 language code and ISO 3166-1 alpha-2 standard of country codes separated by an underscore character.
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskuQuantities:array | *REQUIRED Represents the quantity of an MSKU to print item labels for.
+            pageType: | *OPTIONAL The page type to use to print the labels.
+            width:number | *OPTIONAL The width of the item label.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), data=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/prepDetails', method='GET')
+    def list_prep_details(self, **kwargs) -> ApiResponse:
+        """
+        list_prep_details(self, **kwargs) -> ApiResponse:
+
+        Get preparation details for a list of MSKUs in a specified marketplace.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskus:array | *REQUIRED A list of merchant SKUs, a merchant-supplied identifier of a specific SKU.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), params=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/prepDetails', method='POST')
+    def set_prep_details(self, **kwargs) -> ApiResponse:
+        """
+        set_prep_details(self, **kwargs) -> ApiResponse:
+
+        Set the preparation details for a list of MSKUs in a specified marketplace.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskuPrepDetails:array | *REQUIRED A list of MSKUs and related prep details.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), data=kwargs)
+
