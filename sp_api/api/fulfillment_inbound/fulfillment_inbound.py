@@ -1386,6 +1386,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
         For a given marketplace - creates labels for a list of MSKUs.
 
 **Usage Plan:**
+
 | Rate (requests per second) | Burst |
 | ---- | ---- |
 | 2 | 30 |
@@ -1415,6 +1416,7 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         Get preparation details for a list of MSKUs in a specified marketplace.
 
 **Usage Plan:**
+
 | Rate (requests per second) | Burst |
 | ---- | ---- |
 | 2 | 30 |
@@ -1438,6 +1440,7 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
         Set the preparation details for a list of MSKUs in a specified marketplace.
 
 **Usage Plan:**
+
 | Rate (requests per second) | Burst |
 | ---- | ---- |
 | 2 | 30 |
