@@ -15,7 +15,7 @@ class FulfillmentInboundVersion(str, enum.Enum):
 class FulfillmentInbound(Client):
     """
     FulfillmentInbound SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Fulfillment By Amazon (FBA) Inbound. The FBA Inbound API enables building inbound workflows to create, manage, and send shipments into Amazon's fulfillment network. The API has interoperability with the Send-to-Amazon user interface.
     """
@@ -474,17 +474,17 @@ class FulfillmentInbound(Client):
     The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
             Args:
-            
+
                 key pageSize:integer |  The number of inbound plans to return in the response matching the given query.
-            
+
                 key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-            
+
                 key status:string |  The status of an inbound plan.
-            
+
                 key sortBy:string |  Sort by field.
-            
+
                 key sortOrder:string |  The sort order.
-            
+
 
             Returns:
                 ApiResponse:
@@ -508,7 +508,7 @@ class FulfillmentInbound(Client):
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             body: | * REQUIRED {'description': 'The `createInboundPlan` request.',
  'example': {'contactInformation': {'email': 'email@email.com', 'phoneNumber': '1234567890'},
              'destinationMarketplaces': ['ATVPDKIKX0DER'],
@@ -529,7 +529,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
                 'sourceAddress': {'$ref': '#/definitions/Address'}},
  'required': ['contactInformation', 'destinationMarketplaces', 'items', 'sourceAddress'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -553,9 +553,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
 
         Returns:
             ApiResponse:
@@ -579,13 +579,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of boxes to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -610,9 +610,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
 
         Returns:
             ApiResponse:
@@ -636,13 +636,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of items to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -667,9 +667,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             body: | * REQUIRED {'description': '`setPackingInformation` request.',
  'example': {'packageGroupings': [{'boxes': [{'boxId': 'boxId',
                                               'contentInformationSource': 'BOX_CONTENT_PROVIDED',
@@ -682,7 +682,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
                                    'shipmentId': 'sh1234abcd-1234-abcd-5678-1234abcd5678'}]},
  'properties': {'packageGroupings': {'description': 'List of packing information for the inbound plan.', 'items': {'$ref': '#/definitions/PackageGroupingInput'}, 'type': 'array'}},
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -706,13 +706,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of packing options to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -736,9 +736,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
 
         Returns:
             ApiResponse:
@@ -762,11 +762,11 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             packingOptionId:string | * REQUIRED Identifier to a packing option.
-        
+
 
         Returns:
             ApiResponse:
@@ -790,17 +790,17 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             packingOptionId:string | * REQUIRED Identifier to a packing option.
-        
+
             packingGroupId:string | * REQUIRED Identifier to a packing group.
-        
+
             key pageSize:integer |  The number of packing group items to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -824,13 +824,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of pallets to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -854,13 +854,13 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of placement options to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -884,14 +884,14 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             body: | * REQUIRED {'description': 'The `generatePlacementOptions` request.',
  'example': {'customPlacement': [{'items': [{'expiration': '2024-01-01', 'labelOwner': 'AMAZON', 'manufacturingLotCode': 'manufacturingLotCode', 'msku': 'Sunglasses', 'prepOwner': 'AMAZON', 'quantity': 10}], 'warehouseId': 'YYZ14'}]},
  'properties': {'customPlacement': {'description': 'Custom placements options to be added to the plan.', 'items': {'$ref': '#/definitions/CustomPlacementInput'}, 'type': 'array'}},
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -915,11 +915,11 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             placementOptionId:string | * REQUIRED Identifier to a placement option. A placement option represents the shipment splits and destinations of SKUs.
-        
+
 
         Returns:
             ApiResponse:
@@ -943,11 +943,11 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
 
         Returns:
             ApiResponse:
@@ -971,11 +971,11 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
 
         Returns:
             ApiResponse:
@@ -999,17 +999,17 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             body: | * REQUIRED {'description': 'The `updateShipmentDeliveryWindow` request.',
  'example': {'deliveryWindow': {'start': '2024-01-01T00:00Z'}},
  'properties': {'deliveryWindow': {'$ref': '#/definitions/WindowInput', 'description': 'The range of dates within which the seller expects that their shipment will be delivered to Amazon.\n'}},
  'required': ['deliveryWindow'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1033,15 +1033,15 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             key pageSize:integer |  The number of self ship appointment slots to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
 
         Returns:
             ApiResponse:
@@ -1065,17 +1065,17 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             body: | * REQUIRED {'description': 'The `generateSelfShipAppointmentSlots` request.',
  'example': {'desiredEndDate': '2024-01-06T14:48:00.000Z', 'desiredStartDate': '2024-01-05T14:48:00.000Z'},
  'properties': {'desiredEndDate': {'description': 'The ISO 8601 datetime with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.', 'format': 'date-time', 'type': 'string'},
                 'desiredStartDate': {'description': 'The ISO 8601 datetime with pattern `yyyy-MM-ddTHH:mm:ss.sssZ`.', 'format': 'date-time', 'type': 'string'}},
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1099,15 +1099,15 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             slotId:string | * REQUIRED Identifier to a self-ship appointment slot.
-        
+
             body: | * REQUIRED {'description': 'The `cancelSelfShipAppointment` request.', 'example': {'reasonComment': 'OTHER'}, 'properties': {'reasonComment': {'$ref': '#/definitions/ReasonComment'}}, 'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1131,15 +1131,15 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             slotId:string | * REQUIRED Identifier to a self-ship appointment slot.
-        
+
             body: | * REQUIRED {'description': '`scheduleSelfShipAppointment` request.', 'example': {'reasonComment': 'OTHER'}, 'properties': {'reasonComment': {'$ref': '#/definitions/ReasonComment'}}, 'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1163,17 +1163,17 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
-        
+
             body: | * REQUIRED {'description': 'The `updateShipmentTrackingDetails` request.',
  'example': {'trackingDetails': {'spdTrackingDetail': {'spdTrackingItems': [{'boxId': 'FBA10ABC0YY100001', 'trackingId': 'FBA10002000'}]}}},
  'properties': {'trackingDetails': {'$ref': '#/definitions/TrackingDetailsInput'}},
  'required': ['trackingDetails'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1197,17 +1197,17 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             key pageSize:integer |  The number of transportation options to return in the response matching the given query.
-        
+
             key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
-        
+
             key placementOptionId:string |  The placement option to get transportation options for. Either placementOptionId or shipmentId must be specified.
-        
+
             key shipmentId:string |  The shipment to get transportation options for. Either placementOptionId or shipmentId must be specified.
-        
+
 
         Returns:
             ApiResponse:
@@ -1231,9 +1231,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             body: | * REQUIRED {'description': 'The `generateTransportationOptions` request.',
  'example': {'placementOptionId': 'pl1234abcd-1234-abcd-5678-1234abcd5678',
              'shipmentTransportationConfigurations': [{'contactInformation': {'email': 'email@email.com', 'name': 'John Smithy', 'phoneNumber': '1234567890'},
@@ -1249,7 +1249,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
                 'shipmentTransportationConfigurations': {'description': 'List of shipment transportation configurations.', 'items': {'$ref': '#/definitions/ShipmentTransportationConfiguration'}, 'type': 'array'}},
  'required': ['placementOptionId', 'shipmentTransportationConfigurations'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1273,9 +1273,9 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
-        
+
             body: | * REQUIRED {'description': 'The `confirmTransportationOptions` request.',
  'example': {'transportationSelections': [{'contactInformation': {'email': 'email@email.com', 'name': 'John Smithy', 'phoneNumber': '1234567890'},
                                            'deliveryWindow': {'start': '2024-01-01T00:00Z'},
@@ -1284,7 +1284,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
  'properties': {'transportationSelections': {'description': 'Information needed to confirm one of the available transportation options.', 'items': {'$ref': '#/definitions/TransportationSelection'}, 'minItems': 1, 'type': 'array'}},
  'required': ['transportationSelections'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1308,11 +1308,11 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             key mskus:array | * REQUIRED List of merchant SKUs, a merchant-supplied identifier for a specific SKU.
-        
+
             key marketplaceId:string | * REQUIRED The Marketplace ID. Refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a list of possible values.
-        
+
 
         Returns:
             ApiResponse:
@@ -1336,15 +1336,15 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             key marketplaceId:string | * REQUIRED The Marketplace ID. Refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids) for a list of possible values.
-        
+
             body: | * REQUIRED {'description': 'The `updateItemComplianceDetails` request.',
  'example': {'msku': 'Sunglasses', 'taxDetails': {'declaredValue': {'amount': 5.5, 'code': 'CAD'}, 'hsnCode': 'hsnCode'}},
  'properties': {'msku': {'description': 'The merchant SKU, a merchant-supplied identifier for a specific SKU.', 'maxLength': 40, 'minLength': 1, 'type': 'string'}, 'taxDetails': {'$ref': '#/definitions/TaxDetails'}},
  'required': ['msku', 'taxDetails'],
  'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
@@ -1368,12 +1368,88 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-        
+
             operationId:string | * REQUIRED Identifier to an asynchronous operation.
-        
+
 
         Returns:
             ApiResponse:
         """
 
         return self._request(fill_query_params(kwargs.pop('path'), operationId), params=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/labels', method='POST')
+    def create_marketplace_item_labels(self, **kwargs) -> ApiResponse:
+        """
+        create_marketplace_item_labels(self, **kwargs) -> ApiResponse
+
+        For a given marketplace - creates labels for a list of MSKUs.
+
+**Usage Plan:**
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            height:number | *OPTIONAL The height of the item label.
+            labelType: | *RERQUIRED ndicates the type of print type for a given label.
+            localeCode:string | *OPTIONAL The locale code constructed from ISO 639 language code and ISO 3166-1 alpha-2 standard of country codes separated by an underscore character.
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskuQuantities:array | *REQUIRED Represents the quantity of an MSKU to print item labels for.
+            pageType: | *OPTIONAL The page type to use to print the labels.
+            width:number | *OPTIONAL The width of the item label.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), data=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/prepDetails', method='GET')
+    def list_prep_details(self, **kwargs) -> ApiResponse:
+        """
+        list_prep_details(self, **kwargs) -> ApiResponse:
+
+        Get preparation details for a list of MSKUs in a specified marketplace.
+
+**Usage Plan:**
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskus:array | *REQUIRED A list of merchant SKUs, a merchant-supplied identifier of a specific SKU.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), params=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/items/prepDetails', method='POST')
+    def set_prep_details(self, **kwargs) -> ApiResponse:
+        """
+        set_prep_details(self, **kwargs) -> ApiResponse:
+
+        Set the preparation details for a list of MSKUs in a specified marketplace.
+
+**Usage Plan:**
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            marketplaceId:string | *REQUIRED The marketplace ID.
+            mskuPrepDetails:array | *REQUIRED A list of MSKUs and related prep details.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(kwargs.pop('path'), data=kwargs)
