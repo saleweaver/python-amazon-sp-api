@@ -1460,6 +1460,37 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
 
         return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId, deliveryWindowOptionId), params=kwargs)
 
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/items', method='GET')
+    def list_shipment_items(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        list_shipment_items(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
+
+        Provides a paginated list of item packages in a shipment.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+
+            inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
+
+            shipmentId:string | * REQUIRED Identifier of a shipment. A shipment contains the boxes and units being inbounded.
+
+            key pageSize:integer |  The number of items to return in the response matching the given query.
+
+            key paginationToken:string |  A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the `pagination` returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
+
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), params=kwargs)
+
     @sp_endpoint('/inbound/fba/<version>/items/labels', method='POST')
     def create_marketplace_item_labels(self, **kwargs) -> ApiResponse:
         """
