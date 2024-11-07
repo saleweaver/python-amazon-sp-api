@@ -23,12 +23,6 @@ If you appreciate this project and find it useful, please consider supporting it
 
 Your support helps keep the project alive and evolving, and is greatly appreciated!
 
-## Additional tools are available for sponsors.
-
-All `$10/month+` sponsors get access to the `python-amazon-sp-api-tools` repository, which will contain additional tools and scripts to help you get the most out of the Amazon Selling Partner API.
-Save $$$ on your Amazon Selling Partner API integration by becoming a sponsor today!
-
-![GitHub Sponsors](https://img.shields.io/github/sponsors/saleweaver?logo=GitHub&color=lightgray)
 
 ----
 
