@@ -6,6 +6,10 @@ def test_get_listings_item():
     res = ListingsItems().get_listings_item('xxx', 'xxx')
     assert res is not None
 
+def test_search_listings_items():
+    res = ListingsItems().search_listings_items('xxx')
+    assert res is not None
+
 
 def test_put_listings_item():
     res = ListingsItems().put_listings_item('xxx', 'xxx', body={
