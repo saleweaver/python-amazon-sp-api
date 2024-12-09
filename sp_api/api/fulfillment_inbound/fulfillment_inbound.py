@@ -1570,3 +1570,64 @@ The x-amzn-RateLimit-Limit response header returns the usage plan rate limits th
 
         return self._request(kwargs.pop('path'), data=kwargs)
 
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/boxes', method='GET')
+    def list_shipment_boxes(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        list_shipment_boxes(self, **kwargs) -> ApiResponse:
+
+        Provides a paginated list of box packages in a shipment.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 30 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            pageSize:string | *OPTIONAL Identifier of a shipment. A shipment contains the boxes and units being inbounded.
+            paginationToken: | *OPTIONAL A token to fetch a certain page when there are multiple pages worth of results. The value of this token is fetched from the pagination returned in the API response. In the absence of the token value from the query parameter the API returns the first page of the result.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), params=kwargs)
+
+    @sp_endpoint('/inbound/fba/<version>/inboundPlans/{}/shipments/{}/trackingDetails', method='PUT')
+    def update_shipment_tracking_details(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        update_shipment_tracking_details(self, **kwargs) -> ApiResponse:
+
+        Updates a shipment's tracking details.
+
+**Usage Plan:**
+
+| Rate (requests per second) | Burst |
+| ---- | ---- |
+| 2 | 2 |
+
+The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to Usage Plans and Rate Limits in the Selling Partner API.
+        Args:
+
+            body: | * REQUIRED {
+                'trackingDetails': [
+                    ltlTrackingDetail: [
+                        billOfLadingNumber: string,
+                        freightBillNumber: string<array>
+                    ],
+                    spdTrackingDetail: [
+                        spdTrackingItems:[
+                            boxId: string,
+                            trackingId: string,
+                        ]
+                    ],
+                ],
+            }
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(fill_query_params(kwargs.pop('path'), inboundPlanId, shipmentId), data=kwargs)
