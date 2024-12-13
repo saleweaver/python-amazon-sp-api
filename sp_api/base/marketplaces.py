@@ -21,6 +21,7 @@ Poland	A1C3SOZRARQ6R3	PL
 Turkey	A33AVAJ2PDY3EV	TR
 United Arab Emirates	A2VIGQ35RCS4UG	AE
 India	A21TJRUUN4KGV	IN
+Ireland	A28R8C7NBKEWEA	IE
 Far East
 
 Country	marketplaceId	Country code
@@ -81,6 +82,9 @@ class Marketplaces(Enum):
 
     #: Amazon marketplace in Italy (IT)
     IT = (f"{BASE_URL}-eu.amazon.com", "APJ6JRA9NG5V4", "eu-west-1")
+
+    #: Amazon marketplace in Ireland (IE)
+    IE = (f"{BASE_URL}-eu.amazon.com", "A28R8C7NBKEWEA", "eu-west-1")
 
     #: Amazon marketplace in Netherlands (NL)
     NL = (f"{BASE_URL}-eu.amazon.com", "A1805IZSGTT6HS", "eu-west-1")
