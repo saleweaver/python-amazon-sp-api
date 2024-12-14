@@ -4,7 +4,7 @@ on:
   push:
     # Trigger the workflow on push to the main branch. Adjust the branch name as needed.
     branches:
-      - main
+      - master
 
 jobs:
   generate-changelog:
