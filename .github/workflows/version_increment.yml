@@ -26,6 +26,7 @@ jobs:
           file_path: "sp_api/__version__.py"
           version_key: "__version__"
 
+
       - name: Install Dependencies
         if: env.new_version != ''
         run: |
