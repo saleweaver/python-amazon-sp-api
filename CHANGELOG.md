@@ -1,3 +1,15 @@
+## v1.8.15 - 2024-12-14
+```markdown
+## v1.8.15
+
+### Internal Changes
+
+- Improved the GitHub Actions workflow for version increments:
+  - The changelog entry is now written to a temporary file before being appended to the existing `CHANGELOG.md`, ensuring a cleaner update process.
+  - Enhanced the method for setting the output of the changelog entry in the workflow, replacing the deprecated `set-output` command with a more robust approach.
+- Updated the `generate_changelog.py` script to ensure the changelog entry generation process adheres to the latest guidelines, specifically excluding dates and release status from entries.
+```
+
 ## v1.8.14 - 2024-12-14
 ## v1.8.14
 
