@@ -1,41 +1,34 @@
 import sys
-import openai
 import os
+import openai
 
-def main():
-    if len(sys.argv) < 2:
-        print("No diff provided.")
-        sys.exit(1)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    diff = sys.argv[1]
+if len(sys.argv) < 2:
+    print("No diff file provided.")
+    sys.exit(1)
 
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+diff_file = sys.argv[1]
+with open(diff_file, 'r') as f:
+    diff = f.read()
 
-    prompt = f"""
-    Generate a detailed and well-formatted changelog entry based on the following Git diff. The changelog should include a summary of changes, affected areas, and any relevant details. Format the output in Markdown.
-    
-    {diff}
-    """
+prompt = f"""
+You are a helpful assistant who generates changelog entries.
+Given the following git diff, generate a concise, well-formatted Markdown changelog entry:
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system",
-                 "content": "You are a helpful assistant that generates changelog entries based on Git diffs."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.3,
-            max_tokens=500
-        )
+```diff
+{diff}
+```
+"""
 
-        changelog_entry = response.choices[0].message['content'].strip()
-        print(changelog_entry)
-
-    except Exception as e:
-        print(f"Error generating changelog: {e}")
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main()
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant that generates changelog entries."},
+        {"role": "user", "content": prompt}
+    ],
+    temperature=0.3,
+    max_tokens=500
+)
+changelog_entry = response.choices[0].message['content'].strip()
+print(changelog_entry)
