@@ -1,3 +1,38 @@
+## v1.8.21 - 2024-12-14
+## v1.8.21
+
+### Changes Relevant to End-Users
+- **Configuration Enhancement**: Made the TTL (Time-To-Live) for authentication cache configurable via the `SP_API_AUTH_CACHE_TTL` environment variable. This allows users to customize the cache duration according to their needs, providing greater flexibility in managing token lifetimes.
+
+### Internal Changes
+- No internal changes were made in this version.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Authentication Cache] -->|TTL Configurable| B[Environment Variable];
+```
+
+These changes allow users to better manage their authentication cache settings, enhancing the adaptability of the library to different operational requirements.
+
+## v1.8.20 - 2024-12-14
+## v1.8.20
+
+### Internal Changes
+- Enhanced the changelog generation script to include mermaid diagrams for visual representation of changes.
+- Increased the `max_tokens` parameter for OpenAI API calls from 500 to 750 to allow for more detailed changelog entries.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Changelog Generation Script] -->|Updated| B[Include Mermaid Diagrams];
+    A -->|Increased| C[Max Tokens for API Calls];
+```
+
+These changes improve the clarity and detail of the changelog entries, providing better insights into updates and modifications.
+
 ## v1.8.19 - 2024-12-14
 ## v1.8.19
 
