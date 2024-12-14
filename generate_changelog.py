@@ -21,7 +21,7 @@ Given the following git diff, generate a concise, well-formatted Markdown change
 ```
 """
 
-response = openai.ChatCompletion.create(
+response = openai.chat.completions.create(
     model="gpt-4",
     messages=[
         {"role": "system", "content": "You are a helpful assistant that generates changelog entries."},
