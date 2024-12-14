@@ -1,3 +1,23 @@
+## v1.8.22 - 2024-12-14
+## v1.8.22
+
+### Changes Relevant to End-Users
+- **Code Style Improvement**: Updated the codebase to use consistent string quoting style, improving readability and maintainability.
+
+### Internal Changes
+- **Refactoring**: Reformatted code to adhere to PEP 8 standards, including consistent use of double quotes for strings and improved indentation.
+- **Function Signatures**: Updated function signatures for better clarity and consistency across the codebase.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Codebase] -->|Improved Readability| B[Consistent String Quoting];
+    A -->|Refactored| C[PEP 8 Compliance];
+```
+
+These changes enhance the code quality, making it easier for developers to maintain and extend the library.
+
 ## v1.8.21 - 2024-12-14
 ## v1.8.21
 
