@@ -1,3 +1,11 @@
+## v1.8.16 - 2024-12-14
+## v1.8.16
+
+### Internal Changes
+
+- Updated the `generate_changelog.py` script to remove backticks from the generated changelog entry, ensuring cleaner formatting.
+- Bumped the version number to 1.8.16 in the `__version__.py` file.
+
 ## v1.8.15 - 2024-12-14
 ```markdown
 ## v1.8.15
