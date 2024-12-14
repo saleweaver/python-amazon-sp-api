@@ -67,9 +67,19 @@ jobs:
       - name: Update CHANGELOG.md
         if: env.new_version != ''
         run: |
-          echo "## v${{ env.new_version }} - $(date +'%Y-%m-%d')" >> CHANGELOG.md
-          cat changelog_entry.md >> CHANGELOG.md
-          echo "" >> CHANGELOG.md
+          # Write the new version header and generated entry to a temp file
+          echo "## v${{ env.new_version }} - $(date +'%Y-%m-%d')" > temp_changelog.md
+          cat changelog_entry.md >> temp_changelog.md
+          echo "" >> temp_changelog.md
+          
+          # Append the old CHANGELOG.md content after the new entry
+          if [ -f CHANGELOG.md ]; then
+            cat CHANGELOG.md >> temp_changelog.md
+          fi
+          
+          # Move temp back to CHANGELOG.md
+          mv temp_changelog.md CHANGELOG.md
+          
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add CHANGELOG.md
@@ -79,9 +89,9 @@ jobs:
       - name: Read Changelog Entry
         id: read_changelog
         run: |
-          body="$(cat changelog_entry.md)"
-          # Set the output 'body' to contain the file contents.
-          echo "::set-output name=body::$body"
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          cat changelog_entry.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create a new GitHub release
         if: env.new_version != ''

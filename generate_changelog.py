@@ -17,7 +17,7 @@ with open(diff_file, 'r') as f:
 prompt = f"""
 You are a helpful assistant who generates changelog entries for the python-amazon-sp-api, a wrapper to access Amazon's Selling Partner API with an easy-to-use interface. This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace, enabling powerful automations and data management.
 This is a growing changelog entry for the project. Only add changes that are relevant to the end-users, such as new features, changes to existing features, and bug fixes. Categorize and group changes between internal and relevant to the project..
-The current version is {__version__}. Add this to the Changelog header.
+The current version is {__version__}. Add this to the Changelog header. Never include dates or release status in the changelog entry.
 
 Given the following git diff, generate a concise, well-formatted Markdown changelog entry:
 
@@ -35,7 +35,7 @@ response = openai.chat.completions.create(
     temperature=0.3,
     max_tokens=500
 )
-print (response)
+
 changelog_entry = response.choices[0].message.content.strip()
 print(changelog_entry)
 with open('changelog_entry.md', 'w') as out_file:
