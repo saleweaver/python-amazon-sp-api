@@ -6,7 +6,13 @@ from typing import Optional
 
 import requests
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, Marketplaces
+from sp_api.base import (
+    Client,
+    sp_endpoint,
+    fill_query_params,
+    ApiResponse,
+    Marketplaces,
+)
 
 
 class Reports(Client):
@@ -17,7 +23,7 @@ class Reports(Client):
     The Selling Partner API for Reports lets you retrieve and manage a variety of reports that can help selling partners manage their businesses.
     """
 
-    @sp_endpoint('/reports/2021-06-30/reports', method='GET')
+    @sp_endpoint("/reports/2021-06-30/reports", method="GET")
     def get_reports(self, **kwargs) -> ApiResponse:
         """
         get_reports(self, **kwargs) -> ApiResponse
@@ -54,22 +60,44 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable) and not isinstance(kwargs.get('reportTypes'), str):
-            kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
-        if kwargs.get('processingStatuses', None) and isinstance(kwargs.get('processingStatuses'), abc.Iterable) and not isinstance(kwargs.get('processingStatuses'), str):
-            kwargs.update({'processingStatuses': ','.join(kwargs.get('processingStatuses'))})
-        if kwargs.get('marketplaceIds', None) and isinstance(kwargs.get('marketplaceIds'), abc.Iterable) and not isinstance(kwargs.get('marketplaceIds'), str):
-            marketplaces = kwargs.get('marketplaceIds')
-            kwargs.update({'marketplaceIds': ','.join(
-                [m.marketplace_id if isinstance(m, Marketplaces) else m for m in marketplaces])})
-        for k in ['createdSince', 'createdUntil']:
+        if (
+            kwargs.get("reportTypes", None)
+            and isinstance(kwargs.get("reportTypes"), abc.Iterable)
+            and not isinstance(kwargs.get("reportTypes"), str)
+        ):
+            kwargs.update({"reportTypes": ",".join(kwargs.get("reportTypes"))})
+        if (
+            kwargs.get("processingStatuses", None)
+            and isinstance(kwargs.get("processingStatuses"), abc.Iterable)
+            and not isinstance(kwargs.get("processingStatuses"), str)
+        ):
+            kwargs.update(
+                {"processingStatuses": ",".join(kwargs.get("processingStatuses"))}
+            )
+        if (
+            kwargs.get("marketplaceIds", None)
+            and isinstance(kwargs.get("marketplaceIds"), abc.Iterable)
+            and not isinstance(kwargs.get("marketplaceIds"), str)
+        ):
+            marketplaces = kwargs.get("marketplaceIds")
+            kwargs.update(
+                {
+                    "marketplaceIds": ",".join(
+                        [
+                            m.marketplace_id if isinstance(m, Marketplaces) else m
+                            for m in marketplaces
+                        ]
+                    )
+                }
+            )
+        for k in ["createdSince", "createdUntil"]:
             if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
                 kwargs.update({k: kwargs.get(k).isoformat()})
-        if not kwargs.get('nextToken'):
-            return self._request(kwargs.pop('path'), params=kwargs)
-        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
+        if not kwargs.get("nextToken"):
+            return self._request(kwargs.pop("path"), params=kwargs)
+        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/reports/2021-06-30/reports', method='POST')
+    @sp_endpoint("/reports/2021-06-30/reports", method="POST")
     def create_report(self, **kwargs) -> ApiResponse:
         """
         create_report(self, **kwargs) -> ApiResponse
@@ -106,13 +134,13 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if isinstance(kwargs.get('dataStartTime', None), datetime):
-            kwargs.update({'dataStartTime': kwargs.get('dataStartTime').isoformat()})
-        if isinstance(kwargs.get('dataEndTime', None), datetime):
-            kwargs.update({'dataEndTime': kwargs.get('dataEndTime').isoformat()})
-        return self._request(kwargs.pop('path'), data=kwargs)
+        if isinstance(kwargs.get("dataStartTime", None), datetime):
+            kwargs.update({"dataStartTime": kwargs.get("dataStartTime").isoformat()})
+        if isinstance(kwargs.get("dataEndTime", None), datetime):
+            kwargs.update({"dataEndTime": kwargs.get("dataEndTime").isoformat()})
+        return self._request(kwargs.pop("path"), data=kwargs)
 
-    @sp_endpoint('/reports/2021-06-30/reports/{}', method='DELETE')
+    @sp_endpoint("/reports/2021-06-30/reports/{}", method="DELETE")
     def cancel_report(self, reportId, **kwargs) -> ApiResponse:
         """
         cancel_report(self, reportId, **kwargs) -> ApiResponse
@@ -136,9 +164,11 @@ class Reports(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), reportId), data=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), reportId), data=kwargs
+        )
 
-    @sp_endpoint('/reports/2021-06-30/reports/{}', method='GET')
+    @sp_endpoint("/reports/2021-06-30/reports/{}", method="GET")
     def get_report(self, reportId, **kwargs) -> ApiResponse:
         """
         get_report(self, report_id, **kwargs)
@@ -168,9 +198,11 @@ class Reports(Client):
 
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), reportId), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), reportId), params=kwargs
+        )
 
-    @sp_endpoint('/reports/2021-06-30/schedules', method='GET')
+    @sp_endpoint("/reports/2021-06-30/schedules", method="GET")
     def get_report_schedules(self, **kwargs) -> ApiResponse:
         """
         Returns report schedule details that match the filters that you specify.
@@ -191,12 +223,16 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if kwargs.get('reportTypes', None) and isinstance(kwargs.get('reportTypes'), abc.Iterable) and not isinstance(kwargs.get('reportTypes'), str):
-            kwargs.update({'reportTypes': ','.join(kwargs.get('reportTypes'))})
+        if (
+            kwargs.get("reportTypes", None)
+            and isinstance(kwargs.get("reportTypes"), abc.Iterable)
+            and not isinstance(kwargs.get("reportTypes"), str)
+        ):
+            kwargs.update({"reportTypes": ",".join(kwargs.get("reportTypes"))})
 
-        return self._request(kwargs.pop('path'), params=kwargs)
+        return self._request(kwargs.pop("path"), params=kwargs)
 
-    @sp_endpoint('/reports/2021-06-30/schedules', method='POST')
+    @sp_endpoint("/reports/2021-06-30/schedules", method="POST")
     def create_report_schedule(self, **kwargs) -> ApiResponse:
         """
         create_report_schedule(self, **kwargs) -> ApiResponse
@@ -230,9 +266,9 @@ class Reports(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs)
+        return self._request(kwargs.pop("path"), data=kwargs)
 
-    @sp_endpoint('/reports/2021-06-30/schedules/{}', method='DELETE')
+    @sp_endpoint("/reports/2021-06-30/schedules/{}", method="DELETE")
     def cancel_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse:
         """
         cancel_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse
@@ -261,7 +297,9 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), reportScheduleId), data=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), reportScheduleId), data=kwargs
+        )
 
     def delete_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse:
         """
@@ -293,7 +331,7 @@ class Reports(Client):
         """
         return self.cancel_report_schedule(reportScheduleId)
 
-    @sp_endpoint('/reports/2021-06-30/schedules/{}', method='GET')
+    @sp_endpoint("/reports/2021-06-30/schedules/{}", method="GET")
     def get_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse:
         """
         get_report_schedule(self, reportScheduleId, **kwargs) -> ApiResponse
@@ -322,11 +360,19 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        return self._request(fill_query_params(kwargs.pop('path'), reportScheduleId), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), reportScheduleId), params=kwargs
+        )
 
-    @sp_endpoint('/reports/2021-06-30/documents/{}', method='GET')
-    def get_report_document(self, reportDocumentId, download: bool = False, file=None,
-                            character_code: Optional[str] = None, **kwargs) -> ApiResponse:
+    @sp_endpoint("/reports/2021-06-30/documents/{}", method="GET")
+    def get_report_document(
+        self,
+        reportDocumentId,
+        download: bool = False,
+        file=None,
+        character_code: Optional[str] = None,
+        **kwargs
+    ) -> ApiResponse:
         """
         get_report_document(self, document_id, decrypt: bool = False, file=None, character_code: Optional[str] = None, **kwargs) -> ApiResponse
         Returns the information required for retrieving a report document's contents. This includes a presigned URL for the report document as well as the information required to decrypt the document's contents.
@@ -367,11 +413,13 @@ class Reports(Client):
         Returns:
              ApiResponse
         """  # noqa: E501
-        res = self._request(fill_query_params(kwargs.pop(
-            'path'), reportDocumentId), add_marketplace=False)
-        if download or file or ('decrypt' in kwargs and kwargs['decrypt']):
+        res = self._request(
+            fill_query_params(kwargs.pop("path"), reportDocumentId),
+            add_marketplace=False,
+        )
+        if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             document_response = requests.get(
-                res.payload.get('url'),
+                res.payload.get("url"),
                 proxies=self.proxies,
                 verify=self.verify,
             )
@@ -380,11 +428,11 @@ class Reports(Client):
                 character_code = (
                     document_response.encoding
                     if document_response and document_response.encoding
-                    else 'iso-8859-1'
+                    else "iso-8859-1"
                 )
-                if character_code.lower() == 'windows-31j':
-                    character_code = 'cp932'
-            if 'compressionAlgorithm' in res.payload:
+                if character_code.lower() == "windows-31j":
+                    character_code = "cp932"
+            if "compressionAlgorithm" in res.payload:
                 try:
                     document = zlib.decompress(bytearray(document), 15 + 32)
                 except Exception as e:
@@ -397,9 +445,11 @@ class Reports(Client):
                     decoded_document = document
 
             if download:
-                res.payload.update({
-                    'document': decoded_document,
-                })
+                res.payload.update(
+                    {
+                        "document": decoded_document,
+                    }
+                )
             if file:
                 self._handle_file(file, decoded_document, character_code)
         return res

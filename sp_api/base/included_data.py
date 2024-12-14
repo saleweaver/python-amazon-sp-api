@@ -7,22 +7,22 @@ class IncludedData(str, Enum):
     """
 
     #: Summary details of the listing item.
-    SUMMARIES = 'summaries'
+    SUMMARIES = "summaries"
 
     #: JSON object containing structured listing item attribute data keyed by attribute name.
-    ATTRIBUTES = 'attributes'
+    ATTRIBUTES = "attributes"
 
     #: Issues associated with the listing item.
-    ISSUES = 'issues'
+    ISSUES = "issues"
 
     #: Current offers for the listing item.
-    OFFERS = 'offers'
+    OFFERS = "offers"
 
     #: Fulfillment availability details for the listing item.
-    FULFILLMENT_AVAILABILITY = 'fulfillmentAvailability'
+    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"
 
     #: Vendor procurement details for the listing item.
-    PROCUREMENT = 'procurement'
+    PROCUREMENT = "procurement"
 
     #: Dimensions for an item in the Amazon catalog.
     DIMENSIONS = "dimensions"
@@ -49,22 +49,22 @@ class IncludedData(str, Enum):
 class ListingItemsIncludedData(str, Enum):
 
     #: Summary details of the listing item.
-    SUMMARIES = 'summaries'
+    SUMMARIES = "summaries"
 
     #: JSON object containing structured listing item attribute data keyed by attribute name.
-    ATTRIBUTES = 'attributes'
+    ATTRIBUTES = "attributes"
 
     #: Issues associated with the listing item.
-    ISSUES = 'issues'
+    ISSUES = "issues"
 
     #: Current offers for the listing item.
-    OFFERS = 'offers'
+    OFFERS = "offers"
 
     #: Fulfillment availability details for the listing item.
-    FULFILLMENT_AVAILABILITY = 'fulfillmentAvailability'
+    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"
 
     #: Vendor procurement details for the listing item.
-    PROCUREMENT = 'procurement'
+    PROCUREMENT = "procurement"
 
 
 class CatalogItemsIncludedData(str, Enum):

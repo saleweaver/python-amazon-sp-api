@@ -6,14 +6,15 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Solicitations(Client):
     """
     Solicitations SP-API Client
-    :link: 
+    :link:
 
     With the Solicitations API you can build applications that send non-critical solicitations to buyers. You can get a list of solicitation types that are available for an order that you specify, then call an operation that sends a solicitation to the buyer for that order. Buyers cannot respond to solicitations sent by this API, and these solicitations do not appear in the Messaging section of Seller Central or in the recipient's Message Center. The Solicitations API returns responses that are formed according to the <a href=https://tools.ietf.org/html/draft-kelly-json-hal-08>JSON Hypertext Application Language</a> (HAL) standard.
     """
 
-
-    @sp_endpoint('/solicitations/v1/orders/{}', method='GET')
-    def get_solicitation_actions_for_order(self, amazonOrderId, **kwargs) -> ApiResponse:
+    @sp_endpoint("/solicitations/v1/orders/{}", method="GET")
+    def get_solicitation_actions_for_order(
+        self, amazonOrderId, **kwargs
+    ) -> ApiResponse:
         """
         get_solicitation_actions_for_order(self, amazonOrderId, **kwargs) -> ApiResponse
 
@@ -36,11 +37,18 @@ class Solicitations(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), amazonOrderId), params=kwargs)
 
-    @sp_endpoint('/solicitations/v1/orders/{}/solicitations/productReviewAndSellerFeedback', method='POST')
-    def create_product_review_and_seller_feedback_solicitation(self, amazonOrderId, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), amazonOrderId), params=kwargs
+        )
+
+    @sp_endpoint(
+        "/solicitations/v1/orders/{}/solicitations/productReviewAndSellerFeedback",
+        method="POST",
+    )
+    def create_product_review_and_seller_feedback_solicitation(
+        self, amazonOrderId, **kwargs
+    ) -> ApiResponse:
         """
         create_product_review_and_seller_feedback_solicitation(self, amazonOrderId, **kwargs) -> ApiResponse
 
@@ -63,6 +71,7 @@ class Solicitations(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), amazonOrderId), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), amazonOrderId), params=kwargs
+        )

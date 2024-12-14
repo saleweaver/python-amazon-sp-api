@@ -1,19 +1,25 @@
 from collections import abc
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, IncludedData
+from sp_api.base import (
+    Client,
+    sp_endpoint,
+    fill_query_params,
+    ApiResponse,
+    IncludedData,
+)
 
 
 class ListingsItems(Client):
     """
-    ListingsItems SP-API Client
-    :link: 
+        ListingsItems SP-API Client
+        :link:
 
-    The Selling Partner API for Listings Items (Listings Items API) provides programmatic access to selling partner listings on Amazon. Use this API in collaboration with the Selling Partner API for Product Type Definitions, which you use to retrieve the information about Amazon product types needed to use the Listings Items API.
+        The Selling Partner API for Listings Items (Listings Items API) provides programmatic access to selling partner listings on Amazon. Use this API in collaboration with the Selling Partner API for Product Type Definitions, which you use to retrieve the information about Amazon product types needed to use the Listings Items API.
 
-For more information, see the [Listings Items API Use Case Guide](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/use-case-guides/listings-items-api-use-case-guide/listings-items-api-use-case-guide_2021-08-01.md).
+    For more information, see the [Listings Items API Use Case Guide](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/use-case-guides/listings-items-api-use-case-guide/listings-items-api-use-case-guide_2021-08-01.md).
     """
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='DELETE')
+    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="DELETE")
     def delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
@@ -34,9 +40,11 @@ For more information, see the [Listings Items API Use Case Guide](https://github
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), sellerId, sku), data=kwargs
+        )
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='GET')
+    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="GET")
     def get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         get_listings_item(self, sellerId, **kwargs) -> ApiResponse
@@ -57,13 +65,23 @@ For more information, see the [Listings Items API Use Case Guide](https://github
         Returns:
             ApiResponse:
         """
-        if kwargs.get('includedData') and isinstance(kwargs.get('includedData'), abc.Iterable) and not isinstance(kwargs.get('includedData'), str):
-            kwargs['includedData'] = ','.join(
-                [x.value if isinstance(x, IncludedData) else x for x in kwargs['includedData']])
+        if (
+            kwargs.get("includedData")
+            and isinstance(kwargs.get("includedData"), abc.Iterable)
+            and not isinstance(kwargs.get("includedData"), str)
+        ):
+            kwargs["includedData"] = ",".join(
+                [
+                    x.value if isinstance(x, IncludedData) else x
+                    for x in kwargs["includedData"]
+                ]
+            )
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), sellerId, sku), params=kwargs
+        )
 
-    @sp_endpoint('/listings/2021-08-01/items/{}', method='GET')
+    @sp_endpoint("/listings/2021-08-01/items/{}", method="GET")
     def search_listings_items(self, sellerId, **kwargs) -> ApiResponse:
         """
         search_listings_items(self, sellerId, **kwargs) -> ApiResponse
@@ -83,13 +101,23 @@ For more information, see the [Listings Items API Use Case Guide](https://github
         Returns:
             ApiResponse:
         """
-        if kwargs.get('includedData') and isinstance(kwargs.get('includedData'), abc.Iterable) and not isinstance(kwargs.get('includedData'), str):
-            kwargs['includedData'] = ','.join(
-                [x.value if isinstance(x, IncludedData) else x for x in kwargs['includedData']])
+        if (
+            kwargs.get("includedData")
+            and isinstance(kwargs.get("includedData"), abc.Iterable)
+            and not isinstance(kwargs.get("includedData"), str)
+        ):
+            kwargs["includedData"] = ",".join(
+                [
+                    x.value if isinstance(x, IncludedData) else x
+                    for x in kwargs["includedData"]
+                ]
+            )
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), sellerId), params=kwargs
+        )
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='PATCH')
+    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="PATCH")
     def patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
@@ -122,10 +150,13 @@ For more information, see the [Listings Items API Use Case Guide](https://github
          Returns:
             ApiResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'),
-                             params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), sellerId, sku),
+            data=kwargs.pop("body"),
+            params=kwargs,
+        )
 
-    @sp_endpoint('/listings/2021-08-01/items/{}/{}', method='PUT')
+    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="PUT")
     def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
@@ -152,5 +183,8 @@ For more information, see the [Listings Items API Use Case Guide](https://github
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), sellerId, sku), data=kwargs.pop('body'),
-                             params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), sellerId, sku),
+            data=kwargs.pop("body"),
+            params=kwargs,
+        )

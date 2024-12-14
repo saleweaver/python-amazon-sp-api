@@ -3,7 +3,13 @@ import os
 import urllib.parse
 from datetime import datetime
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse, Marketplaces
+from sp_api.base import (
+    Client,
+    sp_endpoint,
+    fill_query_params,
+    ApiResponse,
+    Marketplaces,
+)
 
 
 class AmznShippingBusiness(str, enum.Enum):
@@ -26,7 +32,7 @@ class AmznShippingBusiness(str, enum.Enum):
 class Shipping(Client):
     """
     Shipping V2 SP-API Client
-    :link: 
+    :link:
 
     Provides programmatic access to Amazon Shipping APIs.
     """
@@ -34,12 +40,14 @@ class Shipping(Client):
     amzn_shipping_business: AmznShippingBusiness = AmznShippingBusiness.US
 
     def __init__(self, *args, **kwargs):
-        if 'amzn_shipping_business' in kwargs:
-            self.amzn_shipping_business = kwargs.pop('amzn_shipping_business', AmznShippingBusiness.US)
+        if "amzn_shipping_business" in kwargs:
+            self.amzn_shipping_business = kwargs.pop(
+                "amzn_shipping_business", AmznShippingBusiness.US
+            )
         else:
             marketplace = args[0] if len(args) > 0 else Marketplaces.US
-            if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
-                marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
+            if os.environ.get("SP_API_DEFAULT_MARKETPLACE", None):
+                marketplace = Marketplaces[os.environ.get("SP_API_DEFAULT_MARKETPLACE")]
 
             if AmznShippingBusiness.has_key(marketplace.name):
                 self.amzn_shipping_business = AmznShippingBusiness[marketplace.name]
@@ -49,15 +57,15 @@ class Shipping(Client):
     @property
     def headers(self):
         return {
-            'host': self.endpoint[8:],
-            'user-agent': self.user_agent,
-            'x-amz-access-token': self.restricted_data_token or self.auth.access_token,
-            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-            'content-type': 'application/json',
-            'x-amzn-shipping-business-id': self.amzn_shipping_business.value,
+            "host": self.endpoint[8:],
+            "user-agent": self.user_agent,
+            "x-amz-access-token": self.restricted_data_token or self.auth.access_token,
+            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "content-type": "application/json",
+            "x-amzn-shipping-business-id": self.amzn_shipping_business.value,
         }
 
-    @sp_endpoint('/shipping/v2/shipments/rates', method='POST')
+    @sp_endpoint("/shipping/v2/shipments/rates", method="POST")
     def get_rates(self, **kwargs) -> ApiResponse:
         """
         get_rates(self, **kwargs) -> ApiResponse
@@ -236,9 +244,9 @@ class Shipping(Client):
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/shipments', method='POST')
+    @sp_endpoint("/shipping/v2/shipments", method="POST")
     def purchase_shipment(self, **kwargs) -> ApiResponse:
         """
         purchase_shipment(self, **kwargs) -> ApiResponse
@@ -284,9 +292,9 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/oneClickShipment', method='POST')
+    @sp_endpoint("/shipping/v2/oneClickShipment", method="POST")
     def one_click_shipment(self, **kwargs) -> ApiResponse:
         """
         one_click_shipment(self, **kwargs) -> ApiResponse
@@ -472,9 +480,9 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/tracking', method='GET')
+    @sp_endpoint("/shipping/v2/tracking", method="GET")
     def get_tracking(self, **kwargs) -> ApiResponse:
         """
         get_tracking(self, **kwargs) -> ApiResponse
@@ -498,9 +506,9 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/shipments/{}/documents', method='GET')
+    @sp_endpoint("/shipping/v2/shipments/{}/documents", method="GET")
     def get_shipment_documents(self, shipmentId, **kwargs) -> ApiResponse:
         """
         get_shipment_documents(self, shipmentId, **kwargs) -> ApiResponse
@@ -527,9 +535,13 @@ class Shipping(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), params=kwargs, add_marketplace=False)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId),
+            params=kwargs,
+            add_marketplace=False,
+        )
 
-    @sp_endpoint('/shipping/v2/shipments/{}/cancel', method='PUT')
+    @sp_endpoint("/shipping/v2/shipments/{}/cancel", method="PUT")
     def cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse:
         """
         cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse
@@ -552,9 +564,13 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs, add_marketplace=False)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId),
+            data=kwargs,
+            add_marketplace=False,
+        )
 
-    @sp_endpoint('/shipping/v2/accessPoints', method='GET')
+    @sp_endpoint("/shipping/v2/accessPoints", method="GET")
     def get_access_points(self, **kwargs) -> ApiResponse:
         """
         get_access_points(self, **kwargs) -> ApiResponse
@@ -579,9 +595,9 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/ndrFeedback', method='POST')
+    @sp_endpoint("/shipping/v2/ndrFeedback", method="POST")
     def submit_ndr_feedback(self, **kwargs) -> ApiResponse:
         """
         submit_ndr_feedback(self, **kwargs) -> ApiResponse
@@ -611,9 +627,9 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), data=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
-    @sp_endpoint('/shipping/v2/shipments/additionalInputs/schema', method='GET')
+    @sp_endpoint("/shipping/v2/shipments/additionalInputs/schema", method="GET")
     def get_additional_inputs(self, **kwargs) -> ApiResponse:
         """
         get_additional_inputs(self, **kwargs) -> ApiResponse
@@ -637,4 +653,4 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)

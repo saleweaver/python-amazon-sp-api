@@ -19,43 +19,53 @@ log = logging.getLogger(__name__)
 
 def show_donation_message():
     import os
-    if os.environ.get('ENV_DISABLE_DONATION_MSG', 0) == '1':
+
+    if os.environ.get("ENV_DISABLE_DONATION_MSG", 0) == "1":
         return
 
     print("🌟 Thank you for using python-amazon-sp-api! 🌟")
-    print("This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace,")
+    print(
+        "This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace,"
+    )
     print("enabling powerful automations and data management.")
-    print("If you appreciate this project and find it useful, please consider supporting its continued development:")
+    print(
+        "If you appreciate this project and find it useful, please consider supporting its continued development:"
+    )
     print(" - 🙌 GitHub Sponsors: https://github.com/sponsors/saleweaver")
     print(" - 🌐 BTC Address: bc1q6uqgczasmnvnc5upumarugw2mksnwneg0f65ws")
     print(" - 🌐 ETH Address: 0xf59534F7a7F5410DBCD0c779Ac3bB6503bd32Ae5")
-    print("\nYour support helps keep the project alive and evolving, and is greatly appreciated!")
-    print("\nTo disable this donation message, set the ENV_DISABLE_DONATION_MSG=1 environment variable.")
+    print(
+        "\nYour support helps keep the project alive and evolving, and is greatly appreciated!"
+    )
+    print(
+        "\nTo disable this donation message, set the ENV_DISABLE_DONATION_MSG=1 environment variable."
+    )
 
 
 class Client(BaseClient):
-    grantless_scope: str = ''
+    grantless_scope: str = ""
     keep_restricted_data_token: bool = False
     version = None
 
     def __init__(
-            self,
-            marketplace: Marketplaces = Marketplaces[
-                os.environ.get('SP_API_DEFAULT_MARKETPLACE', Marketplaces.US.name)],
-            *,
-            refresh_token=None,
-            account='default',
-            credentials=None,
-            restricted_data_token=None,
-            proxies=None,
-            verify=True,
-            timeout=None,
-            version=None,
-            credential_providers=None,
-            auth_token_client_class=AccessTokenClient,
+        self,
+        marketplace: Marketplaces = Marketplaces[
+            os.environ.get("SP_API_DEFAULT_MARKETPLACE", Marketplaces.US.name)
+        ],
+        *,
+        refresh_token=None,
+        account="default",
+        credentials=None,
+        restricted_data_token=None,
+        proxies=None,
+        verify=True,
+        timeout=None,
+        version=None,
+        credential_providers=None,
+        auth_token_client_class=AccessTokenClient,
     ):
-        if os.environ.get('SP_API_DEFAULT_MARKETPLACE', None):
-            marketplace = Marketplaces[os.environ.get('SP_API_DEFAULT_MARKETPLACE')]
+        if os.environ.get("SP_API_DEFAULT_MARKETPLACE", None):
+            marketplace = Marketplaces[os.environ.get("SP_API_DEFAULT_MARKETPLACE")]
         self.credentials = CredentialProvider(
             account,
             credentials,
@@ -66,7 +76,12 @@ class Client(BaseClient):
         self.marketplace_id = marketplace.marketplace_id
         self.region = marketplace.region
         self.restricted_data_token = restricted_data_token
-        self._auth = auth_token_client_class(refresh_token=refresh_token, credentials=self.credentials, proxies=proxies, verify=verify)
+        self._auth = auth_token_client_class(
+            refresh_token=refresh_token,
+            credentials=self.credentials,
+            proxies=proxies,
+            verify=verify,
+        )
         self.proxies = proxies
         self.timeout = timeout
         self.version = version
@@ -76,11 +91,11 @@ class Client(BaseClient):
     @property
     def headers(self):
         return {
-            'host': self.endpoint[8:],
-            'user-agent': self.user_agent,
-            'x-amz-access-token': self.restricted_data_token or self.auth.access_token,
-            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-            'content-type': 'application/json'
+            "host": self.endpoint[8:],
+            "user-agent": self.user_agent,
+            "x-amz-access-token": self.restricted_data_token or self.auth.access_token,
+            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "content-type": "application/json",
         }
 
     @property
@@ -93,9 +108,18 @@ class Client(BaseClient):
             raise MissingScopeException("Grantless operations require scope")
         return self._auth.get_grantless_auth(self.grantless_scope)
 
-    def _request(self, path: str, *, data: dict = None, params: dict = None, headers=None,
-                 add_marketplace=True, res_no_data: bool = False, bulk: bool = False,
-                 wrap_list: bool = False) -> ApiResponse:
+    def _request(
+        self,
+        path: str,
+        *,
+        data: dict = None,
+        params: dict = None,
+        headers=None,
+        add_marketplace=True,
+        res_no_data: bool = False,
+        bulk: bool = False,
+        wrap_list: bool = False,
+    ) -> ApiResponse:
         if params is None:
             params = {}
         if data is None:
@@ -103,28 +127,41 @@ class Client(BaseClient):
 
         # Note: The use of isinstance here is to support request schemas that are an array at the
         # top level, eg get_product_fees_estimate
-        self.method = params.pop('method', data.pop('method', 'GET') if isinstance(data, dict) else 'GET')
+        self.method = params.pop(
+            "method", data.pop("method", "GET") if isinstance(data, dict) else "GET"
+        )
 
         if add_marketplace:
-            self._add_marketplaces(data if self.method in ('POST', 'PUT') else params)
+            self._add_marketplaces(data if self.method in ("POST", "PUT") else params)
 
-        res = request(self.method,
-                      self.endpoint + self._check_version(path),
-                      params=params,
-                      data=json.dumps(data) if data and self.method in ('POST', 'PUT', 'PATCH') else None,
-                      headers=headers or self.headers,
-                      timeout=self.timeout,
-                      proxies=self.proxies,
-                      verify=self.verify)
+        res = request(
+            self.method,
+            self.endpoint + self._check_version(path),
+            params=params,
+            data=(
+                json.dumps(data)
+                if data and self.method in ("POST", "PUT", "PATCH")
+                else None
+            ),
+            headers=headers or self.headers,
+            timeout=self.timeout,
+            proxies=self.proxies,
+            verify=self.verify,
+        )
         return self._check_response(res, res_no_data, bulk, wrap_list)
 
-    def _check_response(self, res, res_no_data: bool = False, bulk: bool = False,
-                        wrap_list: bool = False) -> ApiResponse:
-        if (self.method == 'DELETE' or res_no_data) and 200 <= res.status_code < 300:
+    def _check_response(
+        self,
+        res,
+        res_no_data: bool = False,
+        bulk: bool = False,
+        wrap_list: bool = False,
+    ) -> ApiResponse:
+        if (self.method == "DELETE" or res_no_data) and 200 <= res.status_code < 300:
             try:
                 js = res.json() or {}
             except JSONDecodeError:
-                js = {'status_code': res.status_code}
+                js = {"status_code": res.status_code}
         else:
             try:
                 js = res.json() or {}
@@ -138,7 +175,7 @@ class Client(BaseClient):
             else:
                 js = js[0]
 
-        error = js.get('errors', None)
+        error = js.get("errors", None)
 
         if error:
             exception = get_exception_for_code(res.status_code)
@@ -149,32 +186,48 @@ class Client(BaseClient):
         return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
-        POST = ['marketplaceIds', 'MarketplaceIds']
-        GET = ['MarketplaceId', 'MarketplaceIds', 'marketplace_ids', 'marketplaceIds']
+        POST = ["marketplaceIds", "MarketplaceIds"]
+        GET = ["MarketplaceId", "MarketplaceIds", "marketplace_ids", "marketplaceIds"]
 
-        if self.method == 'POST':
+        if self.method == "POST":
             if any(x in data.keys() for x in POST):
                 return
-            return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in POST})
+            return data.update(
+                {
+                    k: (
+                        self.marketplace_id
+                        if not k.endswith("s")
+                        else [self.marketplace_id]
+                    )
+                    for k in POST
+                }
+            )
         if any(x in data.keys() for x in GET):
             return
-        return data.update({k: self.marketplace_id if not k.endswith('s') else [self.marketplace_id] for k in GET})
+        return data.update(
+            {
+                k: self.marketplace_id if not k.endswith("s") else [self.marketplace_id]
+                for k in GET
+            }
+        )
 
-    def _request_grantless_operation(self, path: str, *, data: dict = None, params: dict = None):
+    def _request_grantless_operation(
+        self, path: str, *, data: dict = None, params: dict = None
+    ):
         headers = {
-            'host': self.endpoint[8:],
-            'user-agent': self.user_agent,
-            'x-amz-access-token': self.grantless_auth.access_token,
-            'x-amz-date': datetime.utcnow().strftime('%Y%m%dT%H%M%SZ'),
-            'content-type': 'application/json'
+            "host": self.endpoint[8:],
+            "user-agent": self.user_agent,
+            "x-amz-access-token": self.grantless_auth.access_token,
+            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "content-type": "application/json",
         }
 
         return self._request(path, data=data, params=params, headers=headers)
 
     def _check_version(self, path):
-        if '<version>' not in path:
+        if "<version>" not in path:
             return path
-        return path.replace('<version>', self.version)
+        return path.replace("<version>", self.version)
 
     def __enter__(self):
         self.keep_restricted_data_token = True

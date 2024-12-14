@@ -10,7 +10,7 @@ class Inventories(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/fba-inventory-api/fbaInventory.md#getinventorysummaries
     """
 
-    @sp_endpoint('/fba/inventory/v1/summaries')
+    @sp_endpoint("/fba/inventory/v1/summaries")
     def get_inventory_summary_marketplace(self, **kwargs) -> ApiResponse:
         """
         get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse
@@ -60,12 +60,19 @@ class Inventories(Client):
 
         """
 
-        kwargs.update({
-            'granularityType': kwargs.get('granularityType', InventoryGranularity.MARKETPLACE.value),
-            "granularityId": kwargs.get('granularityId', self.marketplace_id)
-        })
-        if 'sellerSkus' in kwargs and isinstance(kwargs.get('sellerSkus'), abc.Iterable) and not isinstance(kwargs.get('sellerSkus'), str):
-            kwargs.update({'sellerSkus': ','.join(kwargs.get('sellerSkus'))})
+        kwargs.update(
+            {
+                "granularityType": kwargs.get(
+                    "granularityType", InventoryGranularity.MARKETPLACE.value
+                ),
+                "granularityId": kwargs.get("granularityId", self.marketplace_id),
+            }
+        )
+        if (
+            "sellerSkus" in kwargs
+            and isinstance(kwargs.get("sellerSkus"), abc.Iterable)
+            and not isinstance(kwargs.get("sellerSkus"), str)
+        ):
+            kwargs.update({"sellerSkus": ",".join(kwargs.get("sellerSkus"))})
 
-        return self._request(kwargs.pop('path'), params=kwargs)
-
+        return self._request(kwargs.pop("path"), params=kwargs)

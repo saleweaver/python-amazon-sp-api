@@ -29,6 +29,7 @@ Singapore	A19VAU5U5O7RUS	SG
 Australia	A39IBJ37TRP1C6	AU
 Japan	A1VC38T7YXB528	JP
 """
+
 import sys
 from enum import Enum
 import os
@@ -129,4 +130,3 @@ class Marketplaces(Enum):
         self.endpoint = endpoint
         self.marketplace_id = marketplace_id
         self.region = region
-

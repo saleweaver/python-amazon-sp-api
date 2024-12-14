@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorOrders(Client):
     """
     VendorOrders SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Retail Procurement Orders provides programmatic access to vendor orders data.
     """
 
-
-    @sp_endpoint('/vendor/orders/v1/purchaseOrders', method='GET')
+    @sp_endpoint("/vendor/orders/v1/purchaseOrders", method="GET")
     def get_purchase_orders(self, **kwargs) -> ApiResponse:
         """
         get_purchase_orders(self, **kwargs) -> ApiResponse
@@ -46,11 +45,10 @@ class VendorOrders(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/vendor/orders/v1/purchaseOrders/{}', method='GET')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/vendor/orders/v1/purchaseOrders/{}", method="GET")
     def get_purchase_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
         """
         get_purchase_order(self, purchaseOrderNumber, **kwargs) -> ApiResponse
@@ -74,11 +72,12 @@ class VendorOrders(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
-    
 
-    @sp_endpoint('/vendor/orders/v1/acknowledgements', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), purchaseOrderNumber), params=kwargs
+        )
+
+    @sp_endpoint("/vendor/orders/v1/acknowledgements", method="POST")
     def submit_acknowledgement(self, **kwargs) -> ApiResponse:
         """
         submit_acknowledgement(self, **kwargs) -> ApiResponse
@@ -168,11 +167,10 @@ class VendorOrders(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
-    
 
-    @sp_endpoint('/vendor/orders/v1/purchaseOrdersStatus', method='GET')
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
+
+    @sp_endpoint("/vendor/orders/v1/purchaseOrdersStatus", method="GET")
     def get_purchase_orders_status(self, **kwargs) -> ApiResponse:
         """
         get_purchase_orders_status(self, **kwargs) -> ApiResponse
@@ -202,11 +200,10 @@ class VendorOrders(Client):
             key itemConfirmationStatus:string |  Filters purchase orders based on the specified purchase order item status. If not included in filter, purchase orders for all statuses are included.
             key orderingVendorCode:string |  Filters purchase orders based on the specified ordering vendor code. This value should be same as 'sellingParty.partyId' in the purchase order. If not included in filter, all purchase orders for all the vendor codes that exist in the vendor group used to authorize API client application are returned.
             key shipToPartyId:string |  Filters purchase orders for a specific buyer's Fulfillment Center/warehouse by providing ship to location id here. This value should be same as 'shipToParty.partyId' in the purchase order. If not included in filter, this will return purchase orders for all the buyer's warehouses used for vendor group purchase orders.
-        
+
 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
+
+        return self._request(kwargs.pop("path"), params=kwargs)

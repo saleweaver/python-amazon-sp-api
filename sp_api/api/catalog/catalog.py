@@ -9,7 +9,7 @@ class Catalog(Client):
 
     """
 
-    @sp_endpoint('/catalog/v0/items/{}')
+    @sp_endpoint("/catalog/v0/items/{}")
     def get_item(self, asin: str, **kwargs) -> ApiResponse:
         """
         get_item(self, asin: str, **kwargs) -> ApiResponse
@@ -38,9 +38,9 @@ class Catalog(Client):
         Returns:
             GetCatalogItemResponse:
         """
-        return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
+        return self._request(fill_query_params(kwargs.pop("path"), asin), params=kwargs)
 
-    @sp_endpoint('/catalog/v0/items')
+    @sp_endpoint("/catalog/v0/items")
     def list_items(self, **kwargs) -> ApiResponse:
         """
         list_items(self, **kwargs) -> ApiResponse
@@ -75,11 +75,11 @@ class Catalog(Client):
         Returns:
             ListCatalogItemsResponse:
         """
-        if 'Query' in kwargs:
-            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
-        return self._request(kwargs.pop('path'), params=kwargs)
+        if "Query" in kwargs:
+            kwargs.update({"Query": urllib.parse.quote_plus(kwargs.pop("Query"))})
+        return self._request(kwargs.pop("path"), params=kwargs)
 
-    @sp_endpoint('/catalog/v0/categories')
+    @sp_endpoint("/catalog/v0/categories")
     def list_categories(self, **kwargs) -> ApiResponse:
         """
         list_categories(self, **kwargs) -> ApiResponse
@@ -104,6 +104,6 @@ class Catalog(Client):
         Returns:
             ListCatalogCategoriesResponse:
         """
-        if 'Query' in kwargs:
-            kwargs.update({'Query': urllib.parse.quote_plus(kwargs.pop('Query'))})
-        return self._request(kwargs.pop('path'), params=kwargs)
+        if "Query" in kwargs:
+            kwargs.update({"Query": urllib.parse.quote_plus(kwargs.pop("Query"))})
+        return self._request(kwargs.pop("path"), params=kwargs)

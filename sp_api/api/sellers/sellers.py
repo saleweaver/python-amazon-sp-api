@@ -8,7 +8,7 @@ class Sellers(Client):
 
     """
 
-    @sp_endpoint('/sellers/v1/marketplaceParticipations')
+    @sp_endpoint("/sellers/v1/marketplaceParticipations")
     def get_marketplace_participation(self, **kwargs) -> ApiResponse:
         """
         get_marketplace_participation(self, **kwargs) -> ApiResponse
@@ -36,7 +36,7 @@ class Sellers(Client):
             GetMarketplaceParticipationsResponse:
 
         """
-        return self._request(kwargs.pop('path'), add_marketplace=False)
+        return self._request(kwargs.pop("path"), add_marketplace=False)
 
     @sp_endpoint("/sellers/v1/account")
     def get_account(self, **kwargs) -> ApiResponse:
@@ -66,4 +66,4 @@ class Sellers(Client):
             GetAccountResponse:
 
         """
-        return self._request(kwargs.pop('path'), add_marketplace=False)
+        return self._request(kwargs.pop("path"), add_marketplace=False)

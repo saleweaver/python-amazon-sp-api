@@ -9,12 +9,13 @@ class SellingApiException(Exception):
         error: list Amazon Error list
 
     """
+
     code = 999
 
     def __init__(self, error, headers):
         try:
-            self.message = error[0].get('message')
-            self.amzn_code = error[0].get('code')
+            self.message = error[0].get("message")
+            self.amzn_code = error[0].get("code")
         except IndexError:
             pass
         self.error = error
@@ -25,6 +26,7 @@ class SellingApiBadRequestException(SellingApiException):
     """
     400	Request has missing or invalid parameters and cannot be parsed.
     """
+
     code = 400
 
     def __init__(self, error, headers=None):
@@ -35,6 +37,7 @@ class SellingApiForbiddenException(SellingApiException):
     """
     403	Indicates access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.
     """
+
     code = 403
 
     def __init__(self, error, headers=None):
@@ -45,6 +48,7 @@ class SellingApiNotFoundException(SellingApiException):
     """
     404	The resource specified does not exist.
     """
+
     code = 404
 
     def __init__(self, error, headers=None):
@@ -55,6 +59,7 @@ class SellingApiStateConflictException(SellingApiException):
     """
     409	The resource specified conflicts with the current state.
     """
+
     code = 409
 
     def __init__(self, error, headers=None):
@@ -65,6 +70,7 @@ class SellingApiTooLargeException(SellingApiException):
     """
     413	The request size exceeded the maximum accepted size.
     """
+
     code = 413
 
     def __init__(self, error, headers=None):
@@ -75,6 +81,7 @@ class SellingApiUnsupportedFormatException(SellingApiException):
     """
     415	The request payload is in an unsupported format.
     """
+
     code = 415
 
     def __init__(self, error, headers=None):
@@ -85,6 +92,7 @@ class SellingApiRequestThrottledException(SellingApiException):
     """
     429	The frequency of requests was greater than allowed.
     """
+
     code = 429
 
     def __init__(self, error, headers=None):
@@ -95,6 +103,7 @@ class SellingApiServerException(SellingApiException):
     """
     500	An unexpected condition occurred that prevented the server from fulfilling the request.
     """
+
     code = 500
 
     def __init__(self, error, headers=None):
@@ -105,6 +114,7 @@ class SellingApiTemporarilyUnavailableException(SellingApiException):
     """
     503	Temporary overloading or maintenance of the server.
     """
+
     code = 503
 
     def __init__(self, error, headers=None):
@@ -115,6 +125,7 @@ class SellingApiGatewayTimeoutException(SellingApiException):
     """
     503	Temporary overloading or maintenance of the server.
     """
+
     code = 504
 
     def __init__(self, error, headers=None):
@@ -136,5 +147,5 @@ def get_exception_for_code(code: int):
         429: SellingApiRequestThrottledException,
         500: SellingApiServerException,
         503: SellingApiTemporarilyUnavailableException,
-        504: SellingApiGatewayTimeoutException
+        504: SellingApiGatewayTimeoutException,
     }.get(code, SellingApiException)

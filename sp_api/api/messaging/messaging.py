@@ -6,12 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Messaging(Client):
     """
     Messaging SP-API Client
-    :link: 
+    :link:
 
     With the Messaging API you can build applications that send messages to buyers. You can get a list of message types that are available for an order that you specify, then call an operation that sends a message to the buyer for that order. The Messaging API returns responses that are formed according to the <a href=https://tools.ietf.org/html/draft-kelly-json-hal-08>JSON Hypertext Application Language</a> (HAL) standard.
     """
 
-    @sp_endpoint('/messaging/v1/orders/{}', method='GET')
+    @sp_endpoint("/messaging/v1/orders/{}", method="GET")
     def get_messaging_actions_for_order(self, order_id, **kwargs) -> ApiResponse:
         """
         get_messaging_actions_for_order(self, order_id, **kwargs) -> ApiResponse
@@ -36,9 +36,13 @@ class Messaging(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), order_id), params=kwargs
+        )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/confirmCustomizationDetails', method='POST')
+    @sp_endpoint(
+        "/messaging/v1/orders/{}/messages/confirmCustomizationDetails", method="POST"
+    )
     def confirm_customization_details(self, order_id, **kwargs) -> ApiResponse:
         """
         confirm_customization_details(self, order_id, **kwargs) -> ApiResponse
@@ -72,10 +76,17 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/confirmDeliveryDetails', method='POST')
+    @sp_endpoint(
+        "/messaging/v1/orders/{}/messages/confirmDeliveryDetails", method="POST"
+    )
     def create_confirm_delivery_details(self, order_id, **kwargs) -> ApiResponse:
         """
         create_confirm_delivery_details(self, order_id, **kwargs) -> ApiResponse
@@ -104,10 +115,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/legalDisclosure', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/legalDisclosure", method="POST")
     def create_legal_disclosure(self, order_id, **kwargs) -> ApiResponse:
         """
         create_legal_disclosure(self, order_id, **kwargs) -> ApiResponse
@@ -141,10 +157,17 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/negativeFeedbackRemoval', method='POST')
+    @sp_endpoint(
+        "/messaging/v1/orders/{}/messages/negativeFeedbackRemoval", method="POST"
+    )
     def create_negative_feedback_removal(self, order_id, **kwargs) -> ApiResponse:
         """
         create_negative_feedback_removal(self, order_id, **kwargs) -> ApiResponse
@@ -169,10 +192,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/confirmOrderDetails', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/confirmOrderDetails", method="POST")
     def create_confirm_order_details(self, order_id, **kwargs) -> ApiResponse:
         """
         create_confirm_order_details(self, order_id, **kwargs) -> ApiResponse
@@ -200,10 +228,17 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/confirmServiceDetails', method='POST')
+    @sp_endpoint(
+        "/messaging/v1/orders/{}/messages/confirmServiceDetails", method="POST"
+    )
     def create_confirm_service_details(self, order_id, **kwargs) -> ApiResponse:
         """
         create_confirm_service_details(self, order_id, **kwargs) -> ApiResponse
@@ -232,10 +267,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/amazonMotors', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/amazonMotors", method="POST")
     def create_amazon_motors(self, order_id, **kwargs) -> ApiResponse:
         """
         create_amazon_motors(self, order_id, **kwargs) -> ApiResponse
@@ -269,10 +309,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/warranty', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/warranty", method="POST")
     def create_warranty(self, order_id, **kwargs) -> ApiResponse:
         """
         create_warranty(self, order_id, **kwargs) -> ApiResponse
@@ -309,10 +354,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/attributes', method='GET')
+    @sp_endpoint("/messaging/v1/orders/{}/attributes", method="GET")
     def get_attributes(self, order_id, **kwargs) -> ApiResponse:
         """
         get_attributes(self, order_id, **kwargs) -> ApiResponse
@@ -334,9 +384,11 @@ class Messaging(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), order_id), params=kwargs)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), order_id), params=kwargs
+        )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/digitalAccessKey', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/digitalAccessKey", method="POST")
     def create_digital_access_key(self, order_id, **kwargs) -> ApiResponse:
         """
         create_digital_access_key(self, order_id, **kwargs) -> ApiResponse
@@ -371,10 +423,15 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )
 
-    @sp_endpoint('/messaging/v1/orders/{}/messages/unexpectedProblem', method='POST')
+    @sp_endpoint("/messaging/v1/orders/{}/messages/unexpectedProblem", method="POST")
     def create_unexpected_problem(self, order_id, **kwargs) -> ApiResponse:
         """
         create_unexpected_problem(self, order_id, **kwargs) -> ApiResponse
@@ -402,5 +459,10 @@ class Messaging(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop('path'), order_id), data=kwargs.pop("body"), params={"marketplaceIds": self.marketplace_id, "method": kwargs.pop('method')}
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
         )

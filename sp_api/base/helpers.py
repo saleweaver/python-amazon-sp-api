@@ -7,17 +7,14 @@ from urllib import parse
 
 
 def fill_query_params(query, *args):
-    return query.format(*[parse.quote(arg, safe='') for arg in args])
+    return query.format(*[parse.quote(arg, safe="") for arg in args])
 
 
-def sp_endpoint(path, method='GET'):
+def sp_endpoint(path, method="GET"):
     def decorator(function):
         @functools.wraps(function)
         def wrapper(*args, **kwargs):
-            kwargs.update({
-                'path': path,
-                'method': method
-            })
+            kwargs.update({"path": path, "method": method})
             return function(*args, **kwargs)
 
         return wrapper
@@ -28,16 +25,16 @@ def sp_endpoint(path, method='GET'):
 def create_md5(file):
     hash_md5 = hashlib.md5()
     if isinstance(file, BytesIO):
-        for chunk in iter(lambda: file.read(4096), b''):
+        for chunk in iter(lambda: file.read(4096), b""):
             hash_md5.update(chunk)
         file.seek(0)
         return base64.b64encode(hash_md5.digest()).decode()
     if isinstance(file, str):
         with open(file, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b''):
+            for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
         return base64.b64encode(hash_md5.digest()).decode()
-    for chunk in iter(lambda: file.read(4096), b''):
+    for chunk in iter(lambda: file.read(4096), b""):
         hash_md5.update(chunk)
     return base64.b64encode(hash_md5.digest()).decode()
 
@@ -77,7 +74,7 @@ def nest_dict(flat: dict()):
 
 
 def _nest_dict_rec(k, v, out):
-    k, *rest = k.split('.', 1)
+    k, *rest = k.split(".", 1)
     if rest:
         _nest_dict_rec(rest[0], v, out.setdefault(k, {}))
     else:
@@ -88,12 +85,16 @@ def deprecated(func):
     """This is a decorator which can be used to mark functions
     as deprecated. It will result in a warning being emitted
     when the function is used."""
+
     @functools.wraps(func)
     def new_func(*args, **kwargs):
-        warnings.simplefilter('always', DeprecationWarning)  # turn off filter
-        warnings.warn("Call to deprecated function {}.".format(func.__name__),
-                      category=DeprecationWarning,
-                      stacklevel=2)
-        warnings.simplefilter('default', DeprecationWarning)  # reset filter
+        warnings.simplefilter("always", DeprecationWarning)  # turn off filter
+        warnings.warn(
+            "Call to deprecated function {}.".format(func.__name__),
+            category=DeprecationWarning,
+            stacklevel=2,
+        )
+        warnings.simplefilter("default", DeprecationWarning)  # reset filter
         return func(*args, **kwargs)
+
     return new_func

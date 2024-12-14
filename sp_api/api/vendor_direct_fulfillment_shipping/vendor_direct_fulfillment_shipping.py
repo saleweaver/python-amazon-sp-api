@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorDirectFulfillmentShipping(Client):
     """
     VendorDirectFulfillmentShipping SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Direct Fulfillment Shipping provides programmatic access to a direct fulfillment vendor's shipping data.
     """
 
-
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels', method='GET')
+    @sp_endpoint("/vendor/directFulfillment/shipping/v1/shippingLabels", method="GET")
     def get_shipping_labels(self, **kwargs) -> ApiResponse:
         """
         get_shipping_labels(self, **kwargs) -> ApiResponse
@@ -40,11 +39,10 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels', method='POST')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/vendor/directFulfillment/shipping/v1/shippingLabels", method="POST")
     def submit_shipping_label_request(self, **kwargs) -> ApiResponse:
         """
         submit_shipping_label_request(self, **kwargs) -> ApiResponse
@@ -180,11 +178,12 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shippingLabels/{}', method='GET')
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
+
+    @sp_endpoint(
+        "/vendor/directFulfillment/shipping/v1/shippingLabels/{}", method="GET"
+    )
     def get_shipping_label(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
         """
         get_shipping_label(self, purchaseOrderNumber, **kwargs) -> ApiResponse
@@ -208,11 +207,14 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shipmentConfirmations', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), purchaseOrderNumber), params=kwargs
+        )
+
+    @sp_endpoint(
+        "/vendor/directFulfillment/shipping/v1/shipmentConfirmations", method="POST"
+    )
     def submit_shipment_confirmations(self, **kwargs) -> ApiResponse:
         """
         submit_shipment_confirmations(self, **kwargs) -> ApiResponse
@@ -366,11 +368,12 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates', method='POST')
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
+
+    @sp_endpoint(
+        "/vendor/directFulfillment/shipping/v1/shipmentStatusUpdates", method="POST"
+    )
     def submit_shipment_status_updates(self, **kwargs) -> ApiResponse:
         """
         submit_shipment_status_updates(self, **kwargs) -> ApiResponse
@@ -495,11 +498,10 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/customerInvoices', method='GET')
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/vendor/directFulfillment/shipping/v1/customerInvoices", method="GET")
     def get_customer_invoices(self, **kwargs) -> ApiResponse:
         """
         get_customer_invoices(self, **kwargs) -> ApiResponse
@@ -528,10 +530,12 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/customerInvoices/{}', method='GET')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint(
+        "/vendor/directFulfillment/shipping/v1/customerInvoices/{}", method="GET"
+    )
     def get_customer_invoice(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
         """
         get_customer_invoice(self, purchaseOrderNumber, **kwargs) -> ApiResponse
@@ -555,11 +559,12 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/packingSlips', method='GET')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), purchaseOrderNumber), params=kwargs
+        )
+
+    @sp_endpoint("/vendor/directFulfillment/shipping/v1/packingSlips", method="GET")
     def get_packing_slips(self, **kwargs) -> ApiResponse:
         """
         get_packing_slips(self, **kwargs) -> ApiResponse
@@ -588,11 +593,10 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/vendor/directFulfillment/shipping/v1/packingSlips/{}', method='GET')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/vendor/directFulfillment/shipping/v1/packingSlips/{}", method="GET")
     def get_packing_slip(self, purchaseOrderNumber, **kwargs) -> ApiResponse:
         """
         get_packing_slip(self, purchaseOrderNumber, **kwargs) -> ApiResponse
@@ -616,6 +620,7 @@ class VendorDirectFulfillmentShipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), purchaseOrderNumber), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), purchaseOrderNumber), params=kwargs
+        )

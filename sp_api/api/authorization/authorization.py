@@ -6,13 +6,14 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Authorization(Client):
     """
     Authorization SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Authorization helps developers manage authorizations and check the specific permissions associated with a given authorization.
     """
-    grantless_scope = 'sellingpartnerapi::migration'
 
-    @sp_endpoint('/authorization/v1/authorizationCode', method='GET')
+    grantless_scope = "sellingpartnerapi::migration"
+
+    @sp_endpoint("/authorization/v1/authorizationCode", method="GET")
     def get_authorization_code(self, **kwargs) -> ApiResponse:
         """
         get_authorization_code(self, **kwargs) -> ApiResponse
@@ -48,6 +49,5 @@ class Authorization(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request_grantless_operation(kwargs.pop('path'),  params=kwargs)
 
+        return self._request_grantless_operation(kwargs.pop("path"), params=kwargs)

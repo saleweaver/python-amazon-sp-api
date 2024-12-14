@@ -72,5 +72,7 @@ class KeyMaker:
 
     @staticmethod
     def _replace_dash(key):
-        return key[0].lower() + ''.join(
-            word.title() if i > 0 else word for i, word in enumerate(re.sub(r'[-\s]', '_', key[1:]).split('_')))
+        return key[0].lower() + "".join(
+            word.title() if i > 0 else word
+            for i, word in enumerate(re.sub(r"[-\s]", "_", key[1:]).split("_"))
+        )

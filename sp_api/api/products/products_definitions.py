@@ -4,8 +4,9 @@ from dataclasses import dataclass, asdict
 
 @dataclass
 class ItemOffersRequest:
-    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
-    #itemoffersrequest """
+    """Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #itemoffersrequest"""
+
     uri: str
     method: str
     MarketplaceId: str
@@ -16,8 +17,9 @@ class ItemOffersRequest:
 
 @dataclass
 class GetItemOffersBatchRequest:
-    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
-    #getitemoffersbatchrequest """
+    """Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #getitemoffersbatchrequest"""
+
     requests: Optional[List[Union[ItemOffersRequest, Dict]]] = None
 
     def __post_init__(self):
@@ -40,12 +42,13 @@ class GetItemOffersBatchRequest:
             parsed_requestes.append(request)
 
         return parsed_requestes
-    
+
 
 @dataclass
 class ListingOffersRequest:
-    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
-    #listingoffersrequest """
+    """Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #listingoffersrequest"""
+
     uri: str
     MarketplaceId: str
     ItemCondition: str
@@ -55,8 +58,9 @@ class ListingOffersRequest:
 
 @dataclass
 class GetListingOffersBatchRequest:
-    """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
-    #getlistingoffersbatchrequest """
+    """Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v0-reference
+    #getlistingoffersbatchrequest"""
+
     requests: Optional[List[Union[ListingOffersRequest, Dict]]] = None
 
     def __post_init__(self):
@@ -79,4 +83,3 @@ class GetListingOffersBatchRequest:
             parsed_requestes.append(request)
 
         return parsed_requestes
-

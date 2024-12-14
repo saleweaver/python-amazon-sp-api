@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorDirectFulfillmentPayments(Client):
     """
     VendorDirectFulfillmentPayments SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Direct Fulfillment Payments provides programmatic access to a direct fulfillment vendor's invoice data.
     """
 
-
-    @sp_endpoint('/vendor/directFulfillment/payments/v1/invoices', method='POST')
+    @sp_endpoint("/vendor/directFulfillment/payments/v1/invoices", method="POST")
     def submit_invoice(self, **kwargs) -> ApiResponse:
         """
         submit_invoice(self, **kwargs) -> ApiResponse
@@ -250,6 +249,5 @@ class VendorDirectFulfillmentPayments(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs, add_marketplace=False)
-    
+
+        return self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)

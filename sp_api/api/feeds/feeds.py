@@ -13,7 +13,7 @@ class Feeds(Client):
     The Selling Partner API for Feeds lets you upload data to Amazon on behalf of a selling partner.
     """
 
-    @sp_endpoint('/feeds/2021-06-30/feeds', method='GET')
+    @sp_endpoint("/feeds/2021-06-30/feeds", method="GET")
     def get_feeds(self, **kwargs) -> ApiResponse:
         """
         get_feeds(self, **kwargs) -> ApiResponse
@@ -34,10 +34,14 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        add_marketplace = not 'nextToken' in kwargs
-        return self._request(kwargs.pop('path'), params=kwargs, add_marketplace=add_marketplace)
+        add_marketplace = not "nextToken" in kwargs
+        return self._request(
+            kwargs.pop("path"), params=kwargs, add_marketplace=add_marketplace
+        )
 
-    def submit_feed(self, feed_type, file, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]:
+    def submit_feed(
+        self, feed_type, file, content_type="text/tsv", **kwargs
+    ) -> [ApiResponse, ApiResponse]:
         """
         submit_feed(self, feed_type: str, file: File or File like, content_type='text/tsv', **kwargs) -> [ApiResponse, ApiResponse]
         Combines `create_feed_document` and `create_feed`, uploads the file and sends the feed to amazon.
@@ -69,9 +73,11 @@ class Feeds(Client):
             [ApiResponse:, ApiResponse:]
         """
         document_response = self.create_feed_document(file, content_type)
-        return document_response, self.create_feed(feed_type, document_response.payload.get('feedDocumentId'), **kwargs)
+        return document_response, self.create_feed(
+            feed_type, document_response.payload.get("feedDocumentId"), **kwargs
+        )
 
-    @sp_endpoint('/feeds/2021-06-30/feeds', method='POST')
+    @sp_endpoint("/feeds/2021-06-30/feeds", method="POST")
     def create_feed(self, feed_type, input_feed_document_id, **kwargs) -> ApiResponse:
         """
         create_feed(self, feed_type: str, input_feed_document_id: str, **kwargs) -> ApiResponse
@@ -104,13 +110,13 @@ class Feeds(Client):
             ApiResponse:
         """
         data = {
-            'feedType': feed_type,
-            'inputFeedDocumentId': input_feed_document_id,
-            **kwargs
+            "feedType": feed_type,
+            "inputFeedDocumentId": input_feed_document_id,
+            **kwargs,
         }
-        return self._request(kwargs.pop('path'), data=data)
+        return self._request(kwargs.pop("path"), data=data)
 
-    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='DELETE')
+    @sp_endpoint("/feeds/2021-06-30/feeds/{}", method="DELETE")
     def cancel_feed(self, feedId, **kwargs) -> ApiResponse:
         """
         cancel_feed(self, feedId, **kwargs) -> ApiResponse
@@ -126,9 +132,9 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), feedId), data=kwargs)
+        return self._request(fill_query_params(kwargs.pop("path"), feedId), data=kwargs)
 
-    @sp_endpoint('/feeds/2021-06-30/feeds/{}', method='GET')
+    @sp_endpoint("/feeds/2021-06-30/feeds/{}", method="GET")
     def get_feed(self, feedId, **kwargs) -> ApiResponse:
         """
         get_feed(self, feedId, **kwargs) -> ApiResponse
@@ -144,9 +150,13 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        return self._request(fill_query_params(kwargs.pop('path'), feedId), params=kwargs, add_marketplace=False)
+        return self._request(
+            fill_query_params(kwargs.pop("path"), feedId),
+            params=kwargs,
+            add_marketplace=False,
+        )
 
-    @sp_endpoint('/feeds/2021-06-30/documents', method='POST')
+    @sp_endpoint("/feeds/2021-06-30/documents", method="POST")
     def create_feed_document(self, file, content_type, **kwargs) -> ApiResponse:
         """
         create_feed_document(self, **kwargs) -> ApiResponse
@@ -164,30 +174,31 @@ class Feeds(Client):
         Returns:
             ApiResponse:
         """
-        data = {
-            'contentType': kwargs.get('contentType', content_type)
-        }
-        response = self._request(kwargs.get('path'), data={**data, **kwargs})
+        data = {"contentType": kwargs.get("contentType", content_type)}
+        response = self._request(kwargs.get("path"), data={**data, **kwargs})
 
-        if(file is None):
+        if file is None:
             return response
 
         upload_data = file.read()
         try:
-            upload_data = upload_data.encode('iso-8859-1')
+            upload_data = upload_data.encode("iso-8859-1")
         except AttributeError:
             pass
         upload = requests.put(
-            response.payload.get('url'),
+            response.payload.get("url"),
             data=upload_data,
-            headers={'Content-Type': content_type}
+            headers={"Content-Type": content_type},
         )
         if 200 <= upload.status_code < 300:
             return response
         from sp_api.base.exceptions import SellingApiException
-        raise SellingApiException(headers=upload.headers, error=upload.json().get('errors'))
 
-    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
+        raise SellingApiException(
+            headers=upload.headers, error=upload.json().get("errors")
+        )
+
+    @sp_endpoint("/feeds/2021-06-30/documents/{}", method="GET")
     def get_feed_document(self, feedDocumentId, **kwargs) -> str:
         """
         get_feed_document(self, feedDocumentId, **kwargs) -> ApiResponse
@@ -207,7 +218,7 @@ class Feeds(Client):
 
         return self.get_feed_result_document(feedDocumentId)
 
-    @sp_endpoint('/feeds/2021-06-30/documents/{}', method='GET')
+    @sp_endpoint("/feeds/2021-06-30/documents/{}", method="GET")
     def get_feed_result_document(self, feedDocumentId, **kwargs) -> str:
         """
         get_feed_result_document(self, feedDocumentId, **kwargs) -> str
@@ -223,17 +234,24 @@ class Feeds(Client):
         Returns:
             str:
         """
-        response = self._request(fill_query_params(kwargs.pop('path'), feedDocumentId), params=kwargs,
-                                 add_marketplace=False)
-        url = response.payload.get('url')
+        response = self._request(
+            fill_query_params(kwargs.pop("path"), feedDocumentId),
+            params=kwargs,
+            add_marketplace=False,
+        )
+        url = response.payload.get("url")
         doc_response = requests.get(url)
 
-        encoding = doc_response.encoding if doc_response and doc_response.encoding else 'iso-8859-1'
-        if encoding.lower() == 'windows-31j':
-            encoding = 'cp932'
+        encoding = (
+            doc_response.encoding
+            if doc_response and doc_response.encoding
+            else "iso-8859-1"
+        )
+        if encoding.lower() == "windows-31j":
+            encoding = "cp932"
 
         content = doc_response.content
-        if 'compressionAlgorithm' in response.payload:
+        if "compressionAlgorithm" in response.payload:
             try:
                 return zlib.decompress(bytearray(content), 15 + 32).decode(encoding)
             except Exception:

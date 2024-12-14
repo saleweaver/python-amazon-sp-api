@@ -7,9 +7,12 @@ def make_sleep_time(rate_limit, use_rate_limit_header, throttle_by_seconds):
     return throttle_by_seconds
 
 
-
-def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken', use_rate_limit_header: bool = False,
-                   extras: dict = None):
+def load_all_pages(
+    throttle_by_seconds: float = 2,
+    next_token_param="NextToken",
+    use_rate_limit_header: bool = False,
+    extras: dict = None,
+):
     """
     Load all pages if a next token is returned
 
@@ -31,7 +34,9 @@ def load_all_pages(throttle_by_seconds: float = 2, next_token_param='NextToken',
                 res = function(*args, **kwargs)
                 yield res
                 if res.next_token:
-                    sleep_time = make_sleep_time(res.rate_limit, use_rate_limit_header, throttle_by_seconds)
+                    sleep_time = make_sleep_time(
+                        res.rate_limit, use_rate_limit_header, throttle_by_seconds
+                    )
                     if sleep_time > 0:
                         time.sleep(sleep_time)
                     kwargs.update({next_token_param: res.next_token, **extras})

@@ -15,16 +15,14 @@ except ImportError:
     SecretCache = None
 
 
-required_credentials = [
-    'lwa_app_id',
-    'lwa_client_secret'
-]
+required_credentials = ["lwa_app_id", "lwa_client_secret"]
 
 
 class MissingCredentials(Exception):
     """
     Credentials are missing, see the error output to find possible causes
     """
+
     pass
 
 
@@ -32,7 +30,7 @@ class BaseCredentialProvider(abc.ABC):
     errors = []
     credentials = None
 
-    def __init__(self, account: str = 'default', *args, **kwargs):
+    def __init__(self, account: str = "default", *args, **kwargs):
         self.account = account
 
     def __call__(self, *args, **kwargs):
@@ -40,15 +38,19 @@ class BaseCredentialProvider(abc.ABC):
         return self.check_credentials()
 
     @abc.abstractmethod
-    def load_credentials(self):
-        ...
+    def load_credentials(self): ...
 
     def check_credentials(self):
         try:
-            self.errors = [c for c in required_credentials if
-                           c not in self.credentials.keys() or not self.credentials[c]]
+            self.errors = [
+                c
+                for c in required_credentials
+                if c not in self.credentials.keys() or not self.credentials[c]
+            ]
         except (AttributeError, TypeError):
-            raise MissingCredentials(f'Credentials are missing: {", ".join(required_credentials)}')
+            raise MissingCredentials(
+                f'Credentials are missing: {", ".join(required_credentials)}'
+            )
         if not len(self.errors):
             return self.credentials
         raise MissingCredentials(f'Credentials are missing: {", ".join(self.errors)}')
@@ -59,15 +61,15 @@ class FromCodeCredentialProvider(BaseCredentialProvider):
         return None
 
     def __init__(self, credentials: dict, *args, **kwargs):
-        super(FromCodeCredentialProvider, self).__init__('default', credentials)
+        super(FromCodeCredentialProvider, self).__init__("default", credentials)
         self.credentials = credentials
 
 
 class FromConfigFileCredentialProvider(BaseCredentialProvider):
     def load_credentials(self):
         try:
-            config = confuse.Configuration('python-sp-api')
-            config_filename = os.path.join(config.config_dir(), 'credentials.yml')
+            config = confuse.Configuration("python-sp-api")
+            config_filename = os.path.join(config.config_dir(), "credentials.yml")
             config.set_file(config_filename)
             account_data = config[self.account].get()
             self.credentials = account_data
@@ -77,21 +79,20 @@ class FromConfigFileCredentialProvider(BaseCredentialProvider):
 
 class BaseFromSecretsCredentialProvider(BaseCredentialProvider):
     def load_credentials(self):
-        secret_id = os.environ.get('SP_API_AWS_SECRET_ID')
+        secret_id = os.environ.get("SP_API_AWS_SECRET_ID")
         if not secret_id:
             return
         secret = self.get_secret_content(secret_id)
         if not secret:
             return
         self.credentials = dict(
-            refresh_token=secret.get('SP_API_REFRESH_TOKEN'),
-            lwa_app_id=secret.get('LWA_APP_ID'),
-            lwa_client_secret=secret.get('LWA_CLIENT_SECRET'),
+            refresh_token=secret.get("SP_API_REFRESH_TOKEN"),
+            lwa_app_id=secret.get("LWA_APP_ID"),
+            lwa_client_secret=secret.get("LWA_CLIENT_SECRET"),
         )
 
     @abc.abstractmethod
-    def get_secret_content(self, secret_id: str) -> Dict[str, str]:
-        ...
+    def get_secret_content(self, secret_id: str) -> Dict[str, str]: ...
 
 
 class FromSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
@@ -101,11 +102,11 @@ class FromSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
             import boto3
             from botocore.exceptions import ClientError
 
-            client = boto3.client('secretsmanager')
+            client = boto3.client("secretsmanager")
             response = client.get_secret_value(SecretId=secret_id)
-            return json.loads(response.get('SecretString'))
+            return json.loads(response.get("SecretString"))
         except ImportError:
-            print('boto3 not found')
+            print("boto3 not found")
             return {}
         except ClientError:
             return {}
@@ -118,6 +119,7 @@ class FromCachedSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
         if not secret_cache:
             return {}
         from botocore.exceptions import ClientError
+
         try:
             response = secret_cache.get_secret_string(secret_id=secret_id)
             return json.loads(response)
@@ -135,15 +137,14 @@ class FromCachedSecretsCredentialProvider(BaseFromSecretsCredentialProvider):
 class FromEnvironmentVariablesCredentialProvider(BaseCredentialProvider):
     def load_credentials(self):
         account_data = dict(
-            refresh_token=self._get_env('SP_API_REFRESH_TOKEN'),
-            lwa_app_id=self._get_env('LWA_APP_ID'),
-            lwa_client_secret=self._get_env('LWA_CLIENT_SECRET'),
+            refresh_token=self._get_env("SP_API_REFRESH_TOKEN"),
+            lwa_app_id=self._get_env("LWA_APP_ID"),
+            lwa_client_secret=self._get_env("LWA_CLIENT_SECRET"),
         )
         self.credentials = account_data
 
     def _get_env(self, key):
-        return os.environ.get(f'{key}_{self.account}',
-                              os.environ.get(key))
+        return os.environ.get(f"{key}_{self.account}", os.environ.get(key))
 
 
 class CredentialProvider:
@@ -155,17 +156,21 @@ class CredentialProvider:
         FromEnvironmentVariablesCredentialProvider,
         FromCachedSecretsCredentialProvider,
         FromSecretsCredentialProvider,
-        FromConfigFileCredentialProvider
+        FromConfigFileCredentialProvider,
     )
 
     def __init__(
         self,
-        account: str = 'default',
+        account: str = "default",
         credentials: Optional[Dict[str, str]] = None,
         credential_providers: Optional[Iterable[Type[BaseCredentialProvider]]] = None,
     ):
         self.account = account
-        providers = self.CREDENTIAL_PROVIDERS if credential_providers is None else credential_providers
+        providers = (
+            self.CREDENTIAL_PROVIDERS
+            if credential_providers is None
+            else credential_providers
+        )
         for cp in providers:
             try:
                 self.credentials = cp(account=account, credentials=credentials)()
@@ -175,10 +180,12 @@ class CredentialProvider:
         if self.credentials:
             self.credentials = self.Config(**self.credentials)
         else:
-            raise MissingCredentials(f'Credentials are missing: {", ".join(required_credentials)}')
+            raise MissingCredentials(
+                f'Credentials are missing: {", ".join(required_credentials)}'
+            )
 
     class Config:
         def __init__(self, **kwargs):
-            self.refresh_token = kwargs.get('refresh_token')
-            self.lwa_app_id = kwargs.get('lwa_app_id')
-            self.lwa_client_secret = kwargs.get('lwa_client_secret')
+            self.refresh_token = kwargs.get("refresh_token")
+            self.lwa_app_id = kwargs.get("lwa_app_id")
+            self.lwa_client_secret = kwargs.get("lwa_client_secret")

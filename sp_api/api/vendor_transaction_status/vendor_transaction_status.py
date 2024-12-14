@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorTransactionStatus(Client):
     """
     VendorTransactionStatus SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Retail Procurement Transaction Status provides programmatic access to status information on specific asynchronous POST transactions for vendors.
     """
 
-
-    @sp_endpoint('/vendor/transactions/v1/transactions/{}', method='GET')
+    @sp_endpoint("/vendor/transactions/v1/transactions/{}", method="GET")
     def get_transaction(self, transactionId, **kwargs) -> ApiResponse:
         """
         get_transaction(self, transactionId, **kwargs) -> ApiResponse
@@ -35,6 +34,7 @@ class VendorTransactionStatus(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), transactionId), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), transactionId), params=kwargs
+        )
