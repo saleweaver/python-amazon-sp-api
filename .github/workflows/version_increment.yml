@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -37,9 +39,11 @@ jobs:
         if: env.new_version != ''
         id: get_commits
         run: |
-          # Get the last two commits that start with "Bump version"
-          COMMITS=$(git log --grep='^Bump version' --pretty=format:"%H" -n 2 | tr '\n' ' ')
-          echo "commits=$COMMITS" >> $GITHUB_OUTPUT
+          COMMITS=$(git log --grep='^Bump version' --pretty=format:"%H" -n 2)
+          echo $COMMITS
+          echo "commits<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Generate Diff
         if: env.new_version != ''
