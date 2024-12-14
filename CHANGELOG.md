@@ -1,3 +1,20 @@
+## v1.8.20 - 2024-12-14
+## v1.8.20
+
+### Internal Changes
+- Enhanced the changelog generation script to include mermaid diagrams for visual representation of changes.
+- Increased the `max_tokens` parameter for OpenAI API calls from 500 to 750 to allow for more detailed changelog entries.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Changelog Generation Script] -->|Updated| B[Include Mermaid Diagrams];
+    A -->|Increased| C[Max Tokens for API Calls];
+```
+
+These changes improve the clarity and detail of the changelog entries, providing better insights into updates and modifications.
+
 ## v1.8.19 - 2024-12-14
 ## v1.8.19
 
