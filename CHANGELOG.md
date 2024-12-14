@@ -1,3 +1,11 @@
+## v1.8.17 - 2024-12-14
+## v1.8.17
+
+### Internal Changes
+
+- Updated the version number to 1.8.17 in the `__version__.py` file.
+- Changed the Dependabot update schedule from daily to weekly in `.github/dependabot.yml` for better management of dependency updates.
+
 ## v1.8.16 - 2024-12-14
 ## v1.8.16
 
