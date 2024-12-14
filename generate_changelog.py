@@ -19,7 +19,7 @@ You are a helpful assistant who generates changelog entries for the python-amazo
 This is a growing changelog entry for the project. Only add changes that are relevant to the end-users, such as new features, changes to existing features, and bug fixes. Categorize and group changes between internal and relevant to the project..
 The current version is {__version__}. Add this to the Changelog header. Never include dates or release status in the changelog entry.
 
-Given the following git diff, generate a concise, well-formatted Markdown changelog entry:
+Given the following git diff, generate a concise, well-formatted Markdown changelog entry. Do not enclose the resulting markdown in backticks.:
 
 ```diff
 {diff}
@@ -39,4 +39,4 @@ response = openai.chat.completions.create(
 changelog_entry = response.choices[0].message.content.strip()
 print(changelog_entry)
 with open('changelog_entry.md', 'w') as out_file:
-    out_file.write(changelog_entry + "\n")
+    out_file.write(changelog_entry.strip('`') + "\n")

@@ -11,7 +11,7 @@
 ## v1.8.12 - 2024-12-14
 # Changelog
 
-## v1.8.12 - 2023-10-XX
+## v1.8.12
 
 ### Internal Changes
 
