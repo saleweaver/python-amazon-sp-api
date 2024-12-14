@@ -1,3 +1,10 @@
+## v1.8.19 - 2024-12-14
+## v1.8.19
+
+### Internal Changes
+- Updated the dependabot configuration to check for updates daily instead of weekly.
+- Modified the GitHub Actions workflow to exclude dependabot from triggering certain steps, ensuring that version increments and changelog updates are only performed by human contributors.
+
 ## v1.8.17 - 2024-12-14
 ## v1.8.17
 
