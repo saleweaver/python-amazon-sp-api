@@ -63,10 +63,9 @@ jobs:
           NEW_COMMIT=${COMMITS_ARRAY[0]}
           git diff $OLD_COMMIT $NEW_COMMIT > changelog_diff.patch
           python generate_changelog.py changelog_diff.patch
-          echo "diff=$(cat changelog_entry.md)" >> $GITHUB_OUTPUT
 
       - name: Update CHANGELOG.md
-        if: steps.generate_diff.outputs.diff != '' && env.new_version != ''
+        if: env.new_version != ''
         run: |
           echo "## v${{ env.new_version }} - $(date +'%Y-%m-%d')" >> CHANGELOG.md
           cat changelog_entry.md >> CHANGELOG.md
