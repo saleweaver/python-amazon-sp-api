@@ -13,16 +13,19 @@ jobs:
       actions: write
     steps:
       - name: Checkout code
+        if: github.actor != 'dependabot[bot]'
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Set up Python
+        if: github.actor != 'dependabot[bot]'
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
       - name: Increment version
+        if: github.actor != 'dependabot[bot]'
         uses: saleweaver/version_increment_action@v1
         with:
           file_path: "sp_api/__version__.py"
@@ -30,13 +33,14 @@ jobs:
 
 
       - name: Install Dependencies
-        if: env.new_version != ''
+
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         run: |
           python -m pip install --upgrade pip
           pip install openai
 
       - name: Get Latest Bump Version Commits
-        if: env.new_version != ''
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         id: get_commits
         run: |
           COMMITS=$(git log --grep='^Bump version' --pretty=format:"%H" -n 2)
@@ -46,7 +50,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Generate Diff
-        if: env.new_version != ''
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         id: generate_diff
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -65,7 +69,7 @@ jobs:
           python generate_changelog.py changelog_diff.patch
 
       - name: Update CHANGELOG.md
-        if: env.new_version != ''
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         run: |
           # Write the new version header and generated entry to a temp file
           echo "## v${{ env.new_version }} - $(date +'%Y-%m-%d')" > temp_changelog.md
@@ -87,6 +91,7 @@ jobs:
           git push
 
       - name: Read Changelog Entry
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         id: read_changelog
         run: |
           echo "body<<EOF" >> $GITHUB_OUTPUT
@@ -94,7 +99,7 @@ jobs:
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Create a new GitHub release
-        if: env.new_version != ''
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         uses: actions/create-release@v1
         with:
           tag_name: "v${{ env.new_version }}"
@@ -106,7 +111,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Trigger release workflow
-        if: env.new_version != ''
+        if: env.new_version != '' && github.actor != 'dependabot[bot]'
         run: |
           curl -X POST \
           -H "Accept: application/vnd.github.v3+json" \
