@@ -48,6 +48,8 @@ jobs:
       - name: Generate Diff
         if: env.new_version != ''
         id: generate_diff
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           COMMITS="${{ steps.get_commits.outputs.commits }}"
           COMMITS_ARRAY=($COMMITS)
@@ -60,19 +62,7 @@ jobs:
           OLD_COMMIT=${COMMITS_ARRAY[1]}
           NEW_COMMIT=${COMMITS_ARRAY[0]}
           git diff $OLD_COMMIT $NEW_COMMIT > changelog_diff.patch
-          DIFF_CONTENT=$(<changelog_diff.patch)
-          echo "diff<<EOF" >> $GITHUB_OUTPUT
-          echo "$DIFF_CONTENT" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Generate Changelog Entry
-        if: steps.generate_diff.outputs.diff != '' && env.new_version != ''
-        id: generate_changelog
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: |
-          echo "${{ steps.generate_diff.outputs.diff }}" > diff.txt
-          python generate_changelog.py diff.txt
+          python generate_changelog.py changelog_diff.patch
 
       - name: Update CHANGELOG.md
         if: steps.generate_diff.outputs.diff != '' && env.new_version != ''
