@@ -1,3 +1,21 @@
+## v1.8.21 - 2024-12-14
+## v1.8.21
+
+### Changes Relevant to End-Users
+- **Configuration Enhancement**: Made the TTL (Time-To-Live) for authentication cache configurable via the `SP_API_AUTH_CACHE_TTL` environment variable. This allows users to customize the cache duration according to their needs, providing greater flexibility in managing token lifetimes.
+
+### Internal Changes
+- No internal changes were made in this version.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Authentication Cache] -->|TTL Configurable| B[Environment Variable];
+```
+
+These changes allow users to better manage their authentication cache settings, enhancing the adaptability of the library to different operational requirements.
+
 ## v1.8.20 - 2024-12-14
 ## v1.8.20
 
