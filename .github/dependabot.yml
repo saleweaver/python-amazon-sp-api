@@ -9,7 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     target-branch: "master"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     assignees:
       - "saleweaver"
     commit-message:
