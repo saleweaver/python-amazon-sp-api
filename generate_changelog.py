@@ -32,3 +32,5 @@ response = openai.ChatCompletion.create(
 )
 changelog_entry = response.choices[0].message['content'].strip()
 print(changelog_entry)
+with open('changelog_entry.md', 'w') as out_file:
+    out_file.write(changelog_entry + "\n")

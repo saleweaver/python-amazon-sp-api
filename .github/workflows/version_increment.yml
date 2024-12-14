@@ -72,7 +72,7 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "${{ steps.generate_diff.outputs.diff }}" > diff.txt
-          python generate_changelog.py diff.txt > changelog_entry.md
+          python generate_changelog.py diff.txt
 
       - name: Update CHANGELOG.md
         if: steps.generate_diff.outputs.diff != '' && env.new_version != ''
