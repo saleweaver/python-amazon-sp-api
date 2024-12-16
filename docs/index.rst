@@ -30,6 +30,3 @@ Indices and tables
 *  :ref:`modindex`
 *  :ref:`search`
 
-.. toctree::
-
-   foo
