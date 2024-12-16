@@ -1,3 +1,27 @@
+## v1.9.5 - 2024-12-16
+## v1.9.5
+
+### Changes Relevant to End-Users
+- **Vendor Shipments API Enhancement**: Improved the documentation for `submit_shipment_confirmations` and `submit_shipments` methods in the `VendorShipments` class. The descriptions are now more concise and easier to understand, aiding developers in implementing shipment confirmations and requests more effectively.
+
+### Internal Changes
+- **Code Cleanup**: Removed unnecessary blank lines in the `VendorShipments` class to enhance code readability and maintainability.
+- **Documentation Update**: Added `onerror` attribute to image tags in the documentation templates to ensure fallback images are displayed if the original images fail to load.
+- **Template IDs Update**: Updated the list of template IDs in the documentation layout script to remove unused entries and streamline the selection process.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[VendorShipments Class] -->|Improved Documentation| B[submit_shipment_confirmations];
+    A -->|Improved Documentation| C[submit_shipments];
+    A -->|Code Cleanup| D[Removed Blank Lines];
+    E[Documentation Templates] -->|Added onerror Attribute| F[Image Tags];
+    G[Documentation Layout Script] -->|Updated Template IDs| H[Template ID List];
+```
+
+These updates streamline the process of interacting with the Vendor Shipments API, making it more intuitive for developers to use the library, and improve the robustness of the documentation display.
+
 ## v1.9.4 - 2024-12-16
 ## v1.9.4
 
