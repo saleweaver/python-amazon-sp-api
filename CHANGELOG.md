@@ -1,3 +1,22 @@
+## v1.9.6 - 2024-12-20
+## v1.9.6
+
+### Changes Relevant to End-Users
+- **New Feature in `load_all_pages` Utility**: Added a `next_token_only` parameter to the `load_all_pages` function. This allows users to remove all other parameters from `kwargs`, which is particularly useful for the Reports API where only the next token is needed.
+
+### Internal Changes
+- **Dependency Update**: Updated `boto3` from version `1.35.81` to `1.35.85` in both `requirements.txt` and `docs/requirements.txt` to ensure compatibility with the latest AWS services and features.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[load_all_pages Function] -->|Added Parameter| B[next_token_only];
+    C[Dependencies] -->|Updated Version| D[boto3 1.35.85];
+```
+
+These updates enhance the flexibility of the `load_all_pages` utility function, making it more adaptable for specific API interactions, and ensure the library remains up-to-date with AWS service changes.
+
 ## v1.9.5 - 2024-12-16
 ## v1.9.5
 
