@@ -12,6 +12,7 @@ def load_all_pages(
     next_token_param="NextToken",
     use_rate_limit_header: bool = False,
     extras: dict = None,
+    next_token_only: bool = False
 ):
     """
     Load all pages if a next token is returned
@@ -21,6 +22,7 @@ def load_all_pages(
         next_token_param: str | The param amazon expects to hold the next token
         use_rate_limit_header: if the function should try to use amazon's rate limit header
         extras: additional data to be sent with NextToken, e.g `dict(QueryType='NEXT_TOKEN')` for `FulfillmentInbound`
+        next_token_only: remove all other params from kwargs, required for reports API 
     Returns:
         Transforms the function in a generator, returning all pages
     """
@@ -39,7 +41,10 @@ def load_all_pages(
                     )
                     if sleep_time > 0:
                         time.sleep(sleep_time)
-                    kwargs.update({next_token_param: res.next_token, **extras})
+                     if next_token_only:
+                         kwargs = {next_token_param: res.next_token}
+                     else:
+                        kwargs.update({next_token_param: res.next_token, **extras})
                 else:
                     done = True
 
