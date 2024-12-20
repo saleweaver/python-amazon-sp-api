@@ -41,10 +41,10 @@ def load_all_pages(
                     )
                     if sleep_time > 0:
                         time.sleep(sleep_time)
-                     if next_token_only:
-                         kwargs = {next_token_param: res.next_token}
+                    if next_token_only:
+                        kwargs = {next_token_param: res.next_token}
                      else:
-                        kwargs.update({next_token_param: res.next_token, **extras})
+                         kwargs.update({next_token_param: res.next_token, **extras})
                 else:
                     done = True
 
