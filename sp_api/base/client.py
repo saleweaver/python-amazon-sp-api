@@ -15,31 +15,8 @@ from .marketplaces import Marketplaces
 from sp_api.base.credential_provider import CredentialProvider
 
 log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)  # Set default to DEBUG; users can override externally
 
-
-def show_donation_message():
-    import os
-
-    if os.environ.get("ENV_DISABLE_DONATION_MSG", 0) == "1":
-        return
-
-    print("🌟 Thank you for using python-amazon-sp-api! 🌟")
-    print(
-        "This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace,"
-    )
-    print("enabling powerful automations and data management.")
-    print(
-        "If you appreciate this project and find it useful, please consider supporting its continued development:"
-    )
-    print(" - 🙌 GitHub Sponsors: https://github.com/sponsors/saleweaver")
-    print(" - 🌐 BTC Address: bc1q6uqgczasmnvnc5upumarugw2mksnwneg0f65ws")
-    print(" - 🌐 ETH Address: 0xf59534F7a7F5410DBCD0c779Ac3bB6503bd32Ae5")
-    print(
-        "\nYour support helps keep the project alive and evolving, and is greatly appreciated!"
-    )
-    print(
-        "\nTo disable this donation message, set the ENV_DISABLE_DONATION_MSG=1 environment variable."
-    )
 
 
 class Client(BaseClient):
@@ -86,7 +63,6 @@ class Client(BaseClient):
         self.timeout = timeout
         self.version = version
         self.verify = verify
-        show_donation_message()
 
     @property
     def headers(self):
@@ -134,6 +110,12 @@ class Client(BaseClient):
         if add_marketplace:
             self._add_marketplaces(data if self.method in ("POST", "PUT") else params)
 
+        log.debug("HTTP Method: %s", self.method)
+        log.debug("Making request to URL: %s", self.endpoint + self._check_version(path))
+        log.debug("Request Params: %s", params)
+        log.debug("Request Data: %s", data if self.method in ("POST", "PUT", "PATCH") else None)
+        log.debug("Request Headers: %s", headers or self.headers)
+
         res = request(
             self.method,
             self.endpoint + self._check_version(path),
@@ -178,11 +160,11 @@ class Client(BaseClient):
         error = js.get("errors", None)
 
         if error:
+            log.debug("Error Response: %s", error)
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
 
-        # show_donation_message()
-
+        log.debug("Response: %s", js)
         return ApiResponse(**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
@@ -221,7 +203,11 @@ class Client(BaseClient):
             "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
             "content-type": "application/json",
         }
-
+        log.debug("HTTP Method: %s", self.method)
+        log.debug("Making request to URL: %s", self.endpoint + self._check_version(path))
+        log.debug("Request Params: %s", params)
+        log.debug("Request Data: %s", data if self.method in ("POST", "PUT", "PATCH") else None)
+        log.debug("Request Headers: %s", headers or self.headers)
         return self._request(path, data=data, params=params, headers=headers)
 
     def _check_version(self, path):
