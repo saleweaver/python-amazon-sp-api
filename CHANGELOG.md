@@ -1,3 +1,30 @@
+## v1.9.9 - 2024-12-22
+## v1.9.9
+
+### Changes Relevant to End-Users
+- **Improved Logging in `Client` Class**: Enhanced the logging functionality within the `Client` class to provide more detailed debug information. This includes logging HTTP methods, request URLs, parameters, data, headers, and error responses. This improvement aids in better tracing and debugging of API requests.
+
+- **Removal of Donation Message**: The donation message that previously displayed upon client initialization has been removed. This change streamlines the user experience by eliminating unsolicited messages during API usage.
+
+### Internal Changes
+- **Logging Level Adjustment**: The default logging level for the `Client` class has been set to `INFO`. Users can override this setting externally, allowing for flexible logging configurations.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Client Initialization] -->|Removed| B[Donation Message];
+    A --> C[Enhanced Logging];
+    C --> D[HTTP Method];
+    C --> E[Request URL];
+    C --> F[Request Params];
+    C --> G[Request Data];
+    C --> H[Request Headers];
+    C --> I[Error Response];
+```
+
+This release focuses on improving the logging capabilities for better debugging and removing non-essential output for a cleaner user experience.
+
 ## v1.9.8 - 2024-12-20
 ## v1.9.8
 
