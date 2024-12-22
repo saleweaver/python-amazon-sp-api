@@ -150,6 +150,9 @@ class Client(BaseClient):
             except JSONDecodeError:
                 js = {}
 
+        log.debug("Response before list handling: %s", js)
+
+
         if isinstance(js, list):
             if wrap_list:
                 # Support responses that are an array at the top level, eg get_product_fees_estimate
@@ -160,7 +163,7 @@ class Client(BaseClient):
         error = js.get("errors", None)
 
         if error:
-            log.debug("Error Response: %s", error)
+            log.error("Error Response: %s", error)
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
 
