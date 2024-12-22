@@ -1,3 +1,21 @@
+## v1.9.8 - 2024-12-20
+## v1.9.8
+
+### Changes Relevant to End-Users
+- **Bug Fix in `load_all_pages` Utility**: Corrected indentation issues within the `load_all_pages` function, specifically addressing the handling of the `next_token_only` parameter. This fix ensures that pagination in API requests is managed more reliably, enhancing the function's robustness and accuracy.
+
+### Internal Changes
+- No internal changes were made in this release.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[load_all_pages Function] -->|Corrected Indentation| B[next_token_only Handling];
+```
+
+This update addresses a critical bug in the `load_all_pages` utility, ensuring that the function behaves as expected when managing pagination, particularly when the `next_token_only` parameter is utilized.
+
 ## v1.9.7 - 2024-12-20
 ## v1.9.7
 
