@@ -1,3 +1,22 @@
+## v1.9.10 - 2024-12-22
+## v1.9.10
+
+### Changes Relevant to End-Users
+- **Enhanced Error Logging**: Improved error logging in the `Client` class by changing error messages from debug to error level. This ensures that error responses are more visible and easier to track in logs.
+
+### Internal Changes
+- **Debug Logging Addition**: Added a debug log statement to capture the response data before list handling in the `Client` class. This helps in tracing the response content during the debugging process.
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[Client Class] -->|Added| B[Debug Log for Response];
+    A -->|Changed| C[Error Log Level to Error];
+```
+
+This release enhances error visibility and adds additional debug logging to aid in the development and debugging process.
+
 ## v1.9.9 - 2024-12-22
 ## v1.9.9
 

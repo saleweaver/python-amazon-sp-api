@@ -1,10 +1,10 @@
 pytest
 requests~=2.32.3
 
-boto3~=1.35.85
+boto3~=1.36.5
 
-cachetools~=5.5.0
-setuptools~=75.6.0
+cachetools~=5.5.1
+setuptools~=75.8.0
 pytz~=2024.2
 confuse~=2.0.1
 jinja2
