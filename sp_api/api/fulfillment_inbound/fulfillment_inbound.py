@@ -803,8 +803,8 @@ class FulfillmentInbound(Client):
             data=kwargs,
         )
 
-    @sp_endpoint("/inbound/fba/<version>/inboundPlans/{}/items", method="GET")
-    def list_packing_group_items(self, inboundPlanId, **kwargs) -> ApiResponse:
+    @sp_endpoint("/inbound/fba/<version>/inboundPlans/{}/packingGroups/{}/items", method="GET")
+    def list_packing_group_items(self, inboundPlanId, packingGroupId, **kwargs) -> ApiResponse:
         """
                 list_packing_group_items(self, inboundPlanId, **kwargs) -> ApiResponse
 
@@ -822,8 +822,6 @@ class FulfillmentInbound(Client):
 
                     inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
 
-                    packingOptionId:string | * REQUIRED Identifier to a packing option.
-
                     packingGroupId:string | * REQUIRED Identifier to a packing group.
 
                     key pageSize:integer |  The number of packing group items to return in the response matching the given query.
@@ -836,7 +834,7 @@ class FulfillmentInbound(Client):
         """
 
         return self._request(
-            fill_query_params(kwargs.pop("path"), inboundPlanId), params=kwargs
+            fill_query_params(kwargs.pop("path"), inboundPlanId, packingGroupId), params=kwargs
         )
 
     @sp_endpoint("/inbound/fba/<version>/inboundPlans/{}/pallets", method="GET")
