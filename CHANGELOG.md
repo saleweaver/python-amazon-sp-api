@@ -1,3 +1,26 @@
+## v1.9.11 - 2025-01-25
+## v1.9.11
+
+### Changes Relevant to End-Users
+- **API Endpoint Update**: The `list_packing_group_items` method in the `FulfillmentInbound` class now requires a `packingGroupId` parameter. This change ensures more precise retrieval of packing group items by specifying the packing group directly.
+
+### Internal Changes
+- **Dependency Updates**: Updated several dependencies to their latest versions for improved performance and security:
+  - `boto3` updated from `1.35.85` to `1.36.5`
+  - `cachetools` updated from `5.5.0` to `5.5.1`
+  - `setuptools` updated from `75.6.0` to `75.8.0`
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[FulfillmentInbound Class] -->|Updated| B[list_packing_group_items Method];
+    B -->|Added Parameter| C[packingGroupId];
+    D[Dependencies] -->|Updated| E[boto3, cachetools, setuptools];
+```
+
+This release includes an important API endpoint update for more precise data retrieval and updates to dependencies for enhanced stability and security.
+
 ## v1.9.10 - 2024-12-22
 ## v1.9.10
 
