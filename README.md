@@ -19,8 +19,11 @@ Please vote on the features you would like to see in the next version of the lib
 
 - Pydantic Requests and Responses
 - Full Async Support
-- Better Versioning
+- Better Versioning / Separation of API Versions into different clients
 - What else?
+
+Note: Version 2 will be backwards compatible up to v0.0.1, while incorporating new features as voted by the community.
+
 
 [Vote Now](https://docs.google.com/forms/d/e/1FAIpQLSeEIC1m29ue8z6OoIrkXGTT1dEn3rtbIm5HjUPTTtzud2IntQ/viewform?usp=dialog)
 
