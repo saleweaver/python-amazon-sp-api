@@ -11,6 +11,14 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ---
 
+### 🚀 Version 2 is coming! 🚀
+
+Please vote on the features you would like to see in the next version of the library.
+
+[Vote Now](https://docs.google.com/forms/d/e/1FAIpQLSeEIC1m29ue8z6OoIrkXGTT1dEn3rtbIm5HjUPTTtzud2IntQ/viewform?usp=dialog)
+
+---
+
 # 🌟 Thank you for using python-amazon-sp-api! 🌟
 
 This tool helps developers and businesses connect seamlessly with Amazon's vast marketplace, enabling powerful automations and data management.
