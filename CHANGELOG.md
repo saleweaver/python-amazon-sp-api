@@ -1,3 +1,27 @@
+## v1.9.18 - 2025-02-27
+## v1.9.18
+
+### Changes Relevant to End-Users
+- **New Report Types**: Added support for new brand analytics report types in the `ReportType` enum:
+  - `GET_BRAND_ANALYTICS_SEARCH_CATALOG_PERFORMANCE_REPORT`
+  - `GET_BRAND_ANALYTICS_SEARCH_QUERY_PERFORMANCE_REPORT`
+
+### Internal Changes
+- **Dependency Updates**: Updated dependencies for improved performance and security:
+  - `boto3` updated from `1.37.0` to `1.37.2`
+  - `setuptools` updated from `75.8.0` to `75.8.2`
+
+### Mermaid Diagram Representation
+
+```mermaid
+graph TD;
+    A[ReportType Enum] -->|Added| B[GET_BRAND_ANALYTICS_SEARCH_CATALOG_PERFORMANCE_REPORT];
+    A -->|Added| C[GET_BRAND_ANALYTICS_SEARCH_QUERY_PERFORMANCE_REPORT];
+    D[Dependencies] -->|Updated| E[boto3, setuptools];
+```
+
+This release introduces new report types for enhanced brand analytics capabilities and updates dependencies for better stability and security.
+
 ## v1.9.17 - 2025-02-26
 ## v1.9.17
 
