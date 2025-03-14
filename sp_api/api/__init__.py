@@ -22,6 +22,9 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .easy_ship.easy_ship import EasyShip
+    
+
 
 from .listings_restrictions.listings_restrictions import ListingsRestrictions
 
@@ -110,6 +113,11 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "EasyShip",
+    
+
+    "FulfillmentInbound",
+    
     "ListingsRestrictions",
     "CatalogItemsVersion",
     "AmazonWarehousingAndDistributionVersion",

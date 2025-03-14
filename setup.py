@@ -40,6 +40,7 @@ setup(
               'sp_api.base',
               'sp_api.util',
               ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
+              'sp_api.api.easy_ship',
               'sp_api.api.listings_restrictions',
               'sp_api.api.amazon_warehousing_and_distribu',
               'sp_api.api.catalog_items',

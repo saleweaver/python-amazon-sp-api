@@ -2,7 +2,7 @@ import os
 import re
 
 dirs = [
-    'application_management'
+    'easy_ship'
 ]
 
 
