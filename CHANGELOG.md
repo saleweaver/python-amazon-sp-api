@@ -1,3 +1,22 @@
+## v1.9.20 - 2025-03-14
+# Changelog
+
+## Version 1.9.20
+
+### Internal Changes
+
+- **Dependencies Update**
+  - Updated `requests` library dependency from `>=2.32.0` to `>=2.32.1`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.19] -->|Updated| B[Version 1.9.20];
+    B --> C[Requests >=2.32.1];
+    A --> D[Requests >=2.32.0];
+```
+
+This update ensures compatibility with the latest features and security patches of the `requests` library.
+
 ## v1.9.18 - 2025-02-27
 ## v1.9.18
 
