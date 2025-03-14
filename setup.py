@@ -6,7 +6,7 @@ setup(
     name='python-amazon-sp-api',
     version=__version__,
     install_requires=[
-        "requests",
+        "requests>=2.32.0",
         "cachetools>=4.2",
         "confuse>=1.4"
     ],
