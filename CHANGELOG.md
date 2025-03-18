@@ -1,3 +1,40 @@
+## v1.9.21 - 2025-03-14
+## Version 1.9.21
+
+### New Features
+
+- **Easy Ship API Integration**
+  - Introduced a new `EasyShip` client in the `sp_api.api` module, allowing users to manage and ship Amazon Easy Ship orders.
+  - Added several new endpoints under the `EasyShip` client:
+    - `list_handover_slots`: Retrieve available time slots for scheduling Easy Ship orders.
+    - `get_scheduled_package`: Get detailed information about a scheduled package.
+    - `create_scheduled_package`: Schedule an Easy Ship order and obtain package information.
+    - `update_scheduled_packages`: Update the time slot for a scheduled package.
+    - `create_scheduled_package_bulk`: Schedule multiple Easy Ship orders and generate shipping labels in bulk.
+
+```mermaid
+graph TD;
+    A[Version 1.9.20] -->|Added| B[Version 1.9.21];
+    B --> C[EasyShip API];
+    C --> D[list_handover_slots];
+    C --> E[get_scheduled_package];
+    C --> F[create_scheduled_package];
+    C --> G[update_scheduled_packages];
+    C --> H[create_scheduled_package_bulk];
+```
+
+### Internal Changes
+
+- **Dependencies Update**
+  - Updated `requests` library dependency from `>=2.32.0` to `>=2.32.1` to ensure compatibility with the latest features and security patches.
+
+```mermaid
+graph TD;
+    A[Version 1.9.20] -->|Updated| B[Version 1.9.21];
+    B --> C[Requests >=2.32.1];
+    A --> D[Requests >=2.32.0];
+
+
 ## v1.9.20 - 2025-03-14
 # Changelog
 
