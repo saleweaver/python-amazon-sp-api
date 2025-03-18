@@ -1,3 +1,32 @@
+## v1.9.22 - 2025-03-18
+## Version 1.9.22
+
+### New Features
+
+- **Finances API Enhancements**
+  - Introduced versioning support for the `Finances` client, allowing users to specify API versions when interacting with financial endpoints.
+  - Added a new `list_transactions` endpoint to the `Finances` client for retrieving transaction details.
+
+```mermaid
+graph TD;
+    A[Version 1.9.21] -->|Enhanced| B[Version 1.9.22];
+    B --> C[Finances API];
+    C --> D[Versioning Support];
+    C --> E[list_transactions];
+```
+
+### Internal Changes
+
+- **Dependencies Update**
+  - Updated `boto3` library dependency from `~=1.37.12` to `~=1.37.14` to ensure compatibility with the latest features and security patches.
+
+```mermaid
+graph TD;
+    A[Version 1.9.21] -->|Updated| B[Version 1.9.22];
+    B --> C[boto3 ~=1.37.14];
+    A --> D[boto3 ~=1.37.12];
+
+
 ## v1.9.21 - 2025-03-14
 ## Version 1.9.21
 
