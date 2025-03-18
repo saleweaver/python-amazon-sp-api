@@ -1,4 +1,4 @@
-from .finances.finances import Finances
+from .finances.finances import Finances, FinancesVersion
 from .notifications.notifications import Notifications
 from .orders.orders import Orders
 from .product_fees.product_fees import ProductFees
@@ -117,7 +117,7 @@ __all__ = [
     
 
     "FulfillmentInbound",
-    
+    "FinancesVersion",
     "ListingsRestrictions",
     "CatalogItemsVersion",
     "AmazonWarehousingAndDistributionVersion",
