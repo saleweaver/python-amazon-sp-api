@@ -1,3 +1,32 @@
+## v1.9.24 - 2025-03-22
+## Version 1.9.24
+
+### Changes Relevant to Users
+
+- **Pagination Enhancements**
+  - Improved the `ApiResponse` class to better handle pagination by adding support for an additional `nextToken` key in the response payload. This enhancement ensures more reliable navigation through paginated data.
+
+```mermaid
+graph TD;
+    A[Version 1.9.23] -->|Improved| B[Version 1.9.24];
+    B --> C[ApiResponse];
+    C --> D[nextToken Support];
+```
+
+### Internal Changes
+
+- **Code Quality Improvements**
+  - Minor formatting adjustments in `load_all_pages.py` to enhance code readability and maintain consistency.
+
+```mermaid
+graph TD;
+    A[Version 1.9.23] -->|Refined| B[Version 1.9.24];
+    B --> C[load_all_pages.py];
+    C --> D[Formatting Adjustments];
+```
+
+These changes aim to improve the overall functionality and maintainability of the `python-amazon-sp-api` package, ensuring a smoother experience for developers interacting with Amazon's Selling Partner API.
+
 ## v1.9.23 - 2025-03-21
 ## Version 1.9.23
 
