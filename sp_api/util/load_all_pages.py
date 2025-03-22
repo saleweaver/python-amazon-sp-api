@@ -10,7 +10,6 @@ def make_sleep_time(rate_limit, use_rate_limit_header, throttle_by_seconds):
 def load_all_pages(
     throttle_by_seconds: float = 2,
     next_token_param="NextToken",
-    next_token_key="next_token",
     use_rate_limit_header: bool = False,
     extras: dict = None,
     next_token_only: bool = False
@@ -21,7 +20,6 @@ def load_all_pages(
     Args:
         throttle_by_seconds: float
         next_token_param: str | The param amazon expects to hold the next token
-        next_token_key: str | The key in the response that contains the next token e.g `nextToken` for `Finances V_2024_06_19 endpoints`
         use_rate_limit_header: if the function should try to use amazon's rate limit header
         extras: additional data to be sent with NextToken, e.g `dict(QueryType='NEXT_TOKEN')` for `FulfillmentInbound`
         next_token_only: remove all other params from kwargs, required for reports API
@@ -37,21 +35,17 @@ def load_all_pages(
             while not done:
                 res = function(*args, **kwargs)
 
-                next_token = getattr(res, next_token_key, None)
-                if not next_token and hasattr(res, 'payload'):
-                    next_token = getattr(res.payload, next_token_key, None)
-
                 yield res
-                if next_token:
+                if res.next_token:
                     sleep_time = make_sleep_time(
                         res.rate_limit, use_rate_limit_header, throttle_by_seconds
                     )
                     if sleep_time > 0:
                         time.sleep(sleep_time)
                     if next_token_only:
-                        kwargs = {next_token_param: next_token}
+                        kwargs = {next_token_param: res.next_token}
                     else:
-                        kwargs.update({next_token_param: next_token, **extras})
+                        kwargs.update({next_token_param: res.next_token, **extras})
                 else:
                     done = True
 
