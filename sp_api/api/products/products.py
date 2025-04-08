@@ -305,7 +305,8 @@ class Products(Client):
         )
 
     @sp_endpoint('/batches/products/pricing/2022-05-01/offer/featuredOfferExpectedPrice', method='POST')
-    def get_featured_offer_expected_price_batch(self, requests_: Optional[Union[List[Dict], GetFeaturedOfferExpectedPriceBatch]], **kwargs) -> ApiResponse:
+    def get_featured_offer_expected_price_batch(self, requests_: Optional[
+        Union[List[Dict], GetFeaturedOfferExpectedPriceBatch]], **kwargs) -> ApiResponse:
         """
         get_featured_offer_expected_price_batch(self, **kwargs) -> ApiResponse
 
@@ -343,7 +344,8 @@ class Products(Client):
         )
 
     @sp_endpoint('/batches/products/pricing/2022-05-01/items/competitiveSummary', method='POST')
-    def get_competitive_summary(self, requests_: Optional[Union[List[Dict], CompetitiveSummaryBatchRequest]], **kwargs) -> ApiResponse:
+    def get_competitive_summary(self, requests_: Optional[Union[List[Dict], CompetitiveSummaryBatchRequest]],
+                                **kwargs) -> ApiResponse:
         """
         get_competitive_summary(self, **kwargs) -> ApiResponse
 
