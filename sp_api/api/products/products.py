@@ -2,7 +2,7 @@ from typing import Optional, List, Dict, Union
 
 from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
 from sp_api.api.products.products_definitions import (
-    CompetitiveSummaryBatchRequest,
+    GetCompetitiveSummaryBatch,
     GetFeaturedOfferExpectedPriceBatch,
     GetItemOffersBatchRequest,
     GetListingOffersBatchRequest,
@@ -344,8 +344,7 @@ class Products(Client):
         )
 
     @sp_endpoint('/batches/products/pricing/2022-05-01/items/competitiveSummary', method='POST')
-    def get_competitive_summary(self, requests_: Optional[Union[List[Dict], CompetitiveSummaryBatchRequest]],
-                                **kwargs) -> ApiResponse:
+    def get_competitive_summary_batch(self, requests_: Optional[Union[List[Dict], GetCompetitiveSummaryBatch]], **kwargs) -> ApiResponse:
         """
         get_competitive_summary(self, **kwargs) -> ApiResponse
 

@@ -142,7 +142,7 @@ class CompetitiveSummaryRequest:
 
 
 @dataclass
-class CompetitiveSummaryBatchRequest:
+class GetCompetitiveSummaryBatch:
     """ Implements definition: https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-reference
         #getCompetitiveSummary """
     requests: Optional[List[Union[CompetitiveSummaryRequest, Dict]]] = None
