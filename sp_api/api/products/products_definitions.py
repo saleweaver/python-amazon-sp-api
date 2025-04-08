@@ -1,5 +1,12 @@
+from enum import Enum
 from typing import Optional, List, Dict, Union
 from dataclasses import dataclass, asdict
+
+
+class CompetitiveSummaryIncludedData(Enum):
+    FEATURED_BUYING_OPTIONS = "featuredBuyingOptions"
+    LOWEST_PRICED_OFFERS = "lowestPricedOffers"
+    REFERENCE_PRICES = "referencePrices"
 
 
 @dataclass
@@ -129,6 +136,7 @@ class CompetitiveSummaryRequest:
         #FeaturedOfferExpectedPriceRequest """
     marketplaceId: str
     asin: str
+    includedData: List[CompetitiveSummaryIncludedData]
     uri: str = "/products/pricing/2022-05-01/items/competitiveSummary"
     method: str = "GET"
 
