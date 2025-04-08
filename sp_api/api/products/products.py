@@ -364,7 +364,7 @@ class Products(Client):
         Returns:
             ApiResponse:
         """
-        if isinstance(requests_, CompetitiveSummaryBatchRequest):
+        if isinstance(requests_, GetCompetitiveSummaryBatch):
             get_competitive_summary_batch_request = requests_.to_dict()
         else:
             get_competitive_summary_batch_request = {"requests": requests_}
