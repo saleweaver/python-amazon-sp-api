@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Tokens(Client):
     """
     Tokens SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Tokens provides a secure way to access a customers's PII (Personally Identifiable Information). You can call the Tokens API to get a Restricted Data Token (RDT) for one or more restricted resources that you specify. The RDT authorizes you to make subsequent requests to access these restricted resources.
     """
 
-
-    @sp_endpoint('/tokens/2021-03-01/restrictedDataToken', method='POST')
+    @sp_endpoint("/tokens/2021-03-01/restrictedDataToken", method="POST")
     def create_restricted_data_token(self, **kwargs) -> ApiResponse:
         """
         create_restricted_data_token(self, **kwargs) -> ApiResponse
@@ -61,6 +60,5 @@ class Tokens(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop("path"), data=kwargs)

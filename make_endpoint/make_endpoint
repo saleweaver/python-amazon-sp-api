@@ -52,7 +52,7 @@ def sub(e):
 
 
 def make_endpoint_name(s):
-    return re.sub(r'-([a-zA-Z])', lambda match: r'{}'.format(match.group(1).upper()), s[0].upper() + s[1:])
+    return re.sub('-', '_', re.sub(r'-([a-zA-Z])', lambda match: r'{}'.format(match.group(1).upper()), s[0].upper() + s[1:]))
 
 
 def make_directory(endpoint):
@@ -132,8 +132,8 @@ def create_endpoint_file(model_json):
             operations.append(operation)
 
     make_py(endpoint, operations, model.get('info').get('description'), directory)
-    # add_to_init(endpoint)
-    # add_to_setup_py(endpoint)
+    add_to_init(endpoint)
+    add_to_setup_py(endpoint)
 
 
 def get_endpoint_from_url(url):
@@ -142,9 +142,9 @@ def get_endpoint_from_url(url):
 
 
 if __name__ == '__main__':
-    args = parse_args()
+    # args = parse_args()
 
-    create_endpoint_file(args.model_url)
+    create_endpoint_file('https://raw.githubusercontent.com/amzn/selling-partner-api-models/refs/heads/main/models/easy-ship-model/easyShip_2022-03-23.json')
     # for model_json_url in [
     #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/fulfillment-outbound-api-model/fulfillmentOutbound_2020-07-01.json',
     #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/aplus-content-api-model/aplusContent_2020-11-01.json',

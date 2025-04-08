@@ -6,12 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorInvoices(Client):
     """
     VendorInvoices SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Retail Procurement Payments provides programmatic access to vendors payments data.
     """
 
-    @sp_endpoint('/vendor/payments/v1/invoices', method='POST')
+    @sp_endpoint("/vendor/payments/v1/invoices", method="POST")
     def submit_invoices(self, data, **kwargs) -> ApiResponse:
         """
         submit_invoices(self, data, **kwargs) -> ApiResponse
@@ -288,5 +288,7 @@ class VendorInvoices(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data={**data, **kwargs}, add_marketplace=False)
+
+        return self._request(
+            kwargs.pop("path"), data={**data, **kwargs}, add_marketplace=False
+        )

@@ -10,8 +10,14 @@ class Sales(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/blob/main/references/sales-api/sales.md#parameters
     """
 
-    @sp_endpoint('/sales/v1/orderMetrics')
-    def get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse:
+    @sp_endpoint("/sales/v1/orderMetrics")
+    def get_order_metrics(
+        self,
+        interval: tuple,
+        granularity: Granularity,
+        granularityTimeZone: str = None,
+        **kwargs
+    ) -> ApiResponse:
         """
         get_order_metrics(self, interval: tuple, granularity: Granularity, granularityTimeZone: str = None, **kwargs) -> ApiResponse
 
@@ -46,8 +52,8 @@ class Sales(Client):
             granularity: Granularity | The granularity of the grouping of order metrics, based on a unit of time.         Specifying granularity=Hour results in a successful request only if the interval specified is less than or equal to 30 days from now.         For all other granularities, the interval specified must be less or equal to 2 years from now.         Specifying granularity=Total results in order metrics that are aggregated over the entire interval that you specify.         If the interval start and end date don’t align with the specified granularity, the head and tail end of the response interval will contain partial data.         Example: Day to get a daily breakdown of the request interval, where the day boundary is defined by the granularityTimeZone.	enum (Granularity)	-
             key buyerType: BuyerType | Filters the results by the buyer type that you specify, B2B (business to business) or B2C (business to customer).         Example: B2B, if you want the response to include order metrics for only B2B buyers.         Default: enum (BuyerType)	"All"
             key fulfillmentNetwork: str | Filters the results by the fulfillment network that you specify,         MFN (merchant fulfillment network) or AFN (Amazon fulfillment network).         Do not include this filter if you want the response to include order metrics for all fulfillment networks.         Example: AFN, if you want the response to include order metrics for only Amazon fulfillment network.	string -
-            key firstDayOfWeek: str |         Specifies the day that the week starts on when granularity=Week, either Monday or Sunday.         Default: Monday.         Example: Sunday, if you want the week to start on a Sunday.	enum (FirstDayOfWeek)	"Monday" 
-            key asin: str |         Filters the results by the ASIN that you specify. Specifying both ASIN and SKU returns an error.         Do not include this filter if you want the response to include order metrics for all ASINs.         Example: B0792R1RSN, if you want the response to include order metrics for only ASIN B0792R1RSN.	string	- 
+            key firstDayOfWeek: str |         Specifies the day that the week starts on when granularity=Week, either Monday or Sunday.         Default: Monday.         Example: Sunday, if you want the week to start on a Sunday.	enum (FirstDayOfWeek)	"Monday"
+            key asin: str |         Filters the results by the ASIN that you specify. Specifying both ASIN and SKU returns an error.         Do not include this filter if you want the response to include order metrics for all ASINs.         Example: B0792R1RSN, if you want the response to include order metrics for only ASIN B0792R1RSN.	string	-
             key sku: str | Filters the results by the SKU that you specify.         Specifying both ASIN and SKU returns an error.         Do not include this filter if you want the response to include order metrics for all SKUs. Example: TestSKU, if you want the response to include order metrics for only SKU TestSKU.
             granularityTimeZone: str
 
@@ -55,15 +61,19 @@ class Sales(Client):
         Returns:
             ApiResponse
         """
-        kwargs.update({
-            'interval': '--'.join([self._create_datetime_stamp(_interval) for _interval in interval]),
-            'granularity': granularity.value,
-        })
+        kwargs.update(
+            {
+                "interval": "--".join(
+                    [self._create_datetime_stamp(_interval) for _interval in interval]
+                ),
+                "granularity": granularity.value,
+            }
+        )
         if granularityTimeZone:
-            kwargs.update({'granularityTimeZone': granularityTimeZone})
-        if 'sku' in kwargs:
-            kwargs.update({'sku': urllib.parse.quote(kwargs.pop('sku'), safe='')})
-        return self._request(kwargs.pop('path'), params=kwargs)
+            kwargs.update({"granularityTimeZone": granularityTimeZone})
+        if "sku" in kwargs:
+            kwargs.update({"sku": urllib.parse.quote(kwargs.pop("sku"), safe="")})
+        return self._request(kwargs.pop("path"), params=kwargs)
 
     @staticmethod
     def _create_datetime_stamp(datetime_obj: datetime or str):
@@ -78,5 +88,5 @@ class Sales(Client):
         """
         if isinstance(datetime_obj, str):
             return datetime_obj
-        fmt = '%Y-%m-%dT%H:%M:%S%z'
+        fmt = "%Y-%m-%dT%H:%M:%S%z"
         return datetime_obj.astimezone().isoformat(timespec="seconds")

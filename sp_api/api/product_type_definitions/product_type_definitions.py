@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class ProductTypeDefinitions(Client):
     """
     ProductTypeDefinitions SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Product Type Definitions provides programmatic access to attribute and data requirements for product types in the Amazon catalog. Use this API to return the JSON Schema for a product type that you can then use with other Selling Partner APIs, such as the Selling Partner API for Listings Items, the Selling Partner API for Catalog Items, and the Selling Partner API for Feeds (for JSON-based listing feeds).
     """
 
-
-    @sp_endpoint('/definitions/2020-09-01/productTypes', method='GET')
+    @sp_endpoint("/definitions/2020-09-01/productTypes", method="GET")
     def search_definitions_product_types(self, **kwargs) -> ApiResponse:
         """
         search_definitions_product_types(self, **kwargs) -> ApiResponse
@@ -36,11 +35,10 @@ class ProductTypeDefinitions(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/definitions/2020-09-01/productTypes/{}', method='GET')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/definitions/2020-09-01/productTypes/{}", method="GET")
     def get_definitions_product_type(self, productType, **kwargs) -> ApiResponse:
         """
         get_definitions_product_type(self, productType, **kwargs) -> ApiResponse
@@ -70,6 +68,7 @@ class ProductTypeDefinitions(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), productType), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), productType), params=kwargs
+        )

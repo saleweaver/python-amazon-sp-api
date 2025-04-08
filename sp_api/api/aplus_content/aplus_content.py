@@ -5,13 +5,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class AplusContent(Client):
     """
     AplusContent SP-API Client
-    :link: 
+    :link:
 
     With the A+ Content API, you can build applications that help selling partners add rich marketing content to their Amazon product detail pages. A+ content helps selling partners share their brand and product story, which helps buyers make informed purchasing decisions. Selling partners assemble content by choosing from content modules and adding images and text.
     """
 
-
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments', method='GET')
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments", method="GET")
     def search_content_documents(self, **kwargs) -> ApiResponse:
         """
         search_content_documents(self, **kwargs) -> ApiResponse
@@ -36,11 +35,10 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments', method='POST')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments", method="POST")
     def create_content_document(self, **kwargs) -> ApiResponse:
         """
         create_content_document(self, **kwargs) -> ApiResponse
@@ -61,16 +59,20 @@ class AplusContent(Client):
         Args:
             key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
             postContentDocumentRequest: | * REQUIRED {'properties': {'contentDocument': {'$ref': '#/definitions/ContentDocument'}}, 'required': ['contentDocument'], 'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs.pop('body'), params=kwargs, add_marketplace=False)
-    
+        return self._request(
+            kwargs.pop("path"),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            add_marketplace=False,
+        )
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}', method='GET')
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments/{}", method="GET")
     def get_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse:
         """
         get_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse
@@ -92,15 +94,17 @@ class AplusContent(Client):
             contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
             key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
             key includedDataSet:array | * REQUIRED The set of A+ Content data types to include in the response.
-        
+
 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), params=kwargs)
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey), params=kwargs
+        )
+
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments/{}", method="POST")
     def update_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse:
         """
         update_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse
@@ -124,12 +128,18 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/asins', method='GET')
-    def list_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            add_marketplace=False,
+        )
+
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments/{}/asins", method="GET")
+    def list_content_document_asin_relations(
+        self, contentReferenceKey, **kwargs
+    ) -> ApiResponse:
         """
         list_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse
 
@@ -154,12 +164,15 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), params=kwargs)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/asins', method='POST')
-    def post_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey), params=kwargs
+        )
+
+    @sp_endpoint("/aplus/2020-11-01/contentDocuments/{}/asins", method="POST")
+    def post_content_document_asin_relations(
+        self, contentReferenceKey, **kwargs
+    ) -> ApiResponse:
         """
         post_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse
 
@@ -182,11 +195,15 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentAsinValidations', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            add_marketplace=False,
+        )
+
+    @sp_endpoint("/aplus/2020-11-01/contentAsinValidations", method="POST")
     def validate_content_document_asin_relations(self, **kwargs) -> ApiResponse:
         """
         validate_content_document_asin_relations(self, **kwargs) -> ApiResponse
@@ -206,16 +223,20 @@ class AplusContent(Client):
             key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
             key asinSet:array |  The set of ASINs.
             postContentDocumentRequest: | * REQUIRED {'properties': {'contentDocument': {'$ref': '#/definitions/ContentDocument'}}, 'required': ['contentDocument'], 'type': 'object'}
-        
+
 
         Returns:
             ApiResponse:
         """
 
-        return self._request(kwargs.pop('path'), data=kwargs.pop("body"), params=kwargs, add_marketplace=False)
-    
+        return self._request(
+            kwargs.pop("path"),
+            data=kwargs.pop("body"),
+            params=kwargs,
+            add_marketplace=False,
+        )
 
-    @sp_endpoint('/aplus/2020-11-01/contentPublishRecords', method='GET')
+    @sp_endpoint("/aplus/2020-11-01/contentPublishRecords", method="GET")
     def search_content_publish_records(self, **kwargs) -> ApiResponse:
         """
         search_content_publish_records(self, **kwargs) -> ApiResponse
@@ -239,12 +260,15 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'), params=kwargs)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/approvalSubmissions', method='POST')
-    def post_content_document_approval_submission(self, contentReferenceKey, **kwargs) -> ApiResponse:
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint(
+        "/aplus/2020-11-01/contentDocuments/{}/approvalSubmissions", method="POST"
+    )
+    def post_content_document_approval_submission(
+        self, contentReferenceKey, **kwargs
+    ) -> ApiResponse:
         """
         post_content_document_approval_submission(self, contentReferenceKey, **kwargs) -> ApiResponse
 
@@ -266,12 +290,17 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), params=kwargs)
-    
 
-    @sp_endpoint('/aplus/2020-11-01/contentDocuments/{}/suspendSubmissions', method='POST')
-    def post_content_document_suspend_submission(self, contentReferenceKey, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey), params=kwargs
+        )
+
+    @sp_endpoint(
+        "/aplus/2020-11-01/contentDocuments/{}/suspendSubmissions", method="POST"
+    )
+    def post_content_document_suspend_submission(
+        self, contentReferenceKey, **kwargs
+    ) -> ApiResponse:
         """
         post_content_document_suspend_submission(self, contentReferenceKey, **kwargs) -> ApiResponse
 
@@ -293,5 +322,7 @@ class AplusContent(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), contentReferenceKey), data=kwargs)
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), contentReferenceKey), data=kwargs
+        )

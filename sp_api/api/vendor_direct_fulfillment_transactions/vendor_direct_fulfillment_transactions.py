@@ -6,13 +6,14 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorDirectFulfillmentTransactions(Client):
     """
     VendorDirectFulfillmentTransactions SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Direct Fulfillment Transaction Status provides programmatic access to a direct fulfillment vendor's transaction status.
     """
 
-
-    @sp_endpoint('/vendor/directFulfillment/transactions/v1/transactions/{}', method='GET')
+    @sp_endpoint(
+        "/vendor/directFulfillment/transactions/v1/transactions/{}", method="GET"
+    )
     def get_transaction_status(self, transactionId, **kwargs) -> ApiResponse:
         """
         get_transaction_status(self, transactionId, **kwargs) -> ApiResponse
@@ -35,6 +36,7 @@ class VendorDirectFulfillmentTransactions(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), transactionId), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), transactionId), params=kwargs
+        )

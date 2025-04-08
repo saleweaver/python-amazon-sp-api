@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Services(Client):
     """
     Services SP-API Client
-    :link: 
+    :link:
 
     With the Services API, you can build applications that help service providers get and modify their service orders.
     """
 
-
-    @sp_endpoint('/service/v1/serviceJobs/{}', method='GET')
+    @sp_endpoint("/service/v1/serviceJobs/{}", method="GET")
     def get_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
         """
         get_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
@@ -35,12 +34,15 @@ class Services(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), params=kwargs)
-    
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/cancellations', method='PUT')
-    def cancel_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), serviceJobId), params=kwargs
+        )
+
+    @sp_endpoint("/service/v1/serviceJobs/{}/cancellations", method="PUT")
+    def cancel_service_job_by_service_job_id(
+        self, serviceJobId, **kwargs
+    ) -> ApiResponse:
         """
         cancel_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
@@ -64,12 +66,15 @@ class Services(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
-    
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/completions', method='PUT')
-    def complete_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), serviceJobId), data=kwargs
+        )
+
+    @sp_endpoint("/service/v1/serviceJobs/{}/completions", method="PUT")
+    def complete_service_job_by_service_job_id(
+        self, serviceJobId, **kwargs
+    ) -> ApiResponse:
         """
         complete_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
@@ -92,11 +97,12 @@ class Services(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
-    
 
-    @sp_endpoint('/service/v1/serviceJobs', method='GET')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), serviceJobId), data=kwargs
+        )
+
+    @sp_endpoint("/service/v1/serviceJobs", method="GET")
     def get_service_jobs(self, **kwargs) -> ApiResponse:
         """
         get_service_jobs(self, **kwargs) -> ApiResponse
@@ -131,12 +137,13 @@ class Services(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/service/v1/serviceJobs/{}/appointments', method='POST')
-    def add_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/service/v1/serviceJobs/{}/appointments", method="POST")
+    def add_appointment_for_service_job_by_service_job_id(
+        self, serviceJobId, **kwargs
+    ) -> ApiResponse:
         """
         add_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
@@ -165,12 +172,15 @@ class Services(Client):
          Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
-    
 
-    @sp_endpoint('/service/v1/serviceJobs/{}', method='POST')
-    def reschedule_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse:
+        return self._request(
+            fill_query_params(kwargs.pop("path"), serviceJobId), data=kwargs
+        )
+
+    @sp_endpoint("/service/v1/serviceJobs/{}", method="POST")
+    def reschedule_appointment_for_service_job_by_service_job_id(
+        self, serviceJobId, **kwargs
+    ) -> ApiResponse:
         """
         reschedule_appointment_for_service_job_by_service_job_id(self, serviceJobId, **kwargs) -> ApiResponse
 
@@ -201,6 +211,7 @@ class Services(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), serviceJobId), data=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), serviceJobId), data=kwargs
+        )

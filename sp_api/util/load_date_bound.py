@@ -17,20 +17,35 @@ def load_date_bound(interval_days: int = 30):
 
     def decorator(function):
         def wrapper(*args, **kwargs):
-            date_range.update({
-                'dataStartTime': parse_if_needed(kwargs['dataStartTime']),
-                'dataEndTime': parse_if_needed(kwargs.get('dataEndTime', datetime.datetime.utcnow()))
-            })
-            kwargs.update({
-                'dataEndTime': make_end_date(date_range['dataStartTime'], date_range['dataEndTime'], interval_days)
-            })
-            while kwargs['dataStartTime'] < kwargs['dataEndTime']:
+            date_range.update(
+                {
+                    "dataStartTime": parse_if_needed(kwargs["dataStartTime"]),
+                    "dataEndTime": parse_if_needed(
+                        kwargs.get("dataEndTime", datetime.datetime.utcnow())
+                    ),
+                }
+            )
+            kwargs.update(
+                {
+                    "dataEndTime": make_end_date(
+                        date_range["dataStartTime"],
+                        date_range["dataEndTime"],
+                        interval_days,
+                    )
+                }
+            )
+            while kwargs["dataStartTime"] < kwargs["dataEndTime"]:
                 yield function(*args, **kwargs)
-                kwargs.update({
-                    'dataStartTime': parse_if_needed(kwargs['dataEndTime']),
-                    'dataEndTime': make_end_date(parse_if_needed(kwargs['dataEndTime']), date_range['dataEndTime'],
-                                                 interval_days)
-                })
+                kwargs.update(
+                    {
+                        "dataStartTime": parse_if_needed(kwargs["dataEndTime"]),
+                        "dataEndTime": make_end_date(
+                            parse_if_needed(kwargs["dataEndTime"]),
+                            date_range["dataEndTime"],
+                            interval_days,
+                        ),
+                    }
+                )
 
         wrapper.__doc__ = function.__doc__
         return wrapper

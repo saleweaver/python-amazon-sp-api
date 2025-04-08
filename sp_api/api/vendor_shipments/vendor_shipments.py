@@ -6,283 +6,112 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorShipments(Client):
     """
     VendorShipments SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Retail Procurement Shipments provides programmatic access to retail shipping data for vendors.
     """
 
-
-    @sp_endpoint('/vendor/shipping/v1/shipmentConfirmations', method='POST')
+    @sp_endpoint("/vendor/shipping/v1/shipmentConfirmations", method="POST")
     def submit_shipment_confirmations(self, **kwargs) -> ApiResponse:
         """
         submit_shipment_confirmations(self, **kwargs) -> ApiResponse
 
         Submits one or more shipment confirmations for vendor orders.
 
-        **Usage Plans:**
+        **Usage Plan:**
 
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        10                                       10
-        ======================================  ==============
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 10 | 10 |
 
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+                Args:
+
+                    body: | * REQUIRED {'description': 'The request schema for the SubmitShipmentConfirmations operation.',
+         'properties': {'shipmentConfirmations': {'description': 'A list of one or more shipment confirmations.', 'items': {'$ref': '#/definitions/ShipmentConfirmation'}, 'type': 'array'}},
+         'type': 'object'}
+
+
+                Returns:
+                    ApiResponse:
+        """
+
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/vendor/shipping/v1/shipments", method="POST")
+    def submit_shipments(self, **kwargs) -> ApiResponse:
+        """
+        submit_shipments(self, **kwargs) -> ApiResponse
+
+        Submits one or more shipment request for vendor Orders.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 10 | 10 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+                Args:
+
+                    body: | * REQUIRED {'description': 'The request schema for the SubmitShipments operation.',
+         'properties': {'shipments': {'description': 'A list of one or more shipments with underlying details.', 'items': {'$ref': '#/definitions/Shipment'}, 'type': 'array'}},
+         'type': 'object'}
+
+
+                Returns:
+                    ApiResponse:
+        """
+
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/vendor/shipping/v1/shipments", method="GET")
+    def get_shipment_details(self, **kwargs) -> ApiResponse:
+        """
+        get_shipment_details(self, **kwargs) -> ApiResponse
+
+        Returns the Details about Shipment, Carrier Details,  status of the shipment, container details and other details related to shipment based on the filter parameters value that you specify.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 10 | 10 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
 
         Args:
-            body: {
-              "shipmentConfirmations": [
-                {
-                  "shipmentIdentifier": "string",
-                  "shipmentConfirmationType": "Original",
-                  "shipmentType": "TruckLoad",
-                  "shipmentStructure": "PalletizedAssortmentCase",
-                  "transportationDetails": {
-                    "carrierScac": "string",
-                    "carrierShipmentReferenceNumber": "string",
-                    "transportationMode": "Road",
-                    "billOfLadingNumber": "string"
-                  },
-                  "amazonReferenceNumber": "string",
-                  "shipmentConfirmationDate": "2019-08-24T14:15:22Z",
-                  "shippedDate": "2019-08-24T14:15:22Z",
-                  "estimatedDeliveryDate": "2019-08-24T14:15:22Z",
-                  "sellingParty": {
-                    "address": {
-                      "name": "string",
-                      "addressLine1": "string",
-                      "addressLine2": "string",
-                      "addressLine3": "string",
-                      "city": "string",
-                      "county": "string",
-                      "district": "string",
-                      "stateOrRegion": "string",
-                      "postalCode": "string",
-                      "countryCode": "string",
-                      "phone": "string"
-                    },
-                    "partyId": "string",
-                    "taxRegistrationDetails": [
-                      {
-                        "taxRegistrationType": "VAT",
-                        "taxRegistrationNumber": "string"
-                      }
-                    ]
-                  },
-                  "shipFromParty": {
-                    "address": {
-                      "name": "string",
-                      "addressLine1": "string",
-                      "addressLine2": "string",
-                      "addressLine3": "string",
-                      "city": "string",
-                      "county": "string",
-                      "district": "string",
-                      "stateOrRegion": "string",
-                      "postalCode": "string",
-                      "countryCode": "string",
-                      "phone": "string"
-                    },
-                    "partyId": "string",
-                    "taxRegistrationDetails": [
-                      {
-                        "taxRegistrationType": "VAT",
-                        "taxRegistrationNumber": "string"
-                      }
-                    ]
-                  },
-                  "shipToParty": {
-                    "address": {
-                      "name": "string",
-                      "addressLine1": "string",
-                      "addressLine2": "string",
-                      "addressLine3": "string",
-                      "city": "string",
-                      "county": "string",
-                      "district": "string",
-                      "stateOrRegion": "string",
-                      "postalCode": "string",
-                      "countryCode": "string",
-                      "phone": "string"
-                    },
-                    "partyId": "string",
-                    "taxRegistrationDetails": [
-                      {
-                        "taxRegistrationType": "VAT",
-                        "taxRegistrationNumber": "string"
-                      }
-                    ]
-                  },
-                  "shipmentMeasurements": {
-                    "grossShipmentWeight": {
-                      "unitOfMeasure": "G",
-                      "value": "string"
-                    },
-                    "shipmentVolume": {
-                      "unitOfMeasure": "CuFt",
-                      "value": "string"
-                    },
-                    "cartonCount": 0,
-                    "palletCount": 0
-                  },
-                  "importDetails": {
-                    "methodOfPayment": "PaidByBuyer",
-                    "sealNumber": "string",
-                    "route": {
-                      "stops": [
-                        {
-                          "functionCode": "PortOfDischarge",
-                          "locationIdentification": {
-                            "type": "string",
-                            "locationCode": "string",
-                            "countryCode": "string"
-                          },
-                          "arrivalTime": "2019-08-24T14:15:22Z",
-                          "departureTime": "2019-08-24T14:15:22Z"
-                        }
-                      ]
-                    },
-                    "importContainers": "string",
-                    "billableWeight": {
-                      "unitOfMeasure": "G",
-                      "value": "string"
-                    },
-                    "estimatedShipByDate": "2019-08-24T14:15:22Z"
-                  },
-                  "shippedItems": [
-                    {
-                      "itemSequenceNumber": "string",
-                      "amazonProductIdentifier": "string",
-                      "vendorProductIdentifier": "string",
-                      "shippedQuantity": {
-                        "amount": 0,
-                        "unitOfMeasure": "Cases",
-                        "unitSize": 0
-                      },
-                      "itemDetails": {
-                        "purchaseOrderNumber": "string",
-                        "lotNumber": "string",
-                        "expiry": {
-                          "manufacturerDate": "2019-08-24T14:15:22Z",
-                          "expiryDate": "2019-08-24T14:15:22Z",
-                          "expiryAfterDuration": {
-                            "durationUnit": "Days",
-                            "durationValue": 0
-                          }
-                        },
-                        "maximumRetailPrice": {
-                          "currencyCode": "string",
-                          "amount": "string"
-                        },
-                        "handlingCode": "Oversized"
-                      }
-                    }
-                  ],
-                  "cartons": [
-                    {
-                      "cartonIdentifiers": [
-                        {
-                          "containerIdentificationType": "SSCC",
-                          "containerIdentificationNumber": "string"
-                        }
-                      ],
-                      "cartonSequenceNumber": "string",
-                      "dimensions": {
-                        "length": "string",
-                        "width": "string",
-                        "height": "string",
-                        "unitOfMeasure": "In"
-                      },
-                      "weight": {
-                        "unitOfMeasure": "G",
-                        "value": "string"
-                      },
-                      "trackingNumber": "string",
-                      "items": [
-                        {
-                          "itemReference": "string",
-                          "shippedQuantity": {
-                            "amount": 0,
-                            "unitOfMeasure": "Cases",
-                            "unitSize": 0
-                          },
-                          "itemDetails": {
-                            "purchaseOrderNumber": "string",
-                            "lotNumber": "string",
-                            "expiry": {
-                              "manufacturerDate": "2019-08-24T14:15:22Z",
-                              "expiryDate": "2019-08-24T14:15:22Z",
-                              "expiryAfterDuration": {}
-                            },
-                            "maximumRetailPrice": {
-                              "currencyCode": "string",
-                              "amount": "string"
-                            },
-                            "handlingCode": "Oversized"
-                          }
-                        }
-                      ]
-                    }
-                  ],
-                  "pallets": [
-                    {
-                      "palletIdentifiers": [
-                        {
-                          "containerIdentificationType": "SSCC",
-                          "containerIdentificationNumber": "string"
-                        }
-                      ],
-                      "tier": 0,
-                      "block": 0,
-                      "dimensions": {
-                        "length": "string",
-                        "width": "string",
-                        "height": "string",
-                        "unitOfMeasure": "In"
-                      },
-                      "weight": {
-                        "unitOfMeasure": "G",
-                        "value": "string"
-                      },
-                      "cartonReferenceDetails": {
-                        "cartonCount": 0,
-                        "cartonReferenceNumbers": [
-                          "string"
-                        ]
-                      },
-                      "items": [
-                        {
-                          "itemReference": "string",
-                          "shippedQuantity": {
-                            "amount": 0,
-                            "unitOfMeasure": "Cases",
-                            "unitSize": 0
-                          },
-                          "itemDetails": {
-                            "purchaseOrderNumber": "string",
-                            "lotNumber": "string",
-                            "expiry": {
-                              "manufacturerDate": "2019-08-24T14:15:22Z",
-                              "expiryDate": "2019-08-24T14:15:22Z",
-                              "expiryAfterDuration": {}
-                            },
-                            "maximumRetailPrice": {
-                              "currencyCode": "string",
-                              "amount": "string"
-                            },
-                            "handlingCode": "Oversized"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
+
+            key limit:integer |  The limit to the number of records returned. Default value is 50 records.
+            key sortOrder:string |  Sort in ascending or descending order by purchase order creation date.
+            key nextToken:string |  Used for pagination when there are more shipments than the specified result size limit.
+            key createdAfter:string |  Get Shipment Details that became available after this timestamp will be included in the result. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key createdBefore:string |  Get Shipment Details that became available before this timestamp will be included in the result. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shipmentConfirmedBefore:string |  Get Shipment Details by passing Shipment confirmed create Date Before. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shipmentConfirmedAfter:string |  Get Shipment Details by passing Shipment confirmed create Date After. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key packageLabelCreatedBefore:string |  Get Shipment Details by passing Package label create Date by buyer. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key packageLabelCreatedAfter:string |  Get Shipment Details by passing Package label create Date After by buyer. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shippedBefore:string |  Get Shipment Details by passing Shipped Date Before. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shippedAfter:string |  Get Shipment Details by passing Shipped Date After. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key estimatedDeliveryBefore:string |  Get Shipment Details by passing Estimated Delivery Date Before. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key estimatedDeliveryAfter:string |  Get Shipment Details by passing Estimated Delivery Date Before. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shipmentDeliveryBefore:string |  Get Shipment Details by passing Shipment Delivery Date Before. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key shipmentDeliveryAfter:string |  Get Shipment Details by passing Shipment Delivery Date After. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key requestedPickUpBefore:string |  Get Shipment Details by passing Before Requested pickup date. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key requestedPickUpAfter:string |  Get Shipment Details by passing After Requested pickup date. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key scheduledPickUpBefore:string |  Get Shipment Details by passing Before scheduled pickup date. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key scheduledPickUpAfter:string |  Get Shipment Details by passing After Scheduled pickup date. Must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.
+            key currentShipmentStatus:string |  Get Shipment Details by passing Current shipment status.
+            key vendorShipmentIdentifier:string |  Get Shipment Details by passing Vendor Shipment ID
+            key buyerReferenceNumber:string |  Get Shipment Details by passing buyer Reference ID
+            key buyerWarehouseCode:string |  Get Shipping Details based on buyer warehouse code. This value should be same as 'shipToParty.partyId' in the Shipment.
+            key sellerWarehouseCode:string |  Get Shipping Details based on vendor warehouse code. This value should be same as 'sellingParty.partyId' in the Shipment.
+
 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
+
+        return self._request(kwargs.pop("path"), params=kwargs)

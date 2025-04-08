@@ -11,9 +11,11 @@ You can use the playground to test endpoints:
     endpoints/aplus_content
     endpoints/authorization
     endpoints/application_management
+    endpoints/awd
     endpoints/catalog
     endpoints/catalog_items
     endpoints/data_kiosk
+    endpoints/easy_ship
     endpoints/fba_inbound_eligibility
     endpoints/fba_small_and_light
     endpoints/feeds
@@ -49,4 +51,5 @@ You can use the playground to test endpoints:
     endpoints/vendor_orders
     endpoints/vendor_shipments
     endpoints/vendor_transaction_status
+
 

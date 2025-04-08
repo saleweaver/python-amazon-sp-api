@@ -6,13 +6,12 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class Shipping(Client):
     """
     Shipping SP-API Client
-    :link: 
+    :link:
 
     Provides programmatic access to Amazon Shipping APIs.
     """
 
-
-    @sp_endpoint('/shipping/v1/shipments', method='POST')
+    @sp_endpoint("/shipping/v1/shipments", method="POST")
     def create_shipment(self, **kwargs) -> ApiResponse:
         """
         create_shipment(self, **kwargs) -> ApiResponse
@@ -101,10 +100,10 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
 
-    @sp_endpoint('/shipping/v1/shipments/{}', method='GET')
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/shipping/v1/shipments/{}", method="GET")
     def get_shipment(self, shipmentId, **kwargs) -> ApiResponse:
         """
         get_shipment(self, shipmentId, **kwargs) -> ApiResponse
@@ -127,10 +126,12 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), params=kwargs)
 
-    @sp_endpoint('/shipping/v1/shipments/{}/cancel', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId), params=kwargs
+        )
+
+    @sp_endpoint("/shipping/v1/shipments/{}/cancel", method="POST")
     def cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse:
         """
         cancel_shipment(self, shipmentId, **kwargs) -> ApiResponse
@@ -154,11 +155,12 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/shipments/{}/purchaseLabels', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId), data=kwargs
+        )
+
+    @sp_endpoint("/shipping/v1/shipments/{}/purchaseLabels", method="POST")
     def purchase_labels(self, shipmentId, **kwargs) -> ApiResponse:
         """
         purchase_labels(self, shipmentId, **kwargs) -> ApiResponse
@@ -185,16 +187,17 @@ class Shipping(Client):
                 "labelStockSize": "4x6"
               }
             }
-        
+
 
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/shipments/{}/label', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId), data=kwargs
+        )
+
+    @sp_endpoint("/shipping/v1/shipments/{}/label", method="POST")
     def retrieve_shipping_label(self, shipmentId, **kwargs) -> ApiResponse:
         """
         retrieve_shipping_label(self, shipmentId, **kwargs) -> ApiResponse
@@ -224,11 +227,12 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), shipmentId), data=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/purchaseShipment', method='POST')
+        return self._request(
+            fill_query_params(kwargs.pop("path"), shipmentId), data=kwargs
+        )
+
+    @sp_endpoint("/shipping/v1/purchaseShipment", method="POST")
     def purchase_shipment(self, **kwargs) -> ApiResponse:
         """
         purchase_shipment(self, **kwargs) -> ApiResponse
@@ -323,11 +327,10 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/rates', method='POST')
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/shipping/v1/rates", method="POST")
     def get_rates(self, **kwargs) -> ApiResponse:
         """
         get_rates(self, **kwargs) -> ApiResponse
@@ -399,11 +402,10 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  data=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/account', method='GET')
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/shipping/v1/account", method="GET")
     def get_account(self, **kwargs) -> ApiResponse:
         """
         get_account(self, **kwargs) -> ApiResponse
@@ -423,11 +425,10 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(kwargs.pop('path'),  params=kwargs)
-    
 
-    @sp_endpoint('/shipping/v1/tracking/{}', method='GET')
+        return self._request(kwargs.pop("path"), params=kwargs)
+
+    @sp_endpoint("/shipping/v1/tracking/{}", method="GET")
     def get_tracking_information(self, trackingId, **kwargs) -> ApiResponse:
         """
         get_tracking_information(self, trackingId, **kwargs) -> ApiResponse
@@ -451,6 +452,7 @@ class Shipping(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), trackingId), params=kwargs)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), trackingId), params=kwargs
+        )

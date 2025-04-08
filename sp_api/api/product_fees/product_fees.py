@@ -10,11 +10,20 @@ class ProductFees(Client):
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/product-fees-api
     """
 
-    @sp_endpoint('/products/fees/v0/listings/{}/feesEstimate', method='POST')
-    def get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD',
-                                          is_fba=False, points: dict = None, marketplace_id: str = None,
-                                          optional_fulfillment_program: str = None, force_safe_sku: bool = True,
-                                          **kwargs) -> ApiResponse:
+    @sp_endpoint("/products/fees/v0/listings/{}/feesEstimate", method="POST")
+    def get_product_fees_estimate_for_sku(
+        self,
+        seller_sku,
+        price: float,
+        shipping_price=None,
+        currency="USD",
+        is_fba=False,
+        points: dict = None,
+        marketplace_id: str = None,
+        optional_fulfillment_program: str = None,
+        force_safe_sku: bool = True,
+        **kwargs
+    ) -> ApiResponse:
         """
         get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD', is_fba=False, points: dict = dict, **kwargs) -> ApiResponse
 
@@ -50,17 +59,38 @@ class ProductFees(Client):
         """
 
         if force_safe_sku:
-            #handle `forward slash` issue in SKU
+            # handle `forward slash` issue in SKU
             seller_sku = quote_plus(seller_sku)
 
-        kwargs.update(self._create_body(price, shipping_price, currency, is_fba, seller_sku, points, marketplace_id, optional_fulfillment_program))
-        return self._request(fill_query_params(kwargs.pop('path'), seller_sku), data=kwargs)
+        kwargs.update(
+            self._create_body(
+                price,
+                shipping_price,
+                currency,
+                is_fba,
+                seller_sku,
+                points,
+                marketplace_id,
+                optional_fulfillment_program,
+            )
+        )
+        return self._request(
+            fill_query_params(kwargs.pop("path"), seller_sku), data=kwargs
+        )
 
-    @sp_endpoint('/products/fees/v0/items/{}/feesEstimate', method='POST')
-    def get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,
-                                           points: dict = None, marketplace_id: str = None,
-                                           optional_fulfillment_program: str = None,
-                                           **kwargs) -> ApiResponse:
+    @sp_endpoint("/products/fees/v0/items/{}/feesEstimate", method="POST")
+    def get_product_fees_estimate_for_asin(
+        self,
+        asin,
+        price: float,
+        currency="USD",
+        shipping_price=None,
+        is_fba=False,
+        points: dict = None,
+        marketplace_id: str = None,
+        optional_fulfillment_program: str = None,
+        **kwargs
+    ) -> ApiResponse:
         """
         get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,  points: dict = dict, **kwargs) -> ApiResponse
 
@@ -93,9 +123,19 @@ class ProductFees(Client):
             ApiResponse:
 
         """
-        kwargs.update(self._create_body(price, shipping_price, currency, is_fba, asin, points, marketplace_id, optional_fulfillment_program))
-        return self._request(fill_query_params(kwargs.pop('path'), asin), data=kwargs)
-
+        kwargs.update(
+            self._create_body(
+                price,
+                shipping_price,
+                currency,
+                is_fba,
+                asin,
+                points,
+                marketplace_id,
+                optional_fulfillment_program,
+            )
+        )
+        return self._request(fill_query_params(kwargs.pop("path"), asin), data=kwargs)
 
     def get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse:
         """
@@ -126,17 +166,27 @@ class ProductFees(Client):
                 marketplace_id: str | Defaults to self.marketplace_id
                 optional_fulfillment_program:
         """
-        data = [
-            dict(
-                **self._create_body(**er)
-            )
-            for er in estimate_requests
-        ]
-        return self._request('/products/fees/v0/feesEstimate', data=data, params=dict(method='POST'), wrap_list=True)
+        data = [dict(**self._create_body(**er)) for er in estimate_requests]
+        return self._request(
+            "/products/fees/v0/feesEstimate",
+            data=data,
+            params=dict(method="POST"),
+            wrap_list=True,
+        )
 
-
-    def _create_body(self, price, shipping_price=None, currency='USD', is_fba=False, identifier=None, points: dict = None,
-                     marketplace_id: str = None, optional_fulfillment_program: str=None, id_type=None, id_value=None):
+    def _create_body(
+        self,
+        price,
+        shipping_price=None,
+        currency="USD",
+        is_fba=False,
+        identifier=None,
+        points: dict = None,
+        marketplace_id: str = None,
+        optional_fulfillment_program: str = None,
+        id_type=None,
+        id_value=None,
+    ):
         """
         Create request body
 
@@ -152,22 +202,24 @@ class ProductFees(Client):
 
         """
         body = {
-            'FeesEstimateRequest': {
-                'Identifier': identifier or str(price),
-                'PriceToEstimateFees': {
-                    'ListingPrice': {
-                        'Amount': price,
-                        'CurrencyCode': currency
-                    },
-                    'Shipping': {
-                        'Amount': shipping_price,
-                        'CurrencyCode': currency
-                    } if shipping_price else None,
-                    'Points': points or None
+            "FeesEstimateRequest": {
+                "Identifier": identifier or str(price),
+                "PriceToEstimateFees": {
+                    "ListingPrice": {"Amount": price, "CurrencyCode": currency},
+                    "Shipping": (
+                        {"Amount": shipping_price, "CurrencyCode": currency}
+                        if shipping_price
+                        else None
+                    ),
+                    "Points": points or None,
                 },
-                'IsAmazonFulfilled': is_fba,
-                'OptionalFulfillmentProgram': optional_fulfillment_program if is_fba is True and optional_fulfillment_program else None,
-                'MarketplaceId': marketplace_id or self.marketplace_id
+                "IsAmazonFulfilled": is_fba,
+                "OptionalFulfillmentProgram": (
+                    optional_fulfillment_program
+                    if is_fba is True and optional_fulfillment_program
+                    else None
+                ),
+                "MarketplaceId": marketplace_id or self.marketplace_id,
             }
         }
 
@@ -176,7 +228,6 @@ class ProductFees(Client):
             body["IdValue"] = id_value
 
         return body
-
 
     def _add_marketplaces(self, data):
         # MarketplaceID is a property of the body's FeesEstimateRequest for this section, and does

@@ -6,13 +6,14 @@ from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 class VendorDirectFulfillmentInventory(Client):
     """
     VendorDirectFulfillmentInventory SP-API Client
-    :link: 
+    :link:
 
     The Selling Partner API for Direct Fulfillment Inventory Updates provides programmatic access to a direct fulfillment vendor's inventory updates.
     """
 
-
-    @sp_endpoint('/vendor/directFulfillment/inventory/v1/warehouses/{}/items', method='POST')
+    @sp_endpoint(
+        "/vendor/directFulfillment/inventory/v1/warehouses/{}/items", method="POST"
+    )
     def submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse:
         """
         submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse
@@ -54,6 +55,9 @@ class VendorDirectFulfillmentInventory(Client):
         Returns:
             ApiResponse:
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), warehouseId), data=kwargs, add_marketplace=False)
-    
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), warehouseId),
+            data=kwargs,
+            add_marketplace=False,
+        )

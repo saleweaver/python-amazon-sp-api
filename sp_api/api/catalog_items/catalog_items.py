@@ -20,11 +20,11 @@ class CatalogItems(Client):
     version: CatalogItemsVersion = CatalogItemsVersion.V_2020_12_01
 
     def __init__(self, *args, **kwargs):
-        if 'version' in kwargs:
-            self.version = kwargs.get('version', CatalogItemsVersion.V_2020_12_01)
-        super().__init__(*args, **{**kwargs, 'version': self.version})
+        if "version" in kwargs:
+            self.version = kwargs.get("version", CatalogItemsVersion.V_2020_12_01)
+        super().__init__(*args, **{**kwargs, "version": self.version})
 
-    @sp_endpoint('/catalog/<version>/items', method='GET')
+    @sp_endpoint("/catalog/<version>/items", method="GET")
     def search_catalog_items(self, **kwargs) -> ApiResponse:
         """
         search_catalog_items(self, **kwargs) -> ApiResponse
@@ -56,12 +56,12 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        includedData = kwargs.get('includedData', [])
+        includedData = kwargs.get("includedData", [])
         if includedData and isinstance(includedData, list):
-            kwargs['includedData'] = ','.join(includedData)
-        return self._request(kwargs.pop('path'),  params=kwargs)
+            kwargs["includedData"] = ",".join(includedData)
+        return self._request(kwargs.pop("path"), params=kwargs)
 
-    @sp_endpoint('/catalog/<version>/items/{}', method='GET')
+    @sp_endpoint("/catalog/<version>/items/{}", method="GET")
     def get_catalog_item(self, asin, **kwargs) -> ApiResponse:
         """
         get_catalog_item(self, asin, **kwargs) -> ApiResponse
@@ -87,7 +87,7 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        includedData = kwargs.get('includedData', [])
+        includedData = kwargs.get("includedData", [])
         if includedData and isinstance(includedData, list):
-            kwargs['includedData'] = ','.join(includedData)
-        return self._request(fill_query_params(kwargs.pop('path'), asin), params=kwargs)
+            kwargs["includedData"] = ",".join(includedData)
+        return self._request(fill_query_params(kwargs.pop("path"), asin), params=kwargs)
