@@ -1,3 +1,24 @@
+## v1.9.25 - 2025-04-11
+## Version 1.9.25
+
+### Changes Relevant to Users
+
+- **Dependency Updates**
+  - Updated `boto3` from version `1.37.17` to `1.37.32`. This update ensures compatibility with the latest AWS features and improvements.
+
+```mermaid
+graph TD;
+    A[Version 1.9.24] -->|Updated| B[Version 1.9.25];
+    B --> C[boto3];
+    C --> D[1.37.32];
+```
+
+### Internal Changes
+
+- No internal changes were made in this release.
+
+These updates aim to maintain the robustness and compatibility of the `python-amazon-sp-api` package with the latest tools and libraries.
+
 ## v1.9.24 - 2025-03-22
 ## Version 1.9.24
 
