@@ -1,3 +1,25 @@
+## v1.9.26 - 2025-04-11
+## Version 1.9.26
+
+### Changes Relevant to Users
+
+- **Documentation Update**
+  - Updated the appointment link in the README to a new URL for scheduling appointments. This change ensures users are directed to the correct scheduling page.
+
+### Internal Changes
+
+- **Version Bump**
+  - Updated the package version from `1.9.25` to `1.9.26`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.25] -->|Updated| B[Version 1.9.26];
+    B --> C[README Link];
+    C --> D[New URL];
+```
+
+These changes aim to improve user experience by ensuring accurate and up-to-date documentation.
+
 ## v1.9.25 - 2025-04-11
 ## Version 1.9.25
 
