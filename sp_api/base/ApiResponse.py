@@ -52,6 +52,7 @@ class ApiResponse:
                 or self.payload.get("NextToken", None)
                 or self.pagination.get("nextToken", None)
                 or self.payload.get("nextPageToken", None)
+                or self.payload.get("nextToken", None)
             )
 
         except AttributeError:

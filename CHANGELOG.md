@@ -1,3 +1,93 @@
+## v1.9.24 - 2025-03-22
+## Version 1.9.24
+
+### Changes Relevant to Users
+
+- **Pagination Enhancements**
+  - Improved the `ApiResponse` class to better handle pagination by adding support for an additional `nextToken` key in the response payload. This enhancement ensures more reliable navigation through paginated data.
+
+```mermaid
+graph TD;
+    A[Version 1.9.23] -->|Improved| B[Version 1.9.24];
+    B --> C[ApiResponse];
+    C --> D[nextToken Support];
+```
+
+### Internal Changes
+
+- **Code Quality Improvements**
+  - Minor formatting adjustments in `load_all_pages.py` to enhance code readability and maintain consistency.
+
+```mermaid
+graph TD;
+    A[Version 1.9.23] -->|Refined| B[Version 1.9.24];
+    B --> C[load_all_pages.py];
+    C --> D[Formatting Adjustments];
+```
+
+These changes aim to improve the overall functionality and maintainability of the `python-amazon-sp-api` package, ensuring a smoother experience for developers interacting with Amazon's Selling Partner API.
+
+## v1.9.23 - 2025-03-21
+## Version 1.9.23
+
+### New Features
+
+- **Finances API Enhancements**
+  - Introduced versioning support for the `Finances` client, allowing users to specify API versions when interacting with financial endpoints.
+  - Added a new `list_transactions` endpoint to the `Finances` client for retrieving transaction details.
+
+```mermaid
+graph TD;
+    A[Version 1.9.22] -->|Enhanced| B[Version 1.9.23];
+    B --> C[Finances API];
+    C --> D[Versioning Support];
+    C --> E[list_transactions];
+```
+
+### Internal Changes
+
+- **Dependencies Update**
+  - Updated `boto3` library dependency from `~=1.37.14` to `~=1.37.17` to ensure compatibility with the latest features and security patches.
+  - Updated `setuptools` library dependency from `~=75.8.2` to `~=77.0.3`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.22] -->|Updated| B[Version 1.9.23];
+    B --> C[boto3 ~=1.37.17];
+    A --> D[boto3 ~=1.37.14];
+    B --> E[setuptools ~=77.0.3];
+    A --> F[setuptools ~=75.8.2];
+
+
+## v1.9.22 - 2025-03-18
+## Version 1.9.22
+
+### New Features
+
+- **Finances API Enhancements**
+  - Introduced versioning support for the `Finances` client, allowing users to specify API versions when interacting with financial endpoints.
+  - Added a new `list_transactions` endpoint to the `Finances` client for retrieving transaction details.
+
+```mermaid
+graph TD;
+    A[Version 1.9.21] -->|Enhanced| B[Version 1.9.22];
+    B --> C[Finances API];
+    C --> D[Versioning Support];
+    C --> E[list_transactions];
+```
+
+### Internal Changes
+
+- **Dependencies Update**
+  - Updated `boto3` library dependency from `~=1.37.12` to `~=1.37.14` to ensure compatibility with the latest features and security patches.
+
+```mermaid
+graph TD;
+    A[Version 1.9.21] -->|Updated| B[Version 1.9.22];
+    B --> C[boto3 ~=1.37.14];
+    A --> D[boto3 ~=1.37.12];
+
+
 ## v1.9.21 - 2025-03-14
 ## Version 1.9.21
 
