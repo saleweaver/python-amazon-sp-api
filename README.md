@@ -14,7 +14,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 Automatically download all your Amazon seller reports and effortlessly forward them directly to Google Sheets or your database. Save valuable time, eliminate monthly fees, and own a lifetime license to this powerful reporting tool.
 
-Interested? [Make an appointment](https://me.datastic.co)
+Interested? [Make an appointment](https://nslucidneumannosatl9wn-fct-pensive-haslett.functions.fnc.fr-par.scw.cloud?link=chat&seller=github)
 
 
 ---
