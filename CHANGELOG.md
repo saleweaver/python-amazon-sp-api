@@ -1,3 +1,35 @@
+## v1.9.27 - 2025-04-16
+## Version 1.9.27
+
+### Changes Relevant to Users
+
+- **New Features**
+  - Added `get_featured_offer_expected_price_batch` method in the `Products` class. This method allows users to retrieve the featured offer expected price (FOEP) for a batch of requests. The FOEP is the price at or below which a seller can expect to become the featured offer.
+  - Introduced `get_competitive_summary_batch` method in the `Products` class. This method provides a competitive summary response, including featured buying options for a given ASIN and marketplace combination.
+
+- **Enhancements**
+  - Updated the `products.py` and `products_definitions.py` to include new data classes and enums for handling batch requests and competitive summaries.
+
+### Internal Changes
+
+- **Dependency Updates**
+  - Updated `boto3` dependency from `1.37.32` to `1.37.34` in both `requirements.txt` and `docs/requirements.txt`.
+
+- **Version Bump**
+  - Updated the package version from `1.9.26` to `1.9.27`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.26] -->|Updated| B[Version 1.9.27];
+    B --> C[Products Class];
+    C --> D[get_featured_offer_expected_price_batch];
+    C --> E[get_competitive_summary_batch];
+    B --> F[Dependencies];
+    F --> G[boto3 1.37.34];
+```
+
+These updates enhance the functionality of the `Products` API by providing new methods for batch processing and competitive analysis, while also ensuring compatibility with the latest `boto3` version.
+
 ## v1.9.26 - 2025-04-11
 ## Version 1.9.26
 
