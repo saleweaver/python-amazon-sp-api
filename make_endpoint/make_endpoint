@@ -100,7 +100,7 @@ def add_to_setup_py(endpoint):
     append_template = f"""##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               {package},
     """
-    with open('../setup.py', 'r') as f:
+    with open('./setup.py', 'r') as f:
         content = f.read()
         content = append_template.join(content.split('##### DO NOT DELETE ########## INSERT PACKAGE HERE #######'))
     f.close()
@@ -142,9 +142,9 @@ def get_endpoint_from_url(url):
 
 
 if __name__ == '__main__':
-    # args = parse_args()
+    args = parse_args()
 
-    create_endpoint_file('https://raw.githubusercontent.com/amzn/selling-partner-api-models/refs/heads/main/models/easy-ship-model/easyShip_2022-03-23.json')
+    create_endpoint_file(args.model_url)
     # for model_json_url in [
     #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/fulfillment-outbound-api-model/fulfillmentOutbound_2020-07-01.json',
     #     # 'https://raw.githubusercontent.com/amzn/selling-partner-api-models/main/models/aplus-content-api-model/aplusContent_2020-11-01.json',

@@ -22,6 +22,8 @@ from .messaging.messaging import Messaging
 from .merchant_fulfillment.merchant_fulfillment import MerchantFulfillment
 
 ##### DO NOT DELETE ########## INSERT IMPORT HERE #######
+from .application_integrations.application_integrations import ApplicationIntegrations
+
 from .easy_ship.easy_ship import EasyShip
     
 
@@ -113,6 +115,10 @@ __all__ = [
     "FulfillmentInbound",
     "MerchantFulfillment",
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
+    "ApplicationIntegrations",
+    
+    "FulfillmentInbound",
+    
     "EasyShip",
     
 

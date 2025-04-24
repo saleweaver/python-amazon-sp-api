@@ -10,6 +10,7 @@ You can use the playground to test endpoints:
 
     endpoints/aplus_content
     endpoints/authorization
+    endpoints/application_integrations
     endpoints/application_management
     endpoints/awd
     endpoints/catalog
