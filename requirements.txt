@@ -1,7 +1,7 @@
 pytest
 requests~=2.32.3
 
-boto3~=1.38.1
+boto3~=1.38.2
 
 cachetools~=5.5.2
 setuptools~=77.0.3
