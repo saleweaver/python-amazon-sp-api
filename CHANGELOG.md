@@ -1,3 +1,39 @@
+## v1.9.28 - 2025-04-24
+## Version 1.9.28
+
+### Changes Relevant to Users
+
+- **New Features**
+  - Introduced the `ApplicationIntegrations` class in the API, which includes methods to manage notifications for Amazon Selling Partners:
+    - `create_notification`: Allows creating notifications for sellers in Seller Central.
+    - `delete_notifications`: Enables the removal of application notifications from the Appstore notifications dashboard.
+    - `record_action_feedback`: Records the seller's response to a notification.
+  - Added documentation for the new `application_integrations` endpoint.
+
+- **Enhancements**
+  - Updated the `boto3` dependency from `1.37.34` to `1.38.1` in both `requirements.txt` and `docs/requirements.txt`.
+
+### Internal Changes
+
+- **Documentation Updates**
+  - Added a new documentation file for `application_integrations` in `docs/endpoints/application_integrations.rst`.
+
+- **Code Maintenance**
+  - Modified `make_endpoint/make_docs.py` and `make_endpoint/make_endpoint` scripts to include the new `application_integrations` endpoint.
+
+```mermaid
+graph TD;
+    A[Version 1.9.27] -->|Updated| B[Version 1.9.28];
+    B --> C[ApplicationIntegrations Class];
+    C --> D[create_notification];
+    C --> E[delete_notifications];
+    C --> F[record_action_feedback];
+    B --> G[Dependencies];
+    G --> H[boto3 1.38.1];
+```
+
+These updates introduce new capabilities for managing notifications via the `ApplicationIntegrations` API, enhancing the ability to interact with Amazon's Selling Partner API. Additionally, the dependency update ensures compatibility with the latest `boto3` version.
+
 ## v1.9.27 - 2025-04-16
 ## Version 1.9.27
 
