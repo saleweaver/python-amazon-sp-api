@@ -1,3 +1,25 @@
+## v1.9.31 - 2025-05-16
+## Version 1.9.31
+
+### Changes Relevant to Users
+
+- **Bug Fixes**
+  - Corrected a typo in the `grantless_scope` attribute of the `ApplicationManagement` class from `sellingpartnetapi::client_credential:rotation` to `sellingpartnerapi::client_credential:rotation`. This ensures proper functionality when using the grantless scope for client credential rotation.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.31` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.30] -->|Updated| B[Version 1.9.31];
+    B --> C[ApplicationManagement];
+    C --> D[grantless_scope Typo Fixed];
+```
+
+This update fixes a typo in the `ApplicationManagement` API, ensuring that the correct grantless scope is used for client credential rotations.
+
 ## v1.9.30 - 2025-05-16
 ## Version 1.9.30
 
