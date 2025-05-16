@@ -1,3 +1,25 @@
+## v1.9.32 - 2025-05-16
+## Version 1.9.32
+
+### Changes Relevant to Users
+
+- **Documentation Update**
+  - Updated the README to reflect the community's decision to implement Pydantic and async support in the upcoming version 2.0. Contributors are encouraged to join the ongoing discussion on GitHub.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.32` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.31] -->|Updated| B[Version 1.9.32];
+    B --> C[README Update];
+    C --> D[Pydantic and Async Support];
+```
+
+This update prepares the groundwork for version 2.0 by aligning community feedback with planned features, including Pydantic and async support.
+
 ## v1.9.31 - 2025-05-16
 ## Version 1.9.31
 
