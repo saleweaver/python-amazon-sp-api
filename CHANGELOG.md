@@ -1,3 +1,29 @@
+## v1.9.30 - 2025-05-16
+## Version 1.9.30
+
+### Changes Relevant to Users
+
+- **New Features**
+  - Added `grantless_scope` attribute to `ApplicationManagement` class, enabling the use of the `sellingpartnerapi::client_credential:rotation` scope for client credential rotation.
+
+- **Bug Fixes**
+  - Updated the `rotate_application_client_secret` method to use `_request_grantless_operation`, ensuring proper handling of grantless operations.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.30` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.29] -->|Updated| B[Version 1.9.30];
+    B --> C[ApplicationManagement];
+    C --> D[grantless_scope Added];
+    C --> E[rotate_application_client_secret Updated];
+```
+
+These updates enhance the functionality of the `ApplicationManagement` API, allowing for more seamless client secret rotations and improving the handling of grantless operations.
+
 ## v1.9.29 - 2025-05-16
 ## Version 1.9.29
 
