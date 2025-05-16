@@ -1,3 +1,27 @@
+## v1.9.29 - 2025-05-16
+## Version 1.9.29
+
+### Changes Relevant to Users
+
+- **Enhancements**
+  - Updated the `boto3` dependency from `1.38.1` to `1.38.17` in both `requirements.txt` and `docs/requirements.txt` to ensure compatibility with the latest features and improvements.
+
+### Internal Changes
+
+- **Documentation Updates**
+  - Updated the service link in `README.md` to reflect the new URL for real-time alerts and report downloads.
+
+```mermaid
+graph TD;
+    A[Version 1.9.28] -->|Updated| B[Version 1.9.29];
+    B --> C[Dependencies];
+    C --> D[boto3 1.38.17];
+    B --> E[Documentation];
+    E --> F[Updated Service Link];
+```
+
+These updates ensure the package remains up-to-date with the latest `boto3` enhancements and provide users with the correct service information for accessing real-time alerts and report downloads.
+
 ## v1.9.28 - 2025-04-24
 ## Version 1.9.28
 
