@@ -8,7 +8,7 @@ class ApplicationManagement(Client):
 
     The Selling Partner API for Application Management lets you programmatically update the client secret on registered applications.
     """
-    grantless_scope = 'sellingpartnetapi::client_credential:rotation'
+    grantless_scope = 'sellingpartnerapi::client_credential:rotation'
 
     @sp_endpoint("/applications/2023-11-30/clientSecret", method="POST")
     def rotate_application_client_secret(self, **kwargs) -> ApiResponse:
