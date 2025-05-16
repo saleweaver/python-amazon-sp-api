@@ -21,7 +21,8 @@ If you're looking to download reports from Amazon, or get real-time alerts, [hav
 
 ### 🚀 Version 2 is coming! 🚀
 
-You have decided, and since it's so close I'll implement pydantic and async.
+You have decided, and since it's so close I think we'll have to do both, pydantic and async.
+Thanks to everyone who voted!
 Contributors welcome - please join [the discussion](https://github.com/saleweaver/python-amazon-sp-api/discussions/1762)
 
 ![Alt](votes.png  "Votes")
