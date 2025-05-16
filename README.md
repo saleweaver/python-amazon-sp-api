@@ -13,7 +13,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 🚀 Streamline Your Amazon Seller Reporting!
 
 Automatically download all your Amazon seller reports and effortlessly forward them directly to Google Sheets or your database. 
-If you're looking to download reports from Amazon, [have a look at my service](https://reports.datastic.co).
+If you're looking to download reports from Amazon, or get real-time alerts, [have a look at my service](https://clairinsights.com).
 
 
 
