@@ -2,7 +2,7 @@ import zlib
 from collections import abc
 from datetime import datetime
 from io import BytesIO, StringIO
-from typing import Optional
+from typing import Optional, Union
 
 import requests
 
@@ -371,6 +371,7 @@ class Reports(Client):
         download: bool = False,
         file=None,
         character_code: Optional[str] = None,
+        timeout: Optional[Union[float,int]] = None,
         **kwargs
     ) -> ApiResponse:
         """
@@ -409,6 +410,7 @@ class Reports(Client):
                             obtaining the document from the document URL.
                             It fallbacks to 'iso-8859-1' if no encoding was found.
                             Only valid if decrypt=True.
+            timeout: int | optional, the timeout for the request to download the document
 
         Returns:
              ApiResponse
@@ -422,6 +424,7 @@ class Reports(Client):
                 res.payload.get("url"),
                 proxies=self.proxies,
                 verify=self.verify,
+                timeout=timeout,
             )
             document = document_response.content
             if not character_code:
