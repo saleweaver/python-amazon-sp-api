@@ -1,3 +1,28 @@
+## v1.9.34 - 2025-06-03
+## Version 1.9.34
+
+### Changes Relevant to Users
+
+- **New Feature**
+  - Added a `timeout` parameter to the `get_report_document` method in the `Reports` class. This allows users to specify a timeout for the request when downloading a document, enhancing control over network operations.
+
+### Internal Changes
+
+- **Dependency Update**
+  - Updated `boto3` dependency from `1.38.17` to `1.38.28` in both `requirements.txt` and `docs/requirements.txt` to ensure compatibility and access to the latest features and bug fixes.
+
+- **Version Update**
+  - Incremented version number to `1.9.34` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.33] -->|Updated| B[Version 1.9.34];
+    B --> C[Added Timeout Parameter];
+    B --> D[Updated boto3 Dependency];
+```
+
+This release introduces a new feature for enhanced network request handling and updates a key dependency to improve overall package stability and functionality.
+
 ## v1.9.33 - 2025-05-16
 ## Version 1.9.33
 
