@@ -1,0 +1,3 @@
+{{ renderer.render_type_annotation(field) }} = Field(44      {{ field.default }}{% if field.alias %}, alias="{{ field.alias }}"{% endif %}
+       {%- if field.description %}, description="{{ field.description|escape }}"{% endif %}
+   )
