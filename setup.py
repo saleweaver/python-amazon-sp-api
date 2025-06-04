@@ -72,6 +72,6 @@ setup(
     url='https://github.com/saleweaver/python-amazon-sp-api',
     license='MIT',
     author='Michael',
-    author_email='info@saleweaver.com',
+    author_email='primke.michael@gmail.com',
     description='Python wrapper for the Amazon Selling-Partner API'
 )
