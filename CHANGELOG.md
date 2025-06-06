@@ -1,3 +1,24 @@
+## v1.9.36 - 2025-06-06
+## Version 1.9.36
+
+### Changes Relevant to Users
+
+- **Dependency Update**
+  - Upgraded `boto3` dependency from `1.38.29` to `1.38.31` in both `requirements.txt` and `docs/requirements.txt`. This update ensures users have access to the latest features and improvements provided by `boto3`.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.36` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.35] -->|Updated| B[Version 1.9.36];
+    B --> C[Updated boto3 Dependency];
+```
+
+This release focuses on maintaining compatibility and leveraging the latest improvements in dependencies to ensure optimal performance and stability.
+
 ## v1.9.35 - 2025-06-04
 ## Version 1.9.35
 
