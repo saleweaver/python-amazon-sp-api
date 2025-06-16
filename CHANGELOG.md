@@ -1,3 +1,30 @@
+## v1.9.37 - 2025-06-16
+## Version 1.9.37
+
+### Changes Relevant to Users
+
+- **New Report Type**
+  - Added `GET_DATE_RANGE_FINANCIAL_HOLDS_DATA` to `ReportType`. This new report type allows users to access financial hold data within a specified date range, enhancing financial data analysis capabilities.
+
+- **Dependency Updates**
+  - Upgraded `boto3` dependency from `1.38.31` to `1.38.36` in both `requirements.txt` and `docs/requirements.txt`. This ensures compatibility with the latest AWS features and improvements.
+  - Updated `requests` dependency from `2.32.3` to `2.32.4`. This update includes minor bug fixes and performance improvements.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.37` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.36] -->|Updated| B[Version 1.9.37];
+    B --> C[Added New Report Type];
+    B --> D[Updated boto3 Dependency];
+    B --> E[Updated requests Dependency];
+```
+
+This release introduces a new report type for enhanced financial data analysis and includes updates to key dependencies to maintain compatibility and leverage the latest improvements.
+
 ## v1.9.36 - 2025-06-06
 ## Version 1.9.36
 
