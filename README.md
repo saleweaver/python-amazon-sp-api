@@ -10,13 +10,10 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ---
 
-### 🚀 Version 2 is coming! 🚀
+### 🚀 Version 2 🚀
 
-You have decided, and since it's so close I think we'll have to do both, pydantic and async.
-Thanks to everyone who voted!
-Contributors welcome - please join [the discussion](https://github.com/saleweaver/python-amazon-sp-api/discussions/1762)
-
-![Alt](votes.png  "Votes")
+Version 2 is currently being built - featuring pydantic, async support and better versioning. 
+Check out v2-alpha here: [v2-alpha](https://github.com/saleweaver/python-amazon-sp-api/tree/v2-01)  
 
 ---
 
