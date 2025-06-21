@@ -1,0 +1,59 @@
+"""
+Generated API client from Swagger/OpenAPI specification.
+This file was auto-generated. Do not edit manually.
+"""
+import json
+from typing import Any, Dict, List, Optional, Union, TypeVar, Generic, cast, overload
+
+import httpx
+from pydantic import BaseModel
+
+# Import all models
+from sp_api.api.models.{{module}}.{{module}}_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }} import *
+from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+
+T = TypeVar('T')
+
+
+class {{ module | pascal_case }}_V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}(Client):
+    """
+    {{title}} - {{ version }}
+
+    {{ description }}
+    """
+
+    {% for endpoint in endpoints %}
+    @overload
+    def {{ endpoint.operation_id | snake_case }}(
+        self,
+        request: {{ endpoint.request_params }},
+        *args, **kwargs
+    ) -> ApiResponse[{{ endpoint.responses['200'] if '200' in endpoint.responses else (endpoint.responses.values()|first) }}]:
+        """
+        {% if endpoint.description %}
+        {{ endpoint.description }}
+        {% endif %}
+        """
+        ...
+
+    @sp_endpoint("{{endpoint.path}}", method="{{ endpoint.method | upper }}")
+    def {{ endpoint.operation_id | snake_case }}(
+        self,
+        *args, **kwargs
+    ) -> ApiResponse[{{ endpoint.responses['200'] if '200' in endpoint.responses else (endpoint.responses.values()|first) }}]:
+        """
+        {% if endpoint.description %}
+        {{ endpoint.description }}
+        {% endif %}
+        """
+        path = kwargs.pop('path')
+        method = kwargs.pop('method')
+        request = args[0]
+        if not isinstance(request, {{ endpoint.request_params }}):
+            request = {{ endpoint.request_params }}(**kwargs)
+        path, body, query = request.create_request(path, self.marketplace_id)
+
+        return self._request(path, query=query, body=body, method=method, _type={{ endpoint.responses['200'] if '200' in endpoint.responses else (endpoint.responses.values()|first) }})
+
+
+    {% endfor %}

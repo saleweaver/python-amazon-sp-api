@@ -1,6 +1,5 @@
 import pytest
-
-from sp_api.api.shipping.shippingV2 import Shipping, AmznShippingBusiness
+from sp_api.api.shipping.shippingV2 import AmznShippingBusiness, Shipping
 from sp_api.base import SellingApiBadRequestException
 
 
@@ -25,16 +24,14 @@ def test_get_rates():
                 "email": "seller@test.com",
                 "phoneNumber": "662-302-7817",
             },
-            "shipperInstruction": {
-                "deliveryNotes": "TEST"
-            },
+            "shipperInstruction": {"deliveryNotes": "TEST"},
             "packages": [
                 {
                     "dimensions": {
                         "length": 30,
                         "width": 10,
                         "height": 10,
-                        "unit": "CENTIMETER"
+                        "unit": "CENTIMETER",
                     },
                     "weight": {
                         "unit": "KILOGRAM",
@@ -55,7 +52,7 @@ def test_get_rates():
                                 "unit": "KILOGRAM",
                             },
                         }
-                    ]
+                    ],
                 }
             ],
             "channelDetails": {
@@ -65,15 +62,15 @@ def test_get_rates():
         }
     )
     assert res.errors is None
-    assert res.payload.get('requestToken') is not None
-    assert len(res.payload.get('rates')) > 0
+    assert res.payload.get("requestToken") is not None
+    assert len(res.payload.get("rates")) > 0
 
 
 def test_get_additional_inputs_empty():
     res = Shipping().get_additional_inputs(
         **{
             "requestToken": "amzn1.rq.123456789.101",
-            "rateId": "122324234543535321345436534321423423523452345"
+            "rateId": "122324234543535321345436534321423423523452345",
         }
     )
     assert res.errors is None
@@ -85,7 +82,7 @@ def test_get_additional_inputs_invalid():
         res = Shipping().get_additional_inputs(
             **{
                 "requestToken": "null",
-                "rateId": "2314346237423894905834905890346890789075"
+                "rateId": "2314346237423894905834905890346890789075",
             }
         )
     except SellingApiBadRequestException as br:
@@ -120,8 +117,7 @@ def test_cancel_shipment_not_found():
 def test_get_shipment_documents():
     try:
         res = Shipping().get_shipment_documents(
-            "445454-3232-3232",
-            packageClientReferenceId="ASUSDI-45343854"
+            "445454-3232-3232", packageClientReferenceId="ASUSDI-45343854"
         )
         assert res.errors is None
     except SellingApiBadRequestException as br:
@@ -138,16 +134,12 @@ def test_purchase_shipment():
                 "rateId": "122324234543535321345436534321423423523452345",
                 "requestedDocumentSpecification": {
                     "format": "ZPL",
-                    "size": {
-                        "width": 4,
-                        "length": 6,
-                        "unit": "INCH"
-                    },
+                    "size": {"width": 4, "length": 6, "unit": "INCH"},
                     "dpi": 203,
                     "pageLayout": "DEFAULT",
                     "needFileJoining": False,
-                    "requestedDocumentTypes": ["LABEL"]
-                }
+                    "requestedDocumentTypes": ["LABEL"],
+                },
             }
         )
         assert res.errors is None
@@ -164,8 +156,8 @@ def test_submit_ndr_feedback():
             "ndrAction": "RESCHEDULE",
             "ndrRequestData": {
                 "rescheduleDate": "2024-12-12T05:24:00.00Z",
-                "additionalAddressNotes": "string"
-            }
+                "additionalAddressNotes": "string",
+            },
         }
     )
     assert res.errors is None
@@ -173,11 +165,7 @@ def test_submit_ndr_feedback():
 
 def test_get_access_points():
     res = Shipping().get_access_points(
-        **{
-            "accessPointTypes": "HELIX",
-            "countryCode": "UK",
-            "postalCode": "EX332JL"
-        }
+        **{"accessPointTypes": "HELIX", "countryCode": "UK", "postalCode": "EX332JL"}
     )
     assert res.errors is None
 
@@ -203,16 +191,14 @@ def test_one_click_shipment():
                 "email": "seller@test.com",
                 "phoneNumber": "662-302-7817",
             },
-            "shipperInstruction": {
-                "deliveryNotes": "TEST"
-            },
+            "shipperInstruction": {"deliveryNotes": "TEST"},
             "packages": [
                 {
                     "dimensions": {
                         "length": 30,
                         "width": 10,
                         "height": 10,
-                        "unit": "CENTIMETER"
+                        "unit": "CENTIMETER",
                     },
                     "weight": {
                         "unit": "KILOGRAM",
@@ -233,7 +219,7 @@ def test_one_click_shipment():
                                 "unit": "KILOGRAM",
                             },
                         }
-                    ]
+                    ],
                 }
             ],
             "channelDetails": {
@@ -241,22 +227,16 @@ def test_one_click_shipment():
             },
             "labelSpecifications": {
                 "format": "ZPL",
-                "size": {
-                    "width": 4,
-                    "length": 6,
-                    "unit": "INCH"
-                },
+                "size": {"width": 4, "length": 6, "unit": "INCH"},
                 "dpi": 203,
                 "pageLayout": "DEFAULT",
                 "needFileJoining": False,
-                "requestedDocumentTypes": ["LABEL"]
+                "requestedDocumentTypes": ["LABEL"],
             },
-            "serviceSelection": {
-                "serviceId": ["SWA-UK-PREM"]
-            },
+            "serviceSelection": {"serviceId": ["SWA-UK-PREM"]},
         }
     )
     assert res.errors is None
-    assert res.payload.get('shipmentId')
-    assert res.payload.get('packageDocumentDetails')[0]['trackingId']
-    assert len(res.payload.get('packageDocumentDetails')[0]['packageDocuments']) > 0
+    assert res.payload.get("shipmentId")
+    assert res.payload.get("packageDocumentDetails")[0]["trackingId"]
+    assert len(res.payload.get("packageDocumentDetails")[0]["packageDocuments"]) > 0

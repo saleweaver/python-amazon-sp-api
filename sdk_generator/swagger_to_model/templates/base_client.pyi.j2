@@ -1,0 +1,50 @@
+{# base_client.pyi.j2 #}
+from typing import overload, Literal
+from enum import Enum
+from sp_api.base import Client
+{% for version in versions %}
+from .{{ module | snake_case }}_v_{{ version
+     | replace('-', '_')
+     | replace('.', '_')
+     | replace(' ', '_') }} import {{ module | pascal_case }}_V_{{ version
+     | replace('-', '_')
+     | replace('.', '_')
+     | replace(' ', '_') }}
+{% endfor %}
+
+class {{ module | pascal_case }}Version(Enum):
+    {% for version in versions %}
+    V_{{ version
+       | replace('-', '_')
+       | replace('.', '_')
+       | replace(' ', '_') }}: Literal["{{ version }}"]
+    {% endfor %}
+
+class {{ module | pascal_case }}(Client):
+    # 1) No‐arg default → latest version
+    @overload
+    def __new__(cls) -> {{ module | pascal_case }}_V_{{ versions[-1]
+        | replace('-', '_')
+        | replace('.', '_')
+        | replace(' ', '_') }}: ...
+    {% for version in versions %}
+    # {{ version }} explicit overload
+    @overload
+    def __new__(
+        cls,
+        version: Literal[{{ module | pascal_case }}Version.V_{{ version
+            | replace('-', '_')
+            | replace('.', '_')
+            | replace(' ', '_') }}],
+        *args,
+        **kwargs
+    ) -> {{ module | pascal_case }}_V_{{ version
+        | replace('-', '_')
+        | replace('.', '_')
+        | replace(' ', '_') }}: ...
+    {% endfor %}
+    # fallback stub
+    def __new__(cls, version=..., *args, **kwargs) -> {% for version in versions %} {{ module | pascal_case }}_V_{{ version
+        | replace('-', '_')
+        | replace('.', '_')
+        | replace(' ', '_') }} {% if not loop.last %}|{% endif %} {% endfor %}: ...

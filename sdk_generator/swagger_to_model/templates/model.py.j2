@@ -1,0 +1,89 @@
+{# Model header with name and description #}
+{# This block generates the docstring header for the model #}
+
+
+{# Import statements - these will be populated by generator._get_imports #}
+{# Each import is processed and formatted properly #}
+{% for import_item in imports %}
+from {{ import_item.module }} import {{ import_item.name }}
+{% endfor %}
+
+{# Enum definitions - generated when a model has enum properties #}
+{# This section creates Python enum classes based on the enums detected in the Swagger/OpenAPI spec #}
+{% if model.enums %}
+# Enum definitions
+{% for e in model.enums %}
+class {{ e.name }}({% if e.base_type == 'string' %}str, {% endif %}Enum):
+    """{{ e.description }}"""
+{% for value in e.enum_values %}
+        {# Convert enum values to valid Python identifiers with proper casing #}
+        {% set enum_key = value|string|to_uppercase_snake|upper|replace('-', '_')|replace(' ', '_')|replace('.', '_')|replace('/','_')|replace(',', '_')|replace('__', '_') %}
+        {# Handle enum keys that start with numbers by adding a prefix #}
+        {% if enum_key[0].isdigit() %}    VALUE_{{ enum_key  }}{% else %}    {{ enum_key }}{% endif %} = {% if e.base_type == 'string' %}"{{ value }}"{% else %}{{ value }}{% endif %}{% if e.descriptions and value in e.descriptions %}  # {{ e.descriptions[value] }}{% endif %}
+
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+
+{# Handle top-level array models differently by creating a type alias instead of a model class #}
+{% if model.is_array %}
+{{ model.name }} = List["{{ model.model_name }}"]
+"""{{ model.description | replace('\\', '')| replace('\\\\', '')}}"""
+{% elif model.is_primitive %}
+{# Handle primitive types (string, integer, etc.) without properties as type aliases #}
+{{ model.name }} = {{ model.primitive_type }}
+"""{{ model.description | replace('\\', '')| replace('\\\\', '')}}"""
+{% else %}
+{# Import and inherit from appropriate base model depending on model type #}
+{# Request models use a special base class for request handling, others use standard BaseModel #}
+
+"""
+{{ model.name }}
+
+{{ model.description | replace('\\', '')| replace('\\\\', '') }}
+"""
+
+{% if model.is_request_model or model.is_request_params %}
+
+class {{ model.name }}({% if model.method | lower == 'get' %}GetRequestSerializer, {% endif %}RequestsBaseModel):
+    """
+    Request parameters for operation ID: {{ model.operation_id }}
+    {{ model.description }}
+    """
+{% else %}
+
+class {{ model.name }}(SpApiBaseModel):
+{% endif %}
+    {% if not model.is_request_params %}    """{{ model.description }}"""{% endif %}
+
+    {# Pydantic model configuration for supporting aliased field names #}
+{% if not model.properties.items() %}
+    model_config = ConfigDict(populate_by_name=True, extra="allow", serialize_by_alias=True, arbitrary_types_allowed=True)
+{% else %}
+    model_config = ConfigDict(populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True)
+{% endif %}
+{#    #}
+{#    _path_params = {{ model.path_params }}#}
+    {# Property definitions with special handling for body references and enum types #}
+    {# Each property becomes a typed field in the Pydantic model #}
+    {% for prop_name, prop in model.properties.items() %}
+
+    {# Property with description - generates a Field with description #}
+    {{ prop_name }}: Annotated[{% if not prop.required or 'marketplace' in prop_name | lower %}Optional[{% endif %}{% if prop.type == 'array' or prop.is_array %}List[{% if prop.item_type == 'enum' %}{{ prop.enum_name }}{% else %}{% if not prop.pydantic_type.startswith('List[Dict') %}"{% endif %}{{ prop.pydantic_type.replace('List[', '', 1).replace(']', '') }}{% if not prop.pydantic_type.startswith('List[Dict') %}"{% endif %}{% endif %}]{% elif prop.type == 'enum' %}{{ prop.enum_name }}{% elif prop.type == 'model' %}{% if not prop.pydantic_type.startswith('List[Dict') %}"{% endif %}{{ prop.model_name }}{% if not prop.pydantic_type.startswith('List[Dict') %}"{% endif %}{% elif prop.pydantic_type %}{{ prop.pydantic_type }}{% else %}Any{% endif %}{% if not prop.required or 'marketplace' in prop_name | lower %}]{% endif %}{% if prop.pydantic_type.startswith('List[Dict') %}]{% endif %}, {% if prop.param_location | upper == 'PATH' %}PathParam(), {% elif prop.param_location | upper == 'QUERY' %}QueryParam(), {% elif prop.param_location | upper == 'BODY' %}BodyParam(), {% endif %} Field(
+        {% if not prop.required or 'marketplace' in prop_name | lower %}None{% else %}...{% endif %},
+        {% if prop.name != prop_name %}validation_alias=AliasChoices("{{ prop.name }}", "{{ prop_name }}"),{% endif %}
+        {% if prop.name != prop_name %}serialization_alias="{{ prop.name }}",{% endif %}
+        {% if prop.description %}description="{{ prop.description | replace('"', "'") | replace('\n', ' ') }}"{% endif %}
+    )]
+{#    {% else %}#}
+    {# Property without description - simpler Field definition #}
+{#    {{ prop_name }}: {% if not prop.required %}Optional[{% endif %}{% if prop.type == 'array' %}List[{% if prop.item_type == 'enum' %}{{ prop.enum_name }}{% else %}{% if not (prop.model_name | lower).startswith('dict') %}"{% endif %}{{ prop.pydantic_type.replace('List[', '', 1).replace(']', '') }}{% if not (prop.model_name | lower).startswith('dict') %}"{% endif %}{% endif %}]{% elif prop.type == 'enum' %}{{ prop.enum_name }}{% elif prop.type == 'model' %}{% if not (prop.model_name | lower).startswith('dict') %}"{% endif %}{{ prop.model_name }}{% if not (prop.model_name | lower).startswith('dict') %}"{% endif %}{% elif prop.pydantic_type %}{{ prop.pydantic_type }}{% else %}Any{% endif %}{% if not prop.required %}]{% endif %} = Field(#}
+{#        {% if not prop.required %}None{% else %}...{% endif %},#}
+{#        {% if prop.name != prop_name %}validation_alias=AliasChoices("{{ prop.name }}", "{{ prop_name }}"),{% endif %}#}
+{#        {% if prop.name != prop_name %}serialization_alias="{{ prop.name }}"{% endif %}#}
+{##}
+{#    )#}
+{#    {% endif %}#}
+    {% endfor %}
+{% endif %}

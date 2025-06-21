@@ -3,6 +3,7 @@ import json
 from datetime import datetime
 import logging
 import os
+from typing import Type
 
 from requests import request
 from requests.exceptions import JSONDecodeError
@@ -88,41 +89,27 @@ class Client(BaseClient):
         self,
         path: str,
         *,
-        data: dict = None,
-        params: dict = None,
+        body=None,
+        query=None,
         headers=None,
-        add_marketplace=True,
+        method=None,
         res_no_data: bool = False,
         bulk: bool = False,
         wrap_list: bool = False,
+        _type: Type
     ) -> ApiResponse:
-        if params is None:
-            params = {}
-        if data is None:
-            data = {}
 
         # Note: The use of isinstance here is to support request schemas that are an array at the
         # top level, eg get_product_fees_estimate
-        self.method = params.pop(
-            "method", data.pop("method", "GET") if isinstance(data, dict) else "GET"
-        )
-
-        if add_marketplace:
-            self._add_marketplaces(data if self.method in ("POST", "PUT") else params)
-
-        log.debug("HTTP Method: %s", self.method)
-        log.debug("Making request to URL: %s", self.endpoint + self._check_version(path))
-        log.debug("Request Params: %s", params)
-        log.debug("Request Data: %s", data if self.method in ("POST", "PUT", "PATCH") else None)
-        log.debug("Request Headers: %s", headers or self.headers)
+        self.method = method
 
         res = request(
             self.method,
             self.endpoint + self._check_version(path),
-            params=params,
+            params=query,
             data=(
-                json.dumps(data)
-                if data and self.method in ("POST", "PUT", "PATCH")
+                json.dumps(body)
+                if body and self.method in ("POST", "PUT", "PATCH")
                 else None
             ),
             headers=headers or self.headers,
@@ -130,11 +117,12 @@ class Client(BaseClient):
             proxies=self.proxies,
             verify=self.verify,
         )
-        return self._check_response(res, res_no_data, bulk, wrap_list)
+        return self._check_response(res, _type, res_no_data, bulk, wrap_list)
 
     def _check_response(
         self,
         res,
+            _type: Type,
         res_no_data: bool = False,
         bulk: bool = False,
         wrap_list: bool = False,
@@ -168,7 +156,7 @@ class Client(BaseClient):
             raise exception(error, headers=res.headers)
 
         log.debug("Response: %s", js)
-        return ApiResponse(**js, headers=res.headers)
+        return ApiResponse[_type](**js, headers=res.headers)
 
     def _add_marketplaces(self, data):
         POST = ["marketplaceIds", "MarketplaceIds"]

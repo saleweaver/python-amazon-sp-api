@@ -3,10 +3,9 @@ from unittest import mock
 
 from sp_api.base.credential_provider import FromCachedSecretsCredentialProvider
 
-
-REFRESH_TOKEN = '<refresh_token>'
-LWA_APP_ID = '<lwa_app_id>'
-LWA_CLIENT_SECRET = '<lwa_client_secret>'
+REFRESH_TOKEN = "<refresh_token>"
+LWA_APP_ID = "<lwa_app_id>"
+LWA_CLIENT_SECRET = "<lwa_client_secret>"
 
 
 def test_from_cached_secrets_cp_without_secret_id_set():
@@ -18,8 +17,11 @@ def test_from_cached_secrets_cp_without_secret_id_set():
 
 
 def test_from_cached_secrets_cp_without_cache_available():
-    with mock.patch.dict(os.environ, {"SP_API_AWS_SECRET_ID": "test"}), \
-            mock.patch.object(FromCachedSecretsCredentialProvider, "_get_secret_cache", return_value=None):
+    with mock.patch.dict(
+        os.environ, {"SP_API_AWS_SECRET_ID": "test"}
+    ), mock.patch.object(
+        FromCachedSecretsCredentialProvider, "_get_secret_cache", return_value=None
+    ):
         cp = FromCachedSecretsCredentialProvider()
         cp.load_credentials()
 
@@ -33,8 +35,13 @@ def test_from_cached_secrets_cp_with_cache_available():
         "LWA_CLIENT_SECRET": LWA_CLIENT_SECRET,
     }
 
-    with mock.patch.dict(os.environ, {"SP_API_AWS_SECRET_ID": "test"}), \
-            mock.patch.object(FromCachedSecretsCredentialProvider, "get_secret_content", return_value=secret_content):
+    with mock.patch.dict(
+        os.environ, {"SP_API_AWS_SECRET_ID": "test"}
+    ), mock.patch.object(
+        FromCachedSecretsCredentialProvider,
+        "get_secret_content",
+        return_value=secret_content,
+    ):
         cp = FromCachedSecretsCredentialProvider()
         cp.load_credentials()
 

@@ -1,7 +1,11 @@
 import pprint
+from typing import Generic, TypeVar, Any, Union, Optional, get_args, get_origin
+from pydantic import BaseModel
+
+T = TypeVar("T")
 
 
-class ApiResponse:
+class ApiResponse(Generic[T]):
     """
     Api Response
 
@@ -33,14 +37,15 @@ class ApiResponse:
 
     def __init__(
         self,
-        payload=None,
-        errors=None,
-        pagination=None,
-        headers=None,
-        nextToken=None,
-        **kwargs
-    ):
+        payload: Optional[Union[T, dict, list]] = None,
+        errors: Any = None,
+        pagination: Any = None,
+        headers: Any = None,
+        nextToken: Optional[str] = None,
+        **kwargs: Any
+    ) -> None:
         self.payload = payload or kwargs
+        self.payload: Union[T, dict, list]  # type: ignore
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
@@ -60,13 +65,38 @@ class ApiResponse:
         if kwargs != self.payload:
             self.kwargs = kwargs
 
-    def __str__(self):
+    def __str__(self) -> str:
         return pprint.pformat(vars(self))
 
-    def __call__(self, item=None, **kwargs):
+    def __call__(self, item: Optional[str] = None, **kwargs: Any) -> Union[T, Any]:
         if not item:
             return self.payload
         return self.payload.get(item)
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: str) -> Any:
         return self.payload.get(item)
+
+    @property
+    def payload_parsed(self) -> Optional[T]:
+        """
+        Return the payload parsed into the generic type T, if T is a Pydantic model or list thereof.
+        """
+        try:
+            # Extract the runtime type argument T from __orig_class__
+            model_type = get_args(self.__orig_class__)[0]
+        except (AttributeError, IndexError):
+            return self.payload  # no generic type info
+
+        # If T is a Pydantic model, parse the payload into it
+        if isinstance(model_type, type) and issubclass(model_type, BaseModel):
+            return model_type.model_construct(**(self.payload or {}))
+
+        # If T is a list of Pydantic models, parse each item
+        origin = get_origin(model_type)
+        if origin is list and isinstance(self.payload, list):
+            inner_type = get_args(model_type)[0]
+            if isinstance(inner_type, type) and issubclass(inner_type, BaseModel):
+                return [inner_type.model_validate(**item) for item in self.payload]
+
+        # Fallback: return the raw payload
+        return self.payload  # type: ignore

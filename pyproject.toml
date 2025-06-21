@@ -1,0 +1,44 @@
+[build-system]
+requires = [
+  "setuptools>=67.0",
+  "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
+name = "python-amazon-sp-api"
+authors = [
+    {name = "Michael Primke", email = "michael@clairinsights.com"},
+]
+license = "MIT"
+readme = "README.md"
+dynamic = ["version"]
+description = "Python wrapper for the Amazon Selling-Partner API"
+requires-python = ">=3.8"
+dependencies = [
+  "requests>=2.32.1",
+  "cachetools>=4.2",
+  "confuse>=1.4",
+  "pytest>=8.3.5",
+]
+
+
+[project.optional-dependencies]
+aws-caching = [
+  "aws-secretsmanager-caching",
+  "boto3",
+]
+aws = [
+  "boto3",
+]
+
+
+[tool.setuptools.dynamic]
+version = { attr = "sp_api.__version__.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["sp_api*", "tests*"]

@@ -1,0 +1,218 @@
+"""
+Generated API client from Swagger/OpenAPI specification.
+This file was auto-generated. Do not edit manually.
+"""
+
+import json
+from typing import (Any, Dict, Generic, List, Optional, TypeVar, Union, cast,
+                    overload)
+
+import httpx
+from pydantic import BaseModel
+# Import all models
+from sp_api.api.models.finances.finances_v0 import *
+from sp_api.base import ApiResponse, Client, fill_query_params, sp_endpoint
+
+T = TypeVar("T")
+
+
+class Finances_V_v0(Client):
+    """
+    Selling Partner API for Finances - v0
+
+    The Selling Partner API for Finances helps you obtain financial information relevant to a seller's business. You can obtain financial events for a given order, financial event group, or date range without having to wait until a statement period closes. You can also obtain financial event groups for a given date range.
+    """
+
+    @overload
+    def list_financial_event_groups(
+        self, request: ListFinancialEventGroupsRequest, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventGroupsResponse]:
+        """
+        Returns financial event groups for a given date range. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        ...
+
+    @sp_endpoint("/finances/v0/financialEventGroups", method="GET")
+    def list_financial_event_groups(
+        self, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventGroupsResponse]:
+        """
+        Returns financial event groups for a given date range. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        path = kwargs.pop("path")
+        method = kwargs.pop("method")
+        request = args[0]
+        if not isinstance(request, ListFinancialEventGroupsRequest):
+            request = ListFinancialEventGroupsRequest(**kwargs)
+        path, body, query = request.create_request(path, self.marketplace_id)
+
+        return self._request(
+            path,
+            query=query,
+            body=body,
+            method=method,
+            _type=ListFinancialEventGroupsResponse,
+        )
+
+    @overload
+    def list_financial_events_by_group_id(
+        self, request: ListFinancialEventsByGroupIdRequest, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns all financial events for the specified financial event group. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Note:** This operation will only retrieve group's data for the past two years. If a request is submitted for data spanning more than two years, an empty response is returned.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        ...
+
+    @sp_endpoint(
+        "/finances/v0/financialEventGroups/{eventGroupId}/financialEvents", method="GET"
+    )
+    def list_financial_events_by_group_id(
+        self, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns all financial events for the specified financial event group. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Note:** This operation will only retrieve group's data for the past two years. If a request is submitted for data spanning more than two years, an empty response is returned.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        path = kwargs.pop("path")
+        method = kwargs.pop("method")
+        request = args[0]
+        if not isinstance(request, ListFinancialEventsByGroupIdRequest):
+            request = ListFinancialEventsByGroupIdRequest(**kwargs)
+        path, body, query = request.create_request(path, self.marketplace_id)
+
+        return self._request(
+            path,
+            query=query,
+            body=body,
+            method=method,
+            _type=ListFinancialEventsResponse,
+        )
+
+    @overload
+    def list_financial_events_by_order_id(
+        self, request: ListFinancialEventsByOrderIdRequest, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns all financial events for the specified order. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        ...
+
+    @sp_endpoint("/finances/v0/orders/{orderId}/financialEvents", method="GET")
+    def list_financial_events_by_order_id(
+        self, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns all financial events for the specified order. It may take up to 48 hours for orders to appear in your financial events.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        path = kwargs.pop("path")
+        method = kwargs.pop("method")
+        request = args[0]
+        if not isinstance(request, ListFinancialEventsByOrderIdRequest):
+            request = ListFinancialEventsByOrderIdRequest(**kwargs)
+        path, body, query = request.create_request(path, self.marketplace_id)
+
+        return self._request(
+            path,
+            query=query,
+            body=body,
+            method=method,
+            _type=ListFinancialEventsResponse,
+        )
+
+    @overload
+    def list_financial_events(
+        self, request: ListFinancialEventsRequest, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns financial events for the specified data range. It may take up to 48 hours for orders to appear in your financial events. **Note:** in `ListFinancialEvents`, deferred events don't show up in responses until in they are released.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        ...
+
+    @sp_endpoint("/finances/v0/financialEvents", method="GET")
+    def list_financial_events(
+        self, *args, **kwargs
+    ) -> ApiResponse[ListFinancialEventsResponse]:
+        """
+        Returns financial events for the specified data range. It may take up to 48 hours for orders to appear in your financial events. **Note:** in `ListFinancialEvents`, deferred events don't show up in responses until in they are released.
+
+        **Usage Plan:**
+
+        |   Rate (requests per second) |   Burst |
+        |------------------------------|---------|
+        |                          0.5 |      30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+        """
+        path = kwargs.pop("path")
+        method = kwargs.pop("method")
+        request = args[0]
+        if not isinstance(request, ListFinancialEventsRequest):
+            request = ListFinancialEventsRequest(**kwargs)
+        path, body, query = request.create_request(path, self.marketplace_id)
+
+        return self._request(
+            path,
+            query=query,
+            body=body,
+            method=method,
+            _type=ListFinancialEventsResponse,
+        )

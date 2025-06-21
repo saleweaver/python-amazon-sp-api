@@ -1,0 +1,32 @@
+from typing import overload, Union
+from enum import Enum
+
+from sp_api.base import Client
+{% for version in versions %}
+from .{{ module | snake_case }}_v_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }} import {{ module | pascal_case }}_V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}
+{% endfor %}
+
+class {{ module | pascal_case }}Version(Enum):
+    {% for version in versions %}
+    V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }} = '{{ version }}'
+    {% endfor %}
+
+class {{ module | pascal_case }}(Client):
+    @overload
+    def __new__(cls, *args, **kwargs) -> {{ module | pascal_case }}_V_{{ versions[0] | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}: ...
+    {% for version in versions %}
+    @overload
+    def __new__(cls, version: {{ module | pascal_case }}Version.V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}, *args, **kwargs) -> {{ module | pascal_case }}_V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}: ...
+    {% endfor %}
+    def __new__(cls, version: Union[{{ module | pascal_case }}Version, str] = {{ module | pascal_case }}Version.V_{{ versions[-1] | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}, *args, **kwargs):
+        if not isinstance(version, {{ module | pascal_case }}Version):
+            try:
+                version = {{ module | pascal_case }}Version(version)
+            except ValueError:
+                raise ValueError(f"Invalid version: {version!r}")
+        {% for version in versions %}
+        if version == {{ module | pascal_case }}Version.V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}:
+            return {{ module | pascal_case }}_V_{{ version | replace('-', '_') | replace('.', '_') | replace(' ', '_') }}(*args, **kwargs)
+        {% endfor %}
+        else:
+            raise ValueError(f"Invalid version: {version}")

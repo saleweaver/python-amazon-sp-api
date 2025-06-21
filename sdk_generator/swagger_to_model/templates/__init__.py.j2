@@ -1,0 +1,17 @@
+"""
+Generated models package from Swagger/OpenAPI specification.
+This file was auto-generated. Do not edit manually.
+"""
+from .base_models import RequestsBaseModel
+
+{% for dir, modules in modules.items() %}
+{% for mod in modules %}
+from .{{ dir }} import {{ mod }}
+{% endfor %}
+{% endfor %}
+
+__all__ = [
+    {% for entry in all_entries %}
+    "{{ entry }}",
+    {% endfor %}
+]

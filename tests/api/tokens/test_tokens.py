@@ -1,9 +1,8 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 import pytest
-
-from sp_api.api import Tokens, Orders
-from sp_api.base import SellingApiBadRequestException, Marketplaces
+from sp_api.api import Orders, Tokens
+from sp_api.base import Marketplaces, SellingApiBadRequestException
 
 #
 # def test_get_token_for_bulk_orders():

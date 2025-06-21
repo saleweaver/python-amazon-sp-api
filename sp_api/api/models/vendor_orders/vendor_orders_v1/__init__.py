@@ -1,0 +1,57 @@
+"""
+Generated models package from Swagger/OpenAPI specification.
+This file was auto-generated. Do not edit manually.
+"""
+
+from .base_models import RequestsBaseModel
+from .common import (AcknowledgementStatusDetails, Address, DateTimeInterval,
+                     Decimal, Error, ErrorList, GetPurchaseOrderRequest,
+                     GetPurchaseOrderResponse, GetPurchaseOrdersRequest,
+                     GetPurchaseOrdersResponse, GetPurchaseOrdersStatusRequest,
+                     GetPurchaseOrdersStatusResponse, ImportDetails,
+                     ItemQuantity, ItemStatus, Money, Order,
+                     OrderAcknowledgement, OrderAcknowledgementItem,
+                     OrderDetails, OrderedQuantityDetails, OrderItem,
+                     OrderItemAcknowledgement, OrderItemStatus, OrderList,
+                     OrderListStatus, OrderStatus, Pagination,
+                     PartyIdentification, SubmitAcknowledgementRequest,
+                     SubmitAcknowledgementRequestBody,
+                     SubmitAcknowledgementResponse, TaxRegistrationDetails,
+                     TransactionId)
+
+__all__ = [
+    "GetPurchaseOrdersResponse",
+    "GetPurchaseOrderResponse",
+    "OrderList",
+    "Pagination",
+    "Order",
+    "OrderDetails",
+    "ImportDetails",
+    "DateTimeInterval",
+    "PartyIdentification",
+    "TaxRegistrationDetails",
+    "Address",
+    "OrderItem",
+    "Money",
+    "Decimal",
+    "SubmitAcknowledgementResponse",
+    "TransactionId",
+    "ErrorList",
+    "SubmitAcknowledgementRequestBody",
+    "OrderAcknowledgement",
+    "OrderAcknowledgementItem",
+    "OrderItemAcknowledgement",
+    "ItemQuantity",
+    "GetPurchaseOrdersStatusResponse",
+    "OrderListStatus",
+    "OrderStatus",
+    "ItemStatus",
+    "OrderItemStatus",
+    "OrderedQuantityDetails",
+    "AcknowledgementStatusDetails",
+    "Error",
+    "GetPurchaseOrdersRequest",
+    "GetPurchaseOrderRequest",
+    "SubmitAcknowledgementRequest",
+    "GetPurchaseOrdersStatusRequest",
+]
