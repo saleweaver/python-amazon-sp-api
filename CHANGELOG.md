@@ -1,3 +1,26 @@
+## v1.9.39 - 2025-06-24
+## Version 1.9.39
+
+### Changes Relevant to Users
+
+- **Dependency Updates**
+  - Upgraded `boto3` dependency from `1.38.40` to `1.38.42` in both `requirements.txt` and `docs/requirements.txt`. This update ensures continued compatibility with AWS services and incorporates the latest enhancements.
+  - Upgraded `setuptools` from `77.0.3` to `80.9.0` to include the latest improvements and bug fixes.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.39` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.38] -->|Updated| B[Version 1.9.39];
+    B --> C[Updated boto3 Dependency];
+    B --> D[Updated setuptools Dependency];
+```
+
+This release focuses on maintaining compatibility with AWS services by updating the `boto3` dependency to its latest version and includes improvements from the updated `setuptools` package.
+
 ## v1.9.38 - 2025-06-21
 ## Version 1.9.38
 
