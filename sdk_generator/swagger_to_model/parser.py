@@ -335,7 +335,7 @@ class SwaggerParser:
             for prop_name, prop_schema in schema.get("properties", {}).items():
                 snake_prop_name = self.to_snake_case(prop_name)
                 properties[snake_prop_name] = self._parse_property(
-                    prop_name, prop_schema, prop_name in required_props
+                    prop_name, prop_schema, prop_name in required_props, model_context=name
                 )
                 # Keep original name for reference
                 properties[snake_prop_name]["name"] = prop_name
@@ -356,7 +356,7 @@ class SwaggerParser:
             raise
 
     def _parse_property(
-        self, original_name: str, schema: Dict[str, Any], required: bool
+        self, original_name: str, schema: Dict[str, Any], required: bool, model_context: str = ""
     ) -> Dict[str, Any]:
         """
         Parse a property schema.
@@ -409,7 +409,7 @@ class SwaggerParser:
                 elif "enum" in items_schema:
                     # Create a proper enum class name based on the property name
                     # For example, property "status_codes" becomes "StatusCodesEnum"
-                    enum_name = f"{self.to_pascal_case(original_name)}Enum"
+                    enum_name = self._create_unique_enum_name(original_name, model_context)
 
                     # Extract enum values from the OpenAPI schema
                     # These are the allowed values for items in the array
@@ -485,7 +485,7 @@ class SwaggerParser:
             if "enum" in schema:
                 # Create a proper enum class name based on the property name
                 # For example, property "status" becomes "StatusEnum"
-                enum_name = f"{self.to_pascal_case(original_name)}Enum"
+                enum_name = self._create_unique_enum_name(original_name, model_context)
 
                 # Extract enum values from the OpenAPI schema
                 enum_values = schema.get("enum", [])
@@ -539,6 +539,30 @@ class SwaggerParser:
             # Handle any exceptions that occur during parsing
             self._handle_exception(f"Error parsing property: {original_name}", e)
             raise
+
+    def _create_unique_enum_name(self, property_name: str, model_context: str = "") -> str:
+        """
+        Create a unique enum name by combining model context and property name.
+
+        Args:
+            property_name: Name of the property containing the enum
+            model_context: Name of the model this enum belongs to
+
+        Returns:
+            Unique enum class name
+        """
+        # Convert property name to PascalCase
+        property_pascal = self.to_pascal_case(property_name)
+
+        if model_context:
+            # Convert model context to PascalCase and combine
+            model_pascal = self.to_pascal_case(model_context)
+            enum_name = f"{model_pascal}{property_pascal}Enum"
+        else:
+            enum_name = f"{property_pascal}Enum"
+
+        return enum_name
+
 
     def _parse_operation_swagger2(
         self, path: str, method: str, operation: Dict[str, Any]
@@ -775,7 +799,7 @@ class SwaggerParser:
                 snake_name = self.to_snake_case(
                     name
                 )  # Convert to snake_case for Python compatibility
-                properties[snake_name] = self._parse_property(name, schema, required)
+                properties[snake_name] = self._parse_property(name, schema, required, model_context=model_name)
                 properties[snake_name][
                     "name"
                 ] = name  # Preserve original parameter name for reference
@@ -799,8 +823,8 @@ class SwaggerParser:
                         and "enum" in param["items"]
                     ):
                         properties[snake_name]["is_array"] = True  # Mark as array type
-                        enum_name = (
-                            f"{self.to_pascal_case(name)}Enum"  # Create enum class name
+                        enum_name = self._create_unique_enum_name(
+                            name, model_name
                         )
                         properties[snake_name][
                             "enum_name"
