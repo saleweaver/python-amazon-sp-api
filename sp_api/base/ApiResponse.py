@@ -89,6 +89,8 @@ class ApiResponse(Generic[T]):
 
         # If T is a Pydantic model, parse the payload into it
         if isinstance(model_type, type) and issubclass(model_type, BaseModel):
+            if 'payload' in model_type.model_fields and 'payload' not in self.payload:
+                return model_type.model_validate({'payload': self.payload})
             return model_type.model_construct(**(self.payload or {}))
 
         # If T is a list of Pydantic models, parse each item
