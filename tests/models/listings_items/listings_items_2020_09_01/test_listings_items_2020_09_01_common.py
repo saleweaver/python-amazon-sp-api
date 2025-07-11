@@ -4,10 +4,11 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.listings_items.listings_items_2020_09_01.common import (
     DeleteListingsItemRequest, Error, ErrorList, GetRequestSerializer, Issue,
-    ListingsItemPatchRequestBody, ListingsItemPutRequestBody,
-    ListingsItemSubmissionResponse, OpEnum, PatchListingsItemRequest,
-    PatchOperation, PutListingsItemRequest, RequestsBaseModel,
-    RequirementsEnum, SeverityEnum, SpApiBaseModel, StatusEnum)
+    IssueSeverityEnum, ListingsItemPatchRequestBody,
+    ListingsItemPutRequestBody, ListingsItemPutRequestBodyRequirementsEnum,
+    ListingsItemSubmissionResponse, ListingsItemSubmissionResponseStatusEnum,
+    PatchListingsItemRequest, PatchOperation, PatchOperationOpEnum,
+    PutListingsItemRequest, RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -68,7 +69,7 @@ def test_issue_instantiates():
     kwargs = {
         "code": "",
         "message": "",
-        "severity": SeverityEnum.ERROR,
+        "severity": IssueSeverityEnum.ERROR,
         "attribute_name": None,
     }
     obj = Issue(**kwargs)
@@ -78,7 +79,7 @@ def test_issue_instantiates():
 def test_patchoperation_instantiates():
     """Instantiate PatchOperation with dummy data"""
     kwargs = {
-        "op": OpEnum.ADD,
+        "op": PatchOperationOpEnum.ADD,
         "path": "",
         "value": None,
     }
@@ -111,7 +112,7 @@ def test_listingsitemsubmissionresponse_instantiates():
     """Instantiate ListingsItemSubmissionResponse with dummy data"""
     kwargs = {
         "sku": "",
-        "status": StatusEnum.ACCEPTED,
+        "status": ListingsItemSubmissionResponseStatusEnum.ACCEPTED,
         "submission_id": "",
         "issues": None,
     }

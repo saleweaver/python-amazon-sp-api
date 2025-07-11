@@ -3,22 +3,31 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.vendor_orders.vendor_orders_v1.common import (
-    AcknowledgementCodeEnum, AcknowledgementStatusDetails, Address, Error,
-    GetPurchaseOrderRequest, GetPurchaseOrderResponse,
-    GetPurchaseOrdersRequest, GetPurchaseOrdersResponse,
-    GetPurchaseOrdersStatusRequest, GetPurchaseOrdersStatusResponse,
-    GetRequestSerializer, ImportDetails, InternationalCommercialTermsEnum,
-    ItemConfirmationStatusEnum, ItemQuantity, ItemReceiveStatusEnum,
-    MethodOfPaymentEnum, Money, Order, OrderAcknowledgement,
-    OrderAcknowledgementItem, OrderDetails, OrderedQuantityDetails, OrderItem,
-    OrderItemAcknowledgement, OrderItemStatus, OrderList, OrderListStatus,
-    OrderStatus, Pagination, PartyIdentification, PaymentMethodEnum,
-    PoItemStateEnum, PurchaseOrderStateEnum, PurchaseOrderStatusEnum,
-    PurchaseOrderTypeEnum, RejectionReasonEnum, RequestsBaseModel,
-    SortOrderEnum, SpApiBaseModel, SubmitAcknowledgementRequest,
+    AcknowledgementStatusDetails, Address, Error, GetPurchaseOrderRequest,
+    GetPurchaseOrderResponse, GetPurchaseOrdersRequest,
+    GetPurchaseOrdersRequestPoItemStateEnum,
+    GetPurchaseOrdersRequestPurchaseOrderStateEnum,
+    GetPurchaseOrdersRequestSortOrderEnum, GetPurchaseOrdersResponse,
+    GetPurchaseOrdersStatusRequest,
+    GetPurchaseOrdersStatusRequestItemConfirmationStatusEnum,
+    GetPurchaseOrdersStatusRequestItemReceiveStatusEnum,
+    GetPurchaseOrdersStatusRequestPurchaseOrderStatusEnum,
+    GetPurchaseOrdersStatusRequestSortOrderEnum,
+    GetPurchaseOrdersStatusResponse, GetRequestSerializer, ImportDetails,
+    ImportDetailsInternationalCommercialTermsEnum,
+    ImportDetailsMethodOfPaymentEnum, ItemQuantity,
+    ItemQuantityUnitOfMeasureEnum, Money, MoneyUnitOfMeasureEnum, Order,
+    OrderAcknowledgement, OrderAcknowledgementItem, OrderDetails,
+    OrderDetailsPaymentMethodEnum, OrderDetailsPurchaseOrderTypeEnum,
+    OrderedQuantityDetails, OrderItem, OrderItemAcknowledgement,
+    OrderItemAcknowledgementAcknowledgementCodeEnum,
+    OrderItemAcknowledgementRejectionReasonEnum, OrderItemStatus, OrderList,
+    OrderListStatus, OrderPurchaseOrderStateEnum, OrderStatus,
+    OrderStatusPurchaseOrderStatusEnum, Pagination, PartyIdentification,
+    RequestsBaseModel, SpApiBaseModel, SubmitAcknowledgementRequest,
     SubmitAcknowledgementRequestBody, SubmitAcknowledgementResponse,
-    TaxRegistrationDetails, TaxRegistrationTypeEnum, TransactionId,
-    UnitOfMeasureEnum)
+    TaxRegistrationDetails, TaxRegistrationDetailsTaxRegistrationTypeEnum,
+    TransactionId)
 
 
 def test_requestsbasemodel_instantiates():
@@ -147,7 +156,7 @@ def test_orderitem_instantiates():
 def test_taxregistrationdetails_instantiates():
     """Instantiate TaxRegistrationDetails with dummy data"""
     kwargs = {
-        "tax_registration_type": TaxRegistrationTypeEnum.VAT,
+        "tax_registration_type": TaxRegistrationDetailsTaxRegistrationTypeEnum.VAT,
         "tax_registration_number": "",
     }
     obj = TaxRegistrationDetails(**kwargs)
@@ -191,7 +200,7 @@ def test_order_instantiates():
     """Instantiate Order with dummy data"""
     kwargs = {
         "purchase_order_number": "",
-        "purchase_order_state": PurchaseOrderStateEnum.NEW,
+        "purchase_order_state": OrderPurchaseOrderStateEnum.NEW,
         "order_details": None,
     }
     obj = Order(**kwargs)
@@ -282,7 +291,7 @@ def test_orderstatus_instantiates():
     """Instantiate OrderStatus with dummy data"""
     kwargs = {
         "purchase_order_number": "",
-        "purchase_order_status": PurchaseOrderStatusEnum.OPEN,
+        "purchase_order_status": OrderStatusPurchaseOrderStatusEnum.OPEN,
         "purchase_order_date": datetime(2000, 1, 1),
         "last_updated_date": None,
         "selling_party": PartyIdentification(
@@ -320,7 +329,7 @@ def test_getpurchaseordersstatusresponse_instantiates():
 def test_orderitemacknowledgement_instantiates():
     """Instantiate OrderItemAcknowledgement with dummy data"""
     kwargs = {
-        "acknowledgement_code": AcknowledgementCodeEnum.ACCEPTED,
+        "acknowledgement_code": OrderItemAcknowledgementAcknowledgementCodeEnum.ACCEPTED,
         "acknowledged_quantity": ItemQuantity(
             **{"amount": None, "unit_of_measure": None, "unit_size": None}
         ),

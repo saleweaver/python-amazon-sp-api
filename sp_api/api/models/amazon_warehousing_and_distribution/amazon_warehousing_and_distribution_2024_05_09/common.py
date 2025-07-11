@@ -922,7 +922,7 @@ class GetInboundRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class PageTypeEnum(str, Enum):
+class GetInboundShipmentLabelsRequestPageTypeEnum(str, Enum):
     """Enum for pageType"""
 
     THERMAL_NONPCP = "THERMAL_NONPCP"  # Use `THERMAL_NONPC` for a thermal printer. Supports non-Amazon-partnered shipments.
@@ -930,7 +930,7 @@ class PageTypeEnum(str, Enum):
     LETTER_6 = "LETTER_6"  # Six labels per US Letter label sheet.
 
 
-class FormatTypeEnum(str, Enum):
+class GetInboundShipmentLabelsRequestFormatTypeEnum(str, Enum):
     """Enum for formatType"""
 
     PDF = "PDF"  # PDF format.
@@ -965,7 +965,7 @@ class GetInboundShipmentLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     page_type: Annotated[
-        Optional[PageTypeEnum],
+        Optional[GetInboundShipmentLabelsRequestPageTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -976,7 +976,7 @@ class GetInboundShipmentLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     format_type: Annotated[
-        Optional[FormatTypeEnum],
+        Optional[GetInboundShipmentLabelsRequestFormatTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -988,7 +988,7 @@ class GetInboundShipmentLabelsRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class SkuQuantitiesEnum(str, Enum):
+class GetInboundShipmentRequestSkuQuantitiesEnum(str, Enum):
     """Enum for skuQuantities"""
 
     SHOW = "SHOW"  # Show the additional SKU quantity details.
@@ -1024,7 +1024,7 @@ class GetInboundShipmentRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sku_quantities: Annotated[
-        Optional[SkuQuantitiesEnum],
+        Optional[GetInboundShipmentRequestSkuQuantitiesEnum],
         QueryParam(),
         Field(
             None,
@@ -1791,21 +1791,21 @@ LabelStatus = str
 
 
 # Enum definitions
-class SortByEnum(str, Enum):
+class ListInboundShipmentsRequestSortByEnum(str, Enum):
     """Enum for sortBy"""
 
     UPDATED_AT = "UPDATED_AT"  # Sort by the time of update.
     CREATED_AT = "CREATED_AT"  # Sort by the time of creation.
 
 
-class SortOrderEnum(str, Enum):
+class ListInboundShipmentsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASCENDING = "ASCENDING"  # Sorts the collection in ascending order.
     DESCENDING = "DESCENDING"  # Sorts the collection in descending order.
 
 
-class ShipmentStatusEnum(str, Enum):
+class ListInboundShipmentsRequestShipmentStatusEnum(str, Enum):
     """Enum for shipmentStatus"""
 
     CREATED = "CREATED"  # Shipment is created, but hasn't shipped.
@@ -1835,7 +1835,7 @@ class ListInboundShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
     )
 
     sort_by: Annotated[
-        Optional[SortByEnum],
+        Optional[ListInboundShipmentsRequestSortByEnum],
         QueryParam(),
         Field(
             None,
@@ -1846,7 +1846,7 @@ class ListInboundShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[ListInboundShipmentsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1857,7 +1857,7 @@ class ListInboundShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     shipment_status: Annotated[
-        Optional[ShipmentStatusEnum],
+        Optional[ListInboundShipmentsRequestShipmentStatusEnum],
         QueryParam(),
         Field(
             None,
@@ -1913,14 +1913,14 @@ class ListInboundShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class ListInventoryRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASCENDING = "ASCENDING"  # Sorts the collection in ascending order.
     DESCENDING = "DESCENDING"  # Sorts the collection in descending order.
 
 
-class DetailsEnum(str, Enum):
+class ListInventoryRequestDetailsEnum(str, Enum):
     """Enum for details"""
 
     SHOW = "SHOW"  # Show the additional summarized inventory details.
@@ -1953,7 +1953,7 @@ class ListInventoryRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[ListInventoryRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1964,7 +1964,7 @@ class ListInventoryRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     details: Annotated[
-        Optional[DetailsEnum],
+        Optional[ListInventoryRequestDetailsEnum],
         QueryParam(),
         Field(
             None,

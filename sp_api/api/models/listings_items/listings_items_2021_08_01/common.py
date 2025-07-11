@@ -205,17 +205,19 @@ class FulfillmentAvailability(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class GetListingsItemRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
-    SUMMARIES = "summaries"  # Summary details for the listing item.
-    ATTRIBUTES = "attributes"  # A JSON object that contains structured listing item attribute data, keyed by attribute name.
-    ISSUES = "issues"  # Issues that are associated with the listing item.
-    OFFERS = "offers"  # Current offers for the listing item.
-    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"  # Fulfillment availability details for the listing item.
+    SUMMARIES = "summaries"  # Summary details of the listing item.
+    ATTRIBUTES = "attributes"  # A JSON object containing structured listing item attribute data keyed by attribute name.
+    ISSUES = "issues"  # The issues associated with the listing item.
+    OFFERS = "offers"  # The current offers for the listing item.
+    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"  # The fulfillment availability details for the listing item.
     PROCUREMENT = "procurement"  # Vendor procurement details for the listing item.
     RELATIONSHIPS = "relationships"  # Relationship details for a listing item (for example, variations).
-    PRODUCT_TYPES = "productTypes"  # Product types associated with a listing item.
+    PRODUCT_TYPES = (
+        "productTypes"  # Product types that are associated with a listing item.
+    )
 
 
 """
@@ -278,7 +280,7 @@ class GetListingsItemRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["GetListingsItemRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -313,12 +315,12 @@ class IssueEnforcementAction(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class IssueExemptionStatusEnum(str, Enum):
     """Enum for status"""
 
-    ACCEPTED = "ACCEPTED"  # The listings submission was accepted for processing.
-    INVALID = "INVALID"  # The listings submission was not valid and was not accepted for processing.
-    VALID = "VALID"  # The listings submission was valid. Only returned when the `mode` is `VALIDATION_PREVIEW`.
+    EXEMPT = "EXEMPT"  # This status is assigned to a product listing when it has been exempted from the listed enforcement actions. In cases of `EXEMPT`, Amazon acknowledges the existence of enforcement actions but ensures the user that these actions are not applied to the listing. The user is advised to consider addressing the issue, although enforcement actions are not taken.
+    EXEMPT_UNTIL_EXPIRY_DATE = "EXEMPT_UNTIL_EXPIRY_DATE"  # This status indicates that a product listing has been granted a temporary exemption from the listed enforcement actions. The exemption remains in effect until a specified expiry date. After this date, Amazon enforces the listed actions. The `expiryDate` field provides the timestamp indicating when the temporary exemption ends, adhering to the ISO 8601 format
+    NOT_EXEMPT = "NOT_EXEMPT"  # This status is assigned to a product listing when it has no exemptions from the listed enforcement actions. When the status is `NOT_EXEMPT`, it signifies that Amazon has already taken the specified enforcement actions. There is no exemption in place, and the listed actions are actively enforced
 
 
 """
@@ -336,7 +338,7 @@ class IssueExemption(SpApiBaseModel):
     )
 
     status: Annotated[
-        StatusEnum,
+        IssueExemptionStatusEnum,
         Field(
             ...,
             description="This field indicates the current exemption status for the listed enforcement actions. It can take values such as `EXEMPT`, signifying permanent exemption, `EXEMPT_UNTIL_EXPIRY_DATE` indicating temporary exemption until a specified date, or `NOT_EXEMPT` signifying no exemptions, and enforcement actions were already applied.",
@@ -386,7 +388,7 @@ class IssueEnforcements(SpApiBaseModel):
 
 
 # Enum definitions
-class SeverityEnum(str, Enum):
+class IssueSeverityEnum(str, Enum):
     """Enum for severity"""
 
     ERROR = "ERROR"  # Indicates an issue has occurred preventing the submission from processing, such as a validation error.
@@ -417,7 +419,7 @@ class Issue(SpApiBaseModel):
     ]
 
     severity: Annotated[
-        SeverityEnum, Field(..., description="The severity of the issue.")
+        IssueSeverityEnum, Field(..., description="The severity of the issue.")
     ]
 
     attribute_names: Annotated[
@@ -707,7 +709,7 @@ class Points(SpApiBaseModel):
 
 
 # Enum definitions
-class OfferTypeEnum(str, Enum):
+class ItemOfferByMarketplaceOfferTypeEnum(str, Enum):
     """Enum for offerType"""
 
     B2_C = "B2C"  # The offer on this listings item is available for Business to Consumer purchase, meaning that it is available to shoppers on Amazon retail sites.
@@ -739,7 +741,7 @@ class ItemOfferByMarketplace(SpApiBaseModel):
     ]
 
     offer_type: Annotated[
-        OfferTypeEnum,
+        ItemOfferByMarketplaceOfferTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("offerType", "offer_type"),
@@ -834,7 +836,7 @@ class ItemVariationTheme(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class ItemRelationshipTypeEnum(str, Enum):
     """Enum for type"""
 
     VARIATION = "VARIATION"  # The listing item in the request is a variation parent or variation child of the related listing items, indicated by SKU.
@@ -885,7 +887,9 @@ class ItemRelationship(SpApiBaseModel):
         ),
     ]
 
-    type: Annotated[TypeEnum, Field(..., description="The type of relationship.")]
+    type: Annotated[
+        ItemRelationshipTypeEnum, Field(..., description="The type of relationship.")
+    ]
 
 
 """
@@ -989,7 +993,7 @@ class ItemSearchResults(SpApiBaseModel):
 
 
 # Enum definitions
-class ConditionTypeEnum(str, Enum):
+class ItemSummaryByMarketplaceConditionTypeEnum(str, Enum):
     """Enum for conditionType"""
 
     NEW_NEW = "new_new"  # New.
@@ -1007,12 +1011,11 @@ class ConditionTypeEnum(str, Enum):
     CLUB_CLUB = "club_club"  # Club.
 
 
-class StatusEnum(str, Enum):
+class ItemSummaryByMarketplaceStatusEnum(str, Enum):
     """Enum for status"""
 
-    ACCEPTED = "ACCEPTED"  # The listings submission was accepted for processing.
-    INVALID = "INVALID"  # The listings submission was not valid and was not accepted for processing.
-    VALID = "VALID"  # The listings submission was valid. Only returned when the `mode` is `VALIDATION_PREVIEW`.
+    BUYABLE = "BUYABLE"  # The listings item can be purchased by shoppers. This status does not apply to vendor listings.
+    DISCOVERABLE = "DISCOVERABLE"  # The listings item is visible to shoppers.
 
 
 """
@@ -1058,7 +1061,7 @@ class ItemSummaryByMarketplace(SpApiBaseModel):
     ]
 
     condition_type: Annotated[
-        Optional[ConditionTypeEnum],
+        Optional[ItemSummaryByMarketplaceConditionTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("conditionType", "condition_type"),
@@ -1068,7 +1071,7 @@ class ItemSummaryByMarketplace(SpApiBaseModel):
     ]
 
     status: Annotated[
-        List["StatusEnum"],
+        List["ItemSummaryByMarketplaceStatusEnum"],
         Field(..., description="Statuses that apply to the listings item."),
     ]
 
@@ -1124,7 +1127,7 @@ class ItemSummaryByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class OpEnum(str, Enum):
+class PatchOperationOpEnum(str, Enum):
     """Enum for op"""
 
     ADD = "add"  # The `add` operation adds or replaces the target property.
@@ -1148,7 +1151,7 @@ class PatchOperation(SpApiBaseModel):
     )
 
     op: Annotated[
-        OpEnum,
+        PatchOperationOpEnum,
         Field(
             ...,
             description="Type of JSON Patch operation. Supported JSON Patch operations include `add`, `replace`, `merge` and `delete`. Refer to <https://tools.ietf.org/html/rfc6902>.",
@@ -1203,7 +1206,7 @@ class ListingsItemPatchRequestBody(SpApiBaseModel):
 
 
 # Enum definitions
-class RequirementsEnum(str, Enum):
+class ListingsItemPutRequestBodyRequirementsEnum(str, Enum):
     """Enum for requirements"""
 
     LISTING = "LISTING"  # Indicates the submitted data contains product facts and sales terms.
@@ -1236,7 +1239,7 @@ class ListingsItemPutRequestBody(SpApiBaseModel):
     ]
 
     requirements: Annotated[
-        Optional[RequirementsEnum],
+        Optional[ListingsItemPutRequestBodyRequirementsEnum],
         Field(
             None, description="The name of the requirements set for the provided data."
         ),
@@ -1252,7 +1255,7 @@ class ListingsItemPutRequestBody(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class ListingsItemSubmissionResponseStatusEnum(str, Enum):
     """Enum for status"""
 
     ACCEPTED = "ACCEPTED"  # The listings submission was accepted for processing.
@@ -1283,7 +1286,7 @@ class ListingsItemSubmissionResponse(SpApiBaseModel):
     ]
 
     status: Annotated[
-        StatusEnum,
+        ListingsItemSubmissionResponseStatusEnum,
         Field(..., description="The status of the listings item submission."),
     ]
 
@@ -1315,20 +1318,14 @@ class ListingsItemSubmissionResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class PatchListingsItemRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
-    SUMMARIES = "summaries"  # Summary details for the listing item.
-    ATTRIBUTES = "attributes"  # A JSON object that contains structured listing item attribute data, keyed by attribute name.
-    ISSUES = "issues"  # Issues that are associated with the listing item.
-    OFFERS = "offers"  # Current offers for the listing item.
-    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"  # Fulfillment availability details for the listing item.
-    PROCUREMENT = "procurement"  # Vendor procurement details for the listing item.
-    RELATIONSHIPS = "relationships"  # Relationship details for a listing item (for example, variations).
-    PRODUCT_TYPES = "productTypes"  # Product types associated with a listing item.
+    IDENTIFIERS = "identifiers"  # Identifiers associated with the item in the Amazon catalog, such as Amazon Standard Identification Number (ASIN). Can only be requested when `mode` is `VALIDATION_PREVIEW`.
+    ISSUES = "issues"  # The issues associated with the listing item.
 
 
-class ModeEnum(str, Enum):
+class PatchListingsItemRequestModeEnum(str, Enum):
     """Enum for mode"""
 
     VALIDATION_PREVIEW = "VALIDATION_PREVIEW"  # Indicates the submitted data should be validated using the values provided in the payload and validation errors the selling partner account may face. This will synchronously perform the same checks that are preformed on submissions after being accepted for processing, but without persisting to the selling partner's catalog.
@@ -1383,7 +1380,7 @@ class PatchListingsItemRequest(RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["PatchListingsItemRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1394,7 +1391,7 @@ class PatchListingsItemRequest(RequestsBaseModel):
     ]
 
     mode: Annotated[
-        Optional[ModeEnum],
+        Optional[PatchListingsItemRequestModeEnum],
         QueryParam(),
         Field(None, description="[QUERY] The mode of operation for the request."),
     ]
@@ -1421,20 +1418,14 @@ class PatchListingsItemRequest(RequestsBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class PutListingsItemRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
-    SUMMARIES = "summaries"  # Summary details for the listing item.
-    ATTRIBUTES = "attributes"  # A JSON object that contains structured listing item attribute data, keyed by attribute name.
-    ISSUES = "issues"  # Issues that are associated with the listing item.
-    OFFERS = "offers"  # Current offers for the listing item.
-    FULFILLMENT_AVAILABILITY = "fulfillmentAvailability"  # Fulfillment availability details for the listing item.
-    PROCUREMENT = "procurement"  # Vendor procurement details for the listing item.
-    RELATIONSHIPS = "relationships"  # Relationship details for a listing item (for example, variations).
-    PRODUCT_TYPES = "productTypes"  # Product types associated with a listing item.
+    IDENTIFIERS = "identifiers"  # Identifiers associated with the item in the Amazon catalog, such as Amazon Standard Identification Number (ASIN). Can only be requested when `mode` is `VALIDATION_PREVIEW`.
+    ISSUES = "issues"  # The issues associated with the listing item.
 
 
-class ModeEnum(str, Enum):
+class PutListingsItemRequestModeEnum(str, Enum):
     """Enum for mode"""
 
     VALIDATION_PREVIEW = "VALIDATION_PREVIEW"  # Indicates the submitted data should be validated using the values provided in the payload and validation errors the selling partner account may face. This will synchronously perform the same checks that are preformed on submissions after being accepted for processing, but without persisting to the selling partner's catalog.
@@ -1489,7 +1480,7 @@ class PutListingsItemRequest(RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["PutListingsItemRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1500,7 +1491,7 @@ class PutListingsItemRequest(RequestsBaseModel):
     ]
 
     mode: Annotated[
-        Optional[ModeEnum],
+        Optional[PutListingsItemRequestModeEnum],
         QueryParam(),
         Field(None, description="[QUERY] The mode of operation for the request."),
     ]
@@ -1527,7 +1518,7 @@ class PutListingsItemRequest(RequestsBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class SearchListingsItemsRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
     SUMMARIES = "summaries"  # Summary details for the listing item.
@@ -1540,7 +1531,7 @@ class IncludedDataEnum(str, Enum):
     PRODUCT_TYPES = "productTypes"  # Product types associated with a listing item.
 
 
-class IdentifiersTypeEnum(str, Enum):
+class SearchListingsItemsRequestIdentifiersTypeEnum(str, Enum):
     """Enum for identifiersType"""
 
     ASIN = "ASIN"  # Amazon Standard Identification Number.
@@ -1554,28 +1545,28 @@ class IdentifiersTypeEnum(str, Enum):
     UPC = "UPC"  # Universal Product Code.
 
 
-class WithIssueSeverityEnum(str, Enum):
+class SearchListingsItemsRequestWithIssueSeverityEnum(str, Enum):
     """Enum for withIssueSeverity"""
 
     WARNING = "WARNING"  # Indicates an issue has occurred that should be reviewed, but it has not prevented the submission from processing.
     ERROR = "ERROR"  # Indicates that an issue has occurred, which prevented the submission from processing. For example, a validation error.
 
 
-class WithStatusEnum(str, Enum):
+class SearchListingsItemsRequestWithStatusEnum(str, Enum):
     """Enum for withStatus"""
 
     BUYABLE = "BUYABLE"  # The listings item that shoppers can purchase. This status does not apply to vendor listings.
     DISCOVERABLE = "DISCOVERABLE"  # The listings item is visible to shoppers.
 
 
-class WithoutStatusEnum(str, Enum):
+class SearchListingsItemsRequestWithoutStatusEnum(str, Enum):
     """Enum for withoutStatus"""
 
     BUYABLE = "BUYABLE"  # The listings item can be purchased by shoppers. This status does not apply to vendor listings.
     DISCOVERABLE = "DISCOVERABLE"  # The listings item is visible to shoppers.
 
 
-class SortByEnum(str, Enum):
+class SearchListingsItemsRequestSortByEnum(str, Enum):
     """Enum for sortBy"""
 
     SKU = "sku"  # Stock Keeping Unit, a seller-specified identifier for an Amazon listing.
@@ -1583,7 +1574,7 @@ class SortByEnum(str, Enum):
     LAST_UPDATED_DATE = "lastUpdatedDate"  # The date when the listing item was last updated. Values are in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format.
 
 
-class SortOrderEnum(str, Enum):
+class SearchListingsItemsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Ascending order.
@@ -1641,7 +1632,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["SearchListingsItemsRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1661,7 +1652,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     identifiers_type: Annotated[
-        Optional[IdentifiersTypeEnum],
+        Optional[SearchListingsItemsRequestIdentifiersTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -1740,7 +1731,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     with_issue_severity: Annotated[
-        Optional[List["WithIssueSeverityEnum"]],
+        Optional[List["SearchListingsItemsRequestWithIssueSeverityEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1751,7 +1742,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     with_status: Annotated[
-        Optional[List["WithStatusEnum"]],
+        Optional[List["SearchListingsItemsRequestWithStatusEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1762,7 +1753,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     without_status: Annotated[
-        Optional[List["WithoutStatusEnum"]],
+        Optional[List["SearchListingsItemsRequestWithoutStatusEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1773,7 +1764,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_by: Annotated[
-        Optional[SortByEnum],
+        Optional[SearchListingsItemsRequestSortByEnum],
         QueryParam(),
         Field(
             None,
@@ -1784,7 +1775,7 @@ class SearchListingsItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[SearchListingsItemsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,

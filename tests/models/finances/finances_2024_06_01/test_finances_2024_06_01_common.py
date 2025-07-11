@@ -4,9 +4,10 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.finances.finances_2024_06_01.common import (
     Error, ErrorList, ExpiryDate, GetPaymentMethodsRequest,
-    GetPaymentMethodsResponse, GetRequestSerializer, InitiatePayoutRequest,
-    InitiatePayoutRequestBody, InitiatePayoutResponse, PaymentMethodDetails,
-    PaymentMethodTypesEnum, RequestsBaseModel, SpApiBaseModel)
+    GetPaymentMethodsRequestPaymentMethodTypesEnum, GetPaymentMethodsResponse,
+    GetRequestSerializer, InitiatePayoutRequest, InitiatePayoutRequestBody,
+    InitiatePayoutResponse, PaymentMethodDetails, RequestsBaseModel,
+    SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():

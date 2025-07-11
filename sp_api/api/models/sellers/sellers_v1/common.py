@@ -185,7 +185,7 @@ class PrimaryContact(SpApiBaseModel):
 
 
 # Enum definitions
-class BusinessTypeEnum(str, Enum):
+class AccountBusinessTypeEnum(str, Enum):
     """Enum for businessType"""
 
     CHARITY = "CHARITY"  # The business is registered as a charity.
@@ -202,7 +202,7 @@ class BusinessTypeEnum(str, Enum):
     INDIVIDUAL = "INDIVIDUAL"  # The entity is not a business but an individual.
 
 
-class SellingPlanEnum(str, Enum):
+class AccountSellingPlanEnum(str, Enum):
     """Enum for sellingPlan"""
 
     PROFESSIONAL = "PROFESSIONAL"  # The seller has a professional selling plan.
@@ -235,7 +235,7 @@ class Account(SpApiBaseModel):
     ]
 
     business_type: Annotated[
-        BusinessTypeEnum,
+        AccountBusinessTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("businessType", "business_type"),
@@ -245,7 +245,7 @@ class Account(SpApiBaseModel):
     ]
 
     selling_plan: Annotated[
-        SellingPlanEnum,
+        AccountSellingPlanEnum,
         Field(
             ...,
             validation_alias=AliasChoices("sellingPlan", "selling_plan"),

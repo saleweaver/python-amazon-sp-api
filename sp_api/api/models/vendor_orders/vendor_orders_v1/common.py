@@ -17,7 +17,7 @@ from .base_models import (BodyParam, GetRequestSerializer, PathParam,
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class ItemQuantityUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     CASES = "Cases"  # Packing of individual items into a case.
@@ -46,7 +46,7 @@ class ItemQuantity(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        Optional[UnitOfMeasureEnum],
+        Optional[ItemQuantityUnitOfMeasureEnum],
         Field(
             None,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -307,7 +307,7 @@ class GetPurchaseOrderRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class MethodOfPaymentEnum(str, Enum):
+class ImportDetailsMethodOfPaymentEnum(str, Enum):
     """Enum for methodOfPayment"""
 
     PAID_BY_BUYER = "PaidByBuyer"  # Buyer pays for shipping.
@@ -318,7 +318,7 @@ class MethodOfPaymentEnum(str, Enum):
     PAID_BY_SELLER = "PaidBySeller"  # Seller pays for shipping.
 
 
-class InternationalCommercialTermsEnum(str, Enum):
+class ImportDetailsInternationalCommercialTermsEnum(str, Enum):
     """Enum for internationalCommercialTerms"""
 
     EX_WORKS = "ExWorks"  # Places the maximum obligation on the buyer and minimum obligations on the seller. The seller makes the goods available at its premises. The buyer is responsible for all costs of the transportation of the shipment and bears all the risks for bringing the goods to their final destination.
@@ -349,7 +349,7 @@ class ImportDetails(SpApiBaseModel):
     )
 
     method_of_payment: Annotated[
-        Optional[MethodOfPaymentEnum],
+        Optional[ImportDetailsMethodOfPaymentEnum],
         Field(
             None,
             validation_alias=AliasChoices("methodOfPayment", "method_of_payment"),
@@ -359,7 +359,7 @@ class ImportDetails(SpApiBaseModel):
     ]
 
     international_commercial_terms: Annotated[
-        Optional[InternationalCommercialTermsEnum],
+        Optional[ImportDetailsInternationalCommercialTermsEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -404,11 +404,13 @@ class ImportDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class MoneyUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    CASES = "Cases"  # Packing of individual items into a case.
-    EACHES = "Eaches"  # Individual items.
+    POUNDS = "POUNDS"  # Priced per Pound.
+    OUNCES = "OUNCES"  # Priced per Ounce.
+    GRAMS = "GRAMS"  # Priced per Gram.
+    KILOGRAMS = "KILOGRAMS"  # Priced per Kilogram.
 
 
 """
@@ -443,7 +445,7 @@ class Money(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        Optional[UnitOfMeasureEnum],
+        Optional[MoneyUnitOfMeasureEnum],
         Field(
             None,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -545,7 +547,7 @@ class OrderItem(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailsTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -567,7 +569,7 @@ class TaxRegistrationDetails(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        TaxRegistrationTypeEnum,
+        TaxRegistrationDetailsTaxRegistrationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -632,7 +634,7 @@ class PartyIdentification(SpApiBaseModel):
 
 
 # Enum definitions
-class PurchaseOrderTypeEnum(str, Enum):
+class OrderDetailsPurchaseOrderTypeEnum(str, Enum):
     """Enum for purchaseOrderType"""
 
     REGULAR_ORDER = "RegularOrder"  # A regular purchase order is a method for placing orders for a one-time purchase and payment for line item goods that have a specific quantity and unit price.
@@ -643,7 +645,7 @@ class PurchaseOrderTypeEnum(str, Enum):
     RUSH_ORDER = "RushOrder"  # Rush orders are purchases of goods that need to be processed and delivered by a certain date that is much sooner than the standard arrival date.
 
 
-class PaymentMethodEnum(str, Enum):
+class OrderDetailsPaymentMethodEnum(str, Enum):
     """Enum for paymentMethod"""
 
     INVOICE = "Invoice"  # An invoice payment is submitted by a business to pay for products and services purchased from vendors.
@@ -701,7 +703,7 @@ class OrderDetails(SpApiBaseModel):
     ]
 
     purchase_order_type: Annotated[
-        Optional[PurchaseOrderTypeEnum],
+        Optional[OrderDetailsPurchaseOrderTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("purchaseOrderType", "purchase_order_type"),
@@ -731,7 +733,7 @@ class OrderDetails(SpApiBaseModel):
     ]
 
     payment_method: Annotated[
-        Optional[PaymentMethodEnum],
+        Optional[OrderDetailsPaymentMethodEnum],
         Field(
             None,
             validation_alias=AliasChoices("paymentMethod", "payment_method"),
@@ -807,12 +809,12 @@ class OrderDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class PurchaseOrderStateEnum(str, Enum):
+class OrderPurchaseOrderStateEnum(str, Enum):
     """Enum for purchaseOrderState"""
 
-    NEW = "New"  # Status of the orders that are newly created.
-    ACKNOWLEDGED = "Acknowledged"  # Status of the orders acknowledged by vendors.
-    CLOSED = "Closed"  # Status of the orders that are completed.
+    NEW = "New"  # The purchase order is newly created and needs to be acknowledged by vendor.
+    ACKNOWLEDGED = "Acknowledged"  # The purchase order has been acknowledged by vendor.
+    CLOSED = "Closed"  # The purchase order is closed and no further action is required from the vendor. PO can be in closed state for many reasons such as order is rejected by vendor, order is cancelled by Amazon or order is fully received by Amazon.
 
 
 """
@@ -842,7 +844,7 @@ class Order(SpApiBaseModel):
     ]
 
     purchase_order_state: Annotated[
-        PurchaseOrderStateEnum,
+        OrderPurchaseOrderStateEnum,
         Field(
             ...,
             validation_alias=AliasChoices("purchaseOrderState", "purchase_order_state"),
@@ -889,20 +891,20 @@ class GetPurchaseOrderResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetPurchaseOrdersRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort in ascending order by purchase order creation date.
     DESC = "DESC"  # Sort in descending order by purchase order creation date.
 
 
-class PoItemStateEnum(str, Enum):
+class GetPurchaseOrdersRequestPoItemStateEnum(str, Enum):
     """Enum for poItemState"""
 
     CANCELLED = "Cancelled"  # Status for order items cancelled by vendors.
 
 
-class PurchaseOrderStateEnum(str, Enum):
+class GetPurchaseOrdersRequestPurchaseOrderStateEnum(str, Enum):
     """Enum for purchaseOrderState"""
 
     NEW = "New"  # Status of the orders that are newly created.
@@ -959,7 +961,7 @@ class GetPurchaseOrdersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetPurchaseOrdersRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1014,7 +1016,7 @@ class GetPurchaseOrdersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     po_item_state: Annotated[
-        Optional[PoItemStateEnum],
+        Optional[GetPurchaseOrdersRequestPoItemStateEnum],
         QueryParam(),
         Field(
             None,
@@ -1036,7 +1038,7 @@ class GetPurchaseOrdersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     purchase_order_state: Annotated[
-        Optional[PurchaseOrderStateEnum],
+        Optional[GetPurchaseOrdersRequestPurchaseOrderStateEnum],
         QueryParam(),
         Field(
             None,
@@ -1137,21 +1139,21 @@ class GetPurchaseOrdersResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetPurchaseOrdersStatusRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort in ascending order by purchase order creation date.
     DESC = "DESC"  # Sort in descending order by purchase order creation date.
 
 
-class PurchaseOrderStatusEnum(str, Enum):
+class GetPurchaseOrdersStatusRequestPurchaseOrderStatusEnum(str, Enum):
     """Enum for purchaseOrderStatus"""
 
     OPEN = "OPEN"  # Buyer has not yet received all of the items in the purchase order.
     CLOSED = "CLOSED"  # Buyer has received all of the items in the purchase order.
 
 
-class ItemConfirmationStatusEnum(str, Enum):
+class GetPurchaseOrdersStatusRequestItemConfirmationStatusEnum(str, Enum):
     """Enum for itemConfirmationStatus"""
 
     ACCEPTED = "ACCEPTED"  # Provides a list of orders that has at least one item fully accepted by vendors.
@@ -1160,7 +1162,7 @@ class ItemConfirmationStatusEnum(str, Enum):
     UNCONFIRMED = "UNCONFIRMED"  # Provides a list of orders that has at least one item yet to be confirmed by vendors.
 
 
-class ItemReceiveStatusEnum(str, Enum):
+class GetPurchaseOrdersStatusRequestItemReceiveStatusEnum(str, Enum):
     """Enum for itemReceiveStatus"""
 
     NOT_RECEIVED = "NOT_RECEIVED"  # Provides a list of orders that have at least one item not received by the buyer.
@@ -1195,7 +1197,7 @@ class GetPurchaseOrdersStatusRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetPurchaseOrdersStatusRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1274,7 +1276,7 @@ class GetPurchaseOrdersStatusRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     purchase_order_status: Annotated[
-        Optional[PurchaseOrderStatusEnum],
+        Optional[GetPurchaseOrdersStatusRequestPurchaseOrderStatusEnum],
         QueryParam(),
         Field(
             None,
@@ -1287,7 +1289,7 @@ class GetPurchaseOrdersStatusRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_confirmation_status: Annotated[
-        Optional[ItemConfirmationStatusEnum],
+        Optional[GetPurchaseOrdersStatusRequestItemConfirmationStatusEnum],
         QueryParam(),
         Field(
             None,
@@ -1300,7 +1302,7 @@ class GetPurchaseOrdersStatusRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_receive_status: Annotated[
-        Optional[ItemReceiveStatusEnum],
+        Optional[GetPurchaseOrdersStatusRequestItemReceiveStatusEnum],
         QueryParam(),
         Field(
             None,
@@ -1338,7 +1340,7 @@ ItemStatus = List["OrderItemStatus"]
 
 
 # Enum definitions
-class PurchaseOrderStatusEnum(str, Enum):
+class OrderStatusPurchaseOrderStatusEnum(str, Enum):
     """Enum for purchaseOrderStatus"""
 
     OPEN = "OPEN"  # Buyer has not yet received all of the items in the purchase order.
@@ -1372,7 +1374,7 @@ class OrderStatus(SpApiBaseModel):
     ]
 
     purchase_order_status: Annotated[
-        PurchaseOrderStatusEnum,
+        OrderStatusPurchaseOrderStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -1494,7 +1496,7 @@ class GetPurchaseOrdersStatusResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class AcknowledgementCodeEnum(str, Enum):
+class OrderItemAcknowledgementAcknowledgementCodeEnum(str, Enum):
     """Enum for acknowledgementCode"""
 
     ACCEPTED = "Accepted"  # Vendor accepts to fulfill the order item(s).
@@ -1502,7 +1504,7 @@ class AcknowledgementCodeEnum(str, Enum):
     REJECTED = "Rejected"  # Vendor rejects to fulfill the order item(s).
 
 
-class RejectionReasonEnum(str, Enum):
+class OrderItemAcknowledgementRejectionReasonEnum(str, Enum):
     """Enum for rejectionReason"""
 
     TEMPORARILY_UNAVAILABLE = (
@@ -1529,7 +1531,7 @@ class OrderItemAcknowledgement(SpApiBaseModel):
     )
 
     acknowledgement_code: Annotated[
-        AcknowledgementCodeEnum,
+        OrderItemAcknowledgementAcknowledgementCodeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -1575,7 +1577,7 @@ class OrderItemAcknowledgement(SpApiBaseModel):
     ]
 
     rejection_reason: Annotated[
-        Optional[RejectionReasonEnum],
+        Optional[OrderItemAcknowledgementRejectionReasonEnum],
         Field(
             None,
             validation_alias=AliasChoices("rejectionReason", "rejection_reason"),

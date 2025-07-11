@@ -7,8 +7,8 @@ from sp_api.api.models.vendor_direct_fulfillment_sandbox_test_data.vendor_direct
     GenerateOrderScenariosRequest, GetOrderScenariosRequest,
     GetRequestSerializer, OrderScenarioRequestBody, Pagination,
     PartyIdentification, RequestsBaseModel, Scenario, SpApiBaseModel,
-    StatusEnum, TestCaseData, TestOrder, Transaction, TransactionReference,
-    TransactionStatus)
+    TestCaseData, TestOrder, Transaction, TransactionReference,
+    TransactionStatus, TransactionStatusEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -139,7 +139,7 @@ def test_transaction_instantiates():
     """Instantiate Transaction with dummy data"""
     kwargs = {
         "transaction_id": "",
-        "status": StatusEnum.FAILURE,
+        "status": TransactionStatusEnum.FAILURE,
         "test_case_data": None,
     }
     obj = Transaction(**kwargs)

@@ -2,16 +2,13 @@
 from datetime import datetime
 
 import pytest
-from sp_api.api.models.sales.sales_v1.common import (AmazonProgramEnum,
-                                                     BuyerTypeEnum, Error,
-                                                     FirstDayOfWeekEnum,
-                                                     GetOrderMetricsRequest,
-                                                     GetOrderMetricsResponse,
-                                                     GetRequestSerializer,
-                                                     GranularityEnum, Money,
-                                                     OrderMetricsInterval,
-                                                     RequestsBaseModel,
-                                                     SpApiBaseModel)
+from sp_api.api.models.sales.sales_v1.common import (
+    Error, GetOrderMetricsRequest, GetOrderMetricsRequestAmazonProgramEnum,
+    GetOrderMetricsRequestBuyerTypeEnum,
+    GetOrderMetricsRequestFirstDayOfWeekEnum,
+    GetOrderMetricsRequestGranularityEnum, GetOrderMetricsResponse,
+    GetRequestSerializer, Money, OrderMetricsInterval, RequestsBaseModel,
+    SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -52,7 +49,7 @@ def test_getordermetricsrequest_instantiates():
         "marketplace_ids": None,
         "interval": "",
         "granularity_time_zone": None,
-        "granularity": GranularityEnum.HOUR,
+        "granularity": GetOrderMetricsRequestGranularityEnum.HOUR,
         "buyer_type": None,
         "fulfillment_network": None,
         "first_day_of_week": None,

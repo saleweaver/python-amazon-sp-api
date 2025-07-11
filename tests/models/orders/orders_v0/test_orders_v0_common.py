@@ -3,37 +3,39 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.orders.orders_v0.common import (
-    Address, AddressExtendedFields, AddressTypeEnum, AmazonPrograms,
+    Address, AddressAddressTypeEnum, AddressExtendedFields, AmazonPrograms,
     AssociatedItem, AutomatedShippingSettings, BusinessHours,
-    BuyerCustomizedInfoDetail, BuyerInfo, BuyerInvoicePreferenceEnum,
+    BusinessHoursDayOfWeekEnum, BuyerCustomizedInfoDetail, BuyerInfo,
     BuyerRequestedCancel, BuyerTaxInfo, BuyerTaxInformation,
-    CodCollectionMethodEnum, ConfirmShipmentErrorResponse,
-    ConfirmShipmentOrderItem, ConfirmShipmentRequest,
-    ConfirmShipmentRequestBody, DayOfWeekEnum, DeemedResellerCategoryEnum,
-    DeliveryPreferences, Error, ExceptionDates, ExportInfo, FieldTypeEnum,
-    FulfillmentChannelEnum, FulfillmentInstruction, GetOrderAddressRequest,
+    ConfirmShipmentErrorResponse, ConfirmShipmentOrderItem,
+    ConfirmShipmentRequest, ConfirmShipmentRequestBody,
+    ConfirmShipmentRequestBodyCodCollectionMethodEnum, DeliveryPreferences,
+    Error, ExceptionDates, FulfillmentInstruction, GetOrderAddressRequest,
     GetOrderAddressResponse, GetOrderBuyerInfoRequest,
     GetOrderBuyerInfoResponse, GetOrderItemsBuyerInfoRequest,
     GetOrderItemsBuyerInfoResponse, GetOrderItemsRequest,
     GetOrderItemsResponse, GetOrderRegulatedInfoRequest,
     GetOrderRegulatedInfoResponse, GetOrderRequest, GetOrderResponse,
     GetOrdersRequest, GetOrdersResponse, GetRequestSerializer, ItemBuyerInfo,
-    MarketplaceTaxInfo, Measurement, ModelEnum, Money, OpenInterval,
-    OpenTimeInterval, Order, OrderAddress, OrderBuyerInfo, OrderItem,
-    OrderItemBuyerInfo, OrderItems, OrderItemsBuyerInfoList, OrderItemsList,
-    OrderRegulatedInfo, OrdersList, OrderStatusEnum, OrderTypeEnum,
+    MarketplaceTaxInfo, Measurement, MeasurementUnitEnum, Money, OpenInterval,
+    OpenTimeInterval, Order, OrderAddress, OrderBuyerInfo,
+    OrderBuyerInvoicePreferenceEnum, OrderFulfillmentChannelEnum, OrderItem,
+    OrderItemBuyerInfo, OrderItemDeemedResellerCategoryEnum, OrderItems,
+    OrderItemsBuyerInfoList, OrderItemsList, OrderOrderStatusEnum,
+    OrderOrderTypeEnum, OrderPaymentMethodEnum, OrderRegulatedInfo, OrdersList,
     PackageDetail, PaymentExecutionDetailItem, PaymentMethodDetailItemList,
-    PaymentMethodEnum, PointsGrantedDetail, PreferredDeliveryTime,
-    PrescriptionDetail, ProductInfoDetail, PromotionIdList,
-    RegulatedInformation, RegulatedInformationField,
+    PointsGrantedDetail, PreferredDeliveryTime, PrescriptionDetail,
+    ProductInfoDetail, PromotionIdList, RegulatedInformation,
+    RegulatedInformationField, RegulatedInformationFieldFieldTypeEnum,
     RegulatedOrderVerificationStatus, RejectionReason, RequestsBaseModel,
-    ResponsiblePartyEnum, ShippingConstraints, SpApiBaseModel,
-    SubstitutionOption, SubstitutionPreferences, SubstitutionTypeEnum,
-    TaxClassification, TaxCollection, UnitEnum,
-    UpdateShipmentStatusErrorResponse, UpdateShipmentStatusRequest,
-    UpdateShipmentStatusRequestBody, UpdateVerificationStatusErrorResponse,
-    UpdateVerificationStatusRequest, UpdateVerificationStatusRequestBody,
-    ValidVerificationDetail, VerificationDetails)
+    ShippingConstraints, SpApiBaseModel, SubstitutionOption,
+    SubstitutionPreferences, SubstitutionPreferencesSubstitutionTypeEnum,
+    TaxClassification, TaxCollection, TaxCollectionModelEnum,
+    TaxCollectionResponsiblePartyEnum, UpdateShipmentStatusErrorResponse,
+    UpdateShipmentStatusRequest, UpdateShipmentStatusRequestBody,
+    UpdateVerificationStatusErrorResponse, UpdateVerificationStatusRequest,
+    UpdateVerificationStatusRequestBody, ValidVerificationDetail,
+    VerificationDetails)
 
 
 def test_requestsbasemodel_instantiates():
@@ -347,26 +349,6 @@ def test_error_instantiates():
     assert isinstance(obj, Error)
 
 
-def test_money_instantiates():
-    """Instantiate Money with dummy data"""
-    kwargs = {
-        "currency_code": None,
-        "amount": None,
-    }
-    obj = Money(**kwargs)
-    assert isinstance(obj, Money)
-
-
-def test_exportinfo_instantiates():
-    """Instantiate ExportInfo with dummy data"""
-    kwargs = {
-        "export_charge": None,
-        "export_charge_model": None,
-    }
-    obj = ExportInfo(**kwargs)
-    assert isinstance(obj, ExportInfo)
-
-
 def test_fulfillmentinstruction_instantiates():
     """Instantiate FulfillmentInstruction with dummy data"""
     kwargs = {
@@ -516,7 +498,7 @@ def test_regulatedinformationfield_instantiates():
     kwargs = {
         "field_id": "",
         "field_label": "",
-        "field_type": FieldTypeEnum.TEXT,
+        "field_type": RegulatedInformationFieldFieldTypeEnum.TEXT,
         "field_value": "",
     }
     obj = RegulatedInformationField(**kwargs)
@@ -617,6 +599,16 @@ def test_marketplacetaxinfo_instantiates():
     assert isinstance(obj, MarketplaceTaxInfo)
 
 
+def test_money_instantiates():
+    """Instantiate Money with dummy data"""
+    kwargs = {
+        "currency_code": None,
+        "amount": None,
+    }
+    obj = Money(**kwargs)
+    assert isinstance(obj, Money)
+
+
 def test_paymentmethoddetailitemlist_instantiates():
     """Instantiate PaymentMethodDetailItemList with dummy data"""
     kwargs = {}
@@ -631,7 +623,7 @@ def test_order_instantiates():
         "seller_order_id": None,
         "purchase_date": "",
         "last_update_date": "",
-        "order_status": OrderStatusEnum.PENDING,
+        "order_status": OrderOrderStatusEnum.PENDING,
         "fulfillment_channel": None,
         "sales_channel": None,
         "order_channel": None,
@@ -757,7 +749,7 @@ def test_itembuyerinfo_instantiates():
 def test_measurement_instantiates():
     """Instantiate Measurement with dummy data"""
     kwargs = {
-        "unit": UnitEnum.OUNCES,
+        "unit": MeasurementUnitEnum.OUNCES,
         "value": 0.0,
     }
     obj = Measurement(**kwargs)
@@ -805,7 +797,7 @@ def test_shippingconstraints_instantiates():
 def test_substitutionpreferences_instantiates():
     """Instantiate SubstitutionPreferences with dummy data"""
     kwargs = {
-        "substitution_type": SubstitutionTypeEnum.CUSTOMER_PREFERENCE,
+        "substitution_type": SubstitutionPreferencesSubstitutionTypeEnum.CUSTOMER_PREFERENCE,
         "substitution_options": None,
     }
     obj = SubstitutionPreferences(**kwargs)
@@ -865,7 +857,6 @@ def test_orderitem_instantiates():
         "measurement": None,
         "shipping_constraints": None,
         "amazon_programs": None,
-        "export_info": None,
     }
     obj = OrderItem(**kwargs)
     assert isinstance(obj, OrderItem)

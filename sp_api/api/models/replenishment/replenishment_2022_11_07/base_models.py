@@ -165,4 +165,4 @@ class RequestsBaseModel(SpApiBaseModel):
                         dest[key] = val
                 break
 
-        return path.format(**path_params), body, query
+        return path.format(**path_params), body.get("body", body), query

@@ -103,7 +103,7 @@ class GetTransactionStatusRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class TransactionStatusEnum(str, Enum):
     """Enum for status"""
 
     FAILURE = "Failure"  # Transaction has failed.
@@ -136,7 +136,7 @@ class Transaction(SpApiBaseModel):
     ]
 
     status: Annotated[
-        StatusEnum,
+        TransactionStatusEnum,
         Field(..., description="Current processing status of the transaction."),
     ]
 

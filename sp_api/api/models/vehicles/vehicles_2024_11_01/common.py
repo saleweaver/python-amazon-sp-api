@@ -95,7 +95,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class VehicleTypeEnum(str, Enum):
+class GetVehiclesRequestVehicleTypeEnum(str, Enum):
     """Enum for vehicleType"""
 
     CAR = "CAR"  # Selecting this will return the list of cars.
@@ -144,7 +144,7 @@ class GetVehiclesRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     vehicle_type: Annotated[
-        VehicleTypeEnum,
+        GetVehiclesRequestVehicleTypeEnum,
         QueryParam(),
         Field(
             ...,

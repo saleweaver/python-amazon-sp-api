@@ -4,13 +4,16 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.catalog_items.catalog_items_2020_12_01.common import (
     BrandRefinement, ClassificationRefinement, Error, ErrorList,
-    GetCatalogItemRequest, GetRequestSerializer, IncludedDataEnum, Item,
-    ItemAttributes, ItemIdentifier, ItemIdentifiersByMarketplace, ItemImage,
-    ItemImagesByMarketplace, ItemProductTypeByMarketplace, ItemSalesRank,
+    GetCatalogItemRequest, GetCatalogItemRequestIncludedDataEnum,
+    GetRequestSerializer, Item, ItemAttributes, ItemIdentifier,
+    ItemIdentifiersByMarketplace, ItemImage, ItemImagesByMarketplace,
+    ItemImageVariantEnum, ItemProductTypeByMarketplace, ItemSalesRank,
     ItemSalesRanksByMarketplace, ItemSearchResults, ItemSummaryByMarketplace,
-    ItemVariationsByMarketplace, ItemVendorDetailsByMarketplace, Pagination,
-    Refinements, ReplenishmentCategoryEnum, RequestsBaseModel,
-    SearchCatalogItemsRequest, SpApiBaseModel, VariantEnum, VariationTypeEnum)
+    ItemVariationsByMarketplace, ItemVariationsByMarketplaceVariationTypeEnum,
+    ItemVendorDetailsByMarketplace,
+    ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum, Pagination,
+    Refinements, RequestsBaseModel, SearchCatalogItemsRequest,
+    SearchCatalogItemsRequestIncludedDataEnum, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -134,7 +137,7 @@ def test_itemidentifiersbymarketplace_instantiates():
 def test_itemimage_instantiates():
     """Instantiate ItemImage with dummy data"""
     kwargs = {
-        "variant": VariantEnum.MAIN,
+        "variant": ItemImageVariantEnum.MAIN,
         "link": "",
         "height": 0,
         "width": 0,
@@ -238,7 +241,7 @@ def test_itemvariationsbymarketplace_instantiates():
     kwargs = {
         "marketplace_id": None,
         "asins": [],
-        "variation_type": VariationTypeEnum.PARENT,
+        "variation_type": ItemVariationsByMarketplaceVariationTypeEnum.PARENT,
     }
     obj = ItemVariationsByMarketplace(**kwargs)
     assert isinstance(obj, ItemVariationsByMarketplace)

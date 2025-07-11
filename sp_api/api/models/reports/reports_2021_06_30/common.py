@@ -205,7 +205,7 @@ class CreateReportResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class PeriodEnum(str, Enum):
+class CreateReportScheduleSpecificationPeriodEnum(str, Enum):
     """Enum for period"""
 
     PT5_M = "PT5M"  # 5 minutes
@@ -272,7 +272,7 @@ class CreateReportScheduleSpecification(SpApiBaseModel):
     ]
 
     period: Annotated[
-        PeriodEnum,
+        CreateReportScheduleSpecificationPeriodEnum,
         Field(
             ...,
             description="One of a set of predefined <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> periods that specifies how often a report should be created.",
@@ -518,7 +518,7 @@ class GetReportSchedulesRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusesEnum(str, Enum):
+class GetReportsRequestProcessingStatusesEnum(str, Enum):
     """Enum for processingStatuses"""
 
     CANCELLED = "CANCELLED"  # The report was cancelled. There are two ways a report can be cancelled: an explicit cancellation request before the report starts processing, or an automatic cancellation if there is no data to return.
@@ -557,7 +557,7 @@ class GetReportsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     processing_statuses: Annotated[
-        Optional[List["ProcessingStatusesEnum"]],
+        Optional[List["GetReportsRequestProcessingStatusesEnum"]],
         QueryParam(),
         Field(
             None,
@@ -655,7 +655,7 @@ class GetReportsResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusEnum(str, Enum):
+class ReportProcessingStatusEnum(str, Enum):
     """Enum for processingStatus"""
 
     CANCELLED = "CANCELLED"  # The report was cancelled. There are two ways a report can be cancelled: an explicit cancellation request before the report starts processing, or an automatic cancellation if there is no data to return.
@@ -750,7 +750,7 @@ class Report(SpApiBaseModel):
     ]
 
     processing_status: Annotated[
-        ProcessingStatusEnum,
+        ReportProcessingStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices("processingStatus", "processing_status"),
@@ -793,7 +793,7 @@ class Report(SpApiBaseModel):
 
 
 # Enum definitions
-class CompressionAlgorithmEnum(str, Enum):
+class ReportDocumentCompressionAlgorithmEnum(str, Enum):
     """Enum for compressionAlgorithm"""
 
     GZIP = "GZIP"  # The gzip compression algorithm.
@@ -832,7 +832,7 @@ class ReportDocument(SpApiBaseModel):
     ]
 
     compression_algorithm: Annotated[
-        Optional[CompressionAlgorithmEnum],
+        Optional[ReportDocumentCompressionAlgorithmEnum],
         Field(
             None,
             validation_alias=AliasChoices(

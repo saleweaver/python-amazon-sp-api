@@ -129,13 +129,48 @@ class Breakdown(SpApiBaseModel):
     ]
 
     breakdowns: Annotated[
-        Optional["Breakdown"],
-        Field(None, description="Further granular breakdowns of the BreakdownType."),
+        Optional[List["Breakdown"]],
+        Field(
+            None,
+            description="A list of breakdowns that detail how the total amount is calculated for the transaction.",
+        ),
     ]
 
 
 Breakdowns = List["Breakdown"]
-"""List of breakdowns which will provide the details on how the total amount is calculated for the financial transaction."""
+"""A list of breakdowns that detail how the total amount is calculated for the transaction."""
+
+
+# Enum definitions
+class BusinessContextStoreNameEnum(str, Enum):
+    """Enum for storeName"""
+
+    AMAZON_HAUL = "AMAZON_HAUL"
+
+
+"""
+BusinessContext
+
+Information about the line of business associated with a transaction.
+"""
+
+
+class BusinessContext(SpApiBaseModel):
+    """Information about the line of business associated with a transaction."""
+
+    model_config = ConfigDict(
+        populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
+    )
+
+    store_name: Annotated[
+        Optional[BusinessContextStoreNameEnum],
+        Field(
+            None,
+            validation_alias=AliasChoices("storeName", "store_name"),
+            serialization_alias="storeName",
+            description="The store name associated with the transaction.",
+        ),
+    ]
 
 
 """
@@ -300,10 +335,10 @@ class Item(SpApiBaseModel):
     ]
 
     breakdowns: Annotated[
-        Optional["Breakdowns"],
+        Optional[List["Breakdown"]],
         Field(
             None,
-            description="List of breakdowns which will provide the details on how the total amount is calculated for the financial transaction.",
+            description="A list of breakdowns that detail how the total amount is calculated for the transaction.",
         ),
     ]
 
@@ -314,7 +349,7 @@ class Item(SpApiBaseModel):
 
 
 # Enum definitions
-class ItemRelatedIdentifierNameEnum(str, Enum):
+class ItemRelatedIdentifierItemRelatedIdentifierNameEnum(str, Enum):
     """Enum for itemRelatedIdentifierName"""
 
     ORDER_ADJUSTMENT_ITEM_ID = "ORDER_ADJUSTMENT_ITEM_ID"  # An Amazon-defined order adjustment identifier defined for refunds, guarantee claims, and chargeback events.
@@ -340,7 +375,7 @@ class ItemRelatedIdentifier(SpApiBaseModel):
     )
 
     item_related_identifier_name: Annotated[
-        Optional[ItemRelatedIdentifierNameEnum],
+        Optional[ItemRelatedIdentifierItemRelatedIdentifierNameEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -392,7 +427,7 @@ class ListTransactionsRequest(GetRequestSerializer, RequestsBaseModel):
             ...,
             validation_alias=AliasChoices("postedAfter", "posted_after"),
             serialization_alias="postedAfter",
-            description="[QUERY] A date used for selecting transactions posted after (or at) a specified time. The date-time must be no later than two minutes before the request was submitted, in ISO 8601 date time format.",
+            description="[QUERY] The response includes financial events posted on or after this date. This date must be in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) date-time format. The date-time must be more than two minutes before the time of the request.",
         ),
     ]
 
@@ -414,7 +449,18 @@ class ListTransactionsRequest(GetRequestSerializer, RequestsBaseModel):
             None,
             validation_alias=AliasChoices("marketplaceId", "marketplace_id"),
             serialization_alias="marketplaceId",
-            description="[QUERY] A string token used to select Marketplace ID.",
+            description="[QUERY] The identifier of the marketplace from which you want to retrieve transactions. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).",
+        ),
+    ]
+
+    transaction_status: Annotated[
+        Optional[str],
+        QueryParam(),
+        Field(
+            None,
+            validation_alias=AliasChoices("transactionStatus", "transaction_status"),
+            serialization_alias="transactionStatus",
+            description="[QUERY] The status of the transaction.  **Possible values:**  * `DEFERRED`: the transaction is currently deferred. * `RELEASED`: the transaction is currently released. * `DEFERRED_RELEASED`: the transaction was deferred in the past, but is now released. The status of a deferred transaction is updated to `DEFERRED_RELEASED` when the transaction is released.",
         ),
     ]
 
@@ -435,14 +481,14 @@ Transactions = List["Transaction"]
 
 
 """
-ListTransactionsResponse
+TransactionsPayload
 
-The Response schema.
+The payload for the `listTransactions` operation.
 """
 
 
-class ListTransactionsResponse(SpApiBaseModel):
-    """The Response schema."""
+class TransactionsPayload(SpApiBaseModel):
+    """The payload for the `listTransactions` operation."""
 
     model_config = ConfigDict(
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
@@ -467,6 +513,26 @@ class ListTransactionsResponse(SpApiBaseModel):
 
 
 """
+ListTransactionsResponse
+
+The response schema for the `listTransactions` operation.
+"""
+
+
+class ListTransactionsResponse(SpApiBaseModel):
+    """The response schema for the `listTransactions` operation."""
+
+    model_config = ConfigDict(
+        populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
+    )
+
+    payload: Annotated[
+        Optional["TransactionsPayload"],
+        Field(None, description="The payload for the `listTransactions` operation."),
+    ]
+
+
+"""
 MarketplaceDetails
 
 Information about the marketplace where the transaction occurred.
@@ -486,7 +552,7 @@ class MarketplaceDetails(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("marketplaceId", "marketplace_id"),
             serialization_alias="marketplaceId",
-            description="The identifier of the marketplace where the transaction was made.",
+            description="The identifier of the marketplace where the transaction occurred. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).",
         ),
     ]
 
@@ -604,18 +670,21 @@ class ProductContext(SpApiBaseModel):
 
 
 # Enum definitions
-class RelatedIdentifierNameEnum(str, Enum):
+class RelatedIdentifierRelatedIdentifierNameEnum(str, Enum):
     """Enum for relatedIdentifierName"""
 
-    ORDER_ID = "ORDER_ID"  # Associated OrderId of transaction
-    SHIPMENT_ID = "SHIPMENT_ID"  # Associated ShipmentId of transaction
-    EVENT_GROUP_ID = "EVENT_GROUP_ID"  # Associated identifier of the transaction's financial event group.
+    ORDER_ID = "ORDER_ID"  # The `OrderId` that is associated with the transaction.
+    SHIPMENT_ID = (
+        "SHIPMENT_ID"  # The `ShipmentId` that is associated with the transaction.
+    )
+    FINANCIAL_EVENT_GROUP_ID = "FINANCIAL_EVENT_GROUP_ID"  # The identifier that is associated with the transaction's financial event group.
     REFUND_ID = "REFUND_ID"  # Associated RefundId of transaction
     INVOICE_ID = "INVOICE_ID"  # Associated InvoiceId of transaction
     DISBURSEMENT_ID = "DISBURSEMENT_ID"  # Disbursement Id for Amazon's bank transfer.
     TRANSFER_ID = "TRANSFER_ID"  # The `TransferId` associated with the transaction.
     DEFERRED_TRANSACTION_ID = "DEFERRED_TRANSACTION_ID"  # The transaction ID for the related deferred transaction
     RELEASE_TRANSACTION_ID = "RELEASE_TRANSACTION_ID"  # The transaction ID for the related released transaction
+    SETTLEMENT_ID = "SETTLEMENT_ID"  # The identifier that is associated with the transaction's settlement group.
 
 
 """
@@ -633,7 +702,7 @@ class RelatedIdentifier(SpApiBaseModel):
     )
 
     related_identifier_name: Annotated[
-        Optional[RelatedIdentifierNameEnum],
+        Optional[RelatedIdentifierRelatedIdentifierNameEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -701,7 +770,7 @@ class SellingPartnerMetadata(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("marketplaceId", "marketplace_id"),
             serialization_alias="marketplaceId",
-            description="Marketplace identifier of transaction.",
+            description="The identifier of the marketplace where the transaction occurred. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).",
         ),
     ]
 
@@ -803,7 +872,7 @@ class Transaction(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("transactionStatus", "transaction_status"),
             serialization_alias="transactionStatus",
-            description="The status of the transaction. **Possible values:** * `DEFERRED`: the transaction is currently deferred. * `RELEASED`: the transaction is currently released. * `DEFERRED_RELEASED`: the transaction was deferred in the past, but is now released. Deferred transactions will have their status updated to `DEFERRED_RELEASED` when released.",
+            description="The status of the transaction. **Possible values:** * `DEFERRED`: the transaction is currently deferred. * `RELEASED`: the transaction is currently released. * `DEFERRED_RELEASED`: the transaction was deferred in the past, but is now released. The status of a deferred transaction is updated to `DEFERRED_RELEASED` when the transaction is released.",
         ),
     ]
 
@@ -858,16 +927,17 @@ class Transaction(SpApiBaseModel):
     ]
 
     breakdowns: Annotated[
-        Optional["Breakdowns"],
+        Optional[List["Breakdown"]],
         Field(
             None,
-            description="List of breakdowns which will provide the details on how the total amount is calculated for the financial transaction.",
+            description="A list of breakdowns that detail how the total amount is calculated for the transaction.",
         ),
     ]
 
 
 # Rebuild models to resolve forward references
 ListTransactionsResponse.model_rebuild()
+TransactionsPayload.model_rebuild()
 Transaction.model_rebuild()
 Currency.model_rebuild()
 SellingPartnerMetadata.model_rebuild()
@@ -881,6 +951,7 @@ ProductContext.model_rebuild()
 AmazonPayContext.model_rebuild()
 PaymentsContext.model_rebuild()
 DeferredContext.model_rebuild()
+BusinessContext.model_rebuild()
 TimeRangeContext.model_rebuild()
 ErrorList.model_rebuild()
 Error.model_rebuild()

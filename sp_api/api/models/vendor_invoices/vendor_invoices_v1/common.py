@@ -17,15 +17,12 @@ from .base_models import (BodyParam, GetRequestSerializer, PathParam,
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class AdditionalDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
-    BASIC = "Basic"  # Payment term that buyer and seller have agreed to.
-    END_OF_MONTH = "EndOfMonth"  # Payment term where seller gets paid end of month.
-    FIXED_DATE = "FixedDate"  # Payment term where seller gets paid on a fixed date as agreed with buyer.
-    PROXIMO = "Proximo"  # Payment term where seller gets paid end of following month.
-    PAYMENT_DUE_UPON_RECEIPT_OF_INVOICE = "PaymentDueUponReceiptOfInvoice"  # Payment term where seller gets paid upon receipt of the invoice by the buyer.
-    LETTEROF_CREDIT = "LetterofCredit"  # A payment undertaking given by a bank to the seller and is issued on behalf of the applicant i.e. the buyer.
+    SUR = "SUR"  # An additional tax on something already taxed, such as a higher rate of tax on incomes above a certain level.
+    OCR = "OCR"  # OCR.
+    CARTON_COUNT = "CartonCount"  # The total number of cartons invoiced.
 
 
 """
@@ -43,7 +40,7 @@ class AdditionalDetails(SpApiBaseModel):
     )
 
     type: Annotated[
-        TypeEnum,
+        AdditionalDetailsTypeEnum,
         Field(
             ...,
             description="The type of the additional information provided by the selling party.",
@@ -221,7 +218,7 @@ class Money(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxTypeEnum(str, Enum):
+class TaxDetailsTaxTypeEnum(str, Enum):
     """Enum for taxType"""
 
     CGST = "CGST"  # Central Goods and Services Tax (CGST) is levied by the Indian government for intrastate movement of goods and services.
@@ -257,7 +254,7 @@ class TaxDetails(SpApiBaseModel):
     )
 
     tax_type: Annotated[
-        TaxTypeEnum,
+        TaxDetailsTaxTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("taxType", "tax_type"),
@@ -298,15 +295,17 @@ class TaxDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class AllowanceDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
-    BASIC = "Basic"  # Payment term that buyer and seller have agreed to.
-    END_OF_MONTH = "EndOfMonth"  # Payment term where seller gets paid end of month.
-    FIXED_DATE = "FixedDate"  # Payment term where seller gets paid on a fixed date as agreed with buyer.
-    PROXIMO = "Proximo"  # Payment term where seller gets paid end of following month.
-    PAYMENT_DUE_UPON_RECEIPT_OF_INVOICE = "PaymentDueUponReceiptOfInvoice"  # Payment term where seller gets paid upon receipt of the invoice by the buyer.
-    LETTEROF_CREDIT = "LetterofCredit"  # A payment undertaking given by a bank to the seller and is issued on behalf of the applicant i.e. the buyer.
+    DISCOUNT = "Discount"  # Discount allowance.
+    DISCOUNT_INCENTIVE = "DiscountIncentive"  # Discount incentive allowance.
+    DEFECTIVE = "Defective"  # Allowance applied for defective item.
+    PROMOTIONAL = "Promotional"  # Promotional allowance.
+    UNSALEABLE_MERCHANDISE = (
+        "UnsaleableMerchandise"  # Allowance applied due to unsaleable merchandise.
+    )
+    SPECIAL = "Special"  # Special allowances.
 
 
 """
@@ -323,7 +322,10 @@ class AllowanceDetails(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    type: Annotated[TypeEnum, Field(..., description="Type of the allowance applied.")]
+    type: Annotated[
+        AllowanceDetailsTypeEnum,
+        Field(..., description="Type of the allowance applied."),
+    ]
 
     description: Annotated[
         Optional[str], Field(None, description="Description of the allowance.")
@@ -351,15 +353,24 @@ class AllowanceDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class ChargeDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
-    BASIC = "Basic"  # Payment term that buyer and seller have agreed to.
-    END_OF_MONTH = "EndOfMonth"  # Payment term where seller gets paid end of month.
-    FIXED_DATE = "FixedDate"  # Payment term where seller gets paid on a fixed date as agreed with buyer.
-    PROXIMO = "Proximo"  # Payment term where seller gets paid end of following month.
-    PAYMENT_DUE_UPON_RECEIPT_OF_INVOICE = "PaymentDueUponReceiptOfInvoice"  # Payment term where seller gets paid upon receipt of the invoice by the buyer.
-    LETTEROF_CREDIT = "LetterofCredit"  # A payment undertaking given by a bank to the seller and is issued on behalf of the applicant i.e. the buyer.
+    FREIGHT = "Freight"  # Freight charges.
+    PACKING = "Packing"  # Packing fee.
+    DUTY = "Duty"  # Duty charges.
+    SERVICE = "Service"  # Service fee.
+    SMALL_ORDER = "SmallOrder"  # Small order fee.
+    INSURANCE_PLACEMENT_COST = "InsurancePlacementCost"  # Insurance placement cost.
+    INSURANCE_FEE = "InsuranceFee"  # Insurance fee.
+    SPECIAL_HANDLING_SERVICE = "SpecialHandlingService"  # Special handling service fee.
+    COLLECTION_AND_RECYCLING_SERVICE = (
+        "CollectionAndRecyclingService"  # Collection and recycling service fee.
+    )
+    ENVIRONMENTAL_PROTECTION_SERVICE = (
+        "EnvironmentalProtectionService"  # Environmental protection service fee.
+    )
+    TAX_COLLECTED_AT_SOURCE = "TaxCollectedAtSource"  # Tax collected at source.
 
 
 """
@@ -376,7 +387,9 @@ class ChargeDetails(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    type: Annotated[TypeEnum, Field(..., description="Type of the charge applied.")]
+    type: Annotated[
+        ChargeDetailsTypeEnum, Field(..., description="Type of the charge applied.")
+    ]
 
     description: Annotated[
         Optional[str], Field(None, description="Description of the charge.")
@@ -540,7 +553,7 @@ ErrorList = List["Error"]
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class TotalWeightUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     POUNDS = "POUNDS"  # Weight in Pound.
@@ -564,7 +577,7 @@ class TotalWeight(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        TotalWeightUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -582,13 +595,11 @@ class TotalWeight(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class ItemQuantityUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    POUNDS = "POUNDS"  # Weight in Pound.
-    OUNCES = "OUNCES"  # Weight in Ounce.
-    GRAMS = "GRAMS"  # Weight in Gram.
-    KILOGRAMS = "KILOGRAMS"  # Weight in Kilogram.
+    CASES = "Cases"  # Packing of individual items into a case.
+    EACHES = "Eaches"  # Individual items.
 
 
 """
@@ -611,7 +622,7 @@ class ItemQuantity(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        ItemQuantityUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -788,7 +799,7 @@ class InvoiceItem(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailsTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -810,7 +821,7 @@ class TaxRegistrationDetails(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        TaxRegistrationTypeEnum,
+        TaxRegistrationDetailsTaxRegistrationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -877,7 +888,7 @@ class PartyIdentification(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class PaymentTermsTypeEnum(str, Enum):
     """Enum for type"""
 
     BASIC = "Basic"  # Payment term that buyer and seller have agreed to.
@@ -903,7 +914,7 @@ class PaymentTerms(SpApiBaseModel):
     )
 
     type: Annotated[
-        Optional[TypeEnum],
+        Optional[PaymentTermsTypeEnum],
         Field(None, description="The payment term type for the invoice."),
     ]
 
@@ -939,7 +950,7 @@ class PaymentTerms(SpApiBaseModel):
 
 
 # Enum definitions
-class InvoiceTypeEnum(str, Enum):
+class InvoiceInvoiceTypeEnum(str, Enum):
     """Enum for invoiceType"""
 
     INVOICE = "Invoice"  # A commercial document issued by a seller to a buyer, relating to a sale transaction and indicating the products, quantities, and agreed prices for products or services the seller had provided the buyer.
@@ -961,7 +972,7 @@ class Invoice(SpApiBaseModel):
     )
 
     invoice_type: Annotated[
-        InvoiceTypeEnum,
+        InvoiceInvoiceTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("invoiceType", "invoice_type"),

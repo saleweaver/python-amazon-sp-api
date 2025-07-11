@@ -3,9 +3,11 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.fba_inbound_eligibility.fba_inbound_eligibility_v1.common import (
-    Error, GetItemEligibilityPreviewRequest, GetItemEligibilityPreviewResponse,
-    GetRequestSerializer, IneligibilityReasonListEnum, ItemEligibilityPreview,
-    ProgramEnum, RequestsBaseModel, SpApiBaseModel)
+    Error, GetItemEligibilityPreviewRequest,
+    GetItemEligibilityPreviewRequestProgramEnum,
+    GetItemEligibilityPreviewResponse, GetRequestSerializer,
+    ItemEligibilityPreview, ItemEligibilityPreviewIneligibilityReasonListEnum,
+    ItemEligibilityPreviewProgramEnum, RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -45,7 +47,7 @@ def test_getitemeligibilitypreviewrequest_instantiates():
     kwargs = {
         "marketplace_ids": None,
         "asin": "",
-        "program": ProgramEnum.INBOUND,
+        "program": GetItemEligibilityPreviewRequestProgramEnum.INBOUND,
     }
     obj = GetItemEligibilityPreviewRequest(**kwargs)
     assert isinstance(obj, GetItemEligibilityPreviewRequest)
@@ -56,7 +58,7 @@ def test_itemeligibilitypreview_instantiates():
     kwargs = {
         "asin": "",
         "marketplace_id": None,
-        "program": ProgramEnum.INBOUND,
+        "program": ItemEligibilityPreviewProgramEnum.INBOUND,
         "is_eligible_for_program": False,
         "ineligibility_reason_list": None,
     }

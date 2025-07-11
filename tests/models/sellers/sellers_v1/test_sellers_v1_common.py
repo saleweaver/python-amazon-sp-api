@@ -3,10 +3,10 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.sellers.sellers_v1.common import (
-    Account, Address, Business, BusinessTypeEnum, Error, GetAccountResponse,
-    GetMarketplaceParticipationsResponse, GetRequestSerializer, Marketplace,
-    MarketplaceParticipation, Participation, PrimaryContact, RequestsBaseModel,
-    SellingPlanEnum, SpApiBaseModel)
+    Account, AccountBusinessTypeEnum, AccountSellingPlanEnum, Address,
+    Business, Error, GetAccountResponse, GetMarketplaceParticipationsResponse,
+    GetRequestSerializer, Marketplace, MarketplaceParticipation, Participation,
+    PrimaryContact, RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -90,8 +90,8 @@ def test_account_instantiates():
     """Instantiate Account with dummy data"""
     kwargs = {
         "marketplace_participation_list": None,
-        "business_type": BusinessTypeEnum.CHARITY,
-        "selling_plan": SellingPlanEnum.PROFESSIONAL,
+        "business_type": AccountBusinessTypeEnum.CHARITY,
+        "selling_plan": AccountSellingPlanEnum.PROFESSIONAL,
         "business": None,
         "primary_contact": None,
     }

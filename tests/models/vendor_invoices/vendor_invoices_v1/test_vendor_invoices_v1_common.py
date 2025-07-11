@@ -3,13 +3,16 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.vendor_invoices.vendor_invoices_v1.common import (
-    AdditionalDetails, Address, AllowanceDetails, ChargeDetails,
-    CreditNoteDetails, Error, GetRequestSerializer, Invoice, InvoiceItem,
-    InvoiceTypeEnum, ItemQuantity, Money, PartyIdentification, PaymentTerms,
-    RequestsBaseModel, SpApiBaseModel, SubmitInvoicesRequest,
-    SubmitInvoicesRequestBody, SubmitInvoicesResponse, TaxDetails,
-    TaxRegistrationDetails, TaxRegistrationTypeEnum, TaxTypeEnum, TotalWeight,
-    TransactionId, TypeEnum, UnitOfMeasureEnum)
+    AdditionalDetails, AdditionalDetailsTypeEnum, Address, AllowanceDetails,
+    AllowanceDetailsTypeEnum, ChargeDetails, ChargeDetailsTypeEnum,
+    CreditNoteDetails, Error, GetRequestSerializer, Invoice,
+    InvoiceInvoiceTypeEnum, InvoiceItem, ItemQuantity,
+    ItemQuantityUnitOfMeasureEnum, Money, PartyIdentification, PaymentTerms,
+    PaymentTermsTypeEnum, RequestsBaseModel, SpApiBaseModel,
+    SubmitInvoicesRequest, SubmitInvoicesRequestBody, SubmitInvoicesResponse,
+    TaxDetails, TaxDetailsTaxTypeEnum, TaxRegistrationDetails,
+    TaxRegistrationDetailsTaxRegistrationTypeEnum, TotalWeight,
+    TotalWeightUnitOfMeasureEnum, TransactionId)
 
 
 def test_requestsbasemodel_instantiates():
@@ -36,7 +39,7 @@ def test_getrequestserializer_instantiates():
 def test_additionaldetails_instantiates():
     """Instantiate AdditionalDetails with dummy data"""
     kwargs = {
-        "type": TypeEnum.BASIC,
+        "type": AdditionalDetailsTypeEnum.SUR,
         "detail": "",
         "language_code": None,
     }
@@ -76,7 +79,7 @@ def test_money_instantiates():
 def test_taxdetails_instantiates():
     """Instantiate TaxDetails with dummy data"""
     kwargs = {
-        "tax_type": TaxTypeEnum.CGST,
+        "tax_type": TaxDetailsTaxTypeEnum.CGST,
         "tax_rate": None,
         "tax_amount": Money(**{"currency_code": None, "amount": None}),
         "taxable_amount": None,
@@ -88,7 +91,7 @@ def test_taxdetails_instantiates():
 def test_allowancedetails_instantiates():
     """Instantiate AllowanceDetails with dummy data"""
     kwargs = {
-        "type": TypeEnum.BASIC,
+        "type": AllowanceDetailsTypeEnum.DISCOUNT,
         "description": None,
         "allowance_amount": Money(**{"currency_code": None, "amount": None}),
         "tax_details": None,
@@ -100,7 +103,7 @@ def test_allowancedetails_instantiates():
 def test_chargedetails_instantiates():
     """Instantiate ChargeDetails with dummy data"""
     kwargs = {
-        "type": TypeEnum.BASIC,
+        "type": ChargeDetailsTypeEnum.FREIGHT,
         "description": None,
         "charge_amount": Money(**{"currency_code": None, "amount": None}),
         "tax_details": None,
@@ -138,7 +141,7 @@ def test_error_instantiates():
 def test_totalweight_instantiates():
     """Instantiate TotalWeight with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.POUNDS,
+        "unit_of_measure": TotalWeightUnitOfMeasureEnum.POUNDS,
         "amount": "",
     }
     obj = TotalWeight(**kwargs)
@@ -149,7 +152,7 @@ def test_itemquantity_instantiates():
     """Instantiate ItemQuantity with dummy data"""
     kwargs = {
         "amount": 0,
-        "unit_of_measure": UnitOfMeasureEnum.POUNDS,
+        "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
         "unit_size": None,
         "total_weight": None,
     }
@@ -166,7 +169,7 @@ def test_invoiceitem_instantiates():
         "invoiced_quantity": ItemQuantity(
             **{
                 "amount": 0,
-                "unit_of_measure": UnitOfMeasureEnum.POUNDS,
+                "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
                 "unit_size": None,
                 "total_weight": None,
             }
@@ -187,7 +190,7 @@ def test_invoiceitem_instantiates():
 def test_taxregistrationdetails_instantiates():
     """Instantiate TaxRegistrationDetails with dummy data"""
     kwargs = {
-        "tax_registration_type": TaxRegistrationTypeEnum.VAT,
+        "tax_registration_type": TaxRegistrationDetailsTaxRegistrationTypeEnum.VAT,
         "tax_registration_number": "",
     }
     obj = TaxRegistrationDetails(**kwargs)
@@ -220,7 +223,7 @@ def test_paymentterms_instantiates():
 def test_invoice_instantiates():
     """Instantiate Invoice with dummy data"""
     kwargs = {
-        "invoice_type": InvoiceTypeEnum.INVOICE,
+        "invoice_type": InvoiceInvoiceTypeEnum.INVOICE,
         "id": "",
         "reference_number": None,
         "date": "",

@@ -4,8 +4,9 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.vehicles.vehicles_2024_11_01.common import (
     EngineOutput, Error, ErrorList, GetRequestSerializer, GetVehiclesRequest,
-    MonthAndYear, Pagination, RequestsBaseModel, SpApiBaseModel, Vehicle,
-    VehicleIdentifiers, VehiclesResponse, VehicleTypeEnum)
+    GetVehiclesRequestVehicleTypeEnum, MonthAndYear, Pagination,
+    RequestsBaseModel, SpApiBaseModel, Vehicle, VehicleIdentifiers,
+    VehiclesResponse)
 
 
 def test_requestsbasemodel_instantiates():
@@ -64,7 +65,7 @@ def test_getvehiclesrequest_instantiates():
     kwargs = {
         "page_token": None,
         "marketplace_id": None,
-        "vehicle_type": VehicleTypeEnum.CAR,
+        "vehicle_type": GetVehiclesRequestVehicleTypeEnum.CAR,
         "updated_after": None,
     }
     obj = GetVehiclesRequest(**kwargs)

@@ -4,21 +4,22 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.shipping.shipping_v1.common import (
     AcceptedRate, Account, Address, CancelShipmentRequest,
-    CancelShipmentResponse, Container, ContainerItem, ContainerSpecification,
-    ContainerTypeEnum, CreateShipmentRequest, CreateShipmentRequestBody,
-    CreateShipmentResponse, CreateShipmentResult, Currency, Dimensions, Error,
-    Event, GetAccountResponse, GetRatesRequest, GetRatesRequestBody,
-    GetRatesResponse, GetRatesResult, GetRequestSerializer, GetShipmentRequest,
-    GetShipmentResponse, GetTrackingInformationRequest,
-    GetTrackingInformationResponse, Label, LabelFormatEnum, LabelResult,
-    LabelSpecification, LabelStockSizeEnum, Location, Party,
+    CancelShipmentResponse, Container, ContainerContainerTypeEnum,
+    ContainerItem, ContainerSpecification, CreateShipmentRequest,
+    CreateShipmentRequestBody, CreateShipmentResponse, CreateShipmentResult,
+    Currency, Dimensions, DimensionsUnitEnum, Error, Event, GetAccountResponse,
+    GetRatesRequest, GetRatesRequestBody, GetRatesResponse, GetRatesResult,
+    GetRequestSerializer, GetShipmentRequest, GetShipmentResponse,
+    GetTrackingInformationRequest, GetTrackingInformationResponse, Label,
+    LabelResult, LabelSpecification, LabelSpecificationLabelFormatEnum,
+    LabelSpecificationLabelStockSizeEnum, Location, Party,
     PurchaseLabelsRequest, PurchaseLabelsRequestBody, PurchaseLabelsResponse,
     PurchaseLabelsResult, PurchaseShipmentRequest, PurchaseShipmentRequestBody,
     PurchaseShipmentResponse, PurchaseShipmentResult, Rate, RequestsBaseModel,
     RetrieveShippingLabelRequest, RetrieveShippingLabelRequestBody,
     RetrieveShippingLabelResponse, RetrieveShippingLabelResult, ServiceRate,
     Shipment, ShippingPromiseSet, SpApiBaseModel, TimeRange,
-    TrackingInformation, TrackingSummary, UnitEnum, Weight)
+    TrackingInformation, TrackingSummary, Weight, WeightUnitEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -75,7 +76,7 @@ def test_shippingpromiseset_instantiates():
 def test_weight_instantiates():
     """Instantiate Weight with dummy data"""
     kwargs = {
-        "unit": UnitEnum.G,
+        "unit": WeightUnitEnum.G,
         "value": 0.0,
     }
     obj = Weight(**kwargs)
@@ -145,7 +146,7 @@ def test_containeritem_instantiates():
     kwargs = {
         "quantity": 0.0,
         "unit_price": Currency(**{"value": 0.0, "unit": ""}),
-        "unit_weight": Weight(**{"unit": UnitEnum.G, "value": 0.0}),
+        "unit_weight": Weight(**{"unit": WeightUnitEnum.G, "value": 0.0}),
         "title": "",
     }
     obj = ContainerItem(**kwargs)
@@ -158,7 +159,7 @@ def test_dimensions_instantiates():
         "length": 0.0,
         "width": 0.0,
         "height": 0.0,
-        "unit": UnitEnum.G,
+        "unit": DimensionsUnitEnum.IN,
     }
     obj = Dimensions(**kwargs)
     assert isinstance(obj, Dimensions)
@@ -171,10 +172,15 @@ def test_container_instantiates():
         "container_reference_id": "",
         "value": Currency(**{"value": 0.0, "unit": ""}),
         "dimensions": Dimensions(
-            **{"length": 0.0, "width": 0.0, "height": 0.0, "unit": UnitEnum.G}
+            **{
+                "length": 0.0,
+                "width": 0.0,
+                "height": 0.0,
+                "unit": DimensionsUnitEnum.IN,
+            }
         ),
         "items": [],
-        "weight": Weight(**{"unit": UnitEnum.G, "value": 0.0}),
+        "weight": Weight(**{"unit": WeightUnitEnum.G, "value": 0.0}),
     }
     obj = Container(**kwargs)
     assert isinstance(obj, Container)
@@ -184,9 +190,14 @@ def test_containerspecification_instantiates():
     """Instantiate ContainerSpecification with dummy data"""
     kwargs = {
         "dimensions": Dimensions(
-            **{"length": 0.0, "width": 0.0, "height": 0.0, "unit": UnitEnum.G}
+            **{
+                "length": 0.0,
+                "width": 0.0,
+                "height": 0.0,
+                "unit": DimensionsUnitEnum.IN,
+            }
         ),
-        "weight": Weight(**{"unit": UnitEnum.G, "value": 0.0}),
+        "weight": Weight(**{"unit": WeightUnitEnum.G, "value": 0.0}),
     }
     obj = ContainerSpecification(**kwargs)
     assert isinstance(obj, ContainerSpecification)
@@ -559,8 +570,8 @@ def test_gettrackinginformationresponse_instantiates():
 def test_labelspecification_instantiates():
     """Instantiate LabelSpecification with dummy data"""
     kwargs = {
-        "label_format": LabelFormatEnum.PNG,
-        "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+        "label_format": LabelSpecificationLabelFormatEnum.PNG,
+        "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
     }
     obj = LabelSpecification(**kwargs)
     assert isinstance(obj, LabelSpecification)
@@ -593,8 +604,8 @@ def test_purchaselabelsrequestbody_instantiates():
         "rate_id": "",
         "label_specification": LabelSpecification(
             **{
-                "label_format": LabelFormatEnum.PNG,
-                "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
             }
         ),
     }
@@ -611,8 +622,8 @@ def test_purchaselabelsrequest_instantiates():
                 "rate_id": "",
                 "label_specification": LabelSpecification(
                     **{
-                        "label_format": LabelFormatEnum.PNG,
-                        "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                        "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                        "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
                     }
                 ),
             }
@@ -690,8 +701,8 @@ def test_purchaseshipmentrequestbody_instantiates():
         "containers": [],
         "label_specification": LabelSpecification(
             **{
-                "label_format": LabelFormatEnum.PNG,
-                "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
             }
         ),
     }
@@ -740,8 +751,8 @@ def test_purchaseshipmentrequest_instantiates():
                 "containers": [],
                 "label_specification": LabelSpecification(
                     **{
-                        "label_format": LabelFormatEnum.PNG,
-                        "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                        "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                        "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
                     }
                 ),
             }
@@ -755,7 +766,7 @@ def test_servicerate_instantiates():
     """Instantiate ServiceRate with dummy data"""
     kwargs = {
         "total_charge": Currency(**{"value": 0.0, "unit": ""}),
-        "billable_weight": Weight(**{"unit": UnitEnum.G, "value": 0.0}),
+        "billable_weight": Weight(**{"unit": WeightUnitEnum.G, "value": 0.0}),
         "service_type": "",
         "promise": ShippingPromiseSet(
             **{"delivery_window": None, "receive_window": None}
@@ -772,7 +783,7 @@ def test_purchaseshipmentresult_instantiates():
         "service_rate": ServiceRate(
             **{
                 "total_charge": Currency(**{"value": 0.0, "unit": ""}),
-                "billable_weight": Weight(**{"unit": UnitEnum.G, "value": 0.0}),
+                "billable_weight": Weight(**{"unit": WeightUnitEnum.G, "value": 0.0}),
                 "service_type": "",
                 "promise": ShippingPromiseSet(
                     **{"delivery_window": None, "receive_window": None}
@@ -814,8 +825,8 @@ def test_retrieveshippinglabelrequestbody_instantiates():
     kwargs = {
         "label_specification": LabelSpecification(
             **{
-                "label_format": LabelFormatEnum.PNG,
-                "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
             }
         ),
     }
@@ -832,8 +843,8 @@ def test_retrieveshippinglabelrequest_instantiates():
             **{
                 "label_specification": LabelSpecification(
                     **{
-                        "label_format": LabelFormatEnum.PNG,
-                        "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                        "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                        "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
                     }
                 )
             }
@@ -849,8 +860,8 @@ def test_retrieveshippinglabelresult_instantiates():
         "label_stream": "",
         "label_specification": LabelSpecification(
             **{
-                "label_format": LabelFormatEnum.PNG,
-                "label_stock_size": LabelStockSizeEnum.VALUE_4X6,
+                "label_format": LabelSpecificationLabelFormatEnum.PNG,
+                "label_stock_size": LabelSpecificationLabelStockSizeEnum.VALUE_4X6,
             }
         ),
     }

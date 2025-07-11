@@ -105,7 +105,7 @@ class ShippingPromiseSet(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class WeightUnitEnum(str, Enum):
     """Enum for unit"""
 
     G = "g"  # Grams
@@ -128,7 +128,7 @@ class Weight(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of measurement.")]
+    unit: Annotated[WeightUnitEnum, Field(..., description="The unit of measurement.")]
 
     value: Annotated[float, Field(..., description="The measurement value.")]
 
@@ -449,13 +449,11 @@ ContainerReferenceId = str
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class DimensionsUnitEnum(str, Enum):
     """Enum for unit"""
 
-    G = "g"  # Grams
-    KG = "kg"  # Kilograms
-    OZ = "oz"  # Ounces
-    LB = "lb"  # Pounds
+    IN = "IN"  # Inches
+    CM = "CM"  # Centimeters
 
 
 """
@@ -478,11 +476,13 @@ class Dimensions(SpApiBaseModel):
 
     height: Annotated[float, Field(..., description="The height of the container.")]
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of these measurements.")]
+    unit: Annotated[
+        DimensionsUnitEnum, Field(..., description="The unit of these measurements.")
+    ]
 
 
 # Enum definitions
-class ContainerTypeEnum(str, Enum):
+class ContainerContainerTypeEnum(str, Enum):
     """Enum for containerType"""
 
     PACKAGE = "PACKAGE"  # PACKAGE
@@ -503,7 +503,7 @@ class Container(SpApiBaseModel):
     )
 
     container_type: Annotated[
-        Optional[ContainerTypeEnum],
+        Optional[ContainerContainerTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("containerType", "container_type"),
@@ -1303,13 +1303,13 @@ class GetTrackingInformationResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class LabelFormatEnum(str, Enum):
+class LabelSpecificationLabelFormatEnum(str, Enum):
     """Enum for labelFormat"""
 
     PNG = "PNG"  # PNG
 
 
-class LabelStockSizeEnum(str, Enum):
+class LabelSpecificationLabelStockSizeEnum(str, Enum):
     """Enum for labelStockSize"""
 
     VALUE_4X6 = "4x6"  # 4x6
@@ -1330,7 +1330,7 @@ class LabelSpecification(SpApiBaseModel):
     )
 
     label_format: Annotated[
-        LabelFormatEnum,
+        LabelSpecificationLabelFormatEnum,
         Field(
             ...,
             validation_alias=AliasChoices("labelFormat", "label_format"),
@@ -1340,7 +1340,7 @@ class LabelSpecification(SpApiBaseModel):
     ]
 
     label_stock_size: Annotated[
-        LabelStockSizeEnum,
+        LabelSpecificationLabelStockSizeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("labelStockSize", "label_stock_size"),

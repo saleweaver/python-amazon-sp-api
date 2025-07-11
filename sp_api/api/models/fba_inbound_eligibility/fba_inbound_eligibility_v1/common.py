@@ -59,7 +59,7 @@ ErrorList = List["Error"]
 
 
 # Enum definitions
-class ProgramEnum(str, Enum):
+class GetItemEligibilityPreviewRequestProgramEnum(str, Enum):
     """Enum for program"""
 
     INBOUND = "INBOUND"
@@ -104,7 +104,7 @@ class GetItemEligibilityPreviewRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     program: Annotated[
-        ProgramEnum,
+        GetItemEligibilityPreviewRequestProgramEnum,
         QueryParam(),
         Field(
             ...,
@@ -114,14 +114,16 @@ class GetItemEligibilityPreviewRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class ProgramEnum(str, Enum):
+class ItemEligibilityPreviewProgramEnum(str, Enum):
     """Enum for program"""
 
-    INBOUND = "INBOUND"
-    COMMINGLING = "COMMINGLING"
+    INBOUND = "INBOUND"  # Inbound shipment.
+    COMMINGLING = (
+        "COMMINGLING"  # Using the manufacturer barcode for FBA inventory tracking.
+    )
 
 
-class IneligibilityReasonListEnum(str, Enum):
+class ItemEligibilityPreviewIneligibilityReasonListEnum(str, Enum):
     """Enum for ineligibilityReasonList"""
 
     FBA_INB_0004 = "FBA_INB_0004"  # Missing package dimensions. This product is missing necessary information; dimensions need to be provided in the manufacturer's original packaging.
@@ -200,7 +202,7 @@ class ItemEligibilityPreview(SpApiBaseModel):
     ]
 
     program: Annotated[
-        ProgramEnum,
+        ItemEligibilityPreviewProgramEnum,
         Field(..., description="The program for which eligibility was determined."),
     ]
 
@@ -217,7 +219,7 @@ class ItemEligibilityPreview(SpApiBaseModel):
     ]
 
     ineligibility_reason_list: Annotated[
-        Optional[List["IneligibilityReasonListEnum"]],
+        Optional[List["ItemEligibilityPreviewIneligibilityReasonListEnum"]],
         Field(
             None,
             validation_alias=AliasChoices(

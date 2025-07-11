@@ -187,7 +187,7 @@ class CarrierDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class ContainerIdentificationTypeEnum(str, Enum):
+class ContainerIdentificationContainerIdentificationTypeEnum(str, Enum):
     """Enum for containerIdentificationType"""
 
     SSCC = "SSCC"  # 2 Digit Application Identifier (00) followed by unique 18-digit Serial Shipment Container Code (SSCC) to be included to define a pallet/carton and to identify its contents.
@@ -212,7 +212,7 @@ class ContainerIdentification(SpApiBaseModel):
     )
 
     container_identification_type: Annotated[
-        ContainerIdentificationTypeEnum,
+        ContainerIdentificationContainerIdentificationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -237,7 +237,7 @@ class ContainerIdentification(SpApiBaseModel):
 
 
 # Enum definitions
-class DurationUnitEnum(str, Enum):
+class DurationDurationUnitEnum(str, Enum):
     """Enum for durationUnit"""
 
     DAYS = "Days"  # Days
@@ -259,7 +259,7 @@ class Duration(SpApiBaseModel):
     )
 
     duration_unit: Annotated[
-        DurationUnitEnum,
+        DurationDurationUnitEnum,
         Field(
             ...,
             validation_alias=AliasChoices("durationUnit", "duration_unit"),
@@ -363,7 +363,7 @@ class Money(SpApiBaseModel):
 
 
 # Enum definitions
-class HandlingCodeEnum(str, Enum):
+class ItemDetailsHandlingCodeEnum(str, Enum):
     """Enum for handlingCode"""
 
     OVERSIZED = "Oversized"  # A package weighing 150 pounds or less and measuring greater than 130 inches in length and girth is classified as an oversized package.
@@ -429,7 +429,7 @@ class ItemDetails(SpApiBaseModel):
     ]
 
     handling_code: Annotated[
-        Optional[HandlingCodeEnum],
+        Optional[ItemDetailsHandlingCodeEnum],
         Field(
             None,
             validation_alias=AliasChoices("handlingCode", "handling_code"),
@@ -440,11 +440,13 @@ class ItemDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class TotalWeightUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    CASES = "Cases"  # Packing of individual items into a case.
-    EACHES = "Eaches"  # Individual items.
+    POUNDS = "POUNDS"  # The weight is measured in pounds.
+    OUNCES = "OUNCES"  # The weight is measured in ounces.
+    GRAMS = "GRAMS"  # The weight is measured in grams.
+    KILOGRAMS = "KILOGRAMS"  # The weight is measured in kilograms.
 
 
 """
@@ -462,7 +464,7 @@ class TotalWeight(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        TotalWeightUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -480,7 +482,7 @@ class TotalWeight(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class ItemQuantityUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     CASES = "Cases"  # Packing of individual items into a case.
@@ -510,7 +512,7 @@ class ItemQuantity(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        ItemQuantityUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -584,11 +586,13 @@ class ContainerItem(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class DimensionsUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    CASES = "Cases"  # Packing of individual items into a case.
-    EACHES = "Eaches"  # Individual items.
+    IN = "In"  # Inches
+    FT = "Ft"  # Feet
+    METER = "Meter"  # Meters
+    YARD = "Yard"  # Yards
 
 
 """
@@ -612,7 +616,7 @@ class Dimensions(SpApiBaseModel):
     height: Annotated["Decimal", Field(..., description="The height of the container.")]
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        DimensionsUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -623,11 +627,13 @@ class Dimensions(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class WeightUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    CASES = "Cases"  # Packing of individual items into a case.
-    EACHES = "Eaches"  # Individual items.
+    G = "G"  # Grams
+    KG = "Kg"  # Kilograms
+    OZ = "Oz"  # Ounces
+    LB = "Lb"  # Pounds
 
 
 """
@@ -645,7 +651,7 @@ class Weight(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        WeightUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -985,7 +991,7 @@ class PackedItems(SpApiBaseModel):
 
 
 # Enum definitions
-class ContainerTypeEnum(str, Enum):
+class ContainersContainerTypeEnum(str, Enum):
     """Enum for containerType"""
 
     CARTON = "carton"  # A carton is a box or container usually made of liquid packaging board, paperboard and sometimes of corrugated fiberboard
@@ -1007,7 +1013,7 @@ class Containers(SpApiBaseModel):
     )
 
     container_type: Annotated[
-        ContainerTypeEnum,
+        ContainersContainerTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("containerType", "container_type"),
@@ -1135,11 +1141,11 @@ ErrorList = List["Error"]
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetShipmentDetailsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
-    ASC = "ASC"  # Sort the list by shipment label creation date in ascending order.
-    DESC = "DESC"  # Sort the list by shipment label creation date in descending order.
+    ASC = "ASC"  # Sort in ascending order by shipment creation date.
+    DESC = "DESC"  # Sort in descending order by shipment creation date.
 
 
 """
@@ -1169,7 +1175,7 @@ class GetShipmentDetailsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetShipmentDetailsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1519,7 +1525,7 @@ class Location(SpApiBaseModel):
 
 
 # Enum definitions
-class FunctionCodeEnum(str, Enum):
+class StopFunctionCodeEnum(str, Enum):
     """Enum for functionCode"""
 
     PORT_OF_DISCHARGE = "PortOfDischarge"  # Port of Discharge is a place where a vessel discharges or unloads some or all of its shipments.
@@ -1544,7 +1550,7 @@ class Stop(SpApiBaseModel):
     )
 
     function_code: Annotated[
-        FunctionCodeEnum,
+        StopFunctionCodeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("functionCode", "function_code"),
@@ -1609,7 +1615,7 @@ class Route(SpApiBaseModel):
 
 
 # Enum definitions
-class MethodOfPaymentEnum(str, Enum):
+class ImportDetailsMethodOfPaymentEnum(str, Enum):
     """Enum for methodOfPayment"""
 
     PAID_BY_BUYER = "PaidByBuyer"  # Buyer pays for shipping.
@@ -1622,7 +1628,7 @@ class MethodOfPaymentEnum(str, Enum):
     PAID_BY_SELLER = "PaidBySeller"  # Seller pays for shipping.
 
 
-class HandlingInstructionsEnum(str, Enum):
+class ImportDetailsHandlingInstructionsEnum(str, Enum):
     """Enum for handlingInstructions"""
 
     OVERSIZED = "Oversized"  # A package weighing 150 pounds or less and measuring greater than 130 inches in length and girth is classified as an oversized package.
@@ -1648,7 +1654,7 @@ class ImportDetails(SpApiBaseModel):
     )
 
     method_of_payment: Annotated[
-        Optional[MethodOfPaymentEnum],
+        Optional[ImportDetailsMethodOfPaymentEnum],
         Field(
             None,
             validation_alias=AliasChoices("methodOfPayment", "method_of_payment"),
@@ -1705,7 +1711,7 @@ class ImportDetails(SpApiBaseModel):
     ]
 
     handling_instructions: Annotated[
-        Optional[HandlingInstructionsEnum],
+        Optional[ImportDetailsHandlingInstructionsEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -1718,7 +1724,7 @@ class ImportDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailsTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -1740,7 +1746,7 @@ class TaxRegistrationDetails(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        TaxRegistrationTypeEnum,
+        TaxRegistrationDetailsTaxRegistrationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -1930,7 +1936,7 @@ class PurchaseOrders(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipmentStatusEnum(str, Enum):
+class ShipmentStatusDetailsShipmentStatusEnum(str, Enum):
     """Enum for shipmentStatus"""
 
     CREATED = "Created"  # Shipment request was received by buyer.
@@ -1954,7 +1960,7 @@ class ShipmentStatusDetails(SpApiBaseModel):
     )
 
     shipment_status: Annotated[
-        Optional[ShipmentStatusEnum],
+        Optional[ShipmentStatusDetailsShipmentStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices("shipmentStatus", "shipment_status"),
@@ -1975,11 +1981,13 @@ class ShipmentStatusDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class VolumeUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    CASES = "Cases"  # Packing of individual items into a case.
-    EACHES = "Eaches"  # Individual items.
+    CU_FT = "CuFt"  # Cubic feet.
+    CU_IN = "CuIn"  # Cubic inches.
+    CU_M = "CuM"  # Cubic meter.
+    CU_Y = "CuY"  # Cubic yard.
 
 
 """
@@ -1997,7 +2005,7 @@ class Volume(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        VolumeUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -2079,7 +2087,7 @@ class TransportShipmentMeasurements(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipModeEnum(str, Enum):
+class TransportationDetailsShipModeEnum(str, Enum):
     """Enum for shipMode"""
 
     TRUCK_LOAD = "TruckLoad"  # Truckload shipping is the movement of large amounts of homogeneous cargo, generally the amount necessary to fill an entire semi-trailer or intermodal container.
@@ -2089,7 +2097,7 @@ class ShipModeEnum(str, Enum):
     SMALL_PARCEL = "SmallParcel"  # Small parcel shipments are under 70 pounds per parcel and shipped with your own packaging or carrier supplied boxes.
 
 
-class TransportationModeEnum(str, Enum):
+class TransportationDetailsTransportationModeEnum(str, Enum):
     """Enum for transportationMode"""
 
     ROAD = "Road"  # The mode of transportation is by Road (on a truck).
@@ -2112,7 +2120,7 @@ class TransportationDetails(SpApiBaseModel):
     )
 
     ship_mode: Annotated[
-        Optional[ShipModeEnum],
+        Optional[TransportationDetailsShipModeEnum],
         Field(
             None,
             validation_alias=AliasChoices("shipMode", "ship_mode"),
@@ -2122,7 +2130,7 @@ class TransportationDetails(SpApiBaseModel):
     ]
 
     transportation_mode: Annotated[
-        Optional[TransportationModeEnum],
+        Optional[TransportationDetailsTransportationModeEnum],
         Field(
             None,
             validation_alias=AliasChoices("transportationMode", "transportation_mode"),
@@ -2189,14 +2197,14 @@ class TransportationDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class TransactionTypeEnum(str, Enum):
+class ShipmentTransactionTypeEnum(str, Enum):
     """Enum for transactionType"""
 
     NEW = "New"  # Initial shipment Request.
     CANCEL = "Cancel"  # Cancel existing shipment RequestBody message. should be used only to cancel Shipment request
 
 
-class CurrentShipmentStatusEnum(str, Enum):
+class ShipmentCurrentShipmentStatusEnum(str, Enum):
     """Enum for currentShipmentStatus"""
 
     CREATED = "Created"  # Shipment request was received by buyer.
@@ -2205,7 +2213,7 @@ class CurrentShipmentStatusEnum(str, Enum):
     SHIPPED = "Shipped"  # Shipment sent to buyer warehouse.
 
 
-class ShipmentFreightTermEnum(str, Enum):
+class ShipmentShipmentFreightTermEnum(str, Enum):
     """Enum for shipmentFreightTerm"""
 
     COLLECT = "Collect"  # Buyer Pays / We Pay for the the transportation. Buyer pays for the shipment and provides Vendor and picks up shipment from vendor warehouse / location
@@ -2239,7 +2247,7 @@ class Shipment(SpApiBaseModel):
     ]
 
     transaction_type: Annotated[
-        TransactionTypeEnum,
+        ShipmentTransactionTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("transactionType", "transaction_type"),
@@ -2271,7 +2279,7 @@ class Shipment(SpApiBaseModel):
     ]
 
     current_shipment_status: Annotated[
-        Optional[CurrentShipmentStatusEnum],
+        Optional[ShipmentCurrentShipmentStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -2341,7 +2349,7 @@ class Shipment(SpApiBaseModel):
     ]
 
     shipment_freight_term: Annotated[
-        Optional[ShipmentFreightTermEnum],
+        Optional[ShipmentShipmentFreightTermEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -2506,7 +2514,7 @@ class GetShipmentDetailsResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class LabelFormatEnum(str, Enum):
+class LabelDataLabelFormatEnum(str, Enum):
     """Enum for labelFormat"""
 
     PDF = "PDF"
@@ -2539,7 +2547,7 @@ class LabelData(SpApiBaseModel):
     ]
 
     label_format: Annotated[
-        Optional[LabelFormatEnum],
+        Optional[LabelDataLabelFormatEnum],
         Field(
             None,
             validation_alias=AliasChoices("labelFormat", "label_format"),
@@ -2615,14 +2623,11 @@ class VendorDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipModeEnum(str, Enum):
+class ShipmentInformationShipModeEnum(str, Enum):
     """Enum for shipMode"""
 
-    TRUCK_LOAD = "TruckLoad"  # Truckload shipping is the movement of large amounts of homogeneous cargo, generally the amount necessary to fill an entire semi-trailer or intermodal container.
-    LESS_THAN_TRUCK_LOAD = (
-        "LessThanTruckLoad"  # Shipping does not fill the entire truck.
-    )
-    SMALL_PARCEL = "SmallParcel"  # Small parcel shipments are under 70 pounds per parcel and shipped with your own packaging or carrier supplied boxes.
+    SMALL_PARCEL = "SmallParcel"
+    LTL = "LTL"
 
 
 """
@@ -2712,7 +2717,7 @@ class ShipmentInformation(SpApiBaseModel):
     ]
 
     ship_mode: Annotated[
-        Optional[ShipModeEnum],
+        Optional[ShipmentInformationShipModeEnum],
         Field(
             None,
             validation_alias=AliasChoices("shipMode", "ship_mode"),
@@ -2833,7 +2838,7 @@ class GetShipmentLabels(SpApiBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetShipmentLabelsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort the list by shipment label creation date in ascending order.
@@ -2867,7 +2872,7 @@ class GetShipmentLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetShipmentLabelsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -3019,7 +3024,7 @@ class Item(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class PackedQuantityUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     CASES = "Cases"  # Packing of individual items into a case.
@@ -3049,7 +3054,7 @@ class PackedQuantity(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        PackedQuantityUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -3224,7 +3229,7 @@ class ShipmentMeasurements(SpApiBaseModel):
 
 
 # Enum definitions
-class TransportationModeEnum(str, Enum):
+class TransportationDetailsForShipmentConfirmationTransportationModeEnum(str, Enum):
     """Enum for transportationMode"""
 
     ROAD = "Road"  # The mode of transportation is by Road (on a truck).
@@ -3269,7 +3274,7 @@ class TransportationDetailsForShipmentConfirmation(SpApiBaseModel):
     ]
 
     transportation_mode: Annotated[
-        Optional[TransportationModeEnum],
+        Optional[TransportationDetailsForShipmentConfirmationTransportationModeEnum],
         Field(
             None,
             validation_alias=AliasChoices("transportationMode", "transportation_mode"),
@@ -3292,14 +3297,14 @@ class TransportationDetailsForShipmentConfirmation(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipmentConfirmationTypeEnum(str, Enum):
+class ShipmentConfirmationShipmentConfirmationTypeEnum(str, Enum):
     """Enum for shipmentConfirmationType"""
 
     ORIGINAL = "Original"  # Initial shipment confirmation message.
     REPLACE = "Replace"  # Replace the original shipment confirmation message.
 
 
-class ShipmentTypeEnum(str, Enum):
+class ShipmentConfirmationShipmentTypeEnum(str, Enum):
     """Enum for shipmentType"""
 
     TRUCK_LOAD = "TruckLoad"  # Truckload shipping is the movement of large amounts of homogeneous cargo, generally the amount necessary to fill an entire semi-trailer or intermodal container.
@@ -3309,7 +3314,7 @@ class ShipmentTypeEnum(str, Enum):
     SMALL_PARCEL = "SmallParcel"  # Small parcel shipments are under 70 pounds per and shipped in your own packaging or carrier supplied boxes.
 
 
-class ShipmentStructureEnum(str, Enum):
+class ShipmentConfirmationShipmentStructureEnum(str, Enum):
     """Enum for shipmentStructure"""
 
     PALLETIZED_ASSORTMENT_CASE = "PalletizedAssortmentCase"  # Shipment -> Order -> Pallet/Tare -> Carton/Package -> Item
@@ -3350,7 +3355,7 @@ class ShipmentConfirmation(SpApiBaseModel):
     ]
 
     shipment_confirmation_type: Annotated[
-        ShipmentConfirmationTypeEnum,
+        ShipmentConfirmationShipmentConfirmationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -3362,7 +3367,7 @@ class ShipmentConfirmation(SpApiBaseModel):
     ]
 
     shipment_type: Annotated[
-        Optional[ShipmentTypeEnum],
+        Optional[ShipmentConfirmationShipmentTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("shipmentType", "shipment_type"),
@@ -3372,7 +3377,7 @@ class ShipmentConfirmation(SpApiBaseModel):
     ]
 
     shipment_structure: Annotated[
-        Optional[ShipmentStructureEnum],
+        Optional[ShipmentConfirmationShipmentStructureEnum],
         Field(
             None,
             validation_alias=AliasChoices("shipmentStructure", "shipment_structure"),

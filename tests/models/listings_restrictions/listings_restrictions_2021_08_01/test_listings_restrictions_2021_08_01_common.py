@@ -3,9 +3,10 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.listings_restrictions.listings_restrictions_2021_08_01.common import (
-    ConditionTypeEnum, Error, GetListingsRestrictionsRequest,
-    GetRequestSerializer, Link, Reason, ReasonCodeEnum, RequestsBaseModel,
-    Restriction, RestrictionList, SpApiBaseModel, VerbEnum)
+    Error, GetListingsRestrictionsRequest,
+    GetListingsRestrictionsRequestConditionTypeEnum, GetRequestSerializer,
+    Link, LinkVerbEnum, Reason, ReasonReasonCodeEnum, RequestsBaseModel,
+    Restriction, RestrictionConditionTypeEnum, RestrictionList, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -57,7 +58,7 @@ def test_link_instantiates():
     """Instantiate Link with dummy data"""
     kwargs = {
         "resource": "",
-        "verb": VerbEnum.GET,
+        "verb": LinkVerbEnum.GET,
         "title": None,
         "type": None,
     }

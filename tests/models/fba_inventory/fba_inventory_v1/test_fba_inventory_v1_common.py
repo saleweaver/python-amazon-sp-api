@@ -7,11 +7,12 @@ from sp_api.api.models.fba_inventory.fba_inventory_v1.common import (
     CreateInventoryItemRequest, CreateInventoryItemRequestBody,
     CreateInventoryItemResponse, DeleteInventoryItemRequest,
     DeleteInventoryItemResponse, Error, GetInventorySummariesRequest,
+    GetInventorySummariesRequestGranularityTypeEnum,
     GetInventorySummariesResponse, GetInventorySummariesResult,
-    GetRequestSerializer, Granularity, GranularityTypeEnum, InventoryDetails,
-    InventoryItem, InventorySummary, NameEnum, Pagination, RequestsBaseModel,
-    ResearchingQuantity, ResearchingQuantityEntry, ReservedQuantity,
-    SpApiBaseModel, UnfulfillableQuantity)
+    GetRequestSerializer, Granularity, InventoryDetails, InventoryItem,
+    InventorySummary, Pagination, RequestsBaseModel, ResearchingQuantity,
+    ResearchingQuantityEntry, ResearchingQuantityEntryNameEnum,
+    ReservedQuantity, SpApiBaseModel, UnfulfillableQuantity)
 
 
 def test_requestsbasemodel_instantiates():
@@ -129,7 +130,7 @@ def test_getinventorysummariesrequest_instantiates():
     """Instantiate GetInventorySummariesRequest with dummy data"""
     kwargs = {
         "details": None,
-        "granularity_type": GranularityTypeEnum.MARKETPLACE,
+        "granularity_type": GetInventorySummariesRequestGranularityTypeEnum.MARKETPLACE,
         "granularity_id": "",
         "start_date_time": None,
         "seller_skus": None,
@@ -186,7 +187,7 @@ def test_getinventorysummariesresponse_instantiates():
 def test_researchingquantityentry_instantiates():
     """Instantiate ResearchingQuantityEntry with dummy data"""
     kwargs = {
-        "name": NameEnum.RESEARCHING_QUANTITY_IN_SHORT_TERM,
+        "name": ResearchingQuantityEntryNameEnum.RESEARCHING_QUANTITY_IN_SHORT_TERM,
         "quantity": 0,
     }
     obj = ResearchingQuantityEntry(**kwargs)

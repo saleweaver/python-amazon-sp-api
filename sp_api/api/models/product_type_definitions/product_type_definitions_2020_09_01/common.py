@@ -73,7 +73,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class RequirementsEnum(str, Enum):
+class GetDefinitionsProductTypeRequestRequirementsEnum(str, Enum):
     """Enum for requirements"""
 
     LISTING = "LISTING"  # RequestBody schema containing product facts and sales terms.
@@ -85,14 +85,14 @@ class RequirementsEnum(str, Enum):
     )
 
 
-class RequirementsEnforcedEnum(str, Enum):
+class GetDefinitionsProductTypeRequestRequirementsEnforcedEnum(str, Enum):
     """Enum for requirementsEnforced"""
 
     ENFORCED = "ENFORCED"  # RequestBody schema with required and conditionally required attributes enforced (used for full payload validation).
     NOT_ENFORCED = "NOT_ENFORCED"  # RequestBody schema with required and conditionally required attributes not enforced (used for partial payload validation, such as for single attributes).
 
 
-class LocaleEnum(str, Enum):
+class GetDefinitionsProductTypeRequestLocaleEnum(str, Enum):
     """Enum for locale"""
 
     DEFAULT = "DEFAULT"  # Default locale of the requested Amazon marketplace.
@@ -197,7 +197,7 @@ class GetDefinitionsProductTypeRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     requirements: Annotated[
-        Optional[RequirementsEnum],
+        Optional[GetDefinitionsProductTypeRequestRequirementsEnum],
         QueryParam(),
         Field(
             None,
@@ -206,7 +206,7 @@ class GetDefinitionsProductTypeRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     requirements_enforced: Annotated[
-        Optional[RequirementsEnforcedEnum],
+        Optional[GetDefinitionsProductTypeRequestRequirementsEnforcedEnum],
         QueryParam(),
         Field(
             None,
@@ -219,7 +219,7 @@ class GetDefinitionsProductTypeRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     locale: Annotated[
-        Optional[LocaleEnum],
+        Optional[GetDefinitionsProductTypeRequestLocaleEnum],
         QueryParam(),
         Field(
             None,
@@ -328,23 +328,23 @@ class SchemaLink(SpApiBaseModel):
 
 
 # Enum definitions
-class RequirementsEnum(str, Enum):
+class ProductTypeDefinitionRequirementsEnum(str, Enum):
     """Enum for requirements"""
 
-    LISTING = "LISTING"  # RequestBody schema containing product facts and sales terms.
+    LISTING = "LISTING"  # Indicates the schema contains product facts and sales terms.
     LISTING_PRODUCT_ONLY = (
-        "LISTING_PRODUCT_ONLY"  # RequestBody schema containing product facts only.
+        "LISTING_PRODUCT_ONLY"  # Indicates the schema data contains product facts only.
     )
     LISTING_OFFER_ONLY = (
-        "LISTING_OFFER_ONLY"  # RequestBody schema containing sales terms only.
+        "LISTING_OFFER_ONLY"  # Indicates the schema data contains sales terms only.
     )
 
 
-class RequirementsEnforcedEnum(str, Enum):
+class ProductTypeDefinitionRequirementsEnforcedEnum(str, Enum):
     """Enum for requirementsEnforced"""
 
-    ENFORCED = "ENFORCED"  # RequestBody schema with required and conditionally required attributes enforced (used for full payload validation).
-    NOT_ENFORCED = "NOT_ENFORCED"  # RequestBody schema with required and conditionally required attributes not enforced (used for partial payload validation, such as for single attributes).
+    ENFORCED = "ENFORCED"  # Schema enforces required and conditionally required attributes (used for full payload validation).
+    NOT_ENFORCED = "NOT_ENFORCED"  # Schema does not enforce required and conditionally required attributes (used for partial payload validation, such as for single attributes).
 
 
 """
@@ -380,7 +380,7 @@ class ProductTypeDefinition(SpApiBaseModel):
     ]
 
     requirements: Annotated[
-        RequirementsEnum,
+        ProductTypeDefinitionRequirementsEnum,
         Field(
             ...,
             description="Name of the requirements set represented in this product type definition.",
@@ -388,7 +388,7 @@ class ProductTypeDefinition(SpApiBaseModel):
     ]
 
     requirements_enforced: Annotated[
-        RequirementsEnforcedEnum,
+        ProductTypeDefinitionRequirementsEnforcedEnum,
         Field(
             ...,
             validation_alias=AliasChoices(

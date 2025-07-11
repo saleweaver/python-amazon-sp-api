@@ -452,7 +452,7 @@ class GetBillOfLadingResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class PageTypeEnum(str, Enum):
+class GetLabelsRequestPageTypeEnum(str, Enum):
     """Enum for PageType"""
 
     PACKAGE_LABEL_LETTER_2 = "PackageLabel_Letter_2"  # Two labels per US Letter label sheet. This is the only valid value for Amazon-partnered shipments in the US that use United Parcel Service (UPS) as the carrier. Supported in Canada and the US.
@@ -471,7 +471,7 @@ class PageTypeEnum(str, Enum):
     PACKAGE_LABEL_THERMAL_NO_CARRIER_ROTATION = "PackageLabel_Thermal_No_Carrier_Rotation"  # For use of a thermal printer. Supports Amazon-partnered shipments with DHL.
 
 
-class LabelTypeEnum(str, Enum):
+class GetLabelsRequestLabelTypeEnum(str, Enum):
     """Enum for LabelType"""
 
     BARCODE_2_D = "BARCODE_2D"  # This option is provided only for shipments where 2D Barcodes will be applied to all packages. Amazon strongly recommends using the UNIQUE option to get package labels instead of the BARCODE_2D option.
@@ -508,7 +508,7 @@ class GetLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     page_type: Annotated[
-        PageTypeEnum,
+        GetLabelsRequestPageTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -519,7 +519,7 @@ class GetLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     label_type: Annotated[
-        LabelTypeEnum,
+        GetLabelsRequestLabelTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -825,7 +825,7 @@ class GetShipmentItemsByShipmentIdRequest(GetRequestSerializer, RequestsBaseMode
 
 
 # Enum definitions
-class QueryTypeEnum(str, Enum):
+class GetShipmentItemsRequestQueryTypeEnum(str, Enum):
     """Enum for QueryType"""
 
     DATE_RANGE = "DATE_RANGE"  # Returns items based on the date range information provided by the LastUpdatedAfter and LastUpdatedBefore parameters.
@@ -872,7 +872,7 @@ class GetShipmentItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     query_type: Annotated[
-        QueryTypeEnum,
+        GetShipmentItemsRequestQueryTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -972,7 +972,7 @@ class GetShipmentItemsResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipmentStatusListEnum(str, Enum):
+class GetShipmentsRequestShipmentStatusListEnum(str, Enum):
     """Enum for ShipmentStatusList"""
 
     WORKING = (
@@ -990,11 +990,12 @@ class ShipmentStatusListEnum(str, Enum):
     CHECKED_IN = "CHECKED_IN"  # The shipment was checked-in at the receiving dock of the fulfillment center.
 
 
-class QueryTypeEnum(str, Enum):
+class GetShipmentsRequestQueryTypeEnum(str, Enum):
     """Enum for QueryType"""
 
-    DATE_RANGE = "DATE_RANGE"  # Returns items based on the date range information provided by the LastUpdatedAfter and LastUpdatedBefore parameters.
-    NEXT_TOKEN = "NEXT_TOKEN"  # Returns items by using NextToken to continue returning items specified in a previous request.
+    SHIPMENT = "SHIPMENT"  # Returns shipments based on the shipment information provided by the ShipmentStatusList or ShipmentIdList parameters.
+    DATE_RANGE = "DATE_RANGE"  # Returns shipments based on the date range information provided by the LastUpdatedAfter and LastUpdatedBefore parameters.
+    NEXT_TOKEN = "NEXT_TOKEN"  # Returns shipments by using NextToken to continue returning items specified in a previous request.
 
 
 """
@@ -1015,7 +1016,7 @@ class GetShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
     )
 
     shipment_status_list: Annotated[
-        Optional[List["ShipmentStatusListEnum"]],
+        Optional[List["GetShipmentsRequestShipmentStatusListEnum"]],
         QueryParam(),
         Field(
             None,
@@ -1059,7 +1060,7 @@ class GetShipmentsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     query_type: Annotated[
-        QueryTypeEnum,
+        GetShipmentsRequestQueryTypeEnum,
         QueryParam(),
         Field(
             ...,

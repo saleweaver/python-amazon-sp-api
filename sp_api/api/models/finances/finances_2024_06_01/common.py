@@ -97,7 +97,7 @@ class ExpiryDate(SpApiBaseModel):
 
 
 # Enum definitions
-class PaymentMethodTypesEnum(str, Enum):
+class GetPaymentMethodsRequestPaymentMethodTypesEnum(str, Enum):
     """Enum for paymentMethodTypes"""
 
     BANK_ACCOUNT = "BANK_ACCOUNT"  # The payment is from a bank account.
@@ -134,7 +134,7 @@ class GetPaymentMethodsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     payment_method_types: Annotated[
-        Optional[List["PaymentMethodTypesEnum"]],
+        Optional[List["GetPaymentMethodsRequestPaymentMethodTypesEnum"]],
         QueryParam(),
         Field(
             None,

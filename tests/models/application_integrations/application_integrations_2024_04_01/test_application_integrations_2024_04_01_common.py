@@ -5,10 +5,12 @@ import pytest
 from sp_api.api.models.application_integrations.application_integrations_2024_04_01.common import (
     CreateNotificationRequest, CreateNotificationRequestBody,
     CreateNotificationResponse, DeleteNotificationsRequest,
-    DeleteNotificationsRequestBody, DeletionReasonEnum, Error, ErrorList,
-    FeedbackActionCodeEnum, GetRequestSerializer, NotificationParameters,
-    RecordActionFeedbackRequest, RecordActionFeedbackRequestBody,
-    RequestsBaseModel, SpApiBaseModel)
+    DeleteNotificationsRequestBody,
+    DeleteNotificationsRequestBodyDeletionReasonEnum, Error, ErrorList,
+    GetRequestSerializer, NotificationParameters, RecordActionFeedbackRequest,
+    RecordActionFeedbackRequestBody,
+    RecordActionFeedbackRequestBodyFeedbackActionCodeEnum, RequestsBaseModel,
+    SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -78,7 +80,7 @@ def test_deletenotificationsrequestbody_instantiates():
     """Instantiate DeleteNotificationsRequestBody with dummy data"""
     kwargs = {
         "template_id": "",
-        "deletion_reason": DeletionReasonEnum.INCORRECT_CONTENT,
+        "deletion_reason": DeleteNotificationsRequestBodyDeletionReasonEnum.INCORRECT_CONTENT,
     }
     obj = DeleteNotificationsRequestBody(**kwargs)
     assert isinstance(obj, DeleteNotificationsRequestBody)
@@ -90,7 +92,7 @@ def test_deletenotificationsrequest_instantiates():
         "body": DeleteNotificationsRequestBody(
             **{
                 "template_id": "",
-                "deletion_reason": DeletionReasonEnum.INCORRECT_CONTENT,
+                "deletion_reason": DeleteNotificationsRequestBodyDeletionReasonEnum.INCORRECT_CONTENT,
             }
         ),
     }
@@ -121,7 +123,7 @@ def test_errorlist_instantiates():
 def test_recordactionfeedbackrequestbody_instantiates():
     """Instantiate RecordActionFeedbackRequestBody with dummy data"""
     kwargs = {
-        "feedback_action_code": FeedbackActionCodeEnum.SELLER_ACTION_COMPLETED,
+        "feedback_action_code": RecordActionFeedbackRequestBodyFeedbackActionCodeEnum.SELLER_ACTION_COMPLETED,
     }
     obj = RecordActionFeedbackRequestBody(**kwargs)
     assert isinstance(obj, RecordActionFeedbackRequestBody)
@@ -132,7 +134,9 @@ def test_recordactionfeedbackrequest_instantiates():
     kwargs = {
         "notification_id": "",
         "body": RecordActionFeedbackRequestBody(
-            **{"feedback_action_code": FeedbackActionCodeEnum.SELLER_ACTION_COMPLETED}
+            **{
+                "feedback_action_code": RecordActionFeedbackRequestBodyFeedbackActionCodeEnum.SELLER_ACTION_COMPLETED
+            }
         ),
     }
     obj = RecordActionFeedbackRequest(**kwargs)

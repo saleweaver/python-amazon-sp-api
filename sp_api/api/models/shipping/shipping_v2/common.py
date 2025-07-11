@@ -392,7 +392,7 @@ class ExceptionOperatingHours(SpApiBaseModel):
 
 
 # Enum definitions
-class AssistanceTypeEnum(str, Enum):
+class AccessPointAssistanceTypeEnum(str, Enum):
     """Enum for assistanceType"""
 
     STAFF_ASSISTED = "STAFF_ASSISTED"
@@ -472,7 +472,7 @@ class AccessPoint(SpApiBaseModel):
     ]
 
     assistance_type: Annotated[
-        Optional[AssistanceTypeEnum],
+        Optional[AccessPointAssistanceTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("assistanceType", "assistance_type"),
@@ -1150,7 +1150,7 @@ class ChannelDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class ChargeTypeEnum(str, Enum):
+class ChargeComponentChargeTypeEnum(str, Enum):
     """Enum for chargeType"""
 
     TAX = "TAX"  # A tax imposed on a package.
@@ -1179,7 +1179,7 @@ class ChargeComponent(SpApiBaseModel):
     ]
 
     charge_type: Annotated[
-        Optional[ChargeTypeEnum],
+        Optional[ChargeComponentChargeTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("chargeType", "charge_type"),
@@ -1220,7 +1220,7 @@ ClaimReason = str
 
 
 # Enum definitions
-class ClientReferenceTypeEnum(str, Enum):
+class ClientReferenceDetailClientReferenceTypeEnum(str, Enum):
     """Enum for clientReferenceType"""
 
     INTEGRATOR_SHIPPER_ID = "IntegratorShipperId"  # The unique identifier assigned to a 3P seller by the shipping integrator.
@@ -1242,7 +1242,7 @@ class ClientReferenceDetail(SpApiBaseModel):
     )
 
     client_reference_type: Annotated[
-        ClientReferenceTypeEnum,
+        ClientReferenceDetailClientReferenceTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices(
@@ -1532,7 +1532,7 @@ class CreateClaimResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class PackingGroupEnum(str, Enum):
+class DangerousGoodsDetailsPackingGroupEnum(str, Enum):
     """Enum for packingGroup"""
 
     I = "I"  # Packing group I indicates great danger.
@@ -1540,7 +1540,7 @@ class PackingGroupEnum(str, Enum):
     III = "III"  # Packing group III indicates minor danger.
 
 
-class PackingInstructionEnum(str, Enum):
+class DangerousGoodsDetailsPackingInstructionEnum(str, Enum):
     """Enum for packingInstruction"""
 
     PI965_SECTION_IA = "PI965_SECTION_IA"  # Ion PI965 Section IA (LiBa)
@@ -1599,7 +1599,7 @@ class DangerousGoodsDetails(SpApiBaseModel):
     ]
 
     packing_group: Annotated[
-        Optional[PackingGroupEnum],
+        Optional[DangerousGoodsDetailsPackingGroupEnum],
         Field(
             None,
             validation_alias=AliasChoices("packingGroup", "packing_group"),
@@ -1609,7 +1609,7 @@ class DangerousGoodsDetails(SpApiBaseModel):
     ]
 
     packing_instruction: Annotated[
-        Optional[PackingInstructionEnum],
+        Optional[DangerousGoodsDetailsPackingInstructionEnum],
         Field(
             None,
             validation_alias=AliasChoices("packingInstruction", "packing_instruction"),
@@ -1624,7 +1624,7 @@ DetailCodes = str
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class DimensionsUnitEnum(str, Enum):
     """Enum for unit"""
 
     INCH = "INCH"  # The imperial unit of length equal to one twelfth of a foot.
@@ -1653,7 +1653,9 @@ class Dimensions(SpApiBaseModel):
 
     height: Annotated[float, Field(..., description="The height of the package.")]
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of measurement.")]
+    unit: Annotated[
+        DimensionsUnitEnum, Field(..., description="The unit of measurement.")
+    ]
 
 
 """
@@ -1700,7 +1702,7 @@ DocumentFormat = str
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class DocumentSizeUnitEnum(str, Enum):
     """Enum for unit"""
 
     INCH = "INCH"  # The imperial unit of length equal to one twelfth of a foot.
@@ -1739,7 +1741,9 @@ class DocumentSize(SpApiBaseModel):
         ),
     ]
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of measurement.")]
+    unit: Annotated[
+        DocumentSizeUnitEnum, Field(..., description="The unit of measurement.")
+    ]
 
 
 DocumentType = str
@@ -2323,7 +2327,7 @@ class GenerateCollectionFormResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class AccessPointTypesEnum(str, Enum):
+class GetAccessPointsRequestAccessPointTypesEnum(str, Enum):
     """Enum for accessPointTypes"""
 
     HELIX = "HELIX"
@@ -2354,7 +2358,7 @@ class GetAccessPointsRequest(GetRequestSerializer, RequestsBaseModel):
     )
 
     access_point_types: Annotated[
-        List["AccessPointTypesEnum"],
+        List["GetAccessPointsRequestAccessPointTypesEnum"],
         QueryParam(),
         Field(
             ...,
@@ -3701,13 +3705,16 @@ class InvoiceDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class LiquidVolumeUnitEnum(str, Enum):
     """Enum for unit"""
 
-    INCH = "INCH"  # The imperial unit of length equal to one twelfth of a foot.
-    CENTIMETER = (
-        "CENTIMETER"  # A metric unit of length, equal to one hundredth of a meter.
-    )
+    ML = "ML"  # Milliliter - Metric unit of volume.
+    L = "L"  # Liter - Metric unit of volume.
+    FL_OZ = "FL_OZ"  # Fluid Ounce - Imperial unit of volume.
+    GAL = "GAL"  # Gallon - Imperial unit of volume.
+    PT = "PT"  # Pint - Imperial unit of volume.
+    QT = "QT"  # Quart - Imperial unit of volume.
+    C = "C"  # Cup - Imperial unit of volume.
 
 
 """
@@ -3724,19 +3731,21 @@ class LiquidVolume(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of measurement.")]
+    unit: Annotated[
+        LiquidVolumeUnitEnum, Field(..., description="The unit of measurement.")
+    ]
 
     value: Annotated[float, Field(..., description="The measurement value.")]
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class WeightUnitEnum(str, Enum):
     """Enum for unit"""
 
-    INCH = "INCH"  # The imperial unit of length equal to one twelfth of a foot.
-    CENTIMETER = (
-        "CENTIMETER"  # A metric unit of length, equal to one hundredth of a meter.
-    )
+    GRAM = "GRAM"  # Metric unit of mass equal to one thousandth of a kilogram.
+    KILOGRAM = "KILOGRAM"  # Metric unit of mass.
+    OUNCE = "OUNCE"  # The imperial unit of weight that is one sixteenth of a pound.
+    POUND = "POUND"  # The imperial unit of weight.
 
 
 """
@@ -3753,7 +3762,7 @@ class Weight(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of measurement.")]
+    unit: Annotated[WeightUnitEnum, Field(..., description="The unit of measurement.")]
 
     value: Annotated[float, Field(..., description="The measurement value.")]
 

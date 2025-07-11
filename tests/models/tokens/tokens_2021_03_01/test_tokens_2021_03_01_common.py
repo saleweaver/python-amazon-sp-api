@@ -5,7 +5,8 @@ import pytest
 from sp_api.api.models.tokens.tokens_2021_03_01.common import (
     CreateRestrictedDataTokenRequest, CreateRestrictedDataTokenRequestBody,
     CreateRestrictedDataTokenResponse, Error, ErrorList, GetRequestSerializer,
-    MethodEnum, RequestsBaseModel, RestrictedResource, SpApiBaseModel)
+    RequestsBaseModel, RestrictedResource, RestrictedResourceMethodEnum,
+    SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -32,7 +33,7 @@ def test_getrequestserializer_instantiates():
 def test_restrictedresource_instantiates():
     """Instantiate RestrictedResource with dummy data"""
     kwargs = {
-        "method": MethodEnum.GET,
+        "method": RestrictedResourceMethodEnum.GET,
         "path": "",
         "data_elements": None,
     }

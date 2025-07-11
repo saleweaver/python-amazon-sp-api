@@ -785,7 +785,7 @@ class GetInvoicesExportResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class GetInvoicesExportsRequestStatusEnum(str, Enum):
     """Enum for status"""
 
     REQUESTED = "REQUESTED"  # The export request was created, but has not started yet.
@@ -867,7 +867,7 @@ class GetInvoicesExportsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     status: Annotated[
-        Optional[StatusEnum],
+        Optional[GetInvoicesExportsRequestStatusEnum],
         QueryParam(),
         Field(
             None, description="[QUERY] Return exports matching the status specified. "
@@ -905,14 +905,14 @@ class GetInvoicesExportsResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetInvoicesRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     DESC = "DESC"  # Sort in descending order.
     ASC = "ASC"  # Sort in ascending order.
 
 
-class SortByEnum(str, Enum):
+class GetInvoicesRequestSortByEnum(str, Enum):
     """Enum for sortBy"""
 
     START_DATE_TIME = "START_DATE_TIME"  # Sort by date time.
@@ -1037,7 +1037,7 @@ class GetInvoicesRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetInvoicesRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1079,7 +1079,7 @@ class GetInvoicesRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_by: Annotated[
-        Optional[SortByEnum],
+        Optional[GetInvoicesRequestSortByEnum],
         QueryParam(),
         Field(
             None,

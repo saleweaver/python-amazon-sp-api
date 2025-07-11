@@ -133,7 +133,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class SeverityEnum(str, Enum):
+class IssueSeverityEnum(str, Enum):
     """Enum for severity"""
 
     ERROR = "ERROR"  # Indicates an issue has occurred preventing the submission from processing, such as a validation error.
@@ -164,7 +164,7 @@ class Issue(SpApiBaseModel):
     ]
 
     severity: Annotated[
-        SeverityEnum, Field(..., description="The severity of the issue.")
+        IssueSeverityEnum, Field(..., description="The severity of the issue.")
     ]
 
     attribute_name: Annotated[
@@ -179,7 +179,7 @@ class Issue(SpApiBaseModel):
 
 
 # Enum definitions
-class OpEnum(str, Enum):
+class PatchOperationOpEnum(str, Enum):
     """Enum for op"""
 
     ADD = "add"  # The "add" operation adds or replaces the target property.
@@ -202,7 +202,7 @@ class PatchOperation(SpApiBaseModel):
     )
 
     op: Annotated[
-        OpEnum,
+        PatchOperationOpEnum,
         Field(
             ...,
             description="Type of JSON Patch operation. Supported JSON Patch operations include add, replace, and delete. See <https://tools.ietf.org/html/rfc6902>.",
@@ -257,7 +257,7 @@ class ListingsItemPatchRequestBody(SpApiBaseModel):
 
 
 # Enum definitions
-class RequirementsEnum(str, Enum):
+class ListingsItemPutRequestBodyRequirementsEnum(str, Enum):
     """Enum for requirements"""
 
     LISTING = "LISTING"  # Indicates the submitted data contains product facts and sales terms.
@@ -290,7 +290,7 @@ class ListingsItemPutRequestBody(SpApiBaseModel):
     ]
 
     requirements: Annotated[
-        Optional[RequirementsEnum],
+        Optional[ListingsItemPutRequestBodyRequirementsEnum],
         Field(
             None, description="The name of the requirements set for the provided data."
         ),
@@ -306,7 +306,7 @@ class ListingsItemPutRequestBody(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class ListingsItemSubmissionResponseStatusEnum(str, Enum):
     """Enum for status"""
 
     ACCEPTED = "ACCEPTED"  # The listings submission was accepted for processing.
@@ -336,7 +336,7 @@ class ListingsItemSubmissionResponse(SpApiBaseModel):
     ]
 
     status: Annotated[
-        StatusEnum,
+        ListingsItemSubmissionResponseStatusEnum,
         Field(..., description="The status of the listings item submission."),
     ]
 

@@ -3,13 +3,13 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.feeds.feeds_2021_06_30.common import (
-    CancelFeedRequest, CompressionAlgorithmEnum, CreateFeedDocumentRequest,
-    CreateFeedDocumentResponse, CreateFeedDocumentSpecification,
-    CreateFeedRequest, CreateFeedResponse, CreateFeedSpecification, Error,
-    ErrorList, Feed, FeedDocument, FeedOptions, GetFeedDocumentRequest,
-    GetFeedRequest, GetFeedsRequest, GetFeedsResponse, GetRequestSerializer,
-    ProcessingStatusEnum, ProcessingStatusesEnum, RequestsBaseModel,
-    SpApiBaseModel)
+    CancelFeedRequest, CreateFeedDocumentRequest, CreateFeedDocumentResponse,
+    CreateFeedDocumentSpecification, CreateFeedRequest, CreateFeedResponse,
+    CreateFeedSpecification, Error, ErrorList, Feed, FeedDocument,
+    FeedDocumentCompressionAlgorithmEnum, FeedOptions,
+    FeedProcessingStatusEnum, GetFeedDocumentRequest, GetFeedRequest,
+    GetFeedsRequest, GetFeedsRequestProcessingStatusesEnum, GetFeedsResponse,
+    GetRequestSerializer, RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -141,7 +141,7 @@ def test_feed_instantiates():
         "feed_type": "",
         "marketplace_ids": None,
         "created_time": datetime(2000, 1, 1),
-        "processing_status": ProcessingStatusEnum.CANCELLED,
+        "processing_status": FeedProcessingStatusEnum.CANCELLED,
         "processing_start_time": None,
         "processing_end_time": None,
         "result_feed_document_id": None,

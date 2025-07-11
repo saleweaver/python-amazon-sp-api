@@ -5,9 +5,10 @@ import pytest
 from sp_api.api.models.data_kiosk.data_kiosk_2023_11_15.common import (
     CancelQueryRequest, CreateQueryRequest, CreateQueryResponse,
     CreateQuerySpecification, Error, ErrorList, GetDocumentRequest,
-    GetDocumentResponse, GetQueriesRequest, GetQueriesResponse,
-    GetQueryRequest, GetRequestSerializer, ProcessingStatusEnum,
-    ProcessingStatusesEnum, Query, RequestsBaseModel, SpApiBaseModel)
+    GetDocumentResponse, GetQueriesRequest,
+    GetQueriesRequestProcessingStatusesEnum, GetQueriesResponse,
+    GetQueryRequest, GetRequestSerializer, Query, QueryProcessingStatusEnum,
+    RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -145,7 +146,7 @@ def test_query_instantiates():
         "query_id": "",
         "query": "",
         "created_time": datetime(2000, 1, 1),
-        "processing_status": ProcessingStatusEnum.CANCELLED,
+        "processing_status": QueryProcessingStatusEnum.CANCELLED,
         "processing_start_time": None,
         "processing_end_time": None,
         "data_document_id": None,

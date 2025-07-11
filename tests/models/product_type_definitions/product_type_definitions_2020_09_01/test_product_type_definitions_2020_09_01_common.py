@@ -3,10 +3,14 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.product_type_definitions.product_type_definitions_2020_09_01.common import (
-    Error, ErrorList, GetDefinitionsProductTypeRequest, GetRequestSerializer,
-    LocaleEnum, ProductType, ProductTypeDefinition, ProductTypeList,
-    ProductTypeVersion, PropertyGroup, RequestsBaseModel,
-    RequirementsEnforcedEnum, RequirementsEnum, SchemaLink,
+    Error, ErrorList, GetDefinitionsProductTypeRequest,
+    GetDefinitionsProductTypeRequestLocaleEnum,
+    GetDefinitionsProductTypeRequestRequirementsEnforcedEnum,
+    GetDefinitionsProductTypeRequestRequirementsEnum, GetRequestSerializer,
+    ProductType, ProductTypeDefinition,
+    ProductTypeDefinitionRequirementsEnforcedEnum,
+    ProductTypeDefinitionRequirementsEnum, ProductTypeList, ProductTypeVersion,
+    PropertyGroup, RequestsBaseModel, SchemaLink,
     SearchDefinitionsProductTypesRequest, SpApiBaseModel)
 
 
@@ -103,8 +107,8 @@ def test_producttypedefinition_instantiates():
     kwargs = {
         "meta_schema": None,
         "schema": SchemaLink(**{"link": {}, "checksum": ""}),
-        "requirements": RequirementsEnum.LISTING,
-        "requirements_enforced": RequirementsEnforcedEnum.ENFORCED,
+        "requirements": ProductTypeDefinitionRequirementsEnum.LISTING,
+        "requirements_enforced": ProductTypeDefinitionRequirementsEnforcedEnum.ENFORCED,
         "property_groups": {},
         "locale": "",
         "marketplace_ids": None,

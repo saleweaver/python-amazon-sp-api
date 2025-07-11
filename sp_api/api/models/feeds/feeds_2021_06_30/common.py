@@ -311,7 +311,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusEnum(str, Enum):
+class FeedProcessingStatusEnum(str, Enum):
     """Enum for processingStatus"""
 
     CANCELLED = "CANCELLED"  # The feed was cancelled before it started processing.
@@ -376,7 +376,7 @@ class Feed(SpApiBaseModel):
     ]
 
     processing_status: Annotated[
-        ProcessingStatusEnum,
+        FeedProcessingStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices("processingStatus", "processing_status"),
@@ -421,7 +421,7 @@ class Feed(SpApiBaseModel):
 
 
 # Enum definitions
-class CompressionAlgorithmEnum(str, Enum):
+class FeedDocumentCompressionAlgorithmEnum(str, Enum):
     """Enum for compressionAlgorithm"""
 
     GZIP = "GZIP"  # The gzip compression algorithm.
@@ -460,7 +460,7 @@ class FeedDocument(SpApiBaseModel):
     ]
 
     compression_algorithm: Annotated[
-        Optional[CompressionAlgorithmEnum],
+        Optional[FeedDocumentCompressionAlgorithmEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -535,7 +535,7 @@ class GetFeedRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusesEnum(str, Enum):
+class GetFeedsRequestProcessingStatusesEnum(str, Enum):
     """Enum for processingStatuses"""
 
     CANCELLED = "CANCELLED"  # The feed was cancelled before it started processing.
@@ -596,7 +596,7 @@ class GetFeedsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     processing_statuses: Annotated[
-        Optional[List["ProcessingStatusesEnum"]],
+        Optional[List["GetFeedsRequestProcessingStatusesEnum"]],
         QueryParam(),
         Field(
             None,

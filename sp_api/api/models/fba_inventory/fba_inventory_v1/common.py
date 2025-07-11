@@ -303,7 +303,7 @@ class Error(SpApiBaseModel):
 
 
 # Enum definitions
-class GranularityTypeEnum(str, Enum):
+class GetInventorySummariesRequestGranularityTypeEnum(str, Enum):
     """Enum for granularityType"""
 
     MARKETPLACE = "Marketplace"  # Marketplace
@@ -336,7 +336,7 @@ class GetInventorySummariesRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     granularity_type: Annotated[
-        GranularityTypeEnum,
+        GetInventorySummariesRequestGranularityTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -544,7 +544,7 @@ class GetInventorySummariesResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class NameEnum(str, Enum):
+class ResearchingQuantityEntryNameEnum(str, Enum):
     """Enum for name"""
 
     RESEARCHING_QUANTITY_IN_SHORT_TERM = (
@@ -572,7 +572,10 @@ class ResearchingQuantityEntry(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    name: Annotated[NameEnum, Field(..., description="The duration of the research.")]
+    name: Annotated[
+        ResearchingQuantityEntryNameEnum,
+        Field(..., description="The duration of the research."),
+    ]
 
     quantity: Annotated[int, Field(..., description="The number of units.")]
 

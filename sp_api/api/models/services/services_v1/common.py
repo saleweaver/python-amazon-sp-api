@@ -266,7 +266,7 @@ class Technician(SpApiBaseModel):
 
 
 # Enum definitions
-class PoaTypeEnum(str, Enum):
+class PoaPoaTypeEnum(str, Enum):
     """Enum for poaType"""
 
     NO_SIGNATURE_DUMMY_POS = "NO_SIGNATURE_DUMMY_POS"  # Indicates that the type of proof of appointment uploaded is a dummy signature.
@@ -328,7 +328,7 @@ class Poa(SpApiBaseModel):
     ]
 
     poa_type: Annotated[
-        Optional[PoaTypeEnum],
+        Optional[PoaPoaTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("poaType", "poa_type"),
@@ -339,7 +339,7 @@ class Poa(SpApiBaseModel):
 
 
 # Enum definitions
-class AppointmentStatusEnum(str, Enum):
+class AppointmentAppointmentStatusEnum(str, Enum):
     """Enum for appointmentStatus"""
 
     ACTIVE = "ACTIVE"  # Indicates that an appointment is scheduled.
@@ -372,7 +372,7 @@ class Appointment(SpApiBaseModel):
     ]
 
     appointment_status: Annotated[
-        Optional[AppointmentStatusEnum],
+        Optional[AppointmentAppointmentStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices("appointmentStatus", "appointment_status"),
@@ -492,7 +492,7 @@ class AppointmentSlot(SpApiBaseModel):
 
 
 # Enum definitions
-class SchedulingTypeEnum(str, Enum):
+class AppointmentSlotReportSchedulingTypeEnum(str, Enum):
     """Enum for schedulingType"""
 
     REAL_TIME_SCHEDULING = "REAL_TIME_SCHEDULING"  # The slots provided are backed by inventory in inventory management system.
@@ -514,7 +514,7 @@ class AppointmentSlotReport(SpApiBaseModel):
     )
 
     scheduling_type: Annotated[
-        Optional[SchedulingTypeEnum],
+        Optional[AppointmentSlotReportSchedulingTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("schedulingType", "scheduling_type"),
@@ -734,7 +734,7 @@ OrderId = str
 
 
 # Enum definitions
-class ItemStatusEnum(str, Enum):
+class AssociatedItemItemStatusEnum(str, Enum):
     """Enum for itemStatus"""
 
     ACTIVE = "ACTIVE"  # Indicates the item is yet to be shipped.
@@ -783,7 +783,7 @@ class AssociatedItem(SpApiBaseModel):
     ]
 
     item_status: Annotated[
-        Optional[ItemStatusEnum],
+        Optional[AssociatedItemItemStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices("itemStatus", "item_status"),
@@ -1138,7 +1138,7 @@ class CompleteServiceJobByServiceJobIdResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class ReservationTypeEnum(str, Enum):
     """Enum for type"""
 
     APPOINTMENT = (
@@ -1176,7 +1176,7 @@ class Reservation(SpApiBaseModel):
         ),
     ]
 
-    type: Annotated[TypeEnum, Field(..., description="Type of reservation.")]
+    type: Annotated[ReservationTypeEnum, Field(..., description="Type of reservation.")]
 
     availability: Annotated[
         "AvailabilityRecord",
@@ -1319,7 +1319,7 @@ class CreateReservationResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class StandardEnum(str, Enum):
+class EncryptionDetailsStandardEnum(str, Enum):
     """Enum for standard"""
 
     AES = "AES"  # The Advanced Encryption Standard (AES).
@@ -1340,7 +1340,7 @@ class EncryptionDetails(SpApiBaseModel):
     )
 
     standard: Annotated[
-        StandardEnum,
+        EncryptionDetailsStandardEnum,
         Field(
             ...,
             description="The encryption standard required to encrypt or decrypt the document contents.",
@@ -1441,7 +1441,7 @@ class CreateServiceDocumentUploadDestination(SpApiBaseModel):
 
 
 # Enum definitions
-class ContentTypeEnum(str, Enum):
+class ServiceUploadDocumentContentTypeEnum(str, Enum):
     """Enum for contentType"""
 
     TIFF = "TIFF"  # To be uploaded POA is of type image/tiff.
@@ -1467,7 +1467,7 @@ class ServiceUploadDocument(SpApiBaseModel):
     )
 
     content_type: Annotated[
-        ContentTypeEnum,
+        ServiceUploadDocumentContentTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("contentType", "content_type"),
@@ -1557,7 +1557,7 @@ class DateTimeRange(SpApiBaseModel):
 
 
 # Enum definitions
-class ErrorLevelEnum(str, Enum):
+class ErrorErrorLevelEnum(str, Enum):
     """Enum for errorLevel"""
 
     ERROR = "ERROR"  # Error
@@ -1599,7 +1599,7 @@ class Error(SpApiBaseModel):
     ]
 
     error_level: Annotated[
-        Optional[ErrorLevelEnum],
+        Optional[ErrorErrorLevelEnum],
         Field(
             None,
             validation_alias=AliasChoices("errorLevel", "error_level"),
@@ -2321,7 +2321,7 @@ class ServiceJobProvider(SpApiBaseModel):
 
 
 # Enum definitions
-class ServiceLocationTypeEnum(str, Enum):
+class ServiceLocationServiceLocationTypeEnum(str, Enum):
     """Enum for serviceLocationType"""
 
     IN_HOME = "IN_HOME"  # Indicates the service for the service job is performed at the customers home address.
@@ -2346,7 +2346,7 @@ class ServiceLocation(SpApiBaseModel):
     )
 
     service_location_type: Annotated[
-        Optional[ServiceLocationTypeEnum],
+        Optional[ServiceLocationServiceLocationTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -2364,16 +2364,18 @@ class ServiceLocation(SpApiBaseModel):
 
 
 # Enum definitions
-class ServiceJobStatusEnum(str, Enum):
+class ServiceJobServiceJobStatusEnum(str, Enum):
     """Enum for serviceJobStatus"""
 
-    NOT_SERVICED = "NOT_SERVICED"  # Jobs which are not serviced.
-    CANCELLED = "CANCELLED"  # Jobs which are cancelled.
-    COMPLETED = "COMPLETED"  # Jobs successfully completed.
-    PENDING_SCHEDULE = "PENDING_SCHEDULE"  # Jobs which are pending schedule.
-    NOT_FULFILLABLE = "NOT_FULFILLABLE"  # Jobs which are not fulfillable.
-    HOLD = "HOLD"  # Jobs which are on hold.
-    PAYMENT_DECLINED = "PAYMENT_DECLINED"  # Jobs for which payment was declined.
+    NOT_SERVICED = "NOT_SERVICED"  # Indicates that the service for the service job is not complete.
+    CANCELLED = "CANCELLED"  # Indicates that the service job is cancelled.
+    COMPLETED = "COMPLETED"  # Indicates that the service is performed and the service job is closed successfully.
+    PENDING_SCHEDULE = "PENDING_SCHEDULE"  # Indicates that an appointment for the service job has not been scheduled.
+    NOT_FULFILLABLE = "NOT_FULFILLABLE"  # Indicates that the service job is not actionable due to an unexpected exception.
+    HOLD = "HOLD"  # Indicates that the appointment time preference given by customer cannot be serviced by the service provider.
+    PAYMENT_DECLINED = (
+        "PAYMENT_DECLINED"  # Indicates that the customer payment has been declined.
+    )
 
 
 """
@@ -2411,7 +2413,7 @@ class ServiceJob(SpApiBaseModel):
     ]
 
     service_job_status: Annotated[
-        Optional[ServiceJobStatusEnum],
+        Optional[ServiceJobServiceJobStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices("serviceJobStatus", "service_job_status"),
@@ -2549,7 +2551,7 @@ class GetServiceJobByServiceJobIdResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ServiceJobStatusEnum(str, Enum):
+class GetServiceJobsRequestServiceJobStatusEnum(str, Enum):
     """Enum for serviceJobStatus"""
 
     NOT_SERVICED = "NOT_SERVICED"  # Jobs which are not serviced.
@@ -2561,14 +2563,14 @@ class ServiceJobStatusEnum(str, Enum):
     PAYMENT_DECLINED = "PAYMENT_DECLINED"  # Jobs for which payment was declined.
 
 
-class SortFieldEnum(str, Enum):
+class GetServiceJobsRequestSortFieldEnum(str, Enum):
     """Enum for sortField"""
 
     JOB_DATE = "JOB_DATE"  # Sort on job date.
     JOB_STATUS = "JOB_STATUS"  # Sort on job status.
 
 
-class SortOrderEnum(str, Enum):
+class GetServiceJobsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort in ascending order.
@@ -2604,7 +2606,7 @@ class GetServiceJobsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     service_job_status: Annotated[
-        Optional[List["ServiceJobStatusEnum"]],
+        Optional[List["GetServiceJobsRequestServiceJobStatusEnum"]],
         QueryParam(),
         Field(
             None,
@@ -2637,7 +2639,7 @@ class GetServiceJobsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_field: Annotated[
-        Optional[SortFieldEnum],
+        Optional[GetServiceJobsRequestSortFieldEnum],
         QueryParam(),
         Field(
             None,
@@ -2648,7 +2650,7 @@ class GetServiceJobsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetServiceJobsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,

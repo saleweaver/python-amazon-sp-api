@@ -4,41 +4,43 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.services.services_v1.common import (
     AddAppointmentForServiceJobByServiceJobIdRequest,
-    AddAppointmentRequestBody, Address, Appointment, AppointmentResource,
-    AppointmentSlot, AppointmentSlotReport, AppointmentStatusEnum,
+    AddAppointmentRequestBody, Address, Appointment,
+    AppointmentAppointmentStatusEnum, AppointmentResource, AppointmentSlot,
+    AppointmentSlotReport, AppointmentSlotReportSchedulingTypeEnum,
     AppointmentTime, AppointmentTimeInput, AssignAppointmentResourcesRequest,
     AssignAppointmentResourcesRequestBody, AssignAppointmentResourcesResponse,
-    AssociatedItem, AvailabilityRecord, Buyer, CancelReservationRequest,
-    CancelReservationResponse, CancelServiceJobByServiceJobIdRequest,
+    AssociatedItem, AssociatedItemItemStatusEnum, AvailabilityRecord, Buyer,
+    CancelReservationRequest, CancelReservationResponse,
+    CancelServiceJobByServiceJobIdRequest,
     CancelServiceJobByServiceJobIdResponse,
     CompleteServiceJobByServiceJobIdRequest,
-    CompleteServiceJobByServiceJobIdResponse, ContentTypeEnum,
-    CreateReservationRecord, CreateReservationRequest,
-    CreateReservationRequestBody, CreateReservationResponse,
-    CreateServiceDocumentUploadDestination,
+    CompleteServiceJobByServiceJobIdResponse, CreateReservationRecord,
+    CreateReservationRequest, CreateReservationRequestBody,
+    CreateReservationResponse, CreateServiceDocumentUploadDestination,
     CreateServiceDocumentUploadDestinationRequest, DateTimeRange,
-    EncryptionDetails, Error, ErrorLevelEnum, FixedSlot, FixedSlotCapacity,
-    FixedSlotCapacityErrors, FixedSlotCapacityQuery, FulfillmentDocument,
-    FulfillmentTime, GetAppointmentSlotsRequest, GetAppointmentSlotsResponse,
+    EncryptionDetails, EncryptionDetailsStandardEnum, Error,
+    ErrorErrorLevelEnum, FixedSlot, FixedSlotCapacity, FixedSlotCapacityErrors,
+    FixedSlotCapacityQuery, FulfillmentDocument, FulfillmentTime,
+    GetAppointmentSlotsRequest, GetAppointmentSlotsResponse,
     GetAppointmmentSlotsByJobIdRequest, GetFixedSlotCapacityRequest,
     GetRangeSlotCapacityRequest, GetRequestSerializer,
     GetServiceJobByServiceJobIdRequest, GetServiceJobByServiceJobIdResponse,
-    GetServiceJobsRequest, GetServiceJobsResponse, ItemDelivery,
-    ItemDeliveryPromise, ItemStatusEnum, JobListing, Poa, PoaTypeEnum,
-    RangeCapacity, RangeSlot, RangeSlotCapacity, RangeSlotCapacityErrors,
-    RangeSlotCapacityQuery, Recurrence, RequestsBaseModel,
-    RescheduleAppointmentForServiceJobByServiceJobIdRequest,
-    RescheduleAppointmentRequestBody, Reservation, SchedulingTypeEnum,
+    GetServiceJobsRequest, GetServiceJobsRequestServiceJobStatusEnum,
+    GetServiceJobsRequestSortFieldEnum, GetServiceJobsRequestSortOrderEnum,
+    GetServiceJobsResponse, ItemDelivery, ItemDeliveryPromise, JobListing, Poa,
+    PoaPoaTypeEnum, RangeCapacity, RangeSlot, RangeSlotCapacity,
+    RangeSlotCapacityErrors, RangeSlotCapacityQuery, Recurrence,
+    RequestsBaseModel, RescheduleAppointmentForServiceJobByServiceJobIdRequest,
+    RescheduleAppointmentRequestBody, Reservation, ReservationTypeEnum,
     ScopeOfWork, Seller, ServiceDocumentUploadDestination, ServiceJob,
-    ServiceJobProvider, ServiceJobStatusEnum, ServiceLocation,
-    ServiceLocationTypeEnum, ServiceUploadDocument,
-    SetAppointmentFulfillmentDataRequest,
+    ServiceJobProvider, ServiceJobServiceJobStatusEnum, ServiceLocation,
+    ServiceLocationServiceLocationTypeEnum, ServiceUploadDocument,
+    ServiceUploadDocumentContentTypeEnum, SetAppointmentFulfillmentDataRequest,
     SetAppointmentFulfillmentDataRequestBody, SetAppointmentResponse,
-    SortFieldEnum, SortOrderEnum, SpApiBaseModel, StandardEnum, Technician,
-    TypeEnum, UpdateReservationRecord, UpdateReservationRequest,
-    UpdateReservationRequestBody, UpdateReservationResponse,
-    UpdateScheduleRecord, UpdateScheduleRequest, UpdateScheduleRequestBody,
-    UpdateScheduleResponse, Warning)
+    SpApiBaseModel, Technician, UpdateReservationRecord,
+    UpdateReservationRequest, UpdateReservationRequestBody,
+    UpdateReservationResponse, UpdateScheduleRecord, UpdateScheduleRequest,
+    UpdateScheduleRequestBody, UpdateScheduleResponse, Warning)
 
 
 def test_requestsbasemodel_instantiates():
@@ -357,7 +359,7 @@ def test_reservation_instantiates():
     """Instantiate Reservation with dummy data"""
     kwargs = {
         "reservation_id": None,
-        "type": TypeEnum.APPOINTMENT,
+        "type": ReservationTypeEnum.APPOINTMENT,
         "availability": AvailabilityRecord(
             **{
                 "start_time": datetime(2000, 1, 1),
@@ -389,7 +391,7 @@ def test_createreservationrequestbody_instantiates():
         "reservation": Reservation(
             **{
                 "reservation_id": None,
-                "type": TypeEnum.APPOINTMENT,
+                "type": ReservationTypeEnum.APPOINTMENT,
                 "availability": AvailabilityRecord(
                     **{
                         "start_time": datetime(2000, 1, 1),
@@ -414,7 +416,7 @@ def test_createreservationrequest_instantiates():
                 "reservation": Reservation(
                     **{
                         "reservation_id": None,
-                        "type": TypeEnum.APPOINTMENT,
+                        "type": ReservationTypeEnum.APPOINTMENT,
                         "availability": AvailabilityRecord(
                             **{
                                 "start_time": datetime(2000, 1, 1),
@@ -446,7 +448,7 @@ def test_createreservationresponse_instantiates():
 def test_encryptiondetails_instantiates():
     """Instantiate EncryptionDetails with dummy data"""
     kwargs = {
-        "standard": StandardEnum.AES,
+        "standard": EncryptionDetailsStandardEnum.AES,
         "initialization_vector": "",
         "key": "",
     }
@@ -460,7 +462,11 @@ def test_servicedocumentuploaddestination_instantiates():
         "upload_destination_id": "",
         "url": "",
         "encryption_details": EncryptionDetails(
-            **{"standard": StandardEnum.AES, "initialization_vector": "", "key": ""}
+            **{
+                "standard": EncryptionDetailsStandardEnum.AES,
+                "initialization_vector": "",
+                "key": "",
+            }
         ),
         "headers": None,
     }
@@ -481,7 +487,7 @@ def test_createservicedocumentuploaddestination_instantiates():
 def test_serviceuploaddocument_instantiates():
     """Instantiate ServiceUploadDocument with dummy data"""
     kwargs = {
-        "content_type": ContentTypeEnum.TIFF,
+        "content_type": ServiceUploadDocumentContentTypeEnum.TIFF,
         "content_length": 0.0,
         "content_m_d5": None,
     }
@@ -494,7 +500,7 @@ def test_createservicedocumentuploaddestinationrequest_instantiates():
     kwargs = {
         "body": ServiceUploadDocument(
             **{
-                "content_type": ContentTypeEnum.TIFF,
+                "content_type": ServiceUploadDocumentContentTypeEnum.TIFF,
                 "content_length": 0.0,
                 "content_m_d5": None,
             }
@@ -932,7 +938,7 @@ def test_updatereservationrequestbody_instantiates():
         "reservation": Reservation(
             **{
                 "reservation_id": None,
-                "type": TypeEnum.APPOINTMENT,
+                "type": ReservationTypeEnum.APPOINTMENT,
                 "availability": AvailabilityRecord(
                     **{
                         "start_time": datetime(2000, 1, 1),
@@ -958,7 +964,7 @@ def test_updatereservationrequest_instantiates():
                 "reservation": Reservation(
                     **{
                         "reservation_id": None,
-                        "type": TypeEnum.APPOINTMENT,
+                        "type": ReservationTypeEnum.APPOINTMENT,
                         "availability": AvailabilityRecord(
                             **{
                                 "start_time": datetime(2000, 1, 1),

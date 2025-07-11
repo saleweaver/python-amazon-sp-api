@@ -1018,7 +1018,7 @@ class CompetitivePricingType(SpApiBaseModel):
 
 
 # Enum definitions
-class AvailabilityTypeEnum(str, Enum):
+class DetailedShippingTimeTypeAvailabilityTypeEnum(str, Enum):
     """Enum for availabilityType"""
 
     NOW = "NOW"  # The item is available for shipping now.
@@ -1071,7 +1071,7 @@ class DetailedShippingTimeType(SpApiBaseModel):
     ]
 
     availability_type: Annotated[
-        Optional[AvailabilityTypeEnum],
+        Optional[DetailedShippingTimeTypeAvailabilityTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("availabilityType", "availability_type"),
@@ -1144,14 +1144,14 @@ FulfillmentChannelType = str
 
 
 # Enum definitions
-class ItemTypeEnum(str, Enum):
+class GetCompetitivePricingRequestItemTypeEnum(str, Enum):
     """Enum for ItemType"""
 
     ASIN = "Asin"  # The Amazon Standard Identification Number (ASIN).
     SKU = "Sku"  # The seller SKU.
 
 
-class CustomerTypeEnum(str, Enum):
+class GetCompetitivePricingRequestCustomerTypeEnum(str, Enum):
     """Enum for CustomerType"""
 
     CONSUMER = "Consumer"  # Consumer
@@ -1209,7 +1209,7 @@ class GetCompetitivePricingRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_type: Annotated[
-        ItemTypeEnum,
+        GetCompetitivePricingRequestItemTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -1220,7 +1220,7 @@ class GetCompetitivePricingRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     customer_type: Annotated[
-        Optional[CustomerTypeEnum],
+        Optional[GetCompetitivePricingRequestCustomerTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -1315,7 +1315,7 @@ class GetItemOffersBatchResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ItemConditionEnum(str, Enum):
+class GetItemOffersRequestItemConditionEnum(str, Enum):
     """Enum for ItemCondition"""
 
     NEW = "New"  # New
@@ -1325,7 +1325,7 @@ class ItemConditionEnum(str, Enum):
     CLUB = "Club"  # Club
 
 
-class CustomerTypeEnum(str, Enum):
+class GetItemOffersRequestCustomerTypeEnum(str, Enum):
     """Enum for CustomerType"""
 
     CONSUMER = "Consumer"  # Consumer
@@ -1361,7 +1361,7 @@ class GetItemOffersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_condition: Annotated[
-        ItemConditionEnum,
+        GetItemOffersRequestItemConditionEnum,
         QueryParam(),
         Field(
             ...,
@@ -1383,7 +1383,7 @@ class GetItemOffersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     customer_type: Annotated[
-        Optional[CustomerTypeEnum],
+        Optional[GetItemOffersRequestCustomerTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -1479,7 +1479,7 @@ class GetListingOffersBatchResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ItemConditionEnum(str, Enum):
+class GetListingOffersRequestItemConditionEnum(str, Enum):
     """Enum for ItemCondition"""
 
     NEW = "New"  # New
@@ -1489,7 +1489,7 @@ class ItemConditionEnum(str, Enum):
     CLUB = "Club"  # Club
 
 
-class CustomerTypeEnum(str, Enum):
+class GetListingOffersRequestCustomerTypeEnum(str, Enum):
     """Enum for CustomerType"""
 
     CONSUMER = "Consumer"  # Consumer
@@ -1525,7 +1525,7 @@ class GetListingOffersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_condition: Annotated[
-        ItemConditionEnum,
+        GetListingOffersRequestItemConditionEnum,
         QueryParam(),
         Field(
             ...,
@@ -1547,7 +1547,7 @@ class GetListingOffersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     customer_type: Annotated[
-        Optional[CustomerTypeEnum],
+        Optional[GetListingOffersRequestCustomerTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -1559,14 +1559,14 @@ class GetListingOffersRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class ItemTypeEnum(str, Enum):
+class GetPricingRequestItemTypeEnum(str, Enum):
     """Enum for ItemType"""
 
     ASIN = "Asin"  # The Amazon Standard Identification Number (ASIN).
     SKU = "Sku"  # The seller SKU.
 
 
-class ItemConditionEnum(str, Enum):
+class GetPricingRequestItemConditionEnum(str, Enum):
     """Enum for ItemCondition"""
 
     NEW = "New"  # New
@@ -1576,7 +1576,7 @@ class ItemConditionEnum(str, Enum):
     CLUB = "Club"  # Club
 
 
-class OfferTypeEnum(str, Enum):
+class GetPricingRequestOfferTypeEnum(str, Enum):
     """Enum for OfferType"""
 
     B2_C = "B2C"  # B2C
@@ -1634,7 +1634,7 @@ class GetPricingRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_type: Annotated[
-        ItemTypeEnum,
+        GetPricingRequestItemTypeEnum,
         QueryParam(),
         Field(
             ...,
@@ -1645,7 +1645,7 @@ class GetPricingRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     item_condition: Annotated[
-        Optional[ItemConditionEnum],
+        Optional[GetPricingRequestItemConditionEnum],
         QueryParam(),
         Field(
             None,
@@ -1656,7 +1656,7 @@ class GetPricingRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     offer_type: Annotated[
-        Optional[OfferTypeEnum],
+        Optional[GetPricingRequestOfferTypeEnum],
         QueryParam(),
         Field(
             None,

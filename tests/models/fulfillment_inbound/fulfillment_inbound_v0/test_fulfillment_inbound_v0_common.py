@@ -6,14 +6,17 @@ from sp_api.api.models.fulfillment_inbound.fulfillment_inbound_v0.common import 
     Address, AmazonPrepFeesDetails, Amount, ASINPrepInstructions,
     BillOfLadingDownloadURL, BoxContentsFeeDetails, Error,
     GetBillOfLadingRequest, GetBillOfLadingResponse, GetLabelsRequest,
+    GetLabelsRequestLabelTypeEnum, GetLabelsRequestPageTypeEnum,
     GetLabelsResponse, GetPrepInstructionsRequest, GetPrepInstructionsResponse,
     GetPrepInstructionsResult, GetRequestSerializer,
     GetShipmentItemsByShipmentIdRequest, GetShipmentItemsRequest,
-    GetShipmentItemsResponse, GetShipmentItemsResult, GetShipmentsRequest,
-    GetShipmentsResponse, GetShipmentsResult, InboundShipmentInfo,
-    InboundShipmentItem, InvalidASIN, InvalidSKU, LabelDownloadURL,
-    LabelTypeEnum, PageTypeEnum, PrepDetails, QueryTypeEnum, RequestsBaseModel,
-    ShipmentStatusListEnum, SKUPrepInstructions, SpApiBaseModel)
+    GetShipmentItemsRequestQueryTypeEnum, GetShipmentItemsResponse,
+    GetShipmentItemsResult, GetShipmentsRequest,
+    GetShipmentsRequestQueryTypeEnum,
+    GetShipmentsRequestShipmentStatusListEnum, GetShipmentsResponse,
+    GetShipmentsResult, InboundShipmentInfo, InboundShipmentItem, InvalidASIN,
+    InvalidSKU, LabelDownloadURL, PrepDetails, RequestsBaseModel,
+    SKUPrepInstructions, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -139,8 +142,8 @@ def test_getlabelsrequest_instantiates():
     """Instantiate GetLabelsRequest with dummy data"""
     kwargs = {
         "shipment_id": "",
-        "page_type": PageTypeEnum.PACKAGE_LABEL_LETTER_2,
-        "label_type": LabelTypeEnum.BARCODE_2_D,
+        "page_type": GetLabelsRequestPageTypeEnum.PACKAGE_LABEL_LETTER_2,
+        "label_type": GetLabelsRequestLabelTypeEnum.BARCODE_2_D,
         "number_of_packages": None,
         "package_labels_to_print": None,
         "number_of_pallets": None,
@@ -218,7 +221,7 @@ def test_getshipmentitemsrequest_instantiates():
     kwargs = {
         "last_updated_after": None,
         "last_updated_before": None,
-        "query_type": QueryTypeEnum.DATE_RANGE,
+        "query_type": GetShipmentItemsRequestQueryTypeEnum.DATE_RANGE,
         "next_token": None,
         "marketplace_id": None,
     }
@@ -253,7 +256,7 @@ def test_getshipmentsrequest_instantiates():
         "shipment_id_list": None,
         "last_updated_after": None,
         "last_updated_before": None,
-        "query_type": QueryTypeEnum.DATE_RANGE,
+        "query_type": GetShipmentsRequestQueryTypeEnum.SHIPMENT,
         "next_token": None,
         "marketplace_id": None,
     }

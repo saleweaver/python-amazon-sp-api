@@ -4275,7 +4275,7 @@ class ListInboundPlanPalletsResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class ListInboundPlansRequestStatusEnum(str, Enum):
     """Enum for status"""
 
     ACTIVE = "ACTIVE"  # An inbound plan that is being worked on.
@@ -4283,14 +4283,14 @@ class StatusEnum(str, Enum):
     SHIPPED = "SHIPPED"  # A completed inbound plan. Only minor modifications can be made at this time.
 
 
-class SortByEnum(str, Enum):
+class ListInboundPlansRequestSortByEnum(str, Enum):
     """Enum for sortBy"""
 
     LAST_UPDATED_TIME = "LAST_UPDATED_TIME"  # Last updated time of the inbound plan.
     CREATION_TIME = "CREATION_TIME"  # Inbound plan creation time.
 
 
-class SortOrderEnum(str, Enum):
+class ListInboundPlansRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Ascending order.
@@ -4337,13 +4337,13 @@ class ListInboundPlansRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     status: Annotated[
-        Optional[StatusEnum],
+        Optional[ListInboundPlansRequestStatusEnum],
         QueryParam(),
         Field(None, description="[QUERY] The status of an inbound plan."),
     ]
 
     sort_by: Annotated[
-        Optional[SortByEnum],
+        Optional[ListInboundPlansRequestSortByEnum],
         QueryParam(),
         Field(
             None,
@@ -4354,7 +4354,7 @@ class ListInboundPlansRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[ListInboundPlansRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,

@@ -139,11 +139,11 @@ Decimal = str
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class DimensionsUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
-    KG = "KG"  # Kilogram
-    LB = "LB"  # Pounds (Libra for Latin).
+    IN = "IN"  # Inches
+    CM = "CM"  # Centimeters
 
 
 """
@@ -167,7 +167,7 @@ class Dimensions(SpApiBaseModel):
     height: Annotated["Decimal", Field(..., description="The height of the container.")]
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        DimensionsUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -280,7 +280,7 @@ class PackedItem(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class WeightUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     KG = "KG"  # Kilogram
@@ -302,7 +302,7 @@ class Weight(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        WeightUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -315,7 +315,7 @@ class Weight(SpApiBaseModel):
 
 
 # Enum definitions
-class ContainerTypeEnum(str, Enum):
+class ContainerContainerTypeEnum(str, Enum):
     """Enum for containerType"""
 
     CARTON = (
@@ -339,7 +339,7 @@ class Container(SpApiBaseModel):
     )
 
     container_type: Annotated[
-        ContainerTypeEnum,
+        ContainerContainerTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("containerType", "container_type"),
@@ -500,7 +500,7 @@ Packages = List["Package"]
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailsTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -522,7 +522,7 @@ class TaxRegistrationDetails(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        Optional[TaxRegistrationTypeEnum],
+        Optional[TaxRegistrationDetailsTaxRegistrationTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -987,11 +987,11 @@ class GetCustomerInvoiceRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetCustomerInvoicesRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
-    ASC = "ASC"  # Sort in ascending order by packing slip creation date.
-    DESC = "DESC"  # Sort in descending order by packing slip creation date.
+    ASC = "ASC"  # Sort in ascending order by order creation date.
+    DESC = "DESC"  # Sort in descending order by order creation date.
 
 
 """
@@ -1051,7 +1051,7 @@ class GetCustomerInvoicesRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetCustomerInvoicesRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1105,7 +1105,7 @@ class GetPackingSlipRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetPackingSlipsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort in ascending order by packing slip creation date.
@@ -1169,7 +1169,7 @@ class GetPackingSlipsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetPackingSlipsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1223,11 +1223,11 @@ class GetShippingLabelRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class SortOrderEnum(str, Enum):
+class GetShippingLabelsRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
-    ASC = "ASC"  # Sort in ascending order by packing slip creation date.
-    DESC = "DESC"  # Sort in descending order by packing slip creation date.
+    ASC = "ASC"  # Sort in ascending order by order creation date.
+    DESC = "DESC"  # Sort in descending order by order creation date.
 
 
 """
@@ -1287,7 +1287,7 @@ class GetShippingLabelsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetShippingLabelsRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -1459,7 +1459,7 @@ class Package(SpApiBaseModel):
 
 
 # Enum definitions
-class ContentTypeEnum(str, Enum):
+class PackingSlipContentTypeEnum(str, Enum):
     """Enum for contentType"""
 
     APPLICATION_PDF = "application/pdf"  # Portable Document Format (pdf).
@@ -1496,7 +1496,7 @@ class PackingSlip(SpApiBaseModel):
     ]
 
     content_type: Annotated[
-        Optional[ContentTypeEnum],
+        Optional[PackingSlipContentTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("contentType", "content_type"),
@@ -1540,7 +1540,7 @@ class PackingSlipList(SpApiBaseModel):
 
 
 # Enum definitions
-class ShipmentStatusEnum(str, Enum):
+class ShipmentDetailsShipmentStatusEnum(str, Enum):
     """Enum for shipmentStatus"""
 
     SHIPPED = "SHIPPED"  # Orders that have left the warehouse have shipped status.
@@ -1572,7 +1572,7 @@ class ShipmentDetails(SpApiBaseModel):
     ]
 
     shipment_status: Annotated[
-        ShipmentStatusEnum,
+        ShipmentDetailsShipmentStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices("shipmentStatus", "shipment_status"),
@@ -1873,7 +1873,7 @@ class ShipmentStatusUpdate(SpApiBaseModel):
 
 
 # Enum definitions
-class LabelFormatEnum(str, Enum):
+class ShippingLabelLabelFormatEnum(str, Enum):
     """Enum for labelFormat"""
 
     PNG = "PNG"  # Portable Network Graphics (png) format.
@@ -1927,7 +1927,7 @@ class ShippingLabel(SpApiBaseModel):
     ]
 
     label_format: Annotated[
-        LabelFormatEnum,
+        ShippingLabelLabelFormatEnum,
         Field(
             ...,
             validation_alias=AliasChoices("labelFormat", "label_format"),

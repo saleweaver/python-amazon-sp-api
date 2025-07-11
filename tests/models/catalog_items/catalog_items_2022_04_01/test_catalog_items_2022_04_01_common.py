@@ -4,19 +4,21 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.catalog_items.catalog_items_2022_04_01.common import (
     BrandRefinement, ClassificationRefinement, Dimension, Dimensions, Error,
-    ErrorList, GetCatalogItemRequest, GetRequestSerializer,
-    IdentifiersTypeEnum, IncludedDataEnum, Item, ItemAttributes,
-    ItemBrowseClassification, ItemBrowseClassificationsByMarketplace,
-    ItemClassificationEnum, ItemClassificationSalesRank, ItemContributor,
-    ItemContributorRole, ItemDimensionsByMarketplace,
+    ErrorList, GetCatalogItemRequest, GetCatalogItemRequestIncludedDataEnum,
+    GetRequestSerializer, Item, ItemAttributes, ItemBrowseClassification,
+    ItemBrowseClassificationsByMarketplace, ItemClassificationSalesRank,
+    ItemContributor, ItemContributorRole, ItemDimensionsByMarketplace,
     ItemDisplayGroupSalesRank, ItemIdentifier, ItemIdentifiersByMarketplace,
-    ItemImage, ItemImagesByMarketplace, ItemProductTypeByMarketplace,
-    ItemRelationship, ItemRelationshipsByMarketplace,
+    ItemImage, ItemImagesByMarketplace, ItemImageVariantEnum,
+    ItemProductTypeByMarketplace, ItemRelationship,
+    ItemRelationshipsByMarketplace, ItemRelationshipTypeEnum,
     ItemSalesRanksByMarketplace, ItemSearchResults, ItemSummaryByMarketplace,
-    ItemVariationTheme, ItemVendorDetailsByMarketplace,
-    ItemVendorDetailsCategory, Pagination, Refinements,
-    ReplenishmentCategoryEnum, RequestsBaseModel, SearchCatalogItemsRequest,
-    SpApiBaseModel, TypeEnum, VariantEnum)
+    ItemSummaryByMarketplaceItemClassificationEnum, ItemVariationTheme,
+    ItemVendorDetailsByMarketplace,
+    ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum,
+    ItemVendorDetailsCategory, Pagination, Refinements, RequestsBaseModel,
+    SearchCatalogItemsRequest, SearchCatalogItemsRequestIdentifiersTypeEnum,
+    SearchCatalogItemsRequestIncludedDataEnum, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -240,7 +242,7 @@ def test_itemidentifiersbymarketplace_instantiates():
 def test_itemimage_instantiates():
     """Instantiate ItemImage with dummy data"""
     kwargs = {
-        "variant": VariantEnum.MAIN,
+        "variant": ItemImageVariantEnum.MAIN,
         "link": "",
         "height": 0,
         "width": 0,
@@ -285,7 +287,7 @@ def test_itemrelationship_instantiates():
         "child_asins": None,
         "parent_asins": None,
         "variation_theme": None,
-        "type": TypeEnum.VARIATION,
+        "type": ItemRelationshipTypeEnum.VARIATION,
     }
     obj = ItemRelationship(**kwargs)
     assert isinstance(obj, ItemRelationship)

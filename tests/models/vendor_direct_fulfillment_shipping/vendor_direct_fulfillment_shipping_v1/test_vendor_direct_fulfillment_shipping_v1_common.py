@@ -3,26 +3,28 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.vendor_direct_fulfillment_shipping.vendor_direct_fulfillment_shipping_v1.common import (
-    Address, Container, ContainerTypeEnum, ContentTypeEnum, CustomerInvoice,
-    CustomerInvoiceList, Dimensions, Error, GetCustomerInvoiceRequest,
-    GetCustomerInvoiceResponse, GetCustomerInvoicesRequest,
+    Address, Container, ContainerContainerTypeEnum, CustomerInvoice,
+    CustomerInvoiceList, Dimensions, DimensionsUnitOfMeasureEnum, Error,
+    GetCustomerInvoiceRequest, GetCustomerInvoiceResponse,
+    GetCustomerInvoicesRequest, GetCustomerInvoicesRequestSortOrderEnum,
     GetCustomerInvoicesResponse, GetPackingSlipListResponse,
     GetPackingSlipRequest, GetPackingSlipResponse, GetPackingSlipsRequest,
-    GetRequestSerializer, GetShippingLabelListResponse,
-    GetShippingLabelRequest, GetShippingLabelResponse,
-    GetShippingLabelsRequest, Item, ItemQuantity, LabelData, LabelFormatEnum,
-    PackedItem, PackingSlip, PackingSlipList, Pagination, PartyIdentification,
-    RequestsBaseModel, ShipmentConfirmation, ShipmentDetails,
-    ShipmentStatusEnum, ShipmentStatusUpdate, ShippingLabel, ShippingLabelList,
-    ShippingLabelRequestBody, SortOrderEnum, SpApiBaseModel,
-    StatusUpdateDetails, SubmitShipmentConfirmationsRequest,
-    SubmitShipmentConfirmationsRequestBody,
+    GetPackingSlipsRequestSortOrderEnum, GetRequestSerializer,
+    GetShippingLabelListResponse, GetShippingLabelRequest,
+    GetShippingLabelResponse, GetShippingLabelsRequest,
+    GetShippingLabelsRequestSortOrderEnum, Item, ItemQuantity, LabelData,
+    PackedItem, PackingSlip, PackingSlipContentTypeEnum, PackingSlipList,
+    Pagination, PartyIdentification, RequestsBaseModel, ShipmentConfirmation,
+    ShipmentDetails, ShipmentDetailsShipmentStatusEnum, ShipmentStatusUpdate,
+    ShippingLabel, ShippingLabelLabelFormatEnum, ShippingLabelList,
+    ShippingLabelRequestBody, SpApiBaseModel, StatusUpdateDetails,
+    SubmitShipmentConfirmationsRequest, SubmitShipmentConfirmationsRequestBody,
     SubmitShipmentConfirmationsResponse, SubmitShipmentStatusUpdatesRequest,
     SubmitShipmentStatusUpdatesRequestBody,
     SubmitShipmentStatusUpdatesResponse, SubmitShippingLabelRequestBodyRequest,
     SubmitShippingLabelsRequestBody, SubmitShippingLabelsResponse,
-    TaxRegistrationDetails, TaxRegistrationTypeEnum, TransactionReference,
-    UnitOfMeasureEnum, Weight)
+    TaxRegistrationDetails, TaxRegistrationDetailsTaxRegistrationTypeEnum,
+    TransactionReference, Weight, WeightUnitOfMeasureEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -71,7 +73,7 @@ def test_dimensions_instantiates():
         "length": "",
         "width": "",
         "height": "",
-        "unit_of_measure": UnitOfMeasureEnum.KG,
+        "unit_of_measure": DimensionsUnitOfMeasureEnum.IN,
     }
     obj = Dimensions(**kwargs)
     assert isinstance(obj, Dimensions)
@@ -102,7 +104,7 @@ def test_packeditem_instantiates():
 def test_weight_instantiates():
     """Instantiate Weight with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.KG,
+        "unit_of_measure": WeightUnitOfMeasureEnum.KG,
         "value": "",
     }
     obj = Weight(**kwargs)
@@ -112,7 +114,7 @@ def test_weight_instantiates():
 def test_container_instantiates():
     """Instantiate Container with dummy data"""
     kwargs = {
-        "container_type": ContainerTypeEnum.CARTON,
+        "container_type": ContainerContainerTypeEnum.CARTON,
         "container_identifier": "",
         "tracking_number": None,
         "manifest_id": None,
@@ -122,7 +124,9 @@ def test_container_instantiates():
         "carrier": None,
         "container_sequence_number": None,
         "dimensions": None,
-        "weight": Weight(**{"unit_of_measure": UnitOfMeasureEnum.KG, "value": ""}),
+        "weight": Weight(
+            **{"unit_of_measure": WeightUnitOfMeasureEnum.KG, "value": ""}
+        ),
         "packed_items": [],
     }
     obj = Container(**kwargs)
@@ -322,7 +326,7 @@ def test_shippinglabel_instantiates():
         "ship_from_party": PartyIdentification(
             **{"party_id": "", "address": None, "tax_registration_details": None}
         ),
-        "label_format": LabelFormatEnum.PNG,
+        "label_format": ShippingLabelLabelFormatEnum.PNG,
         "label_data": [],
     }
     obj = ShippingLabel(**kwargs)
@@ -398,7 +402,7 @@ def test_shipmentdetails_instantiates():
     """Instantiate ShipmentDetails with dummy data"""
     kwargs = {
         "shipped_date": datetime(2000, 1, 1),
-        "shipment_status": ShipmentStatusEnum.SHIPPED,
+        "shipment_status": ShipmentDetailsShipmentStatusEnum.SHIPPED,
         "is_priority_shipment": None,
         "vendor_order_number": None,
         "estimated_delivery_date": None,
@@ -414,7 +418,7 @@ def test_shipmentconfirmation_instantiates():
         "shipment_details": ShipmentDetails(
             **{
                 "shipped_date": datetime(2000, 1, 1),
-                "shipment_status": ShipmentStatusEnum.SHIPPED,
+                "shipment_status": ShipmentDetailsShipmentStatusEnum.SHIPPED,
                 "is_priority_shipment": None,
                 "vendor_order_number": None,
                 "estimated_delivery_date": None,

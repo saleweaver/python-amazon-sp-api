@@ -1856,7 +1856,7 @@ class CreateShipmentResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class PackingGroupEnum(str, Enum):
+class DangerousGoodsDetailsPackingGroupEnum(str, Enum):
     """Enum for PackingGroup"""
 
     I = "I"  # Packing group I indicates great danger.
@@ -1864,7 +1864,7 @@ class PackingGroupEnum(str, Enum):
     III = "III"  # Packing group III indicates minor danger.
 
 
-class PackingInstructionEnum(str, Enum):
+class DangerousGoodsDetailsPackingInstructionEnum(str, Enum):
     """Enum for PackingInstruction"""
 
     PI965_SECTION_IA = "PI965_SECTION_IA"  # Ion PI965 Section IA (LiBa).
@@ -1923,7 +1923,7 @@ class DangerousGoodsDetails(SpApiBaseModel):
     ]
 
     packing_group: Annotated[
-        Optional[PackingGroupEnum],
+        Optional[DangerousGoodsDetailsPackingGroupEnum],
         Field(
             None,
             validation_alias=AliasChoices("PackingGroup", "packing_group"),
@@ -1933,7 +1933,7 @@ class DangerousGoodsDetails(SpApiBaseModel):
     ]
 
     packing_instruction: Annotated[
-        Optional[PackingInstructionEnum],
+        Optional[DangerousGoodsDetailsPackingInstructionEnum],
         Field(
             None,
             validation_alias=AliasChoices("PackingInstruction", "packing_instruction"),
@@ -2471,7 +2471,7 @@ ItemQuantity = int
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class LiquidVolumeUnitEnum(str, Enum):
     """Enum for Unit"""
 
     ML = "ML"  # Milliliter - Metric unit of volume.
@@ -2498,7 +2498,7 @@ class LiquidVolume(SpApiBaseModel):
     )
 
     unit: Annotated[
-        UnitEnum,
+        LiquidVolumeUnitEnum,
         Field(
             ...,
             validation_alias=AliasChoices("Unit", "unit"),

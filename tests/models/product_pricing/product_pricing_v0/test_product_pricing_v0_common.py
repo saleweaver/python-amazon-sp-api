@@ -3,25 +3,29 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.product_pricing.product_pricing_v0.common import (
-    ASINIdentifier, AttributeSetList, AvailabilityTypeEnum,
-    BatchOffersRequestParams, BatchOffersResponse, BatchRequestBody,
-    BuyBoxPriceType, CompetitivePriceType, CompetitivePricingType,
-    CustomerTypeEnum, DetailedShippingTimeType, Error, Errors,
-    GetCompetitivePricingRequest, GetItemOffersBatchRequest,
+    ASINIdentifier, AttributeSetList, BatchOffersRequestParams,
+    BatchOffersResponse, BatchRequestBody, BuyBoxPriceType,
+    CompetitivePriceType, CompetitivePricingType, DetailedShippingTimeType,
+    DetailedShippingTimeTypeAvailabilityTypeEnum, Error, Errors,
+    GetCompetitivePricingRequest, GetCompetitivePricingRequestCustomerTypeEnum,
+    GetCompetitivePricingRequestItemTypeEnum, GetItemOffersBatchRequest,
     GetItemOffersBatchRequestBody, GetItemOffersBatchResponse,
-    GetItemOffersRequest, GetListingOffersBatchRequest,
+    GetItemOffersRequest, GetItemOffersRequestCustomerTypeEnum,
+    GetItemOffersRequestItemConditionEnum, GetListingOffersBatchRequest,
     GetListingOffersBatchRequestBody, GetListingOffersBatchResponse,
-    GetListingOffersRequest, GetOffersHttpStatusLine, GetOffersResponse,
-    GetOffersResult, GetPricingRequest, GetPricingResponse,
-    GetRequestSerializer, HttpRequestHeaders, HttpResponseHeaders,
-    IdentifierType, ItemConditionEnum, ItemIdentifier, ItemOffersRequestBody,
-    ItemOffersRequestParams, ItemOffersResponse, ItemTypeEnum,
+    GetListingOffersRequest, GetListingOffersRequestCustomerTypeEnum,
+    GetListingOffersRequestItemConditionEnum, GetOffersHttpStatusLine,
+    GetOffersResponse, GetOffersResult, GetPricingRequest,
+    GetPricingRequestItemConditionEnum, GetPricingRequestItemTypeEnum,
+    GetPricingRequestOfferTypeEnum, GetPricingResponse, GetRequestSerializer,
+    HttpRequestHeaders, HttpResponseHeaders, IdentifierType, ItemIdentifier,
+    ItemOffersRequestBody, ItemOffersRequestParams, ItemOffersResponse,
     ListingOffersRequestBody, ListingOffersRequestParams,
     ListingOffersResponse, LowestPriceType, MoneyType, OfferCountType,
-    OfferDetail, OfferListingCountType, OfferType, OfferTypeEnum, Points,
-    Price, PriceType, PrimeInformationType, Product, QuantityDiscountPriceType,
-    RelationshipList, RequestsBaseModel, SalesRankType, SellerFeedbackType,
-    SellerSKUIdentifier, ShipsFromType, SpApiBaseModel, Summary)
+    OfferDetail, OfferListingCountType, OfferType, Points, Price, PriceType,
+    PrimeInformationType, Product, QuantityDiscountPriceType, RelationshipList,
+    RequestsBaseModel, SalesRankType, SellerFeedbackType, SellerSKUIdentifier,
+    ShipsFromType, SpApiBaseModel, Summary)
 
 
 def test_requestsbasemodel_instantiates():
@@ -320,7 +324,7 @@ def test_getcompetitivepricingrequest_instantiates():
         "marketplace_id": None,
         "asins": None,
         "skus": None,
-        "item_type": ItemTypeEnum.ASIN,
+        "item_type": GetCompetitivePricingRequestItemTypeEnum.ASIN,
         "customer_type": None,
     }
     obj = GetCompetitivePricingRequest(**kwargs)
@@ -360,7 +364,7 @@ def test_getitemoffersrequest_instantiates():
     """Instantiate GetItemOffersRequest with dummy data"""
     kwargs = {
         "marketplace_id": None,
-        "item_condition": ItemConditionEnum.NEW,
+        "item_condition": GetItemOffersRequestItemConditionEnum.NEW,
         "asin": "",
         "customer_type": None,
     }
@@ -401,7 +405,7 @@ def test_getlistingoffersrequest_instantiates():
     """Instantiate GetListingOffersRequest with dummy data"""
     kwargs = {
         "marketplace_id": None,
-        "item_condition": ItemConditionEnum.NEW,
+        "item_condition": GetListingOffersRequestItemConditionEnum.NEW,
         "seller_s_k_u": "",
         "customer_type": None,
     }
@@ -415,7 +419,7 @@ def test_getpricingrequest_instantiates():
         "marketplace_id": None,
         "asins": None,
         "skus": None,
-        "item_type": ItemTypeEnum.ASIN,
+        "item_type": GetPricingRequestItemTypeEnum.ASIN,
         "item_condition": None,
         "offer_type": None,
     }

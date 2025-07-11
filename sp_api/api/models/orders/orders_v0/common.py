@@ -71,7 +71,7 @@ class AddressExtendedFields(SpApiBaseModel):
 
 
 # Enum definitions
-class AddressTypeEnum(str, Enum):
+class AddressAddressTypeEnum(str, Enum):
     """Enum for AddressType"""
 
     RESIDENTIAL = "Residential"  # The shipping address is a residential address.
@@ -233,7 +233,7 @@ class Address(SpApiBaseModel):
     ]
 
     address_type: Annotated[
-        Optional[AddressTypeEnum],
+        Optional[AddressAddressTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("AddressType", "address_type"),
@@ -246,12 +246,12 @@ class Address(SpApiBaseModel):
 """
 AmazonPrograms
 
-Contains the list of programs that are associated with an item. Possible programs are: - **Subscribe and Save**: Offers recurring, scheduled deliveries to Amazon customers and Amazon Business customers for their frequently ordered products.
+Contains the list of programs that Amazon associates with an item. Possible programs are: - **Subscribe and Save**: Offers recurring, scheduled deliveries to Amazon customers and Amazon Business customers for their frequently ordered products. - **FBM Ship+**: Unlocks expedited shipping without the extra cost. Helps you to provide accurate and fast delivery dates to Amazon customers. You also receive protection from late deliveries, a discount on expedited shipping rates, and cash back when you ship.
 """
 
 
 class AmazonPrograms(SpApiBaseModel):
-    """Contains the list of programs that are associated with an item. Possible programs are: - **Subscribe and Save**: Offers recurring, scheduled deliveries to Amazon customers and Amazon Business customers for their frequently ordered products."""
+    """Contains the list of programs that Amazon associates with an item. Possible programs are: - **Subscribe and Save**: Offers recurring, scheduled deliveries to Amazon customers and Amazon Business customers for their frequently ordered products. - **FBM Ship+**: Unlocks expedited shipping without the extra cost. Helps you to provide accurate and fast delivery dates to Amazon customers. You also receive protection from late deliveries, a discount on expedited shipping rates, and cash back when you ship."""
 
     model_config = ConfigDict(
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
@@ -263,7 +263,7 @@ class AmazonPrograms(SpApiBaseModel):
             ...,
             validation_alias=AliasChoices("Programs", "programs"),
             serialization_alias="Programs",
-            description="A list of the programs that are associated with the specified order item. **Possible values**: `SUBSCRIBE_AND_SAVE`",
+            description="A list of the programs that Amazon associates with the order item. **Possible values**: `SUBSCRIBE_AND_SAVE`, `FBM_SHIP_PLUS`",
         ),
     ]
 
@@ -436,7 +436,7 @@ class OpenInterval(SpApiBaseModel):
 
 
 # Enum definitions
-class DayOfWeekEnum(str, Enum):
+class BusinessHoursDayOfWeekEnum(str, Enum):
     """Enum for DayOfWeek"""
 
     SUN = "SUN"  # Sunday - Day of the week.
@@ -463,7 +463,7 @@ class BusinessHours(SpApiBaseModel):
     )
 
     day_of_week: Annotated[
-        Optional[DayOfWeekEnum],
+        Optional[BusinessHoursDayOfWeekEnum],
         Field(
             None,
             validation_alias=AliasChoices("DayOfWeek", "day_of_week"),
@@ -638,7 +638,7 @@ class BuyerInfo(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("BuyerTaxInfo", "buyer_tax_info"),
             serialization_alias="BuyerTaxInfo",
-            description="Tax information about the buyer. Sellers can use this data to issue electronic invoices for business orders. **Note**: This attribute is only available for business orders in the Brazil, Mexico and India marketplaces.",
+            description="Tax information about the buyer. Sellers could use this data to issue electronic invoices for business orders. **Note**: This attribute is only available for business orders in the Brazil, Mexico and India marketplaces.",
         ),
     ]
 
@@ -872,7 +872,7 @@ class PackageDetail(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("carrierName", "carrier_name"),
             serialization_alias="carrierName",
-            description="Carrier Name that will deliver the package. Required when `carrierCode` is 'Others' ",
+            description="Carrier name that will deliver the package. Required when `carrierCode` is 'Other' ",
         ),
     ]
 
@@ -930,7 +930,7 @@ class PackageDetail(SpApiBaseModel):
 
 
 # Enum definitions
-class CodCollectionMethodEnum(str, Enum):
+class ConfirmShipmentRequestBodyCodCollectionMethodEnum(str, Enum):
     """Enum for codCollectionMethod"""
 
     DIRECT_PAYMENT = "DirectPayment"
@@ -960,7 +960,7 @@ class ConfirmShipmentRequestBody(SpApiBaseModel):
     ]
 
     cod_collection_method: Annotated[
-        Optional[CodCollectionMethodEnum],
+        Optional[ConfirmShipmentRequestBodyCodCollectionMethodEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -1207,76 +1207,6 @@ class Error(SpApiBaseModel):
 
 
 """
-Money
-
-The monetary value of the order.
-"""
-
-
-class Money(SpApiBaseModel):
-    """The monetary value of the order."""
-
-    model_config = ConfigDict(
-        populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
-    )
-
-    currency_code: Annotated[
-        Optional[str],
-        Field(
-            None,
-            validation_alias=AliasChoices("CurrencyCode", "currency_code"),
-            serialization_alias="CurrencyCode",
-            description="The three-digit currency code. In ISO 4217 format.",
-        ),
-    ]
-
-    amount: Annotated[
-        Optional[str],
-        Field(
-            None,
-            validation_alias=AliasChoices("Amount", "amount"),
-            serialization_alias="Amount",
-            description="The currency amount.",
-        ),
-    ]
-
-
-"""
-ExportInfo
-
-Contains information that is related to the export of an order item.
-"""
-
-
-class ExportInfo(SpApiBaseModel):
-    """Contains information that is related to the export of an order item."""
-
-    model_config = ConfigDict(
-        populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
-    )
-
-    export_charge: Annotated[
-        Optional["Money"],
-        Field(
-            None,
-            validation_alias=AliasChoices("ExportCharge", "export_charge"),
-            serialization_alias="ExportCharge",
-            description="Holds the export/import charge for an order item.",
-        ),
-    ]
-
-    export_charge_model: Annotated[
-        Optional[str],
-        Field(
-            None,
-            validation_alias=AliasChoices("ExportChargeModel", "export_charge_model"),
-            serialization_alias="ExportChargeModel",
-            description="Holds the `ExportCharge` collection model that is associated with the specified order item.\n\n**Possible values**: `AMAZON_FACILITATED`: Import/export charge is withheld by Amazon and remitted to the customs authority by the carrier on behalf of the buyer/seller.",
-        ),
-    ]
-
-
-"""
 FulfillmentInstruction
 
 Contains the instructions about the fulfillment, such as the location from where you want the order filled.
@@ -1327,7 +1257,7 @@ class GetOrderAddressRequest(GetRequestSerializer, RequestsBaseModel):
             ...,
             validation_alias=AliasChoices("orderId", "order_id"),
             serialization_alias="orderId",
-            description="[PATH] An `orderId` is an Amazon-defined order identifier, in 3-7-7 format.",
+            description="[PATH] The Amazon order identifier in 3-7-7 format.",
         ),
     ]
 
@@ -1440,7 +1370,7 @@ class GetOrderBuyerInfoRequest(GetRequestSerializer, RequestsBaseModel):
             ...,
             validation_alias=AliasChoices("orderId", "order_id"),
             serialization_alias="orderId",
-            description="[PATH] An `orderId` is an Amazon-defined order identifier, in 3-7-7 format.",
+            description="[PATH] The Amazon order identifier in 3-7-7 format.",
         ),
     ]
 
@@ -1808,13 +1738,13 @@ class GetOrderRegulatedInfoRequest(GetRequestSerializer, RequestsBaseModel):
             ...,
             validation_alias=AliasChoices("orderId", "order_id"),
             serialization_alias="orderId",
-            description="[PATH] An Amazon-defined order identifier, in 3-7-7 format.",
+            description="[PATH] The Amazon order identifier in 3-7-7 format.",
         ),
     ]
 
 
 # Enum definitions
-class FieldTypeEnum(str, Enum):
+class RegulatedInformationFieldFieldTypeEnum(str, Enum):
     """Enum for FieldType"""
 
     TEXT = "Text"  # This field is a text representation of the response collected from the regulatory form.
@@ -1856,7 +1786,7 @@ class RegulatedInformationField(SpApiBaseModel):
     ]
 
     field_type: Annotated[
-        FieldTypeEnum,
+        RegulatedInformationFieldFieldTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("FieldType", "field_type"),
@@ -2218,6 +2148,41 @@ class MarketplaceTaxInfo(SpApiBaseModel):
     ]
 
 
+"""
+Money
+
+The monetary value of the order.
+"""
+
+
+class Money(SpApiBaseModel):
+    """The monetary value of the order."""
+
+    model_config = ConfigDict(
+        populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
+    )
+
+    currency_code: Annotated[
+        Optional[str],
+        Field(
+            None,
+            validation_alias=AliasChoices("CurrencyCode", "currency_code"),
+            serialization_alias="CurrencyCode",
+            description="The three-digit currency code. In ISO 4217 format.",
+        ),
+    ]
+
+    amount: Annotated[
+        Optional[str],
+        Field(
+            None,
+            validation_alias=AliasChoices("Amount", "amount"),
+            serialization_alias="Amount",
+            description="The currency amount.",
+        ),
+    ]
+
+
 PaymentExecutionDetailItemList = List["PaymentExecutionDetailItem"]
 """A list of payment execution detail items."""
 
@@ -2241,7 +2206,7 @@ class PaymentMethodDetailItemList(SpApiBaseModel):
 
 
 # Enum definitions
-class OrderStatusEnum(str, Enum):
+class OrderOrderStatusEnum(str, Enum):
     """Enum for OrderStatus"""
 
     PENDING = "Pending"  # The order has been placed but payment has not been authorized. The order is not ready for shipment. Note that for orders with `OrderType = Standard`, the initial order status is Pending. For orders with `OrderType = Preorder`, the initial order status is `PendingAvailability`, and the order passes into the Pending status when the payment authorization process begins.
@@ -2254,14 +2219,14 @@ class OrderStatusEnum(str, Enum):
     PENDING_AVAILABILITY = "PendingAvailability"  # This status is available for pre-orders only. The order has been placed, payment has not been authorized, and the release date for the item is in the future. The order is not ready for shipment.
 
 
-class FulfillmentChannelEnum(str, Enum):
+class OrderFulfillmentChannelEnum(str, Enum):
     """Enum for FulfillmentChannel"""
 
     MFN = "MFN"  # Fulfilled by the seller.
     AFN = "AFN"  # Fulfilled by Amazon.
 
 
-class PaymentMethodEnum(str, Enum):
+class OrderPaymentMethodEnum(str, Enum):
     """Enum for PaymentMethod"""
 
     COD = "COD"  # Cash on delivery.
@@ -2269,7 +2234,7 @@ class PaymentMethodEnum(str, Enum):
     OTHER = "Other"  # A payment method other than COD and CVS.
 
 
-class OrderTypeEnum(str, Enum):
+class OrderOrderTypeEnum(str, Enum):
     """Enum for OrderType"""
 
     STANDARD_ORDER = "StandardOrder"  # An order that contains items for which the selling partner currently has inventory in stock.
@@ -2279,7 +2244,7 @@ class OrderTypeEnum(str, Enum):
     SOURCING_ON_DEMAND_ORDER = "SourcingOnDemandOrder"  # A Sourcing On Demand order.
 
 
-class BuyerInvoicePreferenceEnum(str, Enum):
+class OrderBuyerInvoicePreferenceEnum(str, Enum):
     """Enum for BuyerInvoicePreference"""
 
     INDIVIDUAL = "INDIVIDUAL"  # Issues an individual invoice to the buyer.
@@ -2341,7 +2306,7 @@ class Order(SpApiBaseModel):
     ]
 
     order_status: Annotated[
-        OrderStatusEnum,
+        OrderOrderStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices("OrderStatus", "order_status"),
@@ -2351,7 +2316,7 @@ class Order(SpApiBaseModel):
     ]
 
     fulfillment_channel: Annotated[
-        Optional[FulfillmentChannelEnum],
+        Optional[OrderFulfillmentChannelEnum],
         Field(
             None,
             validation_alias=AliasChoices("FulfillmentChannel", "fulfillment_channel"),
@@ -2437,7 +2402,7 @@ class Order(SpApiBaseModel):
     ]
 
     payment_method: Annotated[
-        Optional[PaymentMethodEnum],
+        Optional[OrderPaymentMethodEnum],
         Field(
             None,
             validation_alias=AliasChoices("PaymentMethod", "payment_method"),
@@ -2505,7 +2470,7 @@ class Order(SpApiBaseModel):
     ]
 
     order_type: Annotated[
-        Optional[OrderTypeEnum],
+        Optional[OrderOrderTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("OrderType", "order_type"),
@@ -2675,7 +2640,7 @@ class Order(SpApiBaseModel):
     ]
 
     buyer_invoice_preference: Annotated[
-        Optional[BuyerInvoicePreferenceEnum],
+        Optional[OrderBuyerInvoicePreferenceEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -3154,7 +3119,7 @@ class OrdersList(SpApiBaseModel):
             None,
             validation_alias=AliasChoices("LastUpdatedBefore", "last_updated_before"),
             serialization_alias="LastUpdatedBefore",
-            description="Use this date to select orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. All dates must be in [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format.",
+            description="Use this date to select orders that were last updated before (or at) a specified time. An update is defined as any change in order status, including the creation of a new order. Includes updates made by Amazon and by the seller. Use [ISO 8601](https://developer-docs.amazon.com/sp-api/docs/iso-8601) format for all dates.",
         ),
     ]
 
@@ -3265,7 +3230,7 @@ class ItemBuyerInfo(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class MeasurementUnitEnum(str, Enum):
     """Enum for Unit"""
 
     OUNCES = "OUNCES"  # The item is measured in ounces.
@@ -3313,7 +3278,7 @@ class Measurement(SpApiBaseModel):
     )
 
     unit: Annotated[
-        UnitEnum,
+        MeasurementUnitEnum,
         Field(
             ...,
             validation_alias=AliasChoices("Unit", "unit"),
@@ -3479,7 +3444,7 @@ SubstitutionOptionList = List["SubstitutionOption"]
 
 
 # Enum definitions
-class SubstitutionTypeEnum(str, Enum):
+class SubstitutionPreferencesSubstitutionTypeEnum(str, Enum):
     """Enum for SubstitutionType"""
 
     CUSTOMER_PREFERENCE = (
@@ -3508,7 +3473,7 @@ class SubstitutionPreferences(SpApiBaseModel):
     )
 
     substitution_type: Annotated[
-        SubstitutionTypeEnum,
+        SubstitutionPreferencesSubstitutionTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("SubstitutionType", "substitution_type"),
@@ -3531,13 +3496,13 @@ class SubstitutionPreferences(SpApiBaseModel):
 
 
 # Enum definitions
-class ModelEnum(str, Enum):
+class TaxCollectionModelEnum(str, Enum):
     """Enum for Model"""
 
     MARKETPLACE_FACILITATOR = "MarketplaceFacilitator"  # Tax is withheld and remitted to the taxing authority by Amazon on behalf of the seller.
 
 
-class ResponsiblePartyEnum(str, Enum):
+class TaxCollectionResponsiblePartyEnum(str, Enum):
     """Enum for ResponsibleParty"""
 
     AMAZON_SERVICES__INC_ = "Amazon Services, Inc."  # The `MarketplaceFacilitator` entity for the US marketplace.
@@ -3558,7 +3523,7 @@ class TaxCollection(SpApiBaseModel):
     )
 
     model: Annotated[
-        Optional[ModelEnum],
+        Optional[TaxCollectionModelEnum],
         Field(
             None,
             validation_alias=AliasChoices("Model", "model"),
@@ -3568,7 +3533,7 @@ class TaxCollection(SpApiBaseModel):
     ]
 
     responsible_party: Annotated[
-        Optional[ResponsiblePartyEnum],
+        Optional[TaxCollectionResponsiblePartyEnum],
         Field(
             None,
             validation_alias=AliasChoices("ResponsibleParty", "responsible_party"),
@@ -3579,7 +3544,7 @@ class TaxCollection(SpApiBaseModel):
 
 
 # Enum definitions
-class DeemedResellerCategoryEnum(str, Enum):
+class OrderItemDeemedResellerCategoryEnum(str, Enum):
     """Enum for DeemedResellerCategory"""
 
     IOSS = "IOSS"  # Import one stop shop. The item being purchased is not held in the EU for shipment.
@@ -3930,7 +3895,7 @@ class OrderItem(SpApiBaseModel):
     ]
 
     deemed_reseller_category: Annotated[
-        Optional[DeemedResellerCategoryEnum],
+        Optional[OrderItemDeemedResellerCategoryEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -4014,16 +3979,6 @@ class OrderItem(SpApiBaseModel):
             validation_alias=AliasChoices("AmazonPrograms", "amazon_programs"),
             serialization_alias="AmazonPrograms",
             description="Contains the list of programs that are associated with an item.",
-        ),
-    ]
-
-    export_info: Annotated[
-        Optional["ExportInfo"],
-        Field(
-            None,
-            validation_alias=AliasChoices("ExportInfo", "export_info"),
-            serialization_alias="ExportInfo",
-            description="Contains information that is related to the export of an order item.",
         ),
     ]
 
@@ -4544,7 +4499,7 @@ class UpdateVerificationStatusRequest(RequestsBaseModel):
             ...,
             validation_alias=AliasChoices("orderId", "order_id"),
             serialization_alias="orderId",
-            description="[PATH] An Amazon-defined order identifier, in 3-7-7 format.",
+            description="[PATH] The Amazon order identifier in 3-7-7 format.",
         ),
     ]
 
@@ -4599,7 +4554,6 @@ MarketplaceTaxInfo.model_rebuild()
 TaxClassification.model_rebuild()
 OrderItemsList.model_rebuild()
 OrderItem.model_rebuild()
-ExportInfo.model_rebuild()
 AmazonPrograms.model_rebuild()
 SubstitutionPreferences.model_rebuild()
 SubstitutionOption.model_rebuild()

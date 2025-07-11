@@ -133,7 +133,7 @@ Decimal = str
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class AmountUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     EACHES = "Eaches"  # Specifies an integer count of units.
@@ -154,7 +154,7 @@ class Amount(SpApiBaseModel):
     )
 
     unit_of_measure: Annotated[
-        UnitOfMeasureEnum,
+        AmountUnitOfMeasureEnum,
         Field(
             ...,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -444,7 +444,7 @@ CreateFulfillmentOrderItemList = List["CreateFulfillmentOrderItem"]
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class DropOffLocationTypeEnum(str, Enum):
     """Enum for type"""
 
     FRONT_DOOR = "FRONT_DOOR"  # Indicates delivery preferred to front door.
@@ -476,7 +476,7 @@ class DropOffLocation(SpApiBaseModel):
     )
 
     type: Annotated[
-        TypeEnum,
+        DropOffLocationTypeEnum,
         Field(
             ...,
             description="Specifies the preferred location to leave the package at the destination address.",
@@ -569,7 +569,7 @@ class DeliveryWindow(SpApiBaseModel):
 
 
 # Enum definitions
-class FeatureFulfillmentPolicyEnum(str, Enum):
+class FeatureSettingsFeatureFulfillmentPolicyEnum(str, Enum):
     """Enum for featureFulfillmentPolicy"""
 
     REQUIRED = "Required"  # If the offer can't be shipped with the selected feature, reject the order.
@@ -601,7 +601,7 @@ class FeatureSettings(SpApiBaseModel):
     ]
 
     feature_fulfillment_policy: Annotated[
-        Optional[FeatureFulfillmentPolicyEnum],
+        Optional[FeatureSettingsFeatureFulfillmentPolicyEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -1734,7 +1734,7 @@ Features = List["Feature"]
 
 
 # Enum definitions
-class NameEnum(str, Enum):
+class FeeNameEnum(str, Enum):
     """Enum for name"""
 
     FBA_PER_UNIT_FULFILLMENT_FEE = "FBAPerUnitFulfillmentFee"  # Estimated fee for each unit in the fulfillment order.
@@ -1759,7 +1759,7 @@ class Fee(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    name: Annotated[NameEnum, Field(..., description="The type of fee.")]
+    name: Annotated[FeeNameEnum, Field(..., description="The type of fee.")]
 
     amount: Annotated["Money", Field(..., description="The amount of the fee.")]
 
@@ -2180,7 +2180,7 @@ UnfulfillablePreviewItemList = List["UnfulfillablePreviewItem"]
 
 
 # Enum definitions
-class UnitEnum(str, Enum):
+class WeightUnitEnum(str, Enum):
     """Enum for unit"""
 
     KG = "KG"  # Kilograms.
@@ -2203,7 +2203,7 @@ class Weight(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    unit: Annotated[UnitEnum, Field(..., description="The unit of weight.")]
+    unit: Annotated[WeightUnitEnum, Field(..., description="The unit of weight.")]
 
     value: Annotated[str, Field(..., description="The weight value.")]
 
@@ -2342,7 +2342,7 @@ class FulfillmentPreview(SpApiBaseModel):
 
 
 # Enum definitions
-class ShippingWeightCalculationMethodEnum(str, Enum):
+class FulfillmentPreviewItemShippingWeightCalculationMethodEnum(str, Enum):
     """Enum for shippingWeightCalculationMethod"""
 
     PACKAGE = "Package"  # Based on the actual weight of the items.
@@ -2400,7 +2400,7 @@ class FulfillmentPreviewItem(SpApiBaseModel):
     ]
 
     shipping_weight_calculation_method: Annotated[
-        Optional[ShippingWeightCalculationMethodEnum],
+        Optional[FulfillmentPreviewItemShippingWeightCalculationMethodEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -2512,7 +2512,7 @@ FulfillmentShipmentPackageList = List["FulfillmentShipmentPackage"]
 
 
 # Enum definitions
-class FulfillmentShipmentStatusEnum(str, Enum):
+class FulfillmentShipmentFulfillmentShipmentStatusEnum(str, Enum):
     """Enum for fulfillmentShipmentStatus"""
 
     PENDING = "PENDING"  # The process of picking units from inventory has begun.
@@ -2560,7 +2560,7 @@ class FulfillmentShipment(SpApiBaseModel):
     ]
 
     fulfillment_shipment_status: Annotated[
-        FulfillmentShipmentStatusEnum,
+        FulfillmentShipmentFulfillmentShipmentStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices(

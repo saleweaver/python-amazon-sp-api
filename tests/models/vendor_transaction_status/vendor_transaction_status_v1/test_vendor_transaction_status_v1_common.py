@@ -4,8 +4,8 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.vendor_transaction_status.vendor_transaction_status_v1.common import (
     Error, GetRequestSerializer, GetTransactionRequest, GetTransactionResponse,
-    RequestsBaseModel, SpApiBaseModel, StatusEnum, Transaction,
-    TransactionStatus)
+    RequestsBaseModel, SpApiBaseModel, Transaction, TransactionStatus,
+    TransactionStatusEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -53,7 +53,7 @@ def test_transaction_instantiates():
     """Instantiate Transaction with dummy data"""
     kwargs = {
         "transaction_id": "",
-        "status": StatusEnum.FAILURE,
+        "status": TransactionStatusEnum.FAILURE,
         "errors": None,
     }
     obj = Transaction(**kwargs)

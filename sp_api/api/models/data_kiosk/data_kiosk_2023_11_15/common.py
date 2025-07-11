@@ -248,7 +248,7 @@ class GetDocumentResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusesEnum(str, Enum):
+class GetQueriesRequestProcessingStatusesEnum(str, Enum):
     """Enum for processingStatuses"""
 
     CANCELLED = "CANCELLED"  # The query was cancelled before it began processing.
@@ -276,7 +276,7 @@ class GetQueriesRequest(GetRequestSerializer, RequestsBaseModel):
     )
 
     processing_statuses: Annotated[
-        Optional[List["ProcessingStatusesEnum"]],
+        Optional[List["GetQueriesRequestProcessingStatusesEnum"]],
         QueryParam(),
         Field(
             None,
@@ -390,7 +390,7 @@ class GetQueryRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class ProcessingStatusEnum(str, Enum):
+class QueryProcessingStatusEnum(str, Enum):
     """Enum for processingStatus"""
 
     CANCELLED = "CANCELLED"  # The query was cancelled before it began processing.
@@ -437,7 +437,7 @@ class Query(SpApiBaseModel):
     ]
 
     processing_status: Annotated[
-        ProcessingStatusEnum,
+        QueryProcessingStatusEnum,
         Field(
             ...,
             validation_alias=AliasChoices("processingStatus", "processing_status"),

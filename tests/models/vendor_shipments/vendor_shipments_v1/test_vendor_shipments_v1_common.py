@@ -5,29 +5,38 @@ import pytest
 from sp_api.api.models.vendor_shipments.vendor_shipments_v1.common import (
     Address, CarrierDetails, Carton, CartonReferenceDetails,
     CollectFreightPickupDetails, ContainerIdentification,
-    ContainerIdentificationTypeEnum, ContainerItem, Containers,
-    ContainerSequenceNumbers, ContainerTypeEnum, CurrentShipmentStatusEnum,
-    Dimensions, Duration, DurationUnitEnum, Error, Expiry, FunctionCodeEnum,
-    GetRequestSerializer, GetShipmentDetailsRequest,
+    ContainerIdentificationContainerIdentificationTypeEnum, ContainerItem,
+    Containers, ContainersContainerTypeEnum, ContainerSequenceNumbers,
+    Dimensions, DimensionsUnitOfMeasureEnum, Duration,
+    DurationDurationUnitEnum, Error, Expiry, GetRequestSerializer,
+    GetShipmentDetailsRequest, GetShipmentDetailsRequestSortOrderEnum,
     GetShipmentDetailsResponse, GetShipmentLabels, GetShipmentLabelsRequest,
-    HandlingCodeEnum, HandlingInstructionsEnum, ImportDetails,
-    InnerContainersDetails, Item, ItemDetails, ItemQuantity, LabelData,
-    LabelFormatEnum, Location, MethodOfPaymentEnum, Money, PackageItemDetails,
-    PackedItems, PackedQuantity, Pagination, Pallet, PartyIdentification,
-    PurchaseOrderItemDetails, PurchaseOrderItems, PurchaseOrders,
-    RequestsBaseModel, Route, Shipment, ShipmentConfirmation,
-    ShipmentConfirmationTypeEnum, ShipmentDetails, ShipmentFreightTermEnum,
-    ShipmentInformation, ShipmentMeasurements, ShipmentStatusDetails,
-    ShipmentStatusEnum, ShipmentStructureEnum, ShipmentTypeEnum, ShipModeEnum,
-    SortOrderEnum, SpApiBaseModel, Stop, SubmitShipmentConfirmationsRequest,
-    SubmitShipmentConfirmationsRequestBody,
+    GetShipmentLabelsRequestSortOrderEnum, ImportDetails,
+    ImportDetailsHandlingInstructionsEnum, ImportDetailsMethodOfPaymentEnum,
+    InnerContainersDetails, Item, ItemDetails, ItemDetailsHandlingCodeEnum,
+    ItemQuantity, ItemQuantityUnitOfMeasureEnum, LabelData,
+    LabelDataLabelFormatEnum, Location, Money, PackageItemDetails, PackedItems,
+    PackedQuantity, PackedQuantityUnitOfMeasureEnum, Pagination, Pallet,
+    PartyIdentification, PurchaseOrderItemDetails, PurchaseOrderItems,
+    PurchaseOrders, RequestsBaseModel, Route, Shipment, ShipmentConfirmation,
+    ShipmentConfirmationShipmentConfirmationTypeEnum,
+    ShipmentConfirmationShipmentStructureEnum,
+    ShipmentConfirmationShipmentTypeEnum, ShipmentCurrentShipmentStatusEnum,
+    ShipmentDetails, ShipmentInformation, ShipmentInformationShipModeEnum,
+    ShipmentMeasurements, ShipmentShipmentFreightTermEnum,
+    ShipmentStatusDetails, ShipmentStatusDetailsShipmentStatusEnum,
+    ShipmentTransactionTypeEnum, SpApiBaseModel, Stop, StopFunctionCodeEnum,
+    SubmitShipmentConfirmationsRequest, SubmitShipmentConfirmationsRequestBody,
     SubmitShipmentConfirmationsResponse, SubmitShipments,
-    SubmitShipmentsRequest, TaxRegistrationDetails, TaxRegistrationTypeEnum,
-    TotalWeight, TransactionReference, TransactionTypeEnum,
-    TransportationDetails, TransportationDetailsForShipmentConfirmation,
-    TransportationLabels, TransportationModeEnum, TransportLabel,
-    TransportShipmentMeasurements, UnitOfMeasureEnum, VendorDetails, Volume,
-    Weight)
+    SubmitShipmentsRequest, TaxRegistrationDetails,
+    TaxRegistrationDetailsTaxRegistrationTypeEnum, TotalWeight,
+    TotalWeightUnitOfMeasureEnum, TransactionReference, TransportationDetails,
+    TransportationDetailsForShipmentConfirmation,
+    TransportationDetailsForShipmentConfirmationTransportationModeEnum,
+    TransportationDetailsShipModeEnum,
+    TransportationDetailsTransportationModeEnum, TransportationLabels,
+    TransportLabel, TransportShipmentMeasurements, VendorDetails, Volume,
+    VolumeUnitOfMeasureEnum, Weight, WeightUnitOfMeasureEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -86,7 +95,7 @@ def test_carrierdetails_instantiates():
 def test_containeridentification_instantiates():
     """Instantiate ContainerIdentification with dummy data"""
     kwargs = {
-        "container_identification_type": ContainerIdentificationTypeEnum.SSCC,
+        "container_identification_type": ContainerIdentificationContainerIdentificationTypeEnum.SSCC,
         "container_identification_number": "",
     }
     obj = ContainerIdentification(**kwargs)
@@ -96,7 +105,7 @@ def test_containeridentification_instantiates():
 def test_duration_instantiates():
     """Instantiate Duration with dummy data"""
     kwargs = {
-        "duration_unit": DurationUnitEnum.DAYS,
+        "duration_unit": DurationDurationUnitEnum.DAYS,
         "duration_value": 0,
     }
     obj = Duration(**kwargs)
@@ -140,7 +149,7 @@ def test_itemdetails_instantiates():
 def test_totalweight_instantiates():
     """Instantiate TotalWeight with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": TotalWeightUnitOfMeasureEnum.POUNDS,
         "amount": "",
     }
     obj = TotalWeight(**kwargs)
@@ -151,7 +160,7 @@ def test_itemquantity_instantiates():
     """Instantiate ItemQuantity with dummy data"""
     kwargs = {
         "amount": 0,
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
         "unit_size": None,
         "total_weight": None,
     }
@@ -166,7 +175,7 @@ def test_containeritem_instantiates():
         "shipped_quantity": ItemQuantity(
             **{
                 "amount": 0,
-                "unit_of_measure": UnitOfMeasureEnum.CASES,
+                "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
                 "unit_size": None,
                 "total_weight": None,
             }
@@ -183,7 +192,7 @@ def test_dimensions_instantiates():
         "length": "",
         "width": "",
         "height": "",
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": DimensionsUnitOfMeasureEnum.IN,
     }
     obj = Dimensions(**kwargs)
     assert isinstance(obj, Dimensions)
@@ -192,7 +201,7 @@ def test_dimensions_instantiates():
 def test_weight_instantiates():
     """Instantiate Weight with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": WeightUnitOfMeasureEnum.G,
         "value": "",
     }
     obj = Weight(**kwargs)
@@ -280,7 +289,7 @@ def test_packeditems_instantiates():
 def test_containers_instantiates():
     """Instantiate Containers with dummy data"""
     kwargs = {
-        "container_type": ContainerTypeEnum.CARTON,
+        "container_type": ContainersContainerTypeEnum.CARTON,
         "container_sequence_number": None,
         "container_identifiers": [],
         "tracking_number": None,
@@ -361,7 +370,7 @@ def test_location_instantiates():
 def test_stop_instantiates():
     """Instantiate Stop with dummy data"""
     kwargs = {
-        "function_code": FunctionCodeEnum.PORT_OF_DISCHARGE,
+        "function_code": StopFunctionCodeEnum.PORT_OF_DISCHARGE,
         "location_identification": None,
         "arrival_time": None,
         "departure_time": None,
@@ -397,7 +406,7 @@ def test_importdetails_instantiates():
 def test_taxregistrationdetails_instantiates():
     """Instantiate TaxRegistrationDetails with dummy data"""
     kwargs = {
-        "tax_registration_type": TaxRegistrationTypeEnum.VAT,
+        "tax_registration_type": TaxRegistrationDetailsTaxRegistrationTypeEnum.VAT,
         "tax_registration_number": "",
     }
     obj = TaxRegistrationDetails(**kwargs)
@@ -424,7 +433,7 @@ def test_purchaseorderitems_instantiates():
         "shipped_quantity": ItemQuantity(
             **{
                 "amount": 0,
-                "unit_of_measure": UnitOfMeasureEnum.CASES,
+                "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
                 "unit_size": None,
                 "total_weight": None,
             }
@@ -460,7 +469,7 @@ def test_shipmentstatusdetails_instantiates():
 def test_volume_instantiates():
     """Instantiate Volume with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": VolumeUnitOfMeasureEnum.CU_FT,
         "value": "",
     }
     obj = Volume(**kwargs)
@@ -499,7 +508,7 @@ def test_shipment_instantiates():
     """Instantiate Shipment with dummy data"""
     kwargs = {
         "vendor_shipment_identifier": "",
-        "transaction_type": TransactionTypeEnum.NEW,
+        "transaction_type": ShipmentTransactionTypeEnum.NEW,
         "buyer_reference_number": None,
         "transaction_date": datetime(2000, 1, 1),
         "current_shipment_status": None,
@@ -644,7 +653,7 @@ def test_item_instantiates():
         "shipped_quantity": ItemQuantity(
             **{
                 "amount": 0,
-                "unit_of_measure": UnitOfMeasureEnum.CASES,
+                "unit_of_measure": ItemQuantityUnitOfMeasureEnum.CASES,
                 "unit_size": None,
                 "total_weight": None,
             }
@@ -659,7 +668,7 @@ def test_packedquantity_instantiates():
     """Instantiate PackedQuantity with dummy data"""
     kwargs = {
         "amount": 0,
-        "unit_of_measure": UnitOfMeasureEnum.CASES,
+        "unit_of_measure": PackedQuantityUnitOfMeasureEnum.CASES,
         "unit_size": None,
     }
     obj = PackedQuantity(**kwargs)
@@ -718,7 +727,7 @@ def test_shipmentconfirmation_instantiates():
     """Instantiate ShipmentConfirmation with dummy data"""
     kwargs = {
         "shipment_identifier": "",
-        "shipment_confirmation_type": ShipmentConfirmationTypeEnum.ORIGINAL,
+        "shipment_confirmation_type": ShipmentConfirmationShipmentConfirmationTypeEnum.ORIGINAL,
         "shipment_type": None,
         "shipment_structure": None,
         "transportation_details": None,

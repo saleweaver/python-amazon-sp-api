@@ -212,7 +212,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class GetCatalogItemRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
     ATTRIBUTES = "attributes"  # A JSON object containing structured item attribute data that is keyed by attribute name. Catalog item attributes conform to the related Amazon product type definitions that you can get from the [Product Type Definitions API](https://developer-docs.amazon.com/sp-api/docs/product-type-definitions-api-v2020-09-01-reference).
@@ -267,7 +267,7 @@ class GetCatalogItemRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["GetCatalogItemRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -750,7 +750,7 @@ class ItemIdentifiersByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class VariantEnum(str, Enum):
+class ItemImageVariantEnum(str, Enum):
     """Enum for variant"""
 
     MAIN = "MAIN"  # Main image for the item
@@ -780,7 +780,7 @@ class ItemImage(SpApiBaseModel):
     )
 
     variant: Annotated[
-        VariantEnum,
+        ItemImageVariantEnum,
         Field(..., description="Variant of the image, such as `MAIN` or `PT01`."),
     ]
 
@@ -891,7 +891,7 @@ class ItemVariationTheme(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class ItemRelationshipTypeEnum(str, Enum):
     """Enum for type"""
 
     VARIATION = "VARIATION"  # The Amazon catalog item in the request is a variation parent or variation child of the related items that are identified by ASIN.
@@ -942,7 +942,9 @@ class ItemRelationship(SpApiBaseModel):
         ),
     ]
 
-    type: Annotated[TypeEnum, Field(..., description="Type of relationship.")]
+    type: Annotated[
+        ItemRelationshipTypeEnum, Field(..., description="Type of relationship.")
+    ]
 
 
 """
@@ -1130,7 +1132,7 @@ class ItemSearchResults(SpApiBaseModel):
 
 
 # Enum definitions
-class ItemClassificationEnum(str, Enum):
+class ItemSummaryByMarketplaceItemClassificationEnum(str, Enum):
     """Enum for itemClassification"""
 
     BASE_PRODUCT = "BASE_PRODUCT"  # A product that can be directly purchased. Can be a standalone ASIN or a variation child item in the Amazon catalog.
@@ -1217,7 +1219,7 @@ class ItemSummaryByMarketplace(SpApiBaseModel):
     ]
 
     item_classification: Annotated[
-        Optional[ItemClassificationEnum],
+        Optional[ItemSummaryByMarketplaceItemClassificationEnum],
         Field(
             None,
             validation_alias=AliasChoices("itemClassification", "item_classification"),
@@ -1371,7 +1373,7 @@ class ItemVendorDetailsCategory(SpApiBaseModel):
 
 
 # Enum definitions
-class ReplenishmentCategoryEnum(str, Enum):
+class ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum(str, Enum):
     """Enum for replenishmentCategory"""
 
     ALLOCATED = "ALLOCATED"  # The vendor allocates the inventory to Amazon and Amazon manually purchases it.
@@ -1475,7 +1477,7 @@ class ItemVendorDetailsByMarketplace(SpApiBaseModel):
     ]
 
     replenishment_category: Annotated[
-        Optional[ReplenishmentCategoryEnum],
+        Optional[ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -1488,7 +1490,7 @@ class ItemVendorDetailsByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class IdentifiersTypeEnum(str, Enum):
+class SearchCatalogItemsRequestIdentifiersTypeEnum(str, Enum):
     """Enum for identifiersType"""
 
     ASIN = "ASIN"  # Amazon Standard Identification Number
@@ -1501,13 +1503,13 @@ class IdentifiersTypeEnum(str, Enum):
     UPC = "UPC"  # Universal Product Code
 
 
-class IncludedDataEnum(str, Enum):
+class SearchCatalogItemsRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
     ATTRIBUTES = "attributes"  # A JSON object containing structured item attribute data that is keyed by attribute name. Catalog item attributes conform to the related Amazon product type definitions that you can get from the [Product Type Definitions API](https://developer-docs.amazon.com/sp-api/docs/product-type-definitions-api-v2020-09-01-reference).
     CLASSIFICATIONS = "classifications"  # Classifications (browse nodes) for an item in the Amazon catalog.
     DIMENSIONS = "dimensions"  # Dimensions of an item in the Amazon catalog.
-    IDENTIFIERS = "identifiers"  # Identifiers that are associated with the item in the Amazon catalog, such as UPC and EA.
+    IDENTIFIERS = "identifiers"  # Identifiers that are associated with the item in the Amazon catalog, such as UPC and EAN.
     IMAGES = "images"  # Images for an item in the Amazon catalog.
     PRODUCT_TYPES = (
         "productTypes"  # Product types associated with the Amazon catalog item.
@@ -1545,7 +1547,7 @@ class SearchCatalogItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     identifiers_type: Annotated[
-        Optional[IdentifiersTypeEnum],
+        Optional[SearchCatalogItemsRequestIdentifiersTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -1567,7 +1569,7 @@ class SearchCatalogItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["SearchCatalogItemsRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,

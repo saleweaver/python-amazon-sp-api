@@ -3,23 +3,25 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.product_pricing.product_pricing_2022_05_01.common import (
-    BatchRequestBody, BatchResponse, BuyingOptionTypeEnum,
-    CompetitiveSummaryBatchRequestBody, CompetitiveSummaryBatchResponse,
-    CompetitiveSummaryRequestBody, CompetitiveSummaryResponse,
-    CompetitiveSummaryResponseBody, CustomerMembershipEnum, EligibilityEnum,
-    Error, Errors, FeaturedBuyingOption, FeaturedOffer,
-    FeaturedOfferExpectedPrice, FeaturedOfferExpectedPriceRequestBody,
+    BatchRequestBody, BatchResponse, CompetitiveSummaryBatchRequestBody,
+    CompetitiveSummaryBatchResponse, CompetitiveSummaryRequestBody,
+    CompetitiveSummaryResponse, CompetitiveSummaryResponseBody, Error, Errors,
+    FeaturedBuyingOption, FeaturedBuyingOptionBuyingOptionTypeEnum,
+    FeaturedOffer, FeaturedOfferExpectedPrice,
+    FeaturedOfferExpectedPriceRequestBody,
     FeaturedOfferExpectedPriceRequestParams,
     FeaturedOfferExpectedPriceResponse, FeaturedOfferExpectedPriceResponseBody,
     FeaturedOfferExpectedPriceResult, FeaturedOfferSegment,
-    GetCompetitiveSummaryRequest, GetFeaturedOfferExpectedPriceBatchRequest,
+    FeaturedOfferSegmentCustomerMembershipEnum, GetCompetitiveSummaryRequest,
+    GetFeaturedOfferExpectedPriceBatchRequest,
     GetFeaturedOfferExpectedPriceBatchRequestBody,
     GetFeaturedOfferExpectedPriceBatchResponse, GetRequestSerializer, HttpBody,
     HttpHeaders, HttpStatusLine, LowestPricedOffer, LowestPricedOffersInput,
-    MoneyType, Offer, OfferIdentifier, OfferTypeEnum, Points, PostalCode,
-    Price, PrimeDetails, ReferencePrice, RequestsBaseModel, SampleLocation,
-    Segment, SegmentDetails, SegmentedFeaturedOffer, ShippingOption,
-    ShippingOptionTypeEnum, SpApiBaseModel, SubConditionEnum)
+    LowestPricedOffersInputOfferTypeEnum, MoneyType, Offer, OfferIdentifier,
+    OfferSubConditionEnum, Points, PostalCode, Price, PrimeDetails,
+    PrimeDetailsEligibilityEnum, ReferencePrice, RequestsBaseModel,
+    SampleLocation, Segment, SegmentDetails, SegmentedFeaturedOffer,
+    ShippingOption, ShippingOptionShippingOptionTypeEnum, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -111,7 +113,7 @@ def test_lowestpricedoffersinput_instantiates():
     """Instantiate LowestPricedOffersInput with dummy data"""
     kwargs = {
         "item_condition": "",
-        "offer_type": OfferTypeEnum.CONSUMER,
+        "offer_type": LowestPricedOffersInputOfferTypeEnum.CONSUMER,
     }
     obj = LowestPricedOffersInput(**kwargs)
     assert isinstance(obj, LowestPricedOffersInput)
@@ -141,7 +143,7 @@ def test_segmentedfeaturedoffer_instantiates():
 def test_featuredbuyingoption_instantiates():
     """Instantiate FeaturedBuyingOption with dummy data"""
     kwargs = {
-        "buying_option_type": BuyingOptionTypeEnum.NEW,
+        "buying_option_type": FeaturedBuyingOptionBuyingOptionTypeEnum.NEW,
         "segmented_featured_offers": [],
     }
     obj = FeaturedBuyingOption(**kwargs)
@@ -171,7 +173,7 @@ def test_points_instantiates():
 def test_primedetails_instantiates():
     """Instantiate PrimeDetails with dummy data"""
     kwargs = {
-        "eligibility": EligibilityEnum.NATIONAL,
+        "eligibility": PrimeDetailsEligibilityEnum.NATIONAL,
     }
     obj = PrimeDetails(**kwargs)
     assert isinstance(obj, PrimeDetails)
@@ -180,7 +182,7 @@ def test_primedetails_instantiates():
 def test_shippingoption_instantiates():
     """Instantiate ShippingOption with dummy data"""
     kwargs = {
-        "shipping_option_type": ShippingOptionTypeEnum.DEFAULT,
+        "shipping_option_type": ShippingOptionShippingOptionTypeEnum.DEFAULT,
         "price": MoneyType(**{"currency_code": None, "amount": None}),
     }
     obj = ShippingOption(**kwargs)
@@ -207,7 +209,10 @@ def test_lowestpricedoffer_instantiates():
     """Instantiate LowestPricedOffer with dummy data"""
     kwargs = {
         "lowest_priced_offers_input": LowestPricedOffersInput(
-            **{"item_condition": "", "offer_type": OfferTypeEnum.CONSUMER}
+            **{
+                "item_condition": "",
+                "offer_type": LowestPricedOffersInputOfferTypeEnum.CONSUMER,
+            }
         ),
         "offers": [],
     }
@@ -420,7 +425,7 @@ def test_featuredofferexpectedpriceresult_instantiates():
 def test_featuredoffersegment_instantiates():
     """Instantiate FeaturedOfferSegment with dummy data"""
     kwargs = {
-        "customer_membership": CustomerMembershipEnum.PRIME,
+        "customer_membership": FeaturedOfferSegmentCustomerMembershipEnum.PRIME,
         "segment_details": SegmentDetails(
             **{"glance_view_weight_percentage": None, "sample_location": None}
         ),

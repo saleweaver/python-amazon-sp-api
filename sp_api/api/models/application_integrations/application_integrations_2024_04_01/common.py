@@ -133,7 +133,7 @@ class CreateNotificationResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class DeletionReasonEnum(str, Enum):
+class DeleteNotificationsRequestBodyDeletionReasonEnum(str, Enum):
     """Enum for deletionReason"""
 
     INCORRECT_CONTENT = (
@@ -169,7 +169,7 @@ class DeleteNotificationsRequestBody(SpApiBaseModel):
     ]
 
     deletion_reason: Annotated[
-        DeletionReasonEnum,
+        DeleteNotificationsRequestBodyDeletionReasonEnum,
         Field(
             ...,
             validation_alias=AliasChoices("deletionReason", "deletion_reason"),
@@ -264,7 +264,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class FeedbackActionCodeEnum(str, Enum):
+class RecordActionFeedbackRequestBodyFeedbackActionCodeEnum(str, Enum):
     """Enum for feedbackActionCode"""
 
     SELLER_ACTION_COMPLETED = "SELLER_ACTION_COMPLETED"  # The seller completed the action attached to the posted notification.
@@ -285,7 +285,7 @@ class RecordActionFeedbackRequestBody(SpApiBaseModel):
     )
 
     feedback_action_code: Annotated[
-        FeedbackActionCodeEnum,
+        RecordActionFeedbackRequestBodyFeedbackActionCodeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("feedbackActionCode", "feedback_action_code"),

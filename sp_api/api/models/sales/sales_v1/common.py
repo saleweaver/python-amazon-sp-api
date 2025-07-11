@@ -63,7 +63,7 @@ ErrorList = List["Error"]
 
 
 # Enum definitions
-class GranularityEnum(str, Enum):
+class GetOrderMetricsRequestGranularityEnum(str, Enum):
     """Enum for granularity"""
 
     HOUR = "Hour"  # Hour
@@ -74,7 +74,7 @@ class GranularityEnum(str, Enum):
     TOTAL = "Total"  # Total
 
 
-class BuyerTypeEnum(str, Enum):
+class GetOrderMetricsRequestBuyerTypeEnum(str, Enum):
     """Enum for buyerType"""
 
     B2_B = "B2B"  # Business to business.
@@ -82,14 +82,14 @@ class BuyerTypeEnum(str, Enum):
     ALL = "All"  # Business to business and business to customer.
 
 
-class FirstDayOfWeekEnum(str, Enum):
+class GetOrderMetricsRequestFirstDayOfWeekEnum(str, Enum):
     """Enum for firstDayOfWeek"""
 
     MONDAY = "Monday"  # Monday
     SUNDAY = "Sunday"  # Sunday
 
 
-class AmazonProgramEnum(str, Enum):
+class GetOrderMetricsRequestAmazonProgramEnum(str, Enum):
     """Enum for amazonProgram"""
 
     AMAZON_HAUL = "AmazonHaul"  # Amazon Haul sales
@@ -146,7 +146,7 @@ class GetOrderMetricsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     granularity: Annotated[
-        GranularityEnum,
+        GetOrderMetricsRequestGranularityEnum,
         QueryParam(),
         Field(
             ...,
@@ -155,7 +155,7 @@ class GetOrderMetricsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     buyer_type: Annotated[
-        Optional[BuyerTypeEnum],
+        Optional[GetOrderMetricsRequestBuyerTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -177,7 +177,7 @@ class GetOrderMetricsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     first_day_of_week: Annotated[
-        Optional[FirstDayOfWeekEnum],
+        Optional[GetOrderMetricsRequestFirstDayOfWeekEnum],
         QueryParam(),
         Field(
             None,
@@ -206,7 +206,7 @@ class GetOrderMetricsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     amazon_program: Annotated[
-        Optional[AmazonProgramEnum],
+        Optional[GetOrderMetricsRequestAmazonProgramEnum],
         QueryParam(),
         Field(
             None,

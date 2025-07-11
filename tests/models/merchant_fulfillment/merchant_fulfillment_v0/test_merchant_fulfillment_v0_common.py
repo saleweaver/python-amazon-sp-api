@@ -8,8 +8,9 @@ from sp_api.api.models.merchant_fulfillment.merchant_fulfillment_v0.common impor
     AvailableShippingServiceOptions, Benefits, CancelShipmentRequest,
     CancelShipmentResponse, Constraint, CreateShipmentRequest,
     CreateShipmentRequestBody, CreateShipmentResponse, CurrencyAmount,
-    DangerousGoodsDetails, Error, ExcludedBenefit, ExcludedBenefitReasonCodes,
-    FileContents, GetAdditionalSellerInputsRequest,
+    DangerousGoodsDetails, DangerousGoodsDetailsPackingGroupEnum,
+    DangerousGoodsDetailsPackingInstructionEnum, Error, ExcludedBenefit,
+    ExcludedBenefitReasonCodes, FileContents, GetAdditionalSellerInputsRequest,
     GetAdditionalSellerInputsRequestBody, GetAdditionalSellerInputsResponse,
     GetAdditionalSellerInputsResult, GetEligibleShipmentServicesRequest,
     GetEligibleShipmentServicesRequestBody,
@@ -17,12 +18,12 @@ from sp_api.api.models.merchant_fulfillment.merchant_fulfillment_v0.common impor
     GetRequestSerializer, GetShipmentRequest, GetShipmentResponse,
     IncludedBenefits, Item, ItemLevelFields, Label, LabelCustomization,
     LabelDimensions, LabelFormatOption, LabelFormatOptionRequestBody, Length,
-    LiquidVolume, PackageDimensions, PackingGroupEnum, PackingInstructionEnum,
+    LiquidVolume, LiquidVolumeUnitEnum, PackageDimensions,
     RejectedShippingService, RequestsBaseModel, RestrictedSetValues,
     SellerInputDefinition, Shipment, ShipmentRequestDetails,
     ShippingOfferingFilter, ShippingService, ShippingServiceOptions,
     SpApiBaseModel, TemporarilyUnavailableCarrier,
-    TermsAndConditionsNotAcceptedCarrier, UnitEnum, Weight)
+    TermsAndConditionsNotAcceptedCarrier, Weight)
 
 
 def test_requestsbasemodel_instantiates():
@@ -918,7 +919,7 @@ def test_getshipmentresponse_instantiates():
 def test_liquidvolume_instantiates():
     """Instantiate LiquidVolume with dummy data"""
     kwargs = {
-        "unit": UnitEnum.ML,
+        "unit": LiquidVolumeUnitEnum.ML,
         "value": 0.0,
     }
     obj = LiquidVolume(**kwargs)

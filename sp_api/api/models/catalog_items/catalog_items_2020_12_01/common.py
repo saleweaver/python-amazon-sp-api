@@ -153,7 +153,7 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class GetCatalogItemRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
     ATTRIBUTES = "attributes"  # A JSON object containing structured item attribute data keyed by attribute name. Catalog item attributes are available only to brand owners and conform to the related Amazon product type definitions available in the Selling Partner API for Product Type Definitions.
@@ -206,7 +206,7 @@ class GetCatalogItemRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["GetCatalogItemRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,
@@ -421,7 +421,7 @@ class ItemIdentifiersByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class VariantEnum(str, Enum):
+class ItemImageVariantEnum(str, Enum):
     """Enum for variant"""
 
     MAIN = "MAIN"  # Main image for the item.
@@ -451,7 +451,7 @@ class ItemImage(SpApiBaseModel):
     )
 
     variant: Annotated[
-        VariantEnum,
+        ItemImageVariantEnum,
         Field(..., description="Variant of the image, such as MAIN or PT01."),
     ]
 
@@ -797,7 +797,7 @@ class ItemSummaryByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class VariationTypeEnum(str, Enum):
+class ItemVariationsByMarketplaceVariationTypeEnum(str, Enum):
     """Enum for variationType"""
 
     PARENT = "PARENT"  # The Amazon catalog item in the request is a variation parent of the related item(s) indicated by ASIN.
@@ -833,7 +833,7 @@ class ItemVariationsByMarketplace(SpApiBaseModel):
     ]
 
     variation_type: Annotated[
-        VariationTypeEnum,
+        ItemVariationsByMarketplaceVariationTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("variationType", "variation_type"),
@@ -844,7 +844,7 @@ class ItemVariationsByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class ReplenishmentCategoryEnum(str, Enum):
+class ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum(str, Enum):
     """Enum for replenishmentCategory"""
 
     ALLOCATED = "ALLOCATED"  # Indicates non-automated purchasing of inventory that has been allocated to Amazon by the vendor.
@@ -938,7 +938,7 @@ class ItemVendorDetailsByMarketplace(SpApiBaseModel):
     ]
 
     replenishment_category: Annotated[
-        Optional[ReplenishmentCategoryEnum],
+        Optional[ItemVendorDetailsByMarketplaceReplenishmentCategoryEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -961,12 +961,11 @@ class ItemVendorDetailsByMarketplace(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataEnum(str, Enum):
+class SearchCatalogItemsRequestIncludedDataEnum(str, Enum):
     """Enum for includedData"""
 
-    ATTRIBUTES = "attributes"  # A JSON object containing structured item attribute data keyed by attribute name. Catalog item attributes are available only to brand owners and conform to the related Amazon product type definitions available in the Selling Partner API for Product Type Definitions.
     IDENTIFIERS = "identifiers"  # Identifiers associated with the item in the Amazon catalog, such as UPC and EAN identifiers.
-    IMAGES = "images"  # Images for an item in the Amazon catalog. All image variants are provided to brand owners. Otherwise, a thumbnail of the "MAIN" image variant is provided.
+    IMAGES = "images"  # Images for an item in the Amazon catalog. All image variants are provided to brand owners; a thumbnail of the "MAIN" image variant is provided otherwise.
     PRODUCT_TYPES = (
         "productTypes"  # Product types associated with the Amazon catalog item.
     )
@@ -1014,7 +1013,7 @@ class SearchCatalogItemsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data: Annotated[
-        Optional[List["IncludedDataEnum"]],
+        Optional[List["SearchCatalogItemsRequestIncludedDataEnum"]],
         QueryParam(),
         Field(
             None,

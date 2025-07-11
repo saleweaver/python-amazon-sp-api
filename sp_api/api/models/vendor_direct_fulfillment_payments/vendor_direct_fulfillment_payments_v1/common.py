@@ -17,7 +17,7 @@ from .base_models import (BodyParam, GetRequestSerializer, PathParam,
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class AdditionalDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
     SUR = "SUR"  # An additional tax on something already taxed, such as a higher rate of tax on incomes above a certain level.
@@ -39,7 +39,7 @@ class AdditionalDetails(SpApiBaseModel):
     )
 
     type: Annotated[
-        TypeEnum,
+        AdditionalDetailsTypeEnum,
         Field(
             ...,
             description="The type of the additional information provided by the selling party.",
@@ -217,7 +217,7 @@ class Money(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxTypeEnum(str, Enum):
+class TaxDetailTaxTypeEnum(str, Enum):
     """Enum for taxType"""
 
     CGST = "CGST"  # Central Goods and Services Tax (CGST) is levied by the Indian government for intrastate movement of goods and services.
@@ -253,7 +253,7 @@ class TaxDetail(SpApiBaseModel):
     )
 
     tax_type: Annotated[
-        TaxTypeEnum,
+        TaxDetailTaxTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("taxType", "tax_type"),
@@ -294,11 +294,16 @@ class TaxDetail(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class ChargeDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
-    SUR = "SUR"  # An additional tax on something already taxed, such as a higher rate of tax on incomes above a certain level.
-    OCR = "OCR"  # OCR.
+    GIFTWRAP = "GIFTWRAP"  # Additional charge applied for giftwrap order.
+    FULFILLMENT = "FULFILLMENT"  # Fulfillment fees are the costs associated with receiving and storing products along with processing orders from handling to shipping.
+    MARKETINGINSERT = "MARKETINGINSERT"  # Charge to insert ads on orders.
+    PACKAGING = "PACKAGING"  # Additional charge for packaging orders.
+    LOADING = "LOADING"  # Additional charge for loading orders.
+    FREIGHTOUT = "FREIGHTOUT"  # Freight-out refers to the costs for which the seller is responsible when shipping to a buyer, such as delivery and insurance expenses.
+    TAX_COLLECTED_AT_SOURCE = "TAX_COLLECTED_AT_SOURCE"  # Tax collected at source (TCS) is the tax payable by a seller which he collects from the buyer at the time of sale.
 
 
 """
@@ -315,7 +320,9 @@ class ChargeDetails(SpApiBaseModel):
         populate_by_name=True, serialize_by_alias=True, arbitrary_types_allowed=True
     )
 
-    type: Annotated[TypeEnum, Field(..., description="Type of charge applied.")]
+    type: Annotated[
+        ChargeDetailsTypeEnum, Field(..., description="Type of charge applied.")
+    ]
 
     charge_amount: Annotated[
         "Money",
@@ -527,7 +534,7 @@ class InvoiceItem(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -549,7 +556,7 @@ class TaxRegistrationDetail(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        Optional[TaxRegistrationTypeEnum],
+        Optional[TaxRegistrationDetailTaxRegistrationTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices(

@@ -9,10 +9,11 @@ from sp_api.api.models.invoices.invoices_2024_06_19.common import (
     GetInvoicesAttributesResponse, GetInvoicesDocumentRequest,
     GetInvoicesDocumentResponse, GetInvoicesExportRequest,
     GetInvoicesExportResponse, GetInvoicesExportsRequest,
-    GetInvoicesExportsResponse, GetInvoicesRequest, GetInvoicesResponse,
-    GetRequestSerializer, Invoice, InvoicesAttributes, InvoicesDocument,
-    RequestsBaseModel, SortByEnum, SortOrderEnum, SpApiBaseModel, StatusEnum,
-    TransactionIdentifier)
+    GetInvoicesExportsRequestStatusEnum, GetInvoicesExportsResponse,
+    GetInvoicesRequest, GetInvoicesRequestSortByEnum,
+    GetInvoicesRequestSortOrderEnum, GetInvoicesResponse, GetRequestSerializer,
+    Invoice, InvoicesAttributes, InvoicesDocument, RequestsBaseModel,
+    SpApiBaseModel, TransactionIdentifier)
 
 
 def test_requestsbasemodel_instantiates():

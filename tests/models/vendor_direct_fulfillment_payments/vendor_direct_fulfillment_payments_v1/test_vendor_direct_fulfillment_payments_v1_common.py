@@ -3,12 +3,13 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.vendor_direct_fulfillment_payments.vendor_direct_fulfillment_payments_v1.common import (
-    AdditionalDetails, Address, ChargeDetails, Error, GetRequestSerializer,
-    InvoiceDetail, InvoiceItem, ItemQuantity, Money, PartyIdentification,
-    RequestsBaseModel, SpApiBaseModel, SubmitInvoiceRequest,
-    SubmitInvoiceRequestBody, SubmitInvoiceResponse, TaxDetail,
-    TaxRegistrationDetail, TaxRegistrationTypeEnum, TaxTypeEnum,
-    TransactionReference, TypeEnum)
+    AdditionalDetails, AdditionalDetailsTypeEnum, Address, ChargeDetails,
+    ChargeDetailsTypeEnum, Error, GetRequestSerializer, InvoiceDetail,
+    InvoiceItem, ItemQuantity, Money, PartyIdentification, RequestsBaseModel,
+    SpApiBaseModel, SubmitInvoiceRequest, SubmitInvoiceRequestBody,
+    SubmitInvoiceResponse, TaxDetail, TaxDetailTaxTypeEnum,
+    TaxRegistrationDetail, TaxRegistrationDetailTaxRegistrationTypeEnum,
+    TransactionReference)
 
 
 def test_requestsbasemodel_instantiates():
@@ -35,7 +36,7 @@ def test_getrequestserializer_instantiates():
 def test_additionaldetails_instantiates():
     """Instantiate AdditionalDetails with dummy data"""
     kwargs = {
-        "type": TypeEnum.SUR,
+        "type": AdditionalDetailsTypeEnum.SUR,
         "detail": "",
         "language_code": None,
     }
@@ -75,7 +76,7 @@ def test_money_instantiates():
 def test_taxdetail_instantiates():
     """Instantiate TaxDetail with dummy data"""
     kwargs = {
-        "tax_type": TaxTypeEnum.CGST,
+        "tax_type": TaxDetailTaxTypeEnum.CGST,
         "tax_rate": None,
         "tax_amount": Money(**{"currency_code": "", "amount": ""}),
         "taxable_amount": None,
@@ -87,7 +88,7 @@ def test_taxdetail_instantiates():
 def test_chargedetails_instantiates():
     """Instantiate ChargeDetails with dummy data"""
     kwargs = {
-        "type": TypeEnum.SUR,
+        "type": ChargeDetailsTypeEnum.GIFTWRAP,
         "charge_amount": Money(**{"currency_code": "", "amount": ""}),
         "tax_details": None,
     }

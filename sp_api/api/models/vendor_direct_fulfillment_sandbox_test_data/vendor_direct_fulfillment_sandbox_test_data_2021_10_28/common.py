@@ -319,7 +319,7 @@ class TestCaseData(SpApiBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class TransactionStatusEnum(str, Enum):
     """Enum for status"""
 
     FAILURE = "FAILURE"  # Transaction has failed.
@@ -352,7 +352,7 @@ class Transaction(SpApiBaseModel):
     ]
 
     status: Annotated[
-        StatusEnum,
+        TransactionStatusEnum,
         Field(..., description="The current processing status of the transaction."),
     ]
 

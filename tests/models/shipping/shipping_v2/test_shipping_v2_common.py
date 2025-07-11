@@ -3,22 +3,25 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.shipping.shipping_v2.common import (
-    AccessibilityAttributes, AccessPoint, AccessPointDetails, AccessPointsMap,
-    AccessPointTypesEnum, ActiveAccount, Address, AmazonOrderDetails,
-    AmazonShipmentDetails, AssistanceTypeEnum, AvailableValueAddedServiceGroup,
+    AccessibilityAttributes, AccessPoint, AccessPointAssistanceTypeEnum,
+    AccessPointDetails, AccessPointsMap, ActiveAccount, Address,
+    AmazonOrderDetails, AmazonShipmentDetails, AvailableValueAddedServiceGroup,
     Benefits, CancelShipmentRequest, CancelShipmentResponse,
     CancelShipmentResult, Carrier, CarrierAccount, CarrierAccountAttribute,
-    CarrierAccountInput, ChannelDetails, ChargeComponent, ChargeTypeEnum,
-    ClaimProofURLs, ClientReferenceDetail, ClientReferenceTypeEnum,
-    CollectionFormsHistoryRecord, CollectionsFormDocument, CollectOnDelivery,
-    CreateClaimRequest, CreateClaimRequestBody, CreateClaimResponse, Currency,
-    DangerousGoodsDetails, DateRange, DayOfWeekTimeMap, Dimensions,
-    DirectFulfillmentItemIdentifiers, DirectPurchaseRequestBody,
-    DirectPurchaseResponse, DirectPurchaseResult,
-    DirectPurchaseShipmentRequest, DocumentSize, Error, ErrorList, Event,
-    ExceptionOperatingHours, ExcludedBenefit, ExcludedBenefitReasonCodes,
-    GenerateCollectionFormRequest, GenerateCollectionFormRequestBody,
-    GenerateCollectionFormResponse, Geocode, GetAccessPointsRequest,
+    CarrierAccountInput, ChannelDetails, ChargeComponent,
+    ChargeComponentChargeTypeEnum, ClaimProofURLs, ClientReferenceDetail,
+    ClientReferenceDetailClientReferenceTypeEnum, CollectionFormsHistoryRecord,
+    CollectionsFormDocument, CollectOnDelivery, CreateClaimRequest,
+    CreateClaimRequestBody, CreateClaimResponse, Currency,
+    DangerousGoodsDetails, DangerousGoodsDetailsPackingGroupEnum,
+    DangerousGoodsDetailsPackingInstructionEnum, DateRange, DayOfWeekTimeMap,
+    Dimensions, DimensionsUnitEnum, DirectFulfillmentItemIdentifiers,
+    DirectPurchaseRequestBody, DirectPurchaseResponse, DirectPurchaseResult,
+    DirectPurchaseShipmentRequest, DocumentSize, DocumentSizeUnitEnum, Error,
+    ErrorList, Event, ExceptionOperatingHours, ExcludedBenefit,
+    ExcludedBenefitReasonCodes, GenerateCollectionFormRequest,
+    GenerateCollectionFormRequestBody, GenerateCollectionFormResponse, Geocode,
+    GetAccessPointsRequest, GetAccessPointsRequestAccessPointTypesEnum,
     GetAccessPointsResponse, GetAccessPointsResult, GetAdditionalInputsRequest,
     GetAdditionalInputsResponse, GetAdditionalInputsResult,
     GetCarrierAccountFormInputsResponse, GetCarrierAccountsRequest,
@@ -34,23 +37,23 @@ from sp_api.api.models.shipping.shipping_v2.common import (
     GoodsOwner, IncludedBenefits, IneligibilityReason, IneligibleRate,
     InvoiceDetails, Item, LinkableAccountType, LinkableCarrier,
     LinkCarrierAccountRequest, LinkCarrierAccountRequestBody,
-    LinkCarrierAccountResponse, LiquidVolume, Location, NdrRequestData,
-    OneClickShipmentRequest, OneClickShipmentRequestBody,
+    LinkCarrierAccountResponse, LiquidVolume, LiquidVolumeUnitEnum, Location,
+    NdrRequestData, OneClickShipmentRequest, OneClickShipmentRequestBody,
     OneClickShipmentResponse, OneClickShipmentResult,
     OneClickShipmentValueAddedService, OperatingHours, Package,
-    PackageDocument, PackageDocumentDetail, PackingGroupEnum,
-    PackingInstructionEnum, PrintOption, Promise, PurchaseShipmentRequest,
-    PurchaseShipmentRequestBody, PurchaseShipmentResponse,
-    PurchaseShipmentResult, Rate, RateItem, RequestedDocumentSpecification,
-    RequestedLabelCustomization, RequestedValueAddedService, RequestsBaseModel,
-    Service, ServiceIds, ServiceSelection, ShipperInstruction, SpApiBaseModel,
+    PackageDocument, PackageDocumentDetail, PrintOption, Promise,
+    PurchaseShipmentRequest, PurchaseShipmentRequestBody,
+    PurchaseShipmentResponse, PurchaseShipmentResult, Rate, RateItem,
+    RequestedDocumentSpecification, RequestedLabelCustomization,
+    RequestedValueAddedService, RequestsBaseModel, Service, ServiceIds,
+    ServiceSelection, ShipperInstruction, SpApiBaseModel,
     SubmitNdrFeedbackRequest, SubmitNdrFeedbackRequestBody,
     SupportedDocumentDetail, SupportedDocumentSpecification, TaxDetail,
-    TimeOfDay, TimeWindow, TrackingDetailCodes, TrackingSummary, UnitEnum,
+    TimeOfDay, TimeWindow, TrackingDetailCodes, TrackingSummary,
     UnlinkCarrierAccountRequest, UnlinkCarrierAccountRequestBody,
     UnlinkCarrierAccountResponse, UnmanifestedCarrierInformation,
     UnmanifestedShipmentLocation, ValidationMetadata, ValueAddedService,
-    ValueAddedServiceDetails, Weight)
+    ValueAddedServiceDetails, Weight, WeightUnitEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -378,7 +381,7 @@ def test_claimproofurls_instantiates():
 def test_clientreferencedetail_instantiates():
     """Instantiate ClientReferenceDetail with dummy data"""
     kwargs = {
-        "client_reference_type": ClientReferenceTypeEnum.INTEGRATOR_SHIPPER_ID,
+        "client_reference_type": ClientReferenceDetailClientReferenceTypeEnum.INTEGRATOR_SHIPPER_ID,
         "client_reference_id": "",
     }
     obj = ClientReferenceDetail(**kwargs)
@@ -476,7 +479,7 @@ def test_dimensions_instantiates():
         "length": 0.0,
         "width": 0.0,
         "height": 0.0,
-        "unit": UnitEnum.INCH,
+        "unit": DimensionsUnitEnum.INCH,
     }
     obj = Dimensions(**kwargs)
     assert isinstance(obj, Dimensions)
@@ -497,7 +500,7 @@ def test_documentsize_instantiates():
     kwargs = {
         "width": 0.0,
         "length": 0.0,
-        "unit": UnitEnum.INCH,
+        "unit": DocumentSizeUnitEnum.INCH,
     }
     obj = DocumentSize(**kwargs)
     assert isinstance(obj, DocumentSize)
@@ -516,7 +519,9 @@ def test_requesteddocumentspecification_instantiates():
     """Instantiate RequestedDocumentSpecification with dummy data"""
     kwargs = {
         "format": "",
-        "size": DocumentSize(**{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}),
+        "size": DocumentSize(
+            **{"width": 0.0, "length": 0.0, "unit": DocumentSizeUnitEnum.INCH}
+        ),
         "dpi": None,
         "page_layout": None,
         "need_file_joining": False,
@@ -1136,7 +1141,7 @@ def test_invoicedetails_instantiates():
 def test_liquidvolume_instantiates():
     """Instantiate LiquidVolume with dummy data"""
     kwargs = {
-        "unit": UnitEnum.INCH,
+        "unit": LiquidVolumeUnitEnum.ML,
         "value": 0.0,
     }
     obj = LiquidVolume(**kwargs)
@@ -1146,7 +1151,7 @@ def test_liquidvolume_instantiates():
 def test_weight_instantiates():
     """Instantiate Weight with dummy data"""
     kwargs = {
-        "unit": UnitEnum.INCH,
+        "unit": WeightUnitEnum.GRAM,
         "value": 0.0,
     }
     obj = Weight(**kwargs)
@@ -1295,7 +1300,7 @@ def test_oneclickshipmentrequestbody_instantiates():
             **{
                 "format": "",
                 "size": DocumentSize(
-                    **{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}
+                    **{"width": 0.0, "length": 0.0, "unit": DocumentSizeUnitEnum.INCH}
                 ),
                 "dpi": None,
                 "page_layout": None,
@@ -1351,7 +1356,11 @@ def test_oneclickshipmentrequest_instantiates():
                     **{
                         "format": "",
                         "size": DocumentSize(
-                            **{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}
+                            **{
+                                "width": 0.0,
+                                "length": 0.0,
+                                "unit": DocumentSizeUnitEnum.INCH,
+                            }
                         ),
                         "dpi": None,
                         "page_layout": None,
@@ -1439,9 +1448,14 @@ def test_package_instantiates():
     """Instantiate Package with dummy data"""
     kwargs = {
         "dimensions": Dimensions(
-            **{"length": 0.0, "width": 0.0, "height": 0.0, "unit": UnitEnum.INCH}
+            **{
+                "length": 0.0,
+                "width": 0.0,
+                "height": 0.0,
+                "unit": DimensionsUnitEnum.INCH,
+            }
         ),
-        "weight": Weight(**{"unit": UnitEnum.INCH, "value": 0.0}),
+        "weight": Weight(**{"unit": WeightUnitEnum.GRAM, "value": 0.0}),
         "insured_value": Currency(**{"value": 0.0, "unit": ""}),
         "is_hazmat": None,
         "seller_display_name": None,
@@ -1495,7 +1509,7 @@ def test_purchaseshipmentrequestbody_instantiates():
             **{
                 "format": "",
                 "size": DocumentSize(
-                    **{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}
+                    **{"width": 0.0, "length": 0.0, "unit": DocumentSizeUnitEnum.INCH}
                 ),
                 "dpi": None,
                 "page_layout": None,
@@ -1522,7 +1536,11 @@ def test_purchaseshipmentrequest_instantiates():
                     **{
                         "format": "",
                         "size": DocumentSize(
-                            **{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}
+                            **{
+                                "width": 0.0,
+                                "length": 0.0,
+                                "unit": DocumentSizeUnitEnum.INCH,
+                            }
                         ),
                         "dpi": None,
                         "page_layout": None,
@@ -1630,7 +1648,9 @@ def test_supporteddocumentspecification_instantiates():
     """Instantiate SupportedDocumentSpecification with dummy data"""
     kwargs = {
         "format": "",
-        "size": DocumentSize(**{"width": 0.0, "length": 0.0, "unit": UnitEnum.INCH}),
+        "size": DocumentSize(
+            **{"width": 0.0, "length": 0.0, "unit": DocumentSizeUnitEnum.INCH}
+        ),
         "print_options": [],
     }
     obj = SupportedDocumentSpecification(**kwargs)

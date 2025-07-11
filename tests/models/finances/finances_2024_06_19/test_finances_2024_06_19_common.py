@@ -3,13 +3,15 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.finances.finances_2024_06_19.common import (
-    AmazonPayContext, Breakdown, Context, Currency, DeferredContext, Error,
-    ErrorList, GetRequestSerializer, Item, ItemRelatedIdentifier,
-    ItemRelatedIdentifierNameEnum, ListTransactionsRequest,
-    ListTransactionsResponse, MarketplaceDetails, PaymentsContext,
-    ProductContext, RelatedIdentifier, RelatedIdentifierNameEnum,
-    RequestsBaseModel, SellingPartnerMetadata, SpApiBaseModel,
-    TimeRangeContext, Transaction)
+    AmazonPayContext, Breakdown, BusinessContext, BusinessContextStoreNameEnum,
+    Context, Currency, DeferredContext, Error, ErrorList, GetRequestSerializer,
+    Item, ItemRelatedIdentifier,
+    ItemRelatedIdentifierItemRelatedIdentifierNameEnum,
+    ListTransactionsRequest, ListTransactionsResponse, MarketplaceDetails,
+    PaymentsContext, ProductContext, RelatedIdentifier,
+    RelatedIdentifierRelatedIdentifierNameEnum, RequestsBaseModel,
+    SellingPartnerMetadata, SpApiBaseModel, TimeRangeContext, Transaction,
+    TransactionsPayload)
 
 
 def test_requestsbasemodel_instantiates():
@@ -63,6 +65,15 @@ def test_breakdown_instantiates():
     }
     obj = Breakdown(**kwargs)
     assert isinstance(obj, Breakdown)
+
+
+def test_businesscontext_instantiates():
+    """Instantiate BusinessContext with dummy data"""
+    kwargs = {
+        "store_name": None,
+    }
+    obj = BusinessContext(**kwargs)
+    assert isinstance(obj, BusinessContext)
 
 
 def test_context_instantiates():
@@ -131,17 +142,27 @@ def test_listtransactionsrequest_instantiates():
         "posted_after": datetime(2000, 1, 1),
         "posted_before": None,
         "marketplace_id": None,
+        "transaction_status": None,
         "next_token": None,
     }
     obj = ListTransactionsRequest(**kwargs)
     assert isinstance(obj, ListTransactionsRequest)
 
 
-def test_listtransactionsresponse_instantiates():
-    """Instantiate ListTransactionsResponse with dummy data"""
+def test_transactionspayload_instantiates():
+    """Instantiate TransactionsPayload with dummy data"""
     kwargs = {
         "next_token": None,
         "transactions": None,
+    }
+    obj = TransactionsPayload(**kwargs)
+    assert isinstance(obj, TransactionsPayload)
+
+
+def test_listtransactionsresponse_instantiates():
+    """Instantiate ListTransactionsResponse with dummy data"""
+    kwargs = {
+        "payload": None,
     }
     obj = ListTransactionsResponse(**kwargs)
     assert isinstance(obj, ListTransactionsResponse)

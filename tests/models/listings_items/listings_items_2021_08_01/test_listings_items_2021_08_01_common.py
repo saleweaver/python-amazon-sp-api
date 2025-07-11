@@ -3,20 +3,32 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.listings_items.listings_items_2021_08_01.common import (
-    Audience, ConditionTypeEnum, DeleteListingsItemRequest, Error, ErrorList,
-    FulfillmentAvailability, GetListingsItemRequest, GetRequestSerializer,
-    IdentifiersTypeEnum, IncludedDataEnum, Issue, IssueEnforcementAction,
-    IssueEnforcements, IssueExemption, Item, ItemAttributes,
+    Audience, DeleteListingsItemRequest, Error, ErrorList,
+    FulfillmentAvailability, GetListingsItemRequest,
+    GetListingsItemRequestIncludedDataEnum, GetRequestSerializer, Issue,
+    IssueEnforcementAction, IssueEnforcements, IssueExemption,
+    IssueExemptionStatusEnum, IssueSeverityEnum, Item, ItemAttributes,
     ItemIdentifiersByMarketplace, ItemImage, ItemOfferByMarketplace,
-    ItemProcurement, ItemProductTypeByMarketplace, ItemRelationship,
-    ItemRelationshipsByMarketplace, ItemSearchResults,
-    ItemSummaryByMarketplace, ItemVariationTheme, ListingsItemPatchRequestBody,
-    ListingsItemPutRequestBody, ListingsItemSubmissionResponse, ModeEnum,
-    Money, OfferTypeEnum, OpEnum, Pagination, PatchListingsItemRequest,
-    PatchOperation, Points, PutListingsItemRequest, RequestsBaseModel,
-    RequirementsEnum, SearchListingsItemsRequest, SeverityEnum, SortByEnum,
-    SortOrderEnum, SpApiBaseModel, StatusEnum, TypeEnum, WithIssueSeverityEnum,
-    WithoutStatusEnum, WithStatusEnum)
+    ItemOfferByMarketplaceOfferTypeEnum, ItemProcurement,
+    ItemProductTypeByMarketplace, ItemRelationship,
+    ItemRelationshipsByMarketplace, ItemRelationshipTypeEnum,
+    ItemSearchResults, ItemSummaryByMarketplace,
+    ItemSummaryByMarketplaceConditionTypeEnum,
+    ItemSummaryByMarketplaceStatusEnum, ItemVariationTheme,
+    ListingsItemPatchRequestBody, ListingsItemPutRequestBody,
+    ListingsItemPutRequestBodyRequirementsEnum, ListingsItemSubmissionResponse,
+    ListingsItemSubmissionResponseStatusEnum, Money, Pagination,
+    PatchListingsItemRequest, PatchListingsItemRequestIncludedDataEnum,
+    PatchListingsItemRequestModeEnum, PatchOperation, PatchOperationOpEnum,
+    Points, PutListingsItemRequest, PutListingsItemRequestIncludedDataEnum,
+    PutListingsItemRequestModeEnum, RequestsBaseModel,
+    SearchListingsItemsRequest, SearchListingsItemsRequestIdentifiersTypeEnum,
+    SearchListingsItemsRequestIncludedDataEnum,
+    SearchListingsItemsRequestSortByEnum,
+    SearchListingsItemsRequestSortOrderEnum,
+    SearchListingsItemsRequestWithIssueSeverityEnum,
+    SearchListingsItemsRequestWithoutStatusEnum,
+    SearchListingsItemsRequestWithStatusEnum, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -117,7 +129,7 @@ def test_issueenforcementaction_instantiates():
 def test_issueexemption_instantiates():
     """Instantiate IssueExemption with dummy data"""
     kwargs = {
-        "status": StatusEnum.ACCEPTED,
+        "status": IssueExemptionStatusEnum.EXEMPT,
         "expiry_date": None,
     }
     obj = IssueExemption(**kwargs)
@@ -129,7 +141,7 @@ def test_issueenforcements_instantiates():
     kwargs = {
         "actions": [],
         "exemption": IssueExemption(
-            **{"status": StatusEnum.ACCEPTED, "expiry_date": None}
+            **{"status": IssueExemptionStatusEnum.EXEMPT, "expiry_date": None}
         ),
     }
     obj = IssueEnforcements(**kwargs)
@@ -141,7 +153,7 @@ def test_issue_instantiates():
     kwargs = {
         "code": "",
         "message": "",
-        "severity": SeverityEnum.ERROR,
+        "severity": IssueSeverityEnum.ERROR,
         "attribute_names": None,
         "categories": [],
         "enforcements": None,
@@ -227,7 +239,7 @@ def test_itemofferbymarketplace_instantiates():
     """Instantiate ItemOfferByMarketplace with dummy data"""
     kwargs = {
         "marketplace_id": None,
-        "offer_type": OfferTypeEnum.B2_C,
+        "offer_type": ItemOfferByMarketplaceOfferTypeEnum.B2_C,
         "price": Money(**{"currency_code": "", "amount": ""}),
         "points": None,
         "audience": None,
@@ -262,7 +274,7 @@ def test_itemrelationship_instantiates():
         "child_skus": None,
         "parent_skus": None,
         "variation_theme": None,
-        "type": TypeEnum.VARIATION,
+        "type": ItemRelationshipTypeEnum.VARIATION,
     }
     obj = ItemRelationship(**kwargs)
     assert isinstance(obj, ItemRelationship)
@@ -320,7 +332,7 @@ def test_itemsummarybymarketplace_instantiates():
 def test_patchoperation_instantiates():
     """Instantiate PatchOperation with dummy data"""
     kwargs = {
-        "op": OpEnum.ADD,
+        "op": PatchOperationOpEnum.ADD,
         "path": "",
         "value": None,
     }
@@ -353,7 +365,7 @@ def test_listingsitemsubmissionresponse_instantiates():
     """Instantiate ListingsItemSubmissionResponse with dummy data"""
     kwargs = {
         "sku": "",
-        "status": StatusEnum.ACCEPTED,
+        "status": ListingsItemSubmissionResponseStatusEnum.ACCEPTED,
         "submission_id": "",
         "issues": None,
         "identifiers": None,

@@ -5,16 +5,18 @@ This file was auto-generated. Do not edit manually.
 
 from .base_models import RequestsBaseModel
 from .common import (AmazonPayContext, BigDecimal, Breakdown, Breakdowns,
-                     Context, Contexts, Currency, Date, DeferredContext, Error,
-                     ErrorList, Item, ItemRelatedIdentifier,
-                     ItemRelatedIdentifiers, Items, ListTransactionsRequest,
-                     ListTransactionsResponse, MarketplaceDetails,
-                     PaymentsContext, ProductContext, RelatedIdentifier,
-                     RelatedIdentifiers, SellingPartnerMetadata,
-                     TimeRangeContext, Transaction, Transactions)
+                     BusinessContext, Context, Contexts, Currency, Date,
+                     DeferredContext, Error, ErrorList, Item,
+                     ItemRelatedIdentifier, ItemRelatedIdentifiers, Items,
+                     ListTransactionsRequest, ListTransactionsResponse,
+                     MarketplaceDetails, PaymentsContext, ProductContext,
+                     RelatedIdentifier, RelatedIdentifiers,
+                     SellingPartnerMetadata, TimeRangeContext, Transaction,
+                     Transactions, TransactionsPayload)
 
 __all__ = [
     "ListTransactionsResponse",
+    "TransactionsPayload",
     "Transactions",
     "Transaction",
     "BigDecimal",
@@ -36,6 +38,7 @@ __all__ = [
     "AmazonPayContext",
     "PaymentsContext",
     "DeferredContext",
+    "BusinessContext",
     "TimeRangeContext",
     "ErrorList",
     "Error",

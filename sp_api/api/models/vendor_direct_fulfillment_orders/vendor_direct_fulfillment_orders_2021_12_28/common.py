@@ -259,7 +259,7 @@ class GetOrderRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class StatusEnum(str, Enum):
+class GetOrdersRequestStatusEnum(str, Enum):
     """Enum for status"""
 
     NEW = "NEW"  # Status for newly created purchase orders.
@@ -268,7 +268,7 @@ class StatusEnum(str, Enum):
     CANCELLED = "CANCELLED"  # Status for cancelled purchase orders.
 
 
-class SortOrderEnum(str, Enum):
+class GetOrdersRequestSortOrderEnum(str, Enum):
     """Enum for sortOrder"""
 
     ASC = "ASC"  # Sort in ascending order by order creation date.
@@ -304,7 +304,7 @@ class GetOrdersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     status: Annotated[
-        Optional[StatusEnum],
+        Optional[GetOrdersRequestStatusEnum],
         QueryParam(),
         Field(
             None,
@@ -344,7 +344,7 @@ class GetOrdersRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     sort_order: Annotated[
-        Optional[SortOrderEnum],
+        Optional[GetOrdersRequestSortOrderEnum],
         QueryParam(),
         Field(
             None,
@@ -413,7 +413,7 @@ class GiftDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class UnitOfMeasureEnum(str, Enum):
+class ItemQuantityUnitOfMeasureEnum(str, Enum):
     """Enum for unitOfMeasure"""
 
     EACH = "Each"  # Unit of measure to represent individual piece.
@@ -441,7 +441,7 @@ class ItemQuantity(SpApiBaseModel):
     ]
 
     unit_of_measure: Annotated[
-        Optional[UnitOfMeasureEnum],
+        Optional[ItemQuantityUnitOfMeasureEnum],
         Field(
             None,
             validation_alias=AliasChoices("unitOfMeasure", "unit_of_measure"),
@@ -714,7 +714,7 @@ class OrderItem(SpApiBaseModel):
 
 
 # Enum definitions
-class TaxRegistrationTypeEnum(str, Enum):
+class TaxRegistrationDetailsTaxRegistrationTypeEnum(str, Enum):
     """Enum for taxRegistrationType"""
 
     VAT = "VAT"  # Value-added tax.
@@ -736,7 +736,7 @@ class TaxRegistrationDetails(SpApiBaseModel):
     )
 
     tax_registration_type: Annotated[
-        Optional[TaxRegistrationTypeEnum],
+        Optional[TaxRegistrationDetailsTaxRegistrationTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices(
@@ -947,7 +947,7 @@ class ShipmentDetails(SpApiBaseModel):
 
 
 # Enum definitions
-class OrderStatusEnum(str, Enum):
+class OrderDetailsOrderStatusEnum(str, Enum):
     """Enum for orderStatus"""
 
     NEW = "NEW"  # Status for newly created orders.
@@ -993,7 +993,7 @@ class OrderDetails(SpApiBaseModel):
     ]
 
     order_status: Annotated[
-        Optional[OrderStatusEnum],
+        Optional[OrderDetailsOrderStatusEnum],
         Field(
             None,
             validation_alias=AliasChoices("orderStatus", "order_status"),
@@ -1417,7 +1417,7 @@ class SubmitAcknowledgementResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class TypeEnum(str, Enum):
+class TaxDetailsTypeEnum(str, Enum):
     """Enum for type"""
 
     CONSUMPTION = (
@@ -1472,7 +1472,7 @@ class TaxDetails(SpApiBaseModel):
         ),
     ]
 
-    type: Annotated[Optional[TypeEnum], Field(None, description="Tax type.")]
+    type: Annotated[Optional[TaxDetailsTypeEnum], Field(None, description="Tax type.")]
 
 
 # Rebuild models to resolve forward references

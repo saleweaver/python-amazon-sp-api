@@ -3,15 +3,17 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.reports.reports_2021_06_30.common import (
-    CancelReportRequest, CancelReportScheduleRequest, CompressionAlgorithmEnum,
-    CreateReportRequest, CreateReportResponse, CreateReportScheduleRequest,
+    CancelReportRequest, CancelReportScheduleRequest, CreateReportRequest,
+    CreateReportResponse, CreateReportScheduleRequest,
     CreateReportScheduleResponse, CreateReportScheduleSpecification,
-    CreateReportSpecification, Error, ErrorList, GetReportDocumentRequest,
-    GetReportRequest, GetReportScheduleRequest, GetReportSchedulesRequest,
-    GetReportsRequest, GetReportsResponse, GetRequestSerializer, PeriodEnum,
-    ProcessingStatusEnum, ProcessingStatusesEnum, Report, ReportDocument,
-    ReportOptions, ReportSchedule, ReportScheduleList, RequestsBaseModel,
-    SpApiBaseModel)
+    CreateReportScheduleSpecificationPeriodEnum, CreateReportSpecification,
+    Error, ErrorList, GetReportDocumentRequest, GetReportRequest,
+    GetReportScheduleRequest, GetReportSchedulesRequest, GetReportsRequest,
+    GetReportsRequestProcessingStatusesEnum, GetReportsResponse,
+    GetRequestSerializer, Report, ReportDocument,
+    ReportDocumentCompressionAlgorithmEnum, ReportOptions,
+    ReportProcessingStatusEnum, ReportSchedule, ReportScheduleList,
+    RequestsBaseModel, SpApiBaseModel)
 
 
 def test_requestsbasemodel_instantiates():
@@ -105,7 +107,7 @@ def test_createreportschedulespecification_instantiates():
         "report_type": "",
         "marketplace_ids": None,
         "report_options": None,
-        "period": PeriodEnum.PT5_M,
+        "period": CreateReportScheduleSpecificationPeriodEnum.PT5_M,
         "next_report_creation_time": None,
     }
     obj = CreateReportScheduleSpecification(**kwargs)
@@ -120,7 +122,7 @@ def test_createreportschedulerequest_instantiates():
                 "report_type": "",
                 "marketplace_ids": None,
                 "report_options": None,
-                "period": PeriodEnum.PT5_M,
+                "period": CreateReportScheduleSpecificationPeriodEnum.PT5_M,
                 "next_report_creation_time": None,
             }
         ),
@@ -229,7 +231,7 @@ def test_report_instantiates():
         "data_end_time": None,
         "report_schedule_id": None,
         "created_time": datetime(2000, 1, 1),
-        "processing_status": ProcessingStatusEnum.CANCELLED,
+        "processing_status": ReportProcessingStatusEnum.CANCELLED,
         "processing_start_time": None,
         "processing_end_time": None,
         "report_document_id": None,

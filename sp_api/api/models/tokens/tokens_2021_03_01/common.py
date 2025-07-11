@@ -17,7 +17,7 @@ from .base_models import (BodyParam, GetRequestSerializer, PathParam,
 
 
 # Enum definitions
-class MethodEnum(str, Enum):
+class RestrictedResourceMethodEnum(str, Enum):
     """Enum for method"""
 
     GET = "GET"  # The GET method.
@@ -41,7 +41,7 @@ class RestrictedResource(SpApiBaseModel):
     )
 
     method: Annotated[
-        MethodEnum,
+        RestrictedResourceMethodEnum,
         Field(..., description="The HTTP method in the restricted resource."),
     ]
 

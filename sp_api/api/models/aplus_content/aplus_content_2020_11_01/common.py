@@ -1891,9 +1891,10 @@ class ErrorList(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataSetEnum(str, Enum):
+class GetContentDocumentRequestIncludedDataSetEnum(str, Enum):
     """Enum for includedDataSet"""
 
+    CONTENTS = "CONTENTS"  # The contents of the content document.
     METADATA = "METADATA"  # The content document's metadata.
 
 
@@ -1939,7 +1940,7 @@ class GetContentDocumentRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     included_data_set: Annotated[
-        List["IncludedDataSetEnum"],
+        List["GetContentDocumentRequestIncludedDataSetEnum"],
         QueryParam(),
         Field(
             ...,
@@ -1969,7 +1970,7 @@ class GetContentDocumentResponse(SpApiBaseModel):
 
 
 # Enum definitions
-class IncludedDataSetEnum(str, Enum):
+class ListContentDocumentAsinRelationsRequestIncludedDataSetEnum(str, Enum):
     """Enum for includedDataSet"""
 
     METADATA = "METADATA"  # The content document's metadata.
@@ -2017,7 +2018,7 @@ class ListContentDocumentAsinRelationsRequest(GetRequestSerializer, RequestsBase
     ]
 
     included_data_set: Annotated[
-        Optional[List["IncludedDataSetEnum"]],
+        Optional[List["ListContentDocumentAsinRelationsRequestIncludedDataSetEnum"]],
         QueryParam(),
         Field(
             None,

@@ -4,15 +4,17 @@ from datetime import datetime
 import pytest
 from sp_api.api.models.vendor_direct_fulfillment_orders.vendor_direct_fulfillment_orders_v1.common import (
     AcknowledgementStatus, Address, Error, GetOrderRequest, GetOrderResponse,
-    GetOrdersRequest, GetOrdersResponse, GetRequestSerializer, GiftDetails,
-    ItemQuantity, Money, Order, OrderAcknowledgementItem, OrderDetails,
-    OrderItem, OrderItemAcknowledgement, OrderList, OrderStatusEnum,
-    Pagination, PartyIdentification, RequestsBaseModel,
-    ScheduledDeliveryShipment, ShipmentDates, ShipmentDetails, SortOrderEnum,
-    SpApiBaseModel, StatusEnum, SubmitAcknowledgementRequest,
-    SubmitAcknowledgementRequestBody, SubmitAcknowledgementResponse,
-    TaxDetails, TaxRegistrationDetails, TaxRegistrationTypeEnum, TransactionId,
-    TypeEnum, UnitOfMeasureEnum)
+    GetOrdersRequest, GetOrdersRequestSortOrderEnum,
+    GetOrdersRequestStatusEnum, GetOrdersResponse, GetRequestSerializer,
+    GiftDetails, ItemQuantity, ItemQuantityUnitOfMeasureEnum, Money, Order,
+    OrderAcknowledgementItem, OrderDetails, OrderDetailsOrderStatusEnum,
+    OrderItem, OrderItemAcknowledgement, OrderList, Pagination,
+    PartyIdentification, RequestsBaseModel, ScheduledDeliveryShipment,
+    ShipmentDates, ShipmentDetails, SpApiBaseModel,
+    SubmitAcknowledgementRequest, SubmitAcknowledgementRequestBody,
+    SubmitAcknowledgementResponse, TaxDetails, TaxDetailsTypeEnum,
+    TaxRegistrationDetails, TaxRegistrationDetailsTaxRegistrationTypeEnum,
+    TransactionId)
 
 
 def test_requestsbasemodel_instantiates():

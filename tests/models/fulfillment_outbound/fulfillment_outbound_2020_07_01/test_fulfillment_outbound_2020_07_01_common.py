@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pytest
 from sp_api.api.models.fulfillment_outbound.fulfillment_outbound_2020_07_01.common import (
-    Address, Amount, CancelFulfillmentOrderRequest,
+    Address, Amount, AmountUnitOfMeasureEnum, CancelFulfillmentOrderRequest,
     CancelFulfillmentOrderResponse, CODSettings, CreateFulfillmentOrderItem,
     CreateFulfillmentOrderRequest, CreateFulfillmentOrderRequestBody,
     CreateFulfillmentOrderResponse, CreateFulfillmentReturnRequest,
@@ -11,11 +11,14 @@ from sp_api.api.models.fulfillment_outbound.fulfillment_outbound_2020_07_01.comm
     CreateFulfillmentReturnResult, CreateReturnItem, DateRange,
     DeliveryDocument, DeliveryInformation, DeliveryMessage, DeliveryOffer,
     DeliveryOffersRequest, DeliveryPolicy, DeliveryPreferences, DeliveryWindow,
-    Destination, DropOffLocation, Error, Feature, FeatureFulfillmentPolicyEnum,
-    FeatureSettings, FeatureSku, Fee, FulfillmentOrder, FulfillmentOrderItem,
-    FulfillmentPreview, FulfillmentPreviewItem, FulfillmentPreviewShipment,
-    FulfillmentShipment, FulfillmentShipmentItem, FulfillmentShipmentPackage,
-    FulfillmentShipmentStatusEnum, GetDeliveryOffersProduct,
+    Destination, DropOffLocation, DropOffLocationTypeEnum, Error, Feature,
+    FeatureSettings, FeatureSettingsFeatureFulfillmentPolicyEnum, FeatureSku,
+    Fee, FeeNameEnum, FulfillmentOrder, FulfillmentOrderItem,
+    FulfillmentPreview, FulfillmentPreviewItem,
+    FulfillmentPreviewItemShippingWeightCalculationMethodEnum,
+    FulfillmentPreviewShipment, FulfillmentShipment,
+    FulfillmentShipmentFulfillmentShipmentStatusEnum, FulfillmentShipmentItem,
+    FulfillmentShipmentPackage, GetDeliveryOffersProduct,
     GetDeliveryOffersRequestBody, GetDeliveryOffersResponse,
     GetDeliveryOffersResult, GetDeliveryOffersTerms,
     GetFeatureInventoryRequest, GetFeatureInventoryResponse,
@@ -30,17 +33,16 @@ from sp_api.api.models.fulfillment_outbound.fulfillment_outbound_2020_07_01.comm
     ListAllFulfillmentOrdersRequest, ListAllFulfillmentOrdersResponse,
     ListAllFulfillmentOrdersResult, ListReturnReasonCodesRequest,
     ListReturnReasonCodesResponse, ListReturnReasonCodesResult, LockerDetails,
-    Money, NameEnum, NotificationEmailList, Origin, PackageTrackingDetails,
+    Money, NotificationEmailList, Origin, PackageTrackingDetails,
     PaymentInformation, ProductIdentifier, ReasonCodeDetails,
     RequestsBaseModel, ReturnAuthorization, ReturnItem, ScheduledDeliveryInfo,
-    ShippingWeightCalculationMethodEnum, SpApiBaseModel, StringList,
-    SubmitFulfillmentOrderStatusUpdateRequest,
+    SpApiBaseModel, StringList, SubmitFulfillmentOrderStatusUpdateRequest,
     SubmitFulfillmentOrderStatusUpdateRequestBody,
     SubmitFulfillmentOrderStatusUpdateResponse, TrackingAddress, TrackingEvent,
-    TypeEnum, UnfulfillablePreviewItem, UnitEnum, UnitOfMeasureEnum,
-    UpdateFulfillmentOrderItem, UpdateFulfillmentOrderRequest,
-    UpdateFulfillmentOrderRequestBody, UpdateFulfillmentOrderResponse,
-    VariablePrecisionAddress, Weight)
+    UnfulfillablePreviewItem, UpdateFulfillmentOrderItem,
+    UpdateFulfillmentOrderRequest, UpdateFulfillmentOrderRequestBody,
+    UpdateFulfillmentOrderResponse, VariablePrecisionAddress, Weight,
+    WeightUnitEnum)
 
 
 def test_requestsbasemodel_instantiates():
@@ -85,7 +87,7 @@ def test_address_instantiates():
 def test_amount_instantiates():
     """Instantiate Amount with dummy data"""
     kwargs = {
-        "unit_of_measure": UnitOfMeasureEnum.EACHES,
+        "unit_of_measure": AmountUnitOfMeasureEnum.EACHES,
         "value": "",
     }
     obj = Amount(**kwargs)
@@ -153,7 +155,7 @@ def test_createfulfillmentorderitem_instantiates():
 def test_dropofflocation_instantiates():
     """Instantiate DropOffLocation with dummy data"""
     kwargs = {
-        "type": TypeEnum.FRONT_DOOR,
+        "type": DropOffLocationTypeEnum.FRONT_DOOR,
         "attributes": None,
     }
     obj = DropOffLocation(**kwargs)
@@ -549,7 +551,7 @@ def test_featuresku_instantiates():
 def test_fee_instantiates():
     """Instantiate Fee with dummy data"""
     kwargs = {
-        "name": NameEnum.FBA_PER_UNIT_FULFILLMENT_FEE,
+        "name": FeeNameEnum.FBA_PER_UNIT_FULFILLMENT_FEE,
         "amount": Money(**{"currency_code": "", "value": ""}),
     }
     obj = Fee(**kwargs)
@@ -635,7 +637,7 @@ def test_stringlist_instantiates():
 def test_weight_instantiates():
     """Instantiate Weight with dummy data"""
     kwargs = {
-        "unit": UnitEnum.KG,
+        "unit": WeightUnitEnum.KG,
         "value": "",
     }
     obj = Weight(**kwargs)
@@ -693,7 +695,7 @@ def test_fulfillmentshipment_instantiates():
     kwargs = {
         "amazon_shipment_id": "",
         "fulfillment_center_id": "",
-        "fulfillment_shipment_status": FulfillmentShipmentStatusEnum.PENDING,
+        "fulfillment_shipment_status": FulfillmentShipmentFulfillmentShipmentStatusEnum.PENDING,
         "shipping_date": None,
         "estimated_arrival_date": None,
         "shipping_notes": None,

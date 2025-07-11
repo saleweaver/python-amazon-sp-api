@@ -231,7 +231,7 @@ Condition = str
 
 
 # Enum definitions
-class OfferTypeEnum(str, Enum):
+class LowestPricedOffersInputOfferTypeEnum(str, Enum):
     """Enum for offerType"""
 
     CONSUMER = "Consumer"  # An offer that is available to all Amazon customers.
@@ -262,7 +262,7 @@ class LowestPricedOffersInput(SpApiBaseModel):
     ]
 
     offer_type: Annotated[
-        OfferTypeEnum,
+        LowestPricedOffersInputOfferTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("offerType", "offer_type"),
@@ -363,7 +363,7 @@ class SegmentedFeaturedOffer(SpApiBaseModel):
 
 
 # Enum definitions
-class BuyingOptionTypeEnum(str, Enum):
+class FeaturedBuyingOptionBuyingOptionTypeEnum(str, Enum):
     """Enum for buyingOptionType"""
 
     NEW = "New"  # New
@@ -384,7 +384,7 @@ class FeaturedBuyingOption(SpApiBaseModel):
     )
 
     buying_option_type: Annotated[
-        BuyingOptionTypeEnum,
+        FeaturedBuyingOptionBuyingOptionTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("buyingOptionType", "buying_option_type"),
@@ -475,7 +475,7 @@ class Points(SpApiBaseModel):
 
 
 # Enum definitions
-class EligibilityEnum(str, Enum):
+class PrimeDetailsEligibilityEnum(str, Enum):
     """Enum for eligibility"""
 
     NATIONAL = "NATIONAL"  # Indicates that this offer has Amazon Prime eligibility in all regions within the marketplace.
@@ -498,13 +498,13 @@ class PrimeDetails(SpApiBaseModel):
     )
 
     eligibility: Annotated[
-        EligibilityEnum,
+        PrimeDetailsEligibilityEnum,
         Field(..., description="Indicates whether the offer is an Amazon Prime offer."),
     ]
 
 
 # Enum definitions
-class ShippingOptionTypeEnum(str, Enum):
+class ShippingOptionShippingOptionTypeEnum(str, Enum):
     """Enum for shippingOptionType"""
 
     DEFAULT = "DEFAULT"  # The estimated shipping cost of the product. Note that the shipping cost is not always available.
@@ -525,7 +525,7 @@ class ShippingOption(SpApiBaseModel):
     )
 
     shipping_option_type: Annotated[
-        ShippingOptionTypeEnum,
+        ShippingOptionShippingOptionTypeEnum,
         Field(
             ...,
             validation_alias=AliasChoices("shippingOptionType", "shipping_option_type"),
@@ -540,7 +540,7 @@ class ShippingOption(SpApiBaseModel):
 
 
 # Enum definitions
-class SubConditionEnum(str, Enum):
+class OfferSubConditionEnum(str, Enum):
     """Enum for subCondition"""
 
     NEW = "New"  # New
@@ -585,7 +585,7 @@ class Offer(SpApiBaseModel):
     condition: Annotated["Condition", Field(..., description="Item Condition.")]
 
     sub_condition: Annotated[
-        Optional[SubConditionEnum],
+        Optional[OfferSubConditionEnum],
         Field(
             None,
             validation_alias=AliasChoices("subCondition", "sub_condition"),
@@ -696,7 +696,7 @@ class ReferencePrice(SpApiBaseModel):
         str,
         Field(
             ...,
-            description="The name of the reference price, such as `CompetitivePriceThreshold` and `WasPrice`. For reference price definitions, refer to the [Use Case Guide](https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-use-case-guide).",
+            description="Reference price type (e.g., `CompetitivePriceThreshold`, `WasPrice`, `CompetitivePrice`). For definitions, see the [Product Pricing API Use Case Guide](https://developer-docs.amazon.com/sp-api/docs/product-pricing-api-v2022-05-01-use-case-guide).",
         ),
     ]
 
@@ -1340,7 +1340,7 @@ class FeaturedOfferExpectedPriceResult(SpApiBaseModel):
 
 
 # Enum definitions
-class CustomerMembershipEnum(str, Enum):
+class FeaturedOfferSegmentCustomerMembershipEnum(str, Enum):
     """Enum for customerMembership"""
 
     PRIME = "PRIME"  # Customers that are Prime members.
@@ -1363,7 +1363,7 @@ class FeaturedOfferSegment(SpApiBaseModel):
     )
 
     customer_membership: Annotated[
-        CustomerMembershipEnum,
+        FeaturedOfferSegmentCustomerMembershipEnum,
         Field(
             ...,
             validation_alias=AliasChoices("customerMembership", "customer_membership"),

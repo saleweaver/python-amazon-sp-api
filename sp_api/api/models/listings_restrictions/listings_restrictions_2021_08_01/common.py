@@ -55,7 +55,7 @@ ErrorList = List["Error"]
 
 
 # Enum definitions
-class ConditionTypeEnum(str, Enum):
+class GetListingsRestrictionsRequestConditionTypeEnum(str, Enum):
     """Enum for conditionType"""
 
     NEW_NEW = "new_new"  # New
@@ -100,7 +100,7 @@ class GetListingsRestrictionsRequest(GetRequestSerializer, RequestsBaseModel):
     ]
 
     condition_type: Annotated[
-        Optional[ConditionTypeEnum],
+        Optional[GetListingsRestrictionsRequestConditionTypeEnum],
         QueryParam(),
         Field(
             None,
@@ -145,7 +145,7 @@ class GetListingsRestrictionsRequest(GetRequestSerializer, RequestsBaseModel):
 
 
 # Enum definitions
-class VerbEnum(str, Enum):
+class LinkVerbEnum(str, Enum):
     """Enum for verb"""
 
     GET = "GET"  # The provided resource is accessed with the HTTP GET method.
@@ -168,7 +168,7 @@ class Link(SpApiBaseModel):
     resource: Annotated[str, Field(..., description="The URI of the related resource.")]
 
     verb: Annotated[
-        VerbEnum,
+        LinkVerbEnum,
         Field(
             ..., description="The HTTP verb used to interact with the related resource."
         ),
@@ -185,7 +185,7 @@ class Link(SpApiBaseModel):
 
 
 # Enum definitions
-class ReasonCodeEnum(str, Enum):
+class ReasonReasonCodeEnum(str, Enum):
     """Enum for reasonCode"""
 
     APPROVAL_REQUIRED = "APPROVAL_REQUIRED"  # Approval is required to create a listing for the specified ASIN. A path forward link will be provided that may allow Selling Partners to remove the restriction.
@@ -213,7 +213,7 @@ class Reason(SpApiBaseModel):
     ]
 
     reason_code: Annotated[
-        Optional[ReasonCodeEnum],
+        Optional[ReasonReasonCodeEnum],
         Field(
             None,
             validation_alias=AliasChoices("reasonCode", "reason_code"),
@@ -232,7 +232,7 @@ class Reason(SpApiBaseModel):
 
 
 # Enum definitions
-class ConditionTypeEnum(str, Enum):
+class RestrictionConditionTypeEnum(str, Enum):
     """Enum for conditionType"""
 
     NEW_NEW = "new_new"  # New
@@ -275,7 +275,7 @@ class Restriction(SpApiBaseModel):
     ]
 
     condition_type: Annotated[
-        Optional[ConditionTypeEnum],
+        Optional[RestrictionConditionTypeEnum],
         Field(
             None,
             validation_alias=AliasChoices("conditionType", "condition_type"),
