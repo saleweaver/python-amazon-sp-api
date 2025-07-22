@@ -937,7 +937,7 @@ class PackedItems(SpApiBaseModel):
     )
 
     item_sequence_number: Annotated[
-        Optional[str],
+        Optional[int],
         Field(
             None,
             validation_alias=AliasChoices("itemSequenceNumber", "item_sequence_number"),
