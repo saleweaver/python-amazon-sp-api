@@ -1,3 +1,28 @@
+## v1.9.40 - 2025-07-26
+## Version 1.9.40
+
+### Changes Relevant to Users
+
+- **New Feature**
+  - Added `send_invoice` method in the `messaging` module. This method allows users to send an invoice message to buyers for a specified order. The method supports sending attachments as part of the message.
+
+- **Dependency Updates**
+  - Upgraded `boto3` dependency from `1.38.42` to `1.39.13` in both `requirements.txt` and `docs/requirements.txt`. This update includes the latest features and bug fixes from AWS services.
+
+### Internal Changes
+
+- **Version Update**
+  - Incremented version number to `1.9.40` in `sp_api/__version__.py`.
+
+```mermaid
+graph TD;
+    A[Version 1.9.39] -->|Updated| B[Version 1.9.40];
+    B --> C[New send_invoice Method];
+    B --> D[Updated boto3 Dependency];
+```
+
+This release introduces the ability to send invoice messages directly through the API, enhancing communication capabilities with buyers. Additionally, it ensures compatibility with the latest AWS services by updating the `boto3` dependency.
+
 ## v1.9.39 - 2025-06-24
 ## Version 1.9.39
 
