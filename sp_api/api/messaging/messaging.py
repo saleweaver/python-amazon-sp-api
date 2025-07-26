@@ -466,3 +466,45 @@ class Messaging(Client):
                 "method": kwargs.pop("method"),
             },
         )
+
+    @sp_endpoint("/messaging/v1/orders/{}/messages/invoice", method="POST")
+    def send_invoice(self, order_id, **kwargs) -> ApiResponse:
+        """
+        send_invoice(self, order_id, **kwargs) -> ApiResponse
+
+        Sends a message providing the buyer an invoice
+
+        **Usage Plan:**
+
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Args:
+            order_id:string | * REQUIRED An Amazon order identifier. This specifies the order for which a message is sent.
+            body: {
+              "attachments": [
+                {
+                  "uploadDestinationId": "string",
+                  "fileName": "string"
+                }
+              ]
+            }
+
+
+        Returns:
+            ApiResponse:
+        """
+
+        return self._request(
+            fill_query_params(kwargs.pop("path"), order_id),
+            data=kwargs.pop("body"),
+            params={
+                "marketplaceIds": self.marketplace_id,
+                "method": kwargs.pop("method"),
+            },
+        )
