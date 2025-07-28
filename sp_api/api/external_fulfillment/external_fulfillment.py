@@ -565,7 +565,10 @@ class ExternalFulfillment(Client):
         """
 
         headers = self.headers.copy()
-        headers["x-amzn-idempotency-token"] = str(uuid.uuid4())
+        if "x-amzn-idempotency-token" in kwargs:
+            headers["x-amzn-idempotency-token"] = kwargs.pop("x-amzn-idempotency-token")
+        else:
+            headers["x-amzn-idempotency-token"] = str(uuid.uuid4())
 
         return self._request(
             fill_query_params(kwargs.pop("path"), returnId),
