@@ -381,10 +381,11 @@ class ExternalFulfillment(Client):
         Returns:
             ApiResponse:
         """
-        kwargs["shipmentId"] = shipmentId
-        kwargs["packageId"] = packageId
+        params = {}
+        params["shipmentId"] = shipmentId
+        params["packageId"] = packageId
 
-        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)
+        return self._request(kwargs.pop("path"), params=params, add_marketplace=False)
 
     @sp_endpoint("/externalFulfillment/shipments/2021-01-06/shipments/{}/shipLabels", method="PUT")
     def generate_ship_labels(self, shipmentId, operation, **kwargs) -> ApiResponse:
@@ -566,7 +567,7 @@ class ExternalFulfillment(Client):
             ApiResponse:
         """
 
-        headers = self.headers
+        headers = self.headers.copy()
         headers["x-amzn-idempotency-token"] = str(uuid.uuid4())
 
         return self._request(
@@ -635,7 +636,7 @@ class ExternalFulfillment(Client):
         """
         kwargs["quantity"] = quantity
 
-        headers = self.headers
+        headers = self.headers.copy()
         if "if_match" in kwargs:
             headers["If-Match"] = kwargs.pop("if_match")
         if "if_unmodified_since" in kwargs:

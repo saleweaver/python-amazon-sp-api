@@ -32,7 +32,7 @@ def test_get_shipment():
     )
 
     assert res.errors is None
-    assert res.payload.get("locationId")  == "ABCD"
+    assert res.payload.get("locationId") == "ABCD"
 
 
 def test_process_shipment_confirm():
