@@ -381,10 +381,7 @@ class ExternalFulfillment(Client):
         Returns:
             ApiResponse:
         """
-        params = {}
-        params["shipmentId"] = shipmentId
-        params["packageId"] = packageId
-
+        params = {"shipmentId": shipmentId, "packageId": packageId}
         return self._request(kwargs.pop("path"), params=params, add_marketplace=False)
 
     @sp_endpoint("/externalFulfillment/shipments/2021-01-06/shipments/{}/shipLabels", method="PUT")
