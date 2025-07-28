@@ -1,3 +1,23 @@
+## v1.9.46 - 2025-07-28
+# Changelog
+
+## Version 1.9.46
+
+### New Features
+- No new features added in this release.
+
+### Bug Fixes
+- No bug fixes included in this release.
+
+### Changes
+- Updated version number from 1.9.45 to 1.9.46.
+
+### Internal
+- No internal changes relevant to end-users. 
+
+### Diagrams
+- No changes requiring diagrams in this release.
+
 ## v1.9.40 - 2025-07-26
 ## Version 1.9.40
 
