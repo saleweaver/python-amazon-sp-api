@@ -197,6 +197,39 @@ class FulfillmentInbound(Client):
             fill_query_params(kwargs.pop("path"), shipment_id), data={**data, **kwargs}
         )
 
+    @sp_endpoint(
+        "/inbound/fba/<version>/inboundPlans/{}/shipments/{}/name", method="PUT"
+    )
+    def update_shipment_name(self, inboundPlanId, shipmentId, **kwargs):
+        """
+                update_shipment_name(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
+
+                Updates the name of an existing shipment.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 2 | 30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+                Args:
+
+                    inboundPlanId:string | * REQUIRED Identifier to an inbound plan.
+
+                    shipmentId:string | * REQUIRED Identifier to a shipment. A shipment contains the boxes and units being inbounded.
+
+                    body: | * REQUIRED {'name': {'description': 'A human-readable name to update the shipment name to.'}, 'type': 'string'}
+
+                Returns:
+                    ApiResponse:
+        """
+        return self._request(
+            fill_query_params(kwargs.pop("path"), inboundPlanId, shipmentId),
+            data=kwargs,
+        )
+
     @sp_endpoint("/fba/inbound/<version>/shipments/{}/preorder")
     def preorder(self, shipment_id, **kwargs):
         """
