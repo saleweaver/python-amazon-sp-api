@@ -1,3 +1,30 @@
+## v1.9.47 - 2025-08-25
+# Changelog
+
+## Version 1.9.47
+
+### New Features
+- **Fulfillment Inbound API**: Added a new method `update_shipment_name` to the `FulfillmentInbound` class. This method allows updating the name of an existing shipment. It supports the following parameters:
+  - `inboundPlanId`: Identifier for the inbound plan.
+  - `shipmentId`: Identifier for the shipment.
+  - `body`: A dictionary containing the new name for the shipment.
+
+  ```mermaid
+  graph TD;
+      A[Client] --> B[update_shipment_name];
+      B --> C[inboundPlanId];
+      B --> D[shipmentId];
+      B --> E[body];
+  ```
+
+### Changes
+- **Dependencies**: Updated the following dependencies:
+  - `requests` from `2.32.4` to `2.32.5`
+  - `boto3` from `1.39.14` to `1.40.15`
+
+### Internal
+- Updated version number from 1.9.46 to 1.9.47.
+
 ## v1.9.46 - 2025-07-28
 # Changelog
 
