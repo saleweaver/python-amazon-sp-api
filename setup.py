@@ -14,9 +14,7 @@ setup(
         "aws-caching": ["aws-secretsmanager-caching", "boto3"],
         "aws": ["boto3"]
     },
-    packages=['tests', 'tests.api', 'tests.api.orders', 'tests.api.sellers', 'tests.api.finances',
-              'tests.api.product_fees', 'tests.api.notifications', 'tests.api.reports', 'tests.client',
-              'sp_api',
+    packages=['sp_api',
               'sp_api.api',
               'sp_api.api.orders',
               'sp_api.api.sellers',
