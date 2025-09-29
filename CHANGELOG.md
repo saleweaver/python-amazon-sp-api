@@ -1,3 +1,21 @@
+## v1.9.49 - 2025-09-29
+## Version 1.9.49
+
+### New Features
+- **External Fulfillment API**: Added a new module `ExternalFulfillment` to the package. This module is now available for import and use in your projects.
+
+  ```mermaid
+  graph TD;
+      A[Client] --> B[ExternalFulfillment];
+  ```
+
+### Changes
+- **Dependencies**: Updated the `boto3` dependency from `1.40.21` to `1.40.40` to ensure compatibility and leverage the latest features and fixes.
+
+### Internal
+- Added `sp_api.api.external_fulfillment` to the list of packages in `setup.py`.
+- Updated version number from 1.9.48 to 1.9.49.
+
 ## v1.9.48 - 2025-09-03
 ## Version 1.9.48
 
