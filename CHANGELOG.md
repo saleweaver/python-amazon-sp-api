@@ -1,3 +1,17 @@
+## v1.9.50 - 2025-09-29
+## Version 1.9.50
+
+### Changes
+- **Module Import Path**: Corrected the import path for `ExternalFulfillment` to ensure proper module loading and usage.
+
+  ```mermaid
+  graph TD;
+      A[Client] --> B[sp_api.api.external_fulfillment.external_fulfillment];
+  ```
+
+### Internal
+- Updated version number from 1.9.49 to 1.9.50 in `__version__.py`.
+
 ## v1.9.49 - 2025-09-29
 ## Version 1.9.49
 
