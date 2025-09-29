@@ -97,7 +97,7 @@ from .amazon_warehousing_and_distribu.amazon_warehousing_and_distribu import (
     AmazonWarehousingAndDistributionVersion,
 )
 
-from .external_fulfillment import ExternalFulfillment
+from .external_fulfillment.external_fulfillment import ExternalFulfillment
 
 __all__ = [
     "Sales",
