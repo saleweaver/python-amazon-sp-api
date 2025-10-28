@@ -6,6 +6,6 @@ boto3~=1.40.59
 cachetools~=5.5.2
 setuptools~=80.9.0
 pytz~=2025.1
-confuse~=2.0.1
+confuse~=2.1.0
 jinja2
 
