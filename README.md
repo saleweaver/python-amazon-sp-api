@@ -16,7 +16,7 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 With Amazon’s new SP-API pricing model (annual fees plus usage-based charges for GET requests), inefficient integrations will quickly become costly. If your systems rely on `python-amazon-sp-api` and you want to control these expenses, I offer consulting to review and optimize your implementation—such as replacing high-volume Orders API polling with report-based workflows and reducing unnecessary GET traffic wherever possible. If you’d like expert support preparing your SP-API usage for the upcoming pricing changes, feel free to get in touch.
 
 
-[Get in touch](mailto:fees@clairinsights.com)
+<fees@clairinsights.com>
 
 ---
 
