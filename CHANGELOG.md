@@ -1,3 +1,30 @@
+## v1.9.52 - 2025-12-05
+## Version 1.9.52
+
+### Relevant Changes
+- **Documentation**: Enhanced the `README.md` by adding a CodeFactor badge, providing users with a quick view of the code quality and maintainability status.
+  
+### Internal
+- Updated version number from 1.9.51 to 1.9.52 in `__version__.py`.
+
+### Diagrams
+#### Updated Documentation Structure
+```mermaid
+graph TD;
+    A[Documentation] --> B[architecture.rst];
+    A --> C[quickstart.rst];
+    A --> D[endpoints];
+    A --> E[responses];
+    A --> F[utils];
+    A --> G[examples];
+```
+
+#### Module Import Path
+```mermaid
+graph TD;
+    A[Client] --> B[sp_api.api.external_fulfillment.external_fulfillment];
+
+
 ## v1.9.51 - 2025-12-05
 ## Version 1.9.51
 
