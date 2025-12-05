@@ -1,3 +1,4 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/saleweaver/python-amazon-sp-api/badge)](https://www.codefactor.io/repository/github/saleweaver/python-amazon-sp-api)
 [![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api)](https://pepy.tech/project/python-amazon-sp-api)
 [![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/month)](https://pepy.tech/project/python-amazon-sp-api)
 [![Downloads](https://static.pepy.tech/badge/python-amazon-sp-api/week)](https://pepy.tech/project/python-amazon-sp-api)
