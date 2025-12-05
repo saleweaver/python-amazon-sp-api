@@ -1,3 +1,29 @@
+## v1.9.55 - 2025-12-05
+## Version 1.9.55
+
+### Relevant Changes
+- **Security**: Enhanced MD5 hash usage by adding the `usedforsecurity=False` parameter. This change addresses security concerns when MD5 is used for non-security purposes.
+- **Error Handling**: Improved the `Reports` class by adding error logging to capture exceptions during document decompression, aiding in debugging and issue resolution.
+
+### Internal
+- **Documentation**: 
+  - Updated the documentation theme to `pydata_sphinx_theme` for a more modern look and feel.
+  - Adjusted HTML theme options to include a custom logo and hide previous/next navigation.
+  - Updated copyright year to 2025.
+- **Code Maintenance**: 
+  - Removed unnecessary spaces in API request methods across several modules for improved consistency and readability.
+  - Updated version number from 1.9.54 to 1.9.55 in `__version__.py`.
+
+### Diagrams
+#### Security Update in MD5 Usage
+```mermaid
+graph TD;
+    A[MD5 Usage] --> B[usedforsecurity=False];
+    B --> C[Improved Security];
+```
+
+This version focuses on enhancing security practices and improving error handling, alongside internal updates to documentation and code maintenance.
+
 ## v1.9.54 - 2025-12-05
 ## Version 1.9.54
 
