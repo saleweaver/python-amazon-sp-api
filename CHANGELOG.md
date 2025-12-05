@@ -1,3 +1,23 @@
+## v1.9.53 - 2025-12-05
+## Version 1.9.53
+
+### Relevant Changes
+- **Documentation**: Removed promotional content and outdated announcements from the documentation layout, resulting in a cleaner and more focused user experience.
+
+### Internal
+- Updated version number from 1.9.52 to 1.9.53 in `__version__.py`.
+
+### Diagrams
+#### Documentation Layout Cleanup
+```mermaid
+graph TD;
+    A[Documentation Layout] --> B[Removed Ads];
+    A --> C[Removed Announcements];
+    A --> D[Improved Focus];
+```
+
+This update focuses on enhancing the documentation by removing unnecessary elements, providing a more streamlined and user-friendly interface.
+
 ## v1.9.52 - 2025-12-05
 ## Version 1.9.52
 
