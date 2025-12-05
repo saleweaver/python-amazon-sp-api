@@ -11,6 +11,15 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ---
 
+### SP-API fees & call optimization
+
+With Amazon’s new SP-API pricing model (annual fees plus usage-based charges for GET requests), inefficient integrations will quickly become costly. If your systems rely on `python-amazon-sp-api` and you want to control these expenses, I offer consulting to review and optimize your implementation—such as replacing high-volume Orders API polling with report-based workflows and reducing unnecessary GET traffic wherever possible. If you’d like expert support preparing your SP-API usage for the upcoming pricing changes, feel free to get in touch.
+
+
+[Get in touch](mailto:fees@clairinsights.com)
+
+---
+
 ### 🚀 Version 2 🚀
 
 Version 2 is currently being built - featuring pydantic, async support and better versioning. 
@@ -141,4 +150,3 @@ The client is pretty extensible and can be used for any other API. Check it out 
 
 
 ![Alt](https://repobeats.axiom.co/api/embed/25e8a3fe715fe68f2996ab99fe2e6188cd96a459.svg "Repobeats analytics image")
-
