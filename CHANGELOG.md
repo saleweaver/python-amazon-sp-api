@@ -1,3 +1,32 @@
+## v1.9.51 - 2025-12-05
+## Version 1.9.51
+
+### Changes
+- **Documentation**: Added a comprehensive `architecture.rst` file to the documentation, detailing the internal structure and components of the library. This addition helps users understand the library's design and how to extend it safely.
+- **Documentation**: Updated the `quickstart.rst` to provide more detailed examples and explanations for setting up and using the library, including handling credentials, pagination, and retries.
+- **Dependencies**: Updated `boto3` to version `1.42.3` and `confuse` to version `2.1.0` in both `requirements.txt` and `docs/requirements.txt` to ensure compatibility and leverage new features.
+
+### Internal
+- Updated version number from 1.9.50 to 1.9.51 in `__version__.py`.
+
+### Diagrams
+#### Module Import Path
+```mermaid
+graph TD;
+    A[Client] --> B[sp_api.api.external_fulfillment.external_fulfillment];
+```
+
+#### Documentation Structure
+```mermaid
+graph TD;
+    A[Documentation] --> B[architecture.rst];
+    A --> C[quickstart.rst];
+    A --> D[endpoints];
+    A --> E[responses];
+    A --> F[utils];
+    A --> G[examples];
+
+
 ## v1.9.50 - 2025-09-29
 ## Version 1.9.50
 
