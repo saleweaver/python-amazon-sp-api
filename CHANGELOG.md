@@ -1,3 +1,24 @@
+## v1.9.56 - 2025-12-05
+## Version 1.9.56
+
+### Relevant Changes
+- **SP-API Fees & Call Optimization**: Added a section in the README to address the new SP-API pricing model by Amazon. This includes consulting services for optimizing API usage to reduce costs associated with high-volume requests.
+  
+### Internal
+- **Version Update**: Updated the version number from 1.9.55 to 1.9.56 in `__version__.py`.
+
+### Diagrams
+#### SP-API Fees & Call Optimization
+```mermaid
+graph TD;
+    A[SP-API Usage] --> B[High Volume Requests];
+    B --> C[Increased Costs];
+    C --> D[Optimization Consulting];
+    D --> E[Reduced Costs];
+```
+
+This version introduces guidance on managing SP-API fees and highlights internal version updates.
+
 ## v1.9.55 - 2025-12-05
 ## Version 1.9.55
 
