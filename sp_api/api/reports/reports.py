@@ -439,6 +439,7 @@ class Reports(Client):
                 try:
                     document = zlib.decompress(bytearray(document), 15 + 32)
                 except Exception as e:
+                    print(e)
                     pass
 
             if character_code:

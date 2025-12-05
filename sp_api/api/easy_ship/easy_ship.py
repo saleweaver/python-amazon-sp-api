@@ -43,7 +43,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     
 
     @sp_endpoint('/easyShip/2022-03-23/package', method='GET')
@@ -72,7 +72,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  params=kwargs)
+        return self._request(kwargs.pop('path'), params=kwargs)
     
 
     @sp_endpoint('/easyShip/2022-03-23/package', method='POST')
@@ -114,7 +114,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     
 
     @sp_endpoint('/easyShip/2022-03-23/package', method='PATCH')
@@ -146,7 +146,7 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     
 
     @sp_endpoint('/easyShip/2022-03-23/packages/bulk', method='POST')
@@ -186,5 +186,5 @@ The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits 
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     

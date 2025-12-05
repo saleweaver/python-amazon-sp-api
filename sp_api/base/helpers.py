@@ -23,7 +23,7 @@ def sp_endpoint(path, method="GET"):
 
 
 def create_md5(file):
-    hash_md5 = hashlib.md5()
+    hash_md5 = hashlib.md5(usedforsecurity=False)
     if isinstance(file, BytesIO):
         for chunk in iter(lambda: file.read(4096), b""):
             hash_md5.update(chunk)

@@ -42,7 +42,7 @@ class ApplicationIntegrations(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     
 
     @sp_endpoint('/appIntegrations/2024-04-01/notifications/deletion', method='POST')
@@ -78,7 +78,7 @@ class ApplicationIntegrations(Client):
             ApiResponse:
         """
     
-        return self._request(kwargs.pop('path'),  data=kwargs)
+        return self._request(kwargs.pop('path'), data=kwargs)
     
 
     @sp_endpoint('/appIntegrations/2024-04-01/notifications/{}/feedback', method='POST')
