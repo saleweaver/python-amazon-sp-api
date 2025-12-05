@@ -1,3 +1,24 @@
+## v1.9.54 - 2025-12-05
+## Version 1.9.54
+
+### Relevant Changes
+- **Security**: Updated MD5 hash usage to include `usedforsecurity=False` parameter to address security concerns when MD5 is used for non-security purposes.
+- **Error Handling**: Added error logging in the `Reports` class to print exceptions during document decompression, aiding in debugging and issue resolution.
+
+### Internal
+- Code cleanup: Removed unnecessary spaces in API request methods across several modules for consistency and readability.
+- Updated version number from 1.9.53 to 1.9.54 in `__version__.py`.
+
+### Diagrams
+#### Security Update in MD5 Usage
+```mermaid
+graph TD;
+    A[MD5 Usage] --> B[usedforsecurity=False];
+    B --> C[Improved Security];
+```
+
+This version enhances security practices by explicitly marking MD5 usage as non-security-related, and improves error handling by logging exceptions during document processing.
+
 ## v1.9.53 - 2025-12-05
 ## Version 1.9.53
 
