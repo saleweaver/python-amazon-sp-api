@@ -1,3 +1,28 @@
+## v1.9.58 - 2025-12-10
+## Version 1.9.58
+
+### Relevant Changes
+- **New Feature: Customer Feedback API**: Introduced a new module `CustomerFeedback` to access customer reviews and returns data. This includes endpoints for:
+  - Retrieving an item's most positive and negative review topics.
+  - Accessing an item's associated browse node.
+  - Fetching review and return trends for items and browse nodes.
+
+  #### Customer Feedback API Diagram
+  ```mermaid
+  graph TD;
+      A[CustomerFeedback API] --> B[Item Review Topics];
+      A --> C[Item Browse Node];
+      A --> D[Review Trends];
+      A --> E[Return Topics];
+      A --> F[Return Trends];
+  ```
+
+### Internal
+- **Dependency Update**: Updated `boto3` from version `1.42.3` to `1.42.6` in both `requirements.txt` and `docs/requirements.txt`.
+- **Version Update**: Updated the version number from 1.9.57 to 1.9.58 in `__version__.py`.
+
+This version introduces the Customer Feedback API, enabling users to gain insights into customer reviews and returns, and includes internal dependency updates.
+
 ## v1.9.57 - 2025-12-05
 ## Version 1.9.57
 
