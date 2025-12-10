@@ -39,6 +39,7 @@ setup(
               'sp_api.util',
               ##### DO NOT DELETE ########## INSERT PACKAGE HERE #######
               'sp_api.api.application_integrations',
+              'sp_api.api.customer_feedback',
               'sp_api.api.external_fulfillment',
               'sp_api.api.easy_ship',
               'sp_api.api.listings_restrictions',

@@ -26,7 +26,7 @@ from .application_integrations.application_integrations import ApplicationIntegr
 
 from .easy_ship.easy_ship import EasyShip
     
-
+from .customer_feedback.customer_feedback import CustomerFeedback
 
 from .listings_restrictions.listings_restrictions import ListingsRestrictions
 
@@ -119,7 +119,7 @@ __all__ = [
     ##### DO NOT DELETE ########## INSERT TITLE HERE #######
     "ExternalFulfillment",
     "ApplicationIntegrations",
-    
+    "CustomerFeedback",
     "FulfillmentInbound",
     
     "EasyShip",
