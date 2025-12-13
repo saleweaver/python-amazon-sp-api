@@ -1,3 +1,15 @@
+## v1.9.59 - 2025-12-13
+## Version 1.9.59
+
+### Relevant Changes
+- **Bug Fix: ApiResponse Handling**: Improved the handling of `headers` and `pagination` in `ApiResponse` to prevent potential `NoneType` errors. This ensures more robust error handling and token retrieval.
+
+### Internal
+- **Dependency Update**: Updated `boto3` from version `1.42.6` to `1.42.8` in both `requirements.txt` and `docs/requirements.txt`.
+- **Version Update**: Updated the version number from 1.9.58 to 1.9.59 in `__version__.py`.
+
+This version focuses on improving the stability of API response handling and includes internal dependency updates.
+
 ## v1.9.58 - 2025-12-10
 ## Version 1.9.58
 
