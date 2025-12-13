@@ -44,13 +44,13 @@ class ApiResponse:
         self.errors = errors
         self.pagination = pagination
         self.headers = headers
-        self.rate_limit = headers.get("x-amzn-RateLimit-Limit")
+        self.rate_limit = (headers or {}).get("x-amzn-RateLimit-Limit")
         try:
             self.next_token = (
                 nextToken
                 or self.payload.get("pagination", {}).get("nextToken", None)
                 or self.payload.get("NextToken", None)
-                or self.pagination.get("nextToken", None)
+                or (self.pagination or {}).get("nextToken", None)
                 or self.payload.get("nextPageToken", None)
                 or self.payload.get("nextToken", None)
             )
