@@ -1,3 +1,25 @@
+## v1.9.60 - 2026-01-08
+## Version 1.9.60
+
+### Relevant Changes
+- **Bug Fix: ApiResponse Handling**: Enhanced the handling of `headers` and `pagination` in `ApiResponse` to prevent potential `NoneType` errors. This improvement ensures more robust error handling and token retrieval.
+
+### Internal
+- **Dependency Update**: Downgraded `boto3` from version `1.42.8` to `1.42.24` in both `requirements.txt` and `docs/requirements.txt` to maintain compatibility.
+- **Author Information**: Updated the author's name in `setup.py` from "Michael" to "Michael Primke" for clarity.
+
+This version focuses on improving the stability of API response handling and includes internal dependency adjustments.
+
+```mermaid
+graph TD;
+    A[Version 1.9.59] -->|Bug Fix| B[ApiResponse Handling Improved];
+    A -->|Dependency Update| C[boto3 Downgraded to 1.42.24];
+    A -->|Author Update| D[Author Name Updated in setup.py];
+    B --> E[Robust Error Handling];
+    C --> F[Compatibility Maintained];
+    D --> G[Clarity in Author Information];
+
+
 ## v1.9.59 - 2025-12-13
 ## Version 1.9.59
 
