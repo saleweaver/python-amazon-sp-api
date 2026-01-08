@@ -70,7 +70,7 @@ setup(
     scripts=['make_endpoint/make_endpoint'],
     url='https://github.com/saleweaver/python-amazon-sp-api',
     license='MIT',
-    author='Michael',
+    author='Michael Primke',
     author_email='primke.michael@gmail.com',
     description='Python wrapper for the Amazon Selling-Partner API'
 )
