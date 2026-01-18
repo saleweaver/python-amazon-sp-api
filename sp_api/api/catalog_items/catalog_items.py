@@ -1,6 +1,7 @@
 import enum
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.util import normalize_included_data
 
 
 class CatalogItemsVersion(str, enum.Enum):
@@ -56,9 +57,7 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        includedData = kwargs.get("includedData", [])
-        if includedData and isinstance(includedData, list):
-            kwargs["includedData"] = ",".join(includedData)
+        normalize_included_data(kwargs)
         return self._request(kwargs.pop("path"), params=kwargs)
 
     @sp_endpoint("/catalog/<version>/items/{}", method="GET")
@@ -87,7 +86,5 @@ class CatalogItems(Client):
             ApiResponse:
         """
 
-        includedData = kwargs.get("includedData", [])
-        if includedData and isinstance(includedData, list):
-            kwargs["includedData"] = ",".join(includedData)
+        normalize_included_data(kwargs)
         return self._request(fill_query_params(kwargs.pop("path"), asin), params=kwargs)

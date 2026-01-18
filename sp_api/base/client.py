@@ -1,18 +1,15 @@
-import hashlib
-import json
 from datetime import datetime
 import logging
 import os
 
-from requests import request
-from requests.exceptions import JSONDecodeError
-
 from sp_api.auth import AccessTokenClient, AccessTokenResponse
 from .ApiResponse import ApiResponse
 from .base_client import BaseClient
-from .exceptions import get_exception_for_code, MissingScopeException
+from .exceptions import MissingScopeException
 from .marketplaces import Marketplaces
 from sp_api.base.credential_provider import CredentialProvider
+from ._core import prepare_request, parse_response, resolve_method
+from ._transport_httpx import HttpxTransport
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.INFO)  # Set default to DEBUG; users can override externally
@@ -63,6 +60,11 @@ class Client(BaseClient):
         self.timeout = timeout
         self.version = version
         self.verify = verify
+        self._transport = HttpxTransport(
+            timeout=timeout,
+            proxies=proxies,
+            verify=verify,
+        )
 
     @property
     def headers(self):
@@ -96,40 +98,32 @@ class Client(BaseClient):
         bulk: bool = False,
         wrap_list: bool = False,
     ) -> ApiResponse:
-        if params is None:
-            params = {}
-        if data is None:
-            data = {}
+        method, params, data = resolve_method(params, data)
+        self.method = method
 
-        # Note: The use of isinstance here is to support request schemas that are an array at the
-        # top level, eg get_product_fees_estimate
-        self.method = params.pop(
-            "method", data.pop("method", "GET") if isinstance(data, dict) else "GET"
-        )
+        request_headers = headers or self.headers
 
-        if add_marketplace:
-            self._add_marketplaces(data if self.method in ("POST", "PUT") else params)
-
-        log.debug("HTTP Method: %s", self.method)
+        log.debug("HTTP Method: %s", method)
         log.debug("Making request to URL: %s", self.endpoint + self._check_version(path))
         log.debug("Request Params: %s", params)
-        log.debug("Request Data: %s", data if self.method in ("POST", "PUT", "PATCH") else None)
-        log.debug("Request Headers: %s", headers or self.headers)
-
-        res = request(
-            self.method,
-            self.endpoint + self._check_version(path),
-            params=params,
-            data=(
-                json.dumps(data)
-                if data and self.method in ("POST", "PUT", "PATCH")
-                else None
-            ),
-            headers=headers or self.headers,
-            timeout=self.timeout,
-            proxies=self.proxies,
-            verify=self.verify,
+        log.debug(
+            "Request Data: %s",
+            data if method in ("POST", "PUT", "PATCH") else None,
         )
+        log.debug("Request Headers: %s", request_headers)
+
+        prepared = prepare_request(
+            method=method,
+            endpoint=self.endpoint,
+            path=path,
+            params=params,
+            data=data,
+            headers=request_headers,
+            add_marketplace=add_marketplace,
+            marketplace_id=self.marketplace_id,
+            version=self.version,
+        )
+        res = self._transport.request(**prepared)
         return self._check_response(res, res_no_data, bulk, wrap_list)
 
     def _check_response(
@@ -139,36 +133,15 @@ class Client(BaseClient):
         bulk: bool = False,
         wrap_list: bool = False,
     ) -> ApiResponse:
-        if (self.method == "DELETE" or res_no_data) and 200 <= res.status_code < 300:
-            try:
-                js = res.json() or {}
-            except JSONDecodeError:
-                js = {"status_code": res.status_code}
-        else:
-            try:
-                js = res.json() or {}
-            except JSONDecodeError:
-                js = {}
-
-        log.debug("Response before list handling: %s", js)
-
-
-        if isinstance(js, list):
-            if wrap_list:
-                # Support responses that are an array at the top level, eg get_product_fees_estimate
-                js = dict(payload=js)
-            else:
-                js = js[0]
-
-        error = js.get("errors", None)
-
-        if error:
-            log.error("Error Response: %s", error)
-            exception = get_exception_for_code(res.status_code)
-            raise exception(error, headers=res.headers)
-
-        log.debug("Response: %s", js)
-        return ApiResponse(**js, headers=res.headers)
+        response = parse_response(
+            res,
+            method=self.method,
+            res_no_data=res_no_data,
+            bulk=bulk,
+            wrap_list=wrap_list,
+        )
+        log.debug("Response: %s", response)
+        return response
 
     def _add_marketplaces(self, data):
         POST = ["marketplaceIds", "MarketplaceIds"]
@@ -195,6 +168,9 @@ class Client(BaseClient):
                 for k in GET
             }
         )
+
+    def close(self):
+        self._transport.close()
 
     def _request_grantless_operation(
         self, path: str, *, data: dict = None, params: dict = None

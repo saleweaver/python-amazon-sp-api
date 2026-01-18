@@ -1,5 +1,3 @@
-from collections import abc
-
 from sp_api.base import (
     Client,
     sp_endpoint,
@@ -7,6 +5,7 @@ from sp_api.base import (
     ApiResponse,
     IncludedData,
 )
+from sp_api.util import normalize_included_data
 
 
 class ListingsItems(Client):
@@ -65,17 +64,7 @@ class ListingsItems(Client):
         Returns:
             ApiResponse:
         """
-        if (
-            kwargs.get("includedData")
-            and isinstance(kwargs.get("includedData"), abc.Iterable)
-            and not isinstance(kwargs.get("includedData"), str)
-        ):
-            kwargs["includedData"] = ",".join(
-                [
-                    x.value if isinstance(x, IncludedData) else x
-                    for x in kwargs["includedData"]
-                ]
-            )
+        normalize_included_data(kwargs, enum_cls=IncludedData)
 
         return self._request(
             fill_query_params(kwargs.pop("path"), sellerId, sku), params=kwargs
@@ -101,17 +90,7 @@ class ListingsItems(Client):
         Returns:
             ApiResponse:
         """
-        if (
-            kwargs.get("includedData")
-            and isinstance(kwargs.get("includedData"), abc.Iterable)
-            and not isinstance(kwargs.get("includedData"), str)
-        ):
-            kwargs["includedData"] = ",".join(
-                [
-                    x.value if isinstance(x, IncludedData) else x
-                    for x in kwargs["includedData"]
-                ]
-            )
+        normalize_included_data(kwargs, enum_cls=IncludedData)
 
         return self._request(
             fill_query_params(kwargs.pop("path"), sellerId), params=kwargs

@@ -3,6 +3,7 @@ import zlib
 import requests
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.util import should_add_marketplace
 
 
 class Feeds(Client):
@@ -34,7 +35,7 @@ class Feeds(Client):
             ApiResponse:
         """
 
-        add_marketplace = not "nextToken" in kwargs
+        add_marketplace = should_add_marketplace(kwargs, "nextToken")
         return self._request(
             kwargs.pop("path"), params=kwargs, add_marketplace=add_marketplace
         )

@@ -3,6 +3,7 @@ from datetime import datetime
 
 from sp_api.base import Client, Marketplaces, sp_endpoint, Granularity, ApiResponse
 import logging
+from sp_api.util import encode_kwarg
 
 
 class Sales(Client):
@@ -71,8 +72,7 @@ class Sales(Client):
         )
         if granularityTimeZone:
             kwargs.update({"granularityTimeZone": granularityTimeZone})
-        if "sku" in kwargs:
-            kwargs.update({"sku": urllib.parse.quote(kwargs.pop("sku"), safe="")})
+        encode_kwarg(kwargs, "sku", lambda value: urllib.parse.quote(value, safe=""))
         return self._request(kwargs.pop("path"), params=kwargs)
 
     @staticmethod

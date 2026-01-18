@@ -1,7 +1,4 @@
-import zlib
-from collections import abc
 from datetime import datetime
-from io import BytesIO, StringIO
 from typing import Optional, Union
 
 import requests
@@ -12,6 +9,19 @@ from sp_api.base import (
     fill_query_params,
     ApiResponse,
     Marketplaces,
+)
+from sp_api.util import (
+    normalize_csv_param,
+    normalize_datetime_kwargs,
+    normalize_marketplace_ids,
+    should_add_marketplace,
+)
+from sp_api.util.report_document import (
+    decode_document,
+    decompress_bytes,
+    handle_file,
+    resolve_character_code,
+    stream_to_file_sync,
 )
 
 
@@ -60,42 +70,16 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if (
-            kwargs.get("reportTypes", None)
-            and isinstance(kwargs.get("reportTypes"), abc.Iterable)
-            and not isinstance(kwargs.get("reportTypes"), str)
-        ):
-            kwargs.update({"reportTypes": ",".join(kwargs.get("reportTypes"))})
-        if (
-            kwargs.get("processingStatuses", None)
-            and isinstance(kwargs.get("processingStatuses"), abc.Iterable)
-            and not isinstance(kwargs.get("processingStatuses"), str)
-        ):
-            kwargs.update(
-                {"processingStatuses": ",".join(kwargs.get("processingStatuses"))}
-            )
-        if (
-            kwargs.get("marketplaceIds", None)
-            and isinstance(kwargs.get("marketplaceIds"), abc.Iterable)
-            and not isinstance(kwargs.get("marketplaceIds"), str)
-        ):
-            marketplaces = kwargs.get("marketplaceIds")
-            kwargs.update(
-                {
-                    "marketplaceIds": ",".join(
-                        [
-                            m.marketplace_id if isinstance(m, Marketplaces) else m
-                            for m in marketplaces
-                        ]
-                    )
-                }
-            )
-        for k in ["createdSince", "createdUntil"]:
-            if kwargs.get(k, None) and isinstance(kwargs.get(k), datetime):
-                kwargs.update({k: kwargs.get(k).isoformat()})
-        if not kwargs.get("nextToken"):
-            return self._request(kwargs.pop("path"), params=kwargs)
-        return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)
+        normalize_csv_param(kwargs, "reportTypes")
+        normalize_csv_param(kwargs, "processingStatuses")
+        normalize_marketplace_ids(kwargs, marketplace_cls=Marketplaces)
+        normalize_datetime_kwargs(kwargs, ["createdSince", "createdUntil"])
+        add_marketplace = should_add_marketplace(kwargs, "nextToken")
+        return self._request(
+            kwargs.pop("path"),
+            params=kwargs,
+            add_marketplace=add_marketplace,
+        )
 
     @sp_endpoint("/reports/2021-06-30/reports", method="POST")
     def create_report(self, **kwargs) -> ApiResponse:
@@ -134,10 +118,7 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if isinstance(kwargs.get("dataStartTime", None), datetime):
-            kwargs.update({"dataStartTime": kwargs.get("dataStartTime").isoformat()})
-        if isinstance(kwargs.get("dataEndTime", None), datetime):
-            kwargs.update({"dataEndTime": kwargs.get("dataEndTime").isoformat()})
+        normalize_datetime_kwargs(kwargs, ["dataStartTime", "dataEndTime"])
         return self._request(kwargs.pop("path"), data=kwargs)
 
     @sp_endpoint("/reports/2021-06-30/reports/{}", method="DELETE")
@@ -223,12 +204,7 @@ class Reports(Client):
         Returns:
             ApiResponse
         """
-        if (
-            kwargs.get("reportTypes", None)
-            and isinstance(kwargs.get("reportTypes"), abc.Iterable)
-            and not isinstance(kwargs.get("reportTypes"), str)
-        ):
-            kwargs.update({"reportTypes": ",".join(kwargs.get("reportTypes"))})
+        normalize_csv_param(kwargs, "reportTypes")
 
         return self._request(kwargs.pop("path"), params=kwargs)
 
@@ -371,6 +347,7 @@ class Reports(Client):
         download: bool = False,
         file=None,
         character_code: Optional[str] = None,
+        stream: bool = False,
         timeout: Optional[Union[float,int]] = None,
         **kwargs
     ) -> ApiResponse:
@@ -410,6 +387,7 @@ class Reports(Client):
                             obtaining the document from the document URL.
                             It fallbacks to 'iso-8859-1' if no encoding was found.
                             Only valid if decrypt=True.
+            stream: bool | if True and file is provided, stream the document to disk
             timeout: int | optional, the timeout for the request to download the document
 
         Returns:
@@ -420,54 +398,36 @@ class Reports(Client):
             add_marketplace=False,
         )
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
+            compression_algorithm = res.payload.get("compressionAlgorithm")
             document_response = requests.get(
                 res.payload.get("url"),
                 proxies=self.proxies,
                 verify=self.verify,
                 timeout=timeout,
+                stream=stream,
             )
-            document = document_response.content
             if not character_code:
-                character_code = (
-                    document_response.encoding
-                    if document_response and document_response.encoding
-                    else "iso-8859-1"
+                character_code = resolve_character_code(
+                    document_response.encoding, fallback="iso-8859-1"
                 )
-                if character_code.lower() == "windows-31j":
-                    character_code = "cp932"
-            if "compressionAlgorithm" in res.payload:
-                try:
-                    document = zlib.decompress(bytearray(document), 15 + 32)
-                except Exception as e:
-                    print(e)
-                    pass
-
-            if character_code:
-                try:
-                    decoded_document = document.decode(character_code)
-                except Exception as e:
-                    decoded_document = document
-
-            if download:
-                res.payload.update(
-                    {
-                        "document": decoded_document,
-                    }
+            if stream and file:
+                stream_to_file_sync(
+                    document_response,
+                    file,
+                    character_code,
+                    compression_algorithm,
                 )
-            if file:
-                self._handle_file(file, decoded_document, character_code)
+            else:
+                document = decompress_bytes(
+                    document_response.content, compression_algorithm
+                )
+                decoded_document = decode_document(document, character_code)
+                if download:
+                    res.payload.update(
+                        {
+                            "document": decoded_document,
+                        }
+                    )
+                if file:
+                    handle_file(file, decoded_document, character_code)
         return res
-
-    @staticmethod
-    def _handle_file(file, document, encoding):
-        if isinstance(file, str):
-            with open(file, "w+", encoding=encoding) as text_file:
-                text_file.write(document)
-        elif isinstance(file, BytesIO):
-            file.write(document.encode(encoding))
-            file.seek(0)
-        elif isinstance(file, StringIO):
-            file.write(document)
-            file.seek(0)
-        else:
-            file.write(document)

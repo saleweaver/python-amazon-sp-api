@@ -1,8 +1,8 @@
-from collections import abc
 import urllib
 
 from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
 from sp_api.base.InventoryEnums import InventoryGranularity
+from sp_api.util import normalize_csv_param
 
 
 class Inventories(Client):
@@ -68,11 +68,6 @@ class Inventories(Client):
                 "granularityId": kwargs.get("granularityId", self.marketplace_id),
             }
         )
-        if (
-            "sellerSkus" in kwargs
-            and isinstance(kwargs.get("sellerSkus"), abc.Iterable)
-            and not isinstance(kwargs.get("sellerSkus"), str)
-        ):
-            kwargs.update({"sellerSkus": ",".join(kwargs.get("sellerSkus"))})
+        normalize_csv_param(kwargs, "sellerSkus")
 
         return self._request(kwargs.pop("path"), params=kwargs)

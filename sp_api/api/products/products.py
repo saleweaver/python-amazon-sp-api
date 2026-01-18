@@ -7,6 +7,7 @@ from sp_api.api.products.products_definitions import (
     GetItemOffersBatchRequest,
     GetListingOffersBatchRequest,
 )
+from sp_api.util import ensure_csv
 
 
 class Products(Client):
@@ -377,10 +378,11 @@ class Products(Client):
         )
 
     def _create_get_pricing_request(self, item_list, item_type, **kwargs):
+        items_csv = ensure_csv(item_list)
         return self._request(
             kwargs.pop("path"),
             params={
-                **{f"{item_type}s": ",".join(item_list)},
+                **{f"{item_type}s": items_csv},
                 "ItemType": item_type,
                 **(
                     {"ItemCondition": kwargs.pop("ItemCondition")}
