@@ -4,9 +4,7 @@ from sp_api.api.shipping.shippingV2 import Shipping, AmznShippingBusiness
 from sp_api.base import SellingApiBadRequestException
 
 
-def test_get_rates():
-    res = Shipping(amzn_shipping_business=AmznShippingBusiness.UK).get_rates(
-        **{
+obj = {
             "shipTo": {
                 "name": "Arlene Purdy",
                 "addressLine1": "8076 Armstrong Extensions",
@@ -61,8 +59,26 @@ def test_get_rates():
             "channelDetails": {
                 "channelType": "EXTERNAL",
             },
-            "shipmentType": "FORWARD",
+            "labelSpecifications": {
+                "format": "ZPL",
+                "size": {
+                    "width": 4,
+                    "length": 6,
+                    "unit": "INCH"
+                },
+                "dpi": 203,
+                "pageLayout": "DEFAULT",
+                "needFileJoining": False,
+                "requestedDocumentTypes": ["LABEL"]
+            },
+            "serviceSelection": {
+                "serviceId": ["SWA-UK-PREM"]
+            },
         }
+
+def test_get_rates():
+    res = Shipping(amzn_shipping_business=AmznShippingBusiness.UK).get_rates(
+        **obj
     )
     assert res.errors is None
     assert res.payload.get('requestToken') is not None
@@ -184,77 +200,7 @@ def test_get_access_points():
 
 def test_one_click_shipment():
     res = Shipping(amzn_shipping_business=AmznShippingBusiness.UK).one_click_shipment(
-        **{
-            "shipTo": {
-                "name": "Arlene Purdy",
-                "addressLine1": "8076 Armstrong Extensions",
-                "city": "South Kristopherborough",
-                "countryCode": "UK",
-                "postalCode": "NW10 0TL",
-                "email": "buyer@test.com",
-                "phoneNumber": "700-008-5275",
-            },
-            "shipFrom": {
-                "name": "Orville Miller I",
-                "addressLine1": "16063 Daugherty Throughway",
-                "city": "Connland",
-                "countryCode": "UK",
-                "postalCode": "NW10 0TL",
-                "email": "seller@test.com",
-                "phoneNumber": "662-302-7817",
-            },
-            "shipperInstruction": {
-                "deliveryNotes": "TEST"
-            },
-            "packages": [
-                {
-                    "dimensions": {
-                        "length": 30,
-                        "width": 10,
-                        "height": 10,
-                        "unit": "CENTIMETER"
-                    },
-                    "weight": {
-                        "unit": "KILOGRAM",
-                        "value": 1.00,
-                    },
-                    "insuredValue": {
-                        "value": 0.00,
-                        "unit": "EUR",
-                    },
-                    "sellerDisplayName": "SELLER_NAME",
-                    "packageClientReferenceId": "PACKAGE_ID_1",
-                    "items": [
-                        {
-                            "description": "ITEM_1",
-                            "quantity": 1,
-                            "weight": {
-                                "value": 1.00,
-                                "unit": "KILOGRAM",
-                            },
-                        }
-                    ]
-                }
-            ],
-            "channelDetails": {
-                "channelType": "EXTERNAL",
-            },
-            "labelSpecifications": {
-                "format": "ZPL",
-                "size": {
-                    "width": 4,
-                    "length": 6,
-                    "unit": "INCH"
-                },
-                "dpi": 203,
-                "pageLayout": "DEFAULT",
-                "needFileJoining": False,
-                "requestedDocumentTypes": ["LABEL"]
-            },
-            "serviceSelection": {
-                "serviceId": ["SWA-UK-PREM"]
-            },
-        }
+        **obj
     )
     assert res.errors is None
     assert res.payload.get('shipmentId')
