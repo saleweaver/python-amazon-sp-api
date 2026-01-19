@@ -1,3 +1,22 @@
+## v2.0.4 - 2026-01-19
+## Version 2.0.4
+
+### New Features
+
+#### Enhanced Order Query Parameters
+
+- Implemented `normalize_csv_param` utility to automatically normalize CSV parameters in the `Orders` API, both for synchronous and asynchronous clients. This enhancement simplifies the process of passing multiple values for parameters like `OrderStatuses`, `MarketplaceIds`, `FulfillmentChannels`, `PaymentMethods`, and `AmazonOrderIds`.
+
+```mermaid
+graph TD;
+    F[Orders API] -->|normalize_csv_param| G[CSV Parameter Normalization];
+    G --> H[OrderStatuses, MarketplaceIds, etc.];
+```
+
+### Internal Changes
+
+- Updated the project version to 2.0.4 in `sp_api/__version__.py`.
+
 ## v2.0.3 - 2026-01-19
 ## Version 2.0.3
 
