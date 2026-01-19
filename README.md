@@ -13,6 +13,8 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ### New Features
 
+#### Async support!
+
 - httpx-based transport for sync clients, enabling connection pooling and consistent streaming behavior.
 - Async client package under `sp_api.asyncio` for non-blocking calls across services.
 
