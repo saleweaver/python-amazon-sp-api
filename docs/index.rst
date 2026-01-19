@@ -14,6 +14,7 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    credentials
    examples
    quickstart
+   async
    architecture
    versions
    endpoints
@@ -30,4 +31,3 @@ Indices and tables
 *  :ref:`genindex`
 *  :ref:`modindex`
 *  :ref:`search`
-
