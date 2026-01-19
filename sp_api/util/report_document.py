@@ -123,10 +123,18 @@ async def _stream_bytes_to_target_async(
             target.close()
 
 
+def _iter_response_bytes_sync(response):
+    if hasattr(response, "iter_content"):
+        return response.iter_content(chunk_size=8192)
+    if hasattr(response, "iter_bytes"):
+        return response.iter_bytes()
+    return response.iter_content(chunk_size=8192)
+
+
 def stream_to_file_sync(response, file, encoding, compression_algorithm):
     target = _open_stream_target(file, encoding)
     _stream_bytes_to_target_sync(
-        response.iter_content(chunk_size=8192),
+        _iter_response_bytes_sync(response),
         target,
         encoding,
         compression_algorithm,

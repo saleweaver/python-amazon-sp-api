@@ -7,7 +7,6 @@ setup(
     version=__version__,
     install_requires=[
         "httpx>=0.27.0",
-        "requests>=2.32.1",
         "cachetools>=4.2",
         "confuse>=1.4"
     ],

@@ -1,6 +1,6 @@
 import zlib
 
-import requests
+import httpx
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
 from sp_api.util import should_add_marketplace
@@ -186,11 +186,12 @@ class Feeds(Client):
             upload_data = upload_data.encode("iso-8859-1")
         except AttributeError:
             pass
-        upload = requests.put(
-            response.payload.get("url"),
-            data=upload_data,
-            headers={"Content-Type": content_type},
-        )
+        with httpx.Client() as client:
+            upload = client.put(
+                response.payload.get("url"),
+                content=upload_data,
+                headers={"Content-Type": content_type},
+            )
         if 200 <= upload.status_code < 300:
             return response
         from sp_api.base.exceptions import SellingApiException
@@ -241,7 +242,8 @@ class Feeds(Client):
             add_marketplace=False,
         )
         url = response.payload.get("url")
-        doc_response = requests.get(url)
+        with httpx.Client() as client:
+            doc_response = client.get(url)
 
         encoding = (
             doc_response.encoding

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional, Union
 
-import requests
+import httpx
 
 from sp_api.base import (
     Client,
@@ -399,35 +399,39 @@ class Reports(Client):
         )
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             compression_algorithm = res.payload.get("compressionAlgorithm")
-            document_response = requests.get(
-                res.payload.get("url"),
+            with httpx.Client(
                 proxies=self.proxies,
                 verify=self.verify,
                 timeout=timeout,
-                stream=stream,
-            )
-            if not character_code:
-                character_code = resolve_character_code(
-                    document_response.encoding, fallback="iso-8859-1"
-                )
-            if stream and file:
-                stream_to_file_sync(
-                    document_response,
-                    file,
-                    character_code,
-                    compression_algorithm,
-                )
-            else:
-                document = decompress_bytes(
-                    document_response.content, compression_algorithm
-                )
-                decoded_document = decode_document(document, character_code)
-                if download:
-                    res.payload.update(
-                        {
-                            "document": decoded_document,
-                        }
+            ) as client:
+                if stream and file:
+                    with client.stream("GET", res.payload.get("url")) as document_response:
+                        if not character_code:
+                            character_code = resolve_character_code(
+                                document_response.encoding, fallback="iso-8859-1"
+                            )
+                        stream_to_file_sync(
+                            document_response,
+                            file,
+                            character_code,
+                            compression_algorithm,
+                        )
+                else:
+                    document_response = client.get(res.payload.get("url"))
+                    if not character_code:
+                        character_code = resolve_character_code(
+                            document_response.encoding, fallback="iso-8859-1"
+                        )
+                    document = decompress_bytes(
+                        document_response.content, compression_algorithm
                     )
-                if file:
-                    handle_file(file, decoded_document, character_code)
+                    decoded_document = decode_document(document, character_code)
+                    if download:
+                        res.payload.update(
+                            {
+                                "document": decoded_document,
+                            }
+                        )
+                    if file:
+                        handle_file(file, decoded_document, character_code)
         return res

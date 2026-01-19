@@ -201,3 +201,4 @@ class Client(BaseClient):
     def __exit__(self, *args, **kwargs):
         self.restricted_data_token = None
         self.keep_restricted_data_token = False
+        self.close()
