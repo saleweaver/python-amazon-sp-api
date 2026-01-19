@@ -11,6 +11,17 @@ from .params import (
     should_add_marketplace,
     ensure_csv,
 )
+from .products_definitions import (
+    CompetitiveSummaryIncludedData,
+    ItemOffersRequest,
+    GetItemOffersBatchRequest,
+    ListingOffersRequest,
+    GetListingOffersBatchRequest,
+    FeaturedOfferExpectedPriceRequest,
+    GetFeaturedOfferExpectedPriceBatch,
+    CompetitiveSummaryRequest,
+    GetCompetitiveSummaryBatch,
+)
 
 __all__ = [
     "retry",
@@ -26,4 +37,13 @@ __all__ = [
     "encode_kwarg",
     "should_add_marketplace",
     "ensure_csv",
+    "CompetitiveSummaryIncludedData",
+    "ItemOffersRequest",
+    "GetItemOffersBatchRequest",
+    "ListingOffersRequest",
+    "GetListingOffersBatchRequest",
+    "FeaturedOfferExpectedPriceRequest",
+    "GetFeaturedOfferExpectedPriceBatch",
+    "CompetitiveSummaryRequest",
+    "GetCompetitiveSummaryBatch",
 ]

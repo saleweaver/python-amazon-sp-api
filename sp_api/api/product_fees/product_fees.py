@@ -3,6 +3,7 @@ from urllib.parse import quote_plus
 
 from sp_api.base.helpers import sp_endpoint, fill_query_params
 from sp_api.base import Client, ApiResponse
+from sp_api.util.product_fees import create_fees_body
 
 
 class ProductFees(Client):
@@ -63,15 +64,15 @@ class ProductFees(Client):
             seller_sku = quote_plus(seller_sku)
 
         kwargs.update(
-            self._create_body(
-                price,
-                shipping_price,
-                currency,
-                is_fba,
-                seller_sku,
-                points,
-                marketplace_id,
-                optional_fulfillment_program,
+            create_fees_body(
+                price=price,
+                shipping_price=shipping_price,
+                currency=currency,
+                is_fba=is_fba,
+                identifier=seller_sku,
+                points=points,
+                marketplace_id=marketplace_id or self.marketplace_id,
+                optional_fulfillment_program=optional_fulfillment_program,
             )
         )
         return self._request(
@@ -124,15 +125,15 @@ class ProductFees(Client):
 
         """
         kwargs.update(
-            self._create_body(
-                price,
-                shipping_price,
-                currency,
-                is_fba,
-                asin,
-                points,
-                marketplace_id,
-                optional_fulfillment_program,
+            create_fees_body(
+                price=price,
+                shipping_price=shipping_price,
+                currency=currency,
+                is_fba=is_fba,
+                identifier=asin,
+                points=points,
+                marketplace_id=marketplace_id or self.marketplace_id,
+                optional_fulfillment_program=optional_fulfillment_program,
             )
         )
         return self._request(fill_query_params(kwargs.pop("path"), asin), data=kwargs)
@@ -166,68 +167,24 @@ class ProductFees(Client):
                 marketplace_id: str | Defaults to self.marketplace_id
                 optional_fulfillment_program:
         """
-        data = [dict(**self._create_body(**er)) for er in estimate_requests]
+        data = []
+        for estimate in estimate_requests:
+            estimate_payload = dict(estimate)
+            marketplace_id = estimate_payload.pop("marketplace_id", None)
+            data.append(
+                dict(
+                    **create_fees_body(
+                        marketplace_id=marketplace_id or self.marketplace_id,
+                        **estimate_payload,
+                    )
+                )
+            )
         return self._request(
             "/products/fees/v0/feesEstimate",
             data=data,
             params=dict(method="POST"),
             wrap_list=True,
         )
-
-    def _create_body(
-        self,
-        price,
-        shipping_price=None,
-        currency="USD",
-        is_fba=False,
-        identifier=None,
-        points: dict = None,
-        marketplace_id: str = None,
-        optional_fulfillment_program: str = None,
-        id_type=None,
-        id_value=None,
-    ):
-        """
-        Create request body
-
-        Args:
-            price:
-            shipping_price:
-            currency:
-            is_fba:
-            identifier:
-            points:
-
-        Returns:
-
-        """
-        body = {
-            "FeesEstimateRequest": {
-                "Identifier": identifier or str(price),
-                "PriceToEstimateFees": {
-                    "ListingPrice": {"Amount": price, "CurrencyCode": currency},
-                    "Shipping": (
-                        {"Amount": shipping_price, "CurrencyCode": currency}
-                        if shipping_price
-                        else None
-                    ),
-                    "Points": points or None,
-                },
-                "IsAmazonFulfilled": is_fba,
-                "OptionalFulfillmentProgram": (
-                    optional_fulfillment_program
-                    if is_fba is True and optional_fulfillment_program
-                    else None
-                ),
-                "MarketplaceId": marketplace_id or self.marketplace_id,
-            }
-        }
-
-        if id_type and id_value:
-            body["IdType"] = id_type
-            body["IdValue"] = id_value
-
-        return body
 
     def _add_marketplaces(self, data):
         # MarketplaceID is a property of the body's FeesEstimateRequest for this section, and does
