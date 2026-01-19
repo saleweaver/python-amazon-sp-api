@@ -1,3 +1,34 @@
+## v2.0.7 - 2026-01-19
+## Version 2.0.7
+
+### New Features
+
+#### Product Fees API Enhancement
+
+- Introduced a new utility function `create_fees_body` for constructing the request body in the `ProductFees` API. This change standardizes the request body creation for both synchronous and asynchronous clients, improving code maintainability and readability.
+
+```mermaid
+graph TD;
+    A[ProductFees API] -->|create_fees_body| B[Request Body Creation];
+    B --> C[Standardized Request Structure];
+```
+
+### Internal Changes
+
+- Refactored `products_definitions` and `product_fees` related classes and functions into separate utility modules. This change organizes the codebase better and enhances modularity, making it easier to maintain and extend.
+
+```mermaid
+graph TD;
+    D[Refactor] -->|Extract to Utility Modules| E[products_definitions.py & product_fees.py];
+    E --> F[Improved Code Organization];
+```
+
+- Removed redundant code by replacing in-line request body creation with the new `create_fees_body` utility function across both synchronous and asynchronous `ProductFees` implementations.
+
+- Updated imports to reflect the new module structure, ensuring all references to `products_definitions` and `product_fees` are correctly pointing to their new locations.
+
+These changes collectively improve the maintainability and scalability of the codebase, setting a foundation for future enhancements.
+
 ## v2.0.6 - 2026-01-19
 ## Version 2.0.6
 
