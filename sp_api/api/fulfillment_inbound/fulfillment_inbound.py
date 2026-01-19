@@ -4,6 +4,7 @@ from sp_api.base import Client, Marketplaces, ApiResponse
 from sp_api.base import sp_endpoint, fill_query_params
 
 import urllib.parse
+from sp_api.util import ensure_csv
 
 
 class FulfillmentInboundVersion(str, enum.Enum):
@@ -489,8 +490,7 @@ class FulfillmentInbound(Client):
         Returns:
             ApiResponse
         """
-        if not isinstance(shipment_id_list, str):
-            shipment_id_list = ",".join(shipment_id_list)
+        shipment_id_list = ensure_csv(shipment_id_list)
         return self.get_shipments(
             QueryType="SHIPMENT", ShipmentIdList=shipment_id_list, **kwargs
         )

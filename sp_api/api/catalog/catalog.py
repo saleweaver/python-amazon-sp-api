@@ -1,6 +1,7 @@
 import urllib.parse
 
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.util import encode_kwarg
 
 
 class Catalog(Client):
@@ -75,8 +76,7 @@ class Catalog(Client):
         Returns:
             ListCatalogItemsResponse:
         """
-        if "Query" in kwargs:
-            kwargs.update({"Query": urllib.parse.quote_plus(kwargs.pop("Query"))})
+        encode_kwarg(kwargs, "Query", urllib.parse.quote_plus)
         return self._request(kwargs.pop("path"), params=kwargs)
 
     @sp_endpoint("/catalog/v0/categories")
@@ -104,6 +104,5 @@ class Catalog(Client):
         Returns:
             ListCatalogCategoriesResponse:
         """
-        if "Query" in kwargs:
-            kwargs.update({"Query": urllib.parse.quote_plus(kwargs.pop("Query"))})
+        encode_kwarg(kwargs, "Query", urllib.parse.quote_plus)
         return self._request(kwargs.pop("path"), params=kwargs)

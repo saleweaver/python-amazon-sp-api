@@ -1,3 +1,4 @@
+import httpx
 import urllib.parse
 from io import BytesIO, StringIO
 from typing import Union, BinaryIO, TextIO
@@ -190,14 +191,12 @@ class DataKiosk(Client):
             add_marketplace=False,
         )
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
-            import requests
-
-            document_response = requests.get(
-                res.payload.get("documentUrl"),
+            with httpx.Client(
                 proxies=self.proxies,
                 verify=self.verify,
-            )
-            document = document_response.content
+            ) as client:
+                document_response = client.get(res.payload.get("documentUrl"))
+                document = document_response.content
             if download:
                 res.payload.update(
                     {

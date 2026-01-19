@@ -1,14 +1,20 @@
 import os
 
-import requests
-import hashlib
 import logging
 from cachetools import TTLCache
 from sp_api.base import BaseClient
+from sp_api.base._transport_httpx import HttpxTransport
 
 from .credentials import Credentials
 from .access_token_response import AccessTokenResponse
 from .exceptions import AuthorizationError
+from ._core import (
+    build_auth_code_request_body,
+    build_cache_key,
+    build_grantless_data,
+    build_headers,
+    build_refresh_token_data,
+)
 
 cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=int(os.environ.get('SP_API_AUTH_CACHE_TTL', 3200)))
 grantless_cache = TTLCache(maxsize=int(os.environ.get('SP_API_AUTH_CACHE_SIZE', 10)), ttl=int(os.environ.get('SP_API_AUTH_CACHE_TTL', 3200)))
@@ -25,9 +31,13 @@ class AccessTokenClient(BaseClient):
         self.cred = Credentials(refresh_token, credentials)
         self.proxies = proxies
         self.verify = verify
+        self._transport = HttpxTransport(
+            proxies=proxies,
+            verify=verify,
+        )
 
     def _request(self, url, data, headers):
-        response = requests.post(url, data=data, headers=headers, proxies=self.proxies, verify=self.verify)
+        response = self._transport.request("POST", url, data=data, headers=headers)
         response_data = response.json()
         if response.status_code != 200:
             error_message = response_data.get('error_description')
@@ -93,40 +103,18 @@ class AccessTokenClient(BaseClient):
         return res
 
     def _auth_code_request_body(self, auth_code):
-        return {
-            'grant_type': 'authorization_code',
-            'code': auth_code,
-            'client_id': self.cred.client_id,
-            'client_secret': self.cred.client_secret
-        }
+        return build_auth_code_request_body(self.cred, auth_code)
 
     def grantless_data(self, scope_value: str):
-        return {
-            'grant_type': 'client_credentials',
-            'client_id': self.cred.client_id,
-            'scope': scope_value,
-            'client_secret': self.cred.client_secret
-        }
+        return build_grantless_data(self.cred, scope_value)
 
     @property
     def data(self):
-        return {
-            'grant_type': self.grant_type,
-            'client_id': self.cred.client_id,
-            'refresh_token': self.cred.refresh_token,
-            'client_secret': self.cred.client_secret
-        }
+        return build_refresh_token_data(self.cred, self.grant_type)
 
     @property
     def headers(self):
-        return {
-            'User-Agent': self.user_agent,
-            'content-type': self.content_type
-        }
+        return build_headers(self.user_agent, self.content_type)
 
     def _get_cache_key(self, token_flavor=''):
-        return 'access_token_' + hashlib.md5(
-            (token_flavor + (self.cred.refresh_token or '__grantless__')).encode('utf-8'),
-            usedforsecurity=False
-        ).hexdigest()
-
+        return build_cache_key(self.cred.refresh_token, token_flavor)

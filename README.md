@@ -11,21 +11,11 @@ A wrapper to access **Amazon's Selling Partner API** with an easy-to-use interfa
 
 ---
 
-### SP-API fees & call optimization
+### New Features
 
-With Amazon’s new SP-API pricing model (annual fees plus usage-based charges for GET requests), inefficient integrations will quickly become costly. If your systems rely on `python-amazon-sp-api` and you want to control these expenses, I offer consulting to review and optimize your implementation—such as replacing high-volume Orders API polling with report-based workflows and reducing unnecessary GET traffic wherever possible. If you’d like expert support preparing your SP-API usage for the upcoming pricing changes, feel free to get in touch.
+- httpx-based transport for sync clients, enabling connection pooling and consistent streaming behavior.
+- Async client package under `sp_api.asyncio` for non-blocking calls across services.
 
-
-<fees@clairinsights.com>
-
----
-
-### 🚀 Version 2 🚀
-
-Version 2 is currently being built - featuring pydantic, async support and better versioning. 
-Check out v2-alpha here: [v2-alpha](https://github.com/saleweaver/python-amazon-sp-api/tree/v2-01)  
-
----
 
 # 🌟 Thank you for using python-amazon-sp-api! 🌟
 
@@ -110,6 +100,41 @@ Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow
 orders = Orders().get_orders(
     LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
 )
+```
+
+---
+
+### Async Usage
+
+```python
+import asyncio
+from datetime import datetime, timedelta
+
+from sp_api.asyncio.api import Orders, Reports
+from sp_api.base.reportTypes import ReportType
+
+
+async def main():
+    async with Orders() as orders_client:
+        res = await orders_client.get_orders(
+            LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+        )
+        print(res.payload)
+
+    async with Reports() as reports_client:
+        report = await reports_client.create_report(
+            reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA
+        )
+        print(report.payload)
+    
+    # OR 
+    await Reports().create_report(
+        reportType=ReportType.GET_MERCHANT_LISTINGS_ALL_DATA
+    )
+
+    
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
 ---
