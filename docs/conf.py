@@ -86,3 +86,5 @@ napoleon_use_rtype = True
 napoleon_preprocess_types = False
 napoleon_type_aliases = None
 napoleon_attr_annotations = True
+
+html_extra_path = ['llms.txt']
