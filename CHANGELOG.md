@@ -1,3 +1,24 @@
+## v2.0.2 - 2026-01-19
+# Changelog
+
+## Version 2.0.2
+
+### New Features
+
+#### Async Support!
+
+- Introduced `httpx`-based transport for synchronous clients, which enables connection pooling and consistent streaming behavior.
+- Added an asynchronous client package under `sp_api.asyncio` for non-blocking calls across services.
+
+```mermaid
+graph TD;
+    A[Sync Client] -->|httpx-based transport| B[Connection Pooling];
+    A -->|httpx-based transport| C[Consistent Streaming];
+    D[Async Client] -->|sp_api.asyncio| E[Non-blocking Calls];
+```
+
+These enhancements provide more robust and efficient handling of API requests, improving both performance and scalability for developers using the library.
+
 ## v1.9.60 - 2026-01-08
 ## Version 1.9.60
 
