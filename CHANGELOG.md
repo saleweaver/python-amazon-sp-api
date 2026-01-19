@@ -1,3 +1,35 @@
+## v2.0.3 - 2026-01-19
+## Version 2.0.3
+
+### New Features
+
+#### Asynchronous Client Support
+
+- Introduced an asynchronous client package under `sp_api.asyncio`, allowing for non-blocking API calls. This is particularly useful for applications that require high concurrency and efficiency.
+
+```mermaid
+graph TD;
+    D[Async Client] -->|sp_api.asyncio| E[Non-blocking Calls];
+```
+
+- Added `httpx`-based transport for synchronous clients, enabling connection pooling and consistent streaming behavior.
+
+```mermaid
+graph TD;
+    A[Sync Client] -->|httpx-based transport| B[Connection Pooling];
+    A -->|httpx-based transport| C[Consistent Streaming];
+```
+
+These enhancements improve the library's performance and scalability, providing developers with more robust options for handling API requests.
+
+### Documentation
+
+- Added new documentation section for asynchronous clients, detailing usage patterns and examples for integrating async functionality into projects. This includes guidance on importing async clients, basic usage, streaming report documents, and proper client closure.
+
+### Internal Changes
+
+- Updated the project version to 2.0.3 in `sp_api/__version__.py`.
+
 ## v2.0.2 - 2026-01-19
 # Changelog
 
