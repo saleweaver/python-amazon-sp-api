@@ -1,5 +1,6 @@
 from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
 from sp_api.base import Client, Marketplaces
+from sp_api.util import normalize_csv_param
 
 
 class Orders(Client):
@@ -53,6 +54,12 @@ class Orders(Client):
 
 
         """
+        normalize_csv_param(kwargs, "OrderStatuses")
+        normalize_csv_param(kwargs, "MarketplaceIds")
+        normalize_csv_param(kwargs, "FulfillmentChannels")
+        normalize_csv_param(kwargs, "PaymentMethods")
+        normalize_csv_param(kwargs, "AmazonOrderIds")
+
         if "RestrictedResources" in kwargs:
             return self._access_restricted(kwargs)
         return self._request(kwargs.pop("path"), params={**kwargs})
