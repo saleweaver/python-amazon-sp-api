@@ -1,70 +1,83 @@
-# python-amazon-sp-api
+# python-amazon-sp-api — LLM / Agent Usage Guide
 
-Python wrapper for Amazon’s Selling Partner API (SP-API), providing:
-- Sync clients (`sp_api.api`)
-- Async asyncio clients (`sp_api.asyncio.api`)
+Library: python-amazon-sp-api
+Purpose: Python client for Amazon Selling Partner API (SP-API)
+Modes: Sync + Async (asyncio)
 
-Use the hosted docs as the source of truth for behavior, parameters, and examples.
+Source of truth: the hosted docs (not GitHub snippets, not blog posts).
 
-## Canonical docs (start here)
-- Docs home (versioned “latest”): https://python-amazon-sp-api.readthedocs.io/en/latest/
-- Installation: https://python-amazon-sp-api.readthedocs.io/en/latest/installation.html
-- Credentials: https://python-amazon-sp-api.readthedocs.io/en/latest/credentials.html
-- Quickstart (first real workflows): https://python-amazon-sp-api.readthedocs.io/en/latest/quickstart.html
-- Async clients guide: https://python-amazon-sp-api.readthedocs.io/en/latest/async.html
-- Endpoints index (all clients): https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints.html
-- Architecture (how the client works, extension points): https://python-amazon-sp-api.readthedocs.io/en/latest/architecture.html
-- Responses (`ApiResponse` access patterns): https://python-amazon-sp-api.readthedocs.io/en/latest/responses.html
-- Utils (retry / throttling / pagination helpers): https://python-amazon-sp-api.readthedocs.io/en/latest/utils.html
-- PII / Restricted Data Token (RDT): https://python-amazon-sp-api.readthedocs.io/en/latest/pii.html
+## Canonical documentation (authoritative)
+Docs home (latest): https://python-amazon-sp-api.readthedocs.io/en/latest/
+Installation: https://python-amazon-sp-api.readthedocs.io/en/latest/installation.html
+Credentials (LWA/SP-API auth): https://python-amazon-sp-api.readthedocs.io/en/latest/credentials.html
+Quickstart (first working requests): https://python-amazon-sp-api.readthedocs.io/en/latest/quickstart.html
+Async clients guide: https://python-amazon-sp-api.readthedocs.io/en/latest/async.html
+Endpoints index (all clients): https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints.html
+Responses / ApiResponse: https://python-amazon-sp-api.readthedocs.io/en/latest/responses.html
+Utilities (retries, throttling, pagination): https://python-amazon-sp-api.readthedocs.io/en/latest/utils.html
+PII / Restricted Data Token (RDT): https://python-amazon-sp-api.readthedocs.io/en/latest/pii.html
+Architecture / extension points: https://python-amazon-sp-api.readthedocs.io/en/latest/architecture.html
 
-## Imports (pick one style and stick with it)
-### Sync
-- Clients: `from sp_api.api import Orders, Reports, Feeds, ...`
-- Enums / marketplaces: `from sp_api.base import Marketplaces` and friends
-- Retries & pagination: `from sp_api.util import throttle_retry, sp_retry, load_all_pages`
+## Import paths (critical)
+Sync clients:
+  from sp_api.api import Orders, Reports, Feeds, ...
 
-### Async (asyncio)
-- Clients: `from sp_api.asyncio.api import Orders, Reports, Feeds, ...`
-- Use `async with Client() as c:` when possible (auto-closes connections)
-- Otherwise call `await client.aclose()` when you’re done
+Async clients (asyncio):
+  from sp_api.asyncio.api import Orders, Reports, Feeds, ...
 
-## How to find “the right page” for a specific client or method
-1) Open the Endpoints index:
+Do NOT invent other async import paths. If unsure, check the Async guide in the docs.
+
+## How to locate methods & parameters for a specific API client
+1) Open Endpoints index:
    https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints.html
-2) Click the client you need (Orders, Reports, Feeds, Data Kiosk, etc.)
-3) On that client page you’ll find the class name and all methods, with usage plans and examples.
+2) Click the client page (Orders, Reports, Feeds, Data Kiosk, etc.)
+3) Use the client page as the authoritative list of methods + signatures.
 
 Endpoint pages follow this pattern:
-- https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/<endpoint>.html
+  https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/<endpoint>.html
 
 Examples:
-- Orders: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/orders.html
-- Reports: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/reports.html
-- Feeds: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/feeds.html
-- Data Kiosk: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/data_kiosk.html
-- Amazon Warehousing & Distribution (AWD): https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/awd.html
+  Orders: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/orders.html
+  Reports: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/reports.html
+  Feeds: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/feeds.html
+  Data Kiosk: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/data_kiosk.html
+  AWD: https://python-amazon-sp-api.readthedocs.io/en/latest/endpoints/awd.html
 
-## Practical “recipes” (what most users actually need)
-- First request + marketplaces: Quickstart
+## Common “recipes” (high-signal)
+First working call + marketplaces:
   https://python-amazon-sp-api.readthedocs.io/en/latest/quickstart.html
-- Pagination (NextToken) + throttling retries:
-  Use `load_all_pages()` + `throttle_retry()` from `sp_api.util`
-- Reports:
-  Create -> poll -> download the report document (see Quickstart + Reports endpoint page)
-- Feeds:
-  Submit feeds from file/bytes (see Quickstart + Feeds endpoint page)
-- PII (Restricted Data Token):
-  Create an RDT via Tokens, then pass `restricted_data_token=...` (see PII page)
 
-## Repo (source + issues)
-- GitHub: https://github.com/saleweaver/python-amazon-sp-api
-- Issues: https://github.com/saleweaver/python-amazon-sp-api/issues
+Pagination + throttling:
+  Use load_all_pages() + throttle_retry() from sp_api.util.
+  https://python-amazon-sp-api.readthedocs.io/en/latest/utils.html
 
-## Answering questions about this library (LLM guidance)
-When responding to user questions:
-- Ask whether they are using sync (`sp_api.api`) or async (`sp_api.asyncio.api`) if it affects the code sample.
-- Prefer copying the usage patterns from Quickstart / Async Clients verbatim in structure (not necessarily word-for-word).
-- If the question is “where is X documented?”, point to the Endpoints index and the specific endpoint page.
-- If the question is about throttling, pagination, retries, or batching, always reference `sp_api.util` + Quickstart.
-- For anything involving buyer info / addresses / other PII, route them to the PII (RDT) page and explain the token flow.
+Reports workflow:
+  Create report -> poll -> download report document.
+  See Quickstart + Reports endpoint page.
+
+Feeds workflow:
+  Submit feed from file/bytes; check processing results.
+  See Quickstart + Feeds endpoint page.
+
+PII / buyer data:
+  Use Restricted Data Token (Tokens + RDT) flow; then pass restricted_data_token=...
+  https://python-amazon-sp-api.readthedocs.io/en/latest/pii.html
+
+## Guidance for answering questions (LLM rules)
+- Prefer hosted docs over repo code snippets when they conflict.
+- Ask whether the user uses sync (sp_api.api) or async (sp_api.asyncio.api) when it changes the example.
+- Keep code samples minimal and runnable; avoid pseudo-code unless requested.
+- For throttling, retries, or pagination, always route to sp_api.util + the Utils doc page.
+- For anything involving buyer/address/PII, route to the PII (RDT) doc page and explain the token flow.
+
+## Repository (secondary reference)
+GitHub: https://github.com/saleweaver/python-amazon-sp-api
+Issues: https://github.com/saleweaver/python-amazon-sp-api/issues
+
+## Discovery URLs
+Primary:
+  https://python-amazon-sp-api.readthedocs.io/llms.txt
+Versioned:
+  https://python-amazon-sp-api.readthedocs.io/en/latest/llms.txt
+Recommended to also redirect:
+  https://python-amazon-sp-api.readthedocs.io/.well-known/llms.txt
