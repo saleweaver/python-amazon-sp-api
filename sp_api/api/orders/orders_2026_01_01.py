@@ -18,32 +18,93 @@ class OrdersV20260101(Client):
 
     @sp_endpoint("/orders/2026-01-01/orders")
     def search_orders(self, **kwargs: Any) -> ApiResponse:
-        """Search orders.
+        """
+        search_orders(self, **kwargs) -> ApiResponse
+        Returns orders that are created or updated during the time period that you specify.
+        You can filter the response for specific types of orders.
 
-        Corresponds to GET /orders/2026-01-01/orders (operationId: searchOrders).
+        **Usage Plan:**
 
-        Notes:
-        - Parameters are lowerCamelCase in this version (e.g. createdAfter).
-        - List parameters can be passed as Python lists; they will be normalized
-          into a comma-delimited string.
+        ======================================  =====================
+        Rate (requests per second)               Burst
+        ======================================  =====================
+        See x-amzn-ratelimit-limit response      See Amazon docs
+        ======================================  =====================
+
+        Note:
+            The SP-API returns an `x-amzn-ratelimit-limit` (or similar) response header indicating the rate limit
+            applied to the request. Rate and burst can vary by seller/account and by any Amazon-granted overrides.
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                OrdersV20260101().search_orders(
+                    createdAfter="2026-01-01T00:00:00Z",
+                    marketplaceIds=["A1PA6795UKMFR9"]
+                )
+
+        Args:
+            key createdAfter: str
+            key createdBefore: str
+            key lastUpdatedAfter: str
+            key lastUpdatedBefore: str
+            key fulfillmentStatuses: [str] | str
+            key marketplaceIds: [str] | str
+            key fulfilledBy: [str] | str
+            key includedData: [str] | str
+            key paginationToken: str
+            key maxResultsPerPage: int
+
+        Returns:
+            ApiResponse:
+
+
         """
 
         normalize_csv_param(kwargs, "fulfillmentStatuses")
         normalize_csv_param(kwargs, "marketplaceIds")
         normalize_csv_param(kwargs, "fulfilledBy")
         normalize_csv_param(kwargs, "includedData")
-        print(kwargs)
         return self._request(kwargs.pop("path"), params={**kwargs})
 
     @sp_endpoint("/orders/2026-01-01/orders/{}")
     def get_order(self, order_id: str, **kwargs: Any) -> ApiResponse:
-        """Get order by orderId.
+        """
+        get_order(self, order_id: str, **kwargs) -> ApiResponse
+        Returns the order that you specify.
 
-        Corresponds to GET /orders/2026-01-01/orders/{orderId} (operationId: getOrder).
+        **Usage Plan:**
+
+        ======================================  =====================
+        Rate (requests per second)               Burst
+        ======================================  =====================
+        See x-amzn-ratelimit-limit response      See Amazon docs
+        ======================================  =====================
+
+        Note:
+            The SP-API returns an `x-amzn-ratelimit-limit` (or similar) response header indicating the rate limit
+            applied to the request. Rate and burst can vary by seller/account and by any Amazon-granted overrides.
+
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+
+        Examples:
+            literal blocks::
+
+                OrdersV20260101().get_order(
+                    "306-9860906-6213927",
+                    includedData=["orderItems"]
+                )
 
         Args:
-            order_id: The Amazon order identifier.
-            includedData: Optional list of datasets to include in the response.
+            order_id: str
+            key includedData: [str] | str
+
+        Returns:
+            ApiResponse:
+
+
         """
 
         normalize_csv_param(kwargs, "includedData")
