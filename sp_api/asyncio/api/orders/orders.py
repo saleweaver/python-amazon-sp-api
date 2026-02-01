@@ -1,12 +1,61 @@
-from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
+from __future__ import annotations
+
+import enum
+from typing import Any, Literal, overload
+
 from sp_api.asyncio.base import AsyncBaseClient
+from sp_api.base import ApiResponse, deprecated, fill_query_params, sp_endpoint
 from sp_api.util import normalize_csv_param
+
+from .orders_2026_01_01 import OrdersV20260101
+
+
+class OrdersVersion(str, enum.Enum):
+    V0 = "v0"  # legacy
+    V_2026_01_01 = "2026-01-01"
+    LATEST = "2026-01-01"
 
 
 class Orders(AsyncBaseClient):
-    """
+    """Orders API client (async).
+
+    This class implements the legacy Orders API **v0**.
+
+    If you pass version "2026-01-01" (or :class:`OrdersVersion.V_2026_01_01`)
+    to the constructor, :meth:`__new__` returns an instance of
+    :class:`~sp_api.asyncio.api.orders.orders_2026_01_01.OrdersV20260101` instead.
+
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/orders-api
     """
+
+    @overload
+    def __new__(
+        cls,
+        *args: Any,
+        version: Literal[OrdersVersion.V_2026_01_01, "2026-01-01"],
+        **kwargs: Any,
+    ) -> OrdersV20260101: ...
+
+    @overload
+    def __new__(
+        cls,
+        *args: Any,
+        version: str | OrdersVersion | None = None,
+        **kwargs: Any,
+    ) -> "Orders": ...
+
+    def __new__(
+        cls,
+        *args: Any,
+        version: str | OrdersVersion | None = None,
+        **kwargs: Any,
+    ):
+        if cls is Orders:
+            v = version if version is not None else kwargs.get("version")
+            if v in (OrdersVersion.V_2026_01_01, OrdersVersion.LATEST, "2026-01-01"):
+                kwargs.pop("version", None)
+                return OrdersV20260101(*args, **kwargs)
+        return super().__new__(cls)
 
     @sp_endpoint("/orders/v0/orders")
     async def get_orders(self, **kwargs) -> ApiResponse:
@@ -361,43 +410,3 @@ class Orders(AsyncBaseClient):
             self.restricted_data_token = None
         return r
 
-
-class OrdersV20260101(AsyncBaseClient):
-    """Orders API (version 2026-01-01) - async client.
-
-    This is a newer Orders API version that uses different endpoints/parameters
-    than the legacy v0 Orders API implemented by :class:`~sp_api.asyncio.api.orders.orders.Orders`.
-
-    Model source:
-    https://github.com/amzn/selling-partner-api-models/blob/main/models/orders-api-model/orders_2026-01-01.json
-    """
-
-    @sp_endpoint("/orders/2026-01-01/orders")
-    async def search_orders(self, **kwargs) -> ApiResponse:
-        """Search orders (async).
-
-        Corresponds to GET /orders/2026-01-01/orders (operationId: searchOrders).
-
-        Notes:
-        - Parameters are lowerCamelCase in this version (e.g. createdAfter).
-        - List parameters can be passed as Python lists; they will be normalized
-          into a comma-delimited string.
-        """
-
-        normalize_csv_param(kwargs, "fulfillmentStatuses")
-        normalize_csv_param(kwargs, "marketplaceIds")
-        normalize_csv_param(kwargs, "fulfilledBy")
-        normalize_csv_param(kwargs, "includedData")
-
-        return await self._request(kwargs.pop("path"), params={**kwargs})
-
-    @sp_endpoint("/orders/2026-01-01/orders/{}")
-    async def get_order(self, order_id: str, **kwargs) -> ApiResponse:
-        """Get order by orderId (async)."""
-
-        normalize_csv_param(kwargs, "includedData")
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id),
-            params={**kwargs},
-            add_marketplace=False,
-        )
