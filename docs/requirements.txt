@@ -18,3 +18,4 @@ sphinx-jinja2-compat>=0.1.1
 sphinx-toolbox>=2.16.0
 enum-tools[sphinx]
 pydata-sphinx-theme
+httpx

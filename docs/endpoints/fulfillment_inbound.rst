@@ -3,7 +3,7 @@ FulfillmentInbound
 
 
 
-.. info::
+.. note::
 
     To use the `load all pages decorator`_ for this endpoints, pass `extras` to it
 
