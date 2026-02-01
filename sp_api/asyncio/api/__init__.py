@@ -1,6 +1,7 @@
 from .finances.finances import Finances, FinancesVersion
 from .notifications.notifications import Notifications
-from .orders.orders import Orders
+from .orders.orders import Orders, OrdersVersion
+from .orders.orders_2026_01_01 import OrdersV20260101
 from .product_fees.product_fees import ProductFees
 from .sellers.sellers import Sellers
 from .reports.reports import Reports
@@ -104,6 +105,8 @@ __all__ = [
     "Products",
     "Reports",
     "Orders",
+    "OrdersVersion",
+    "OrdersV20260101",
     "Sellers",
     "Notifications",
     "ProductFees",

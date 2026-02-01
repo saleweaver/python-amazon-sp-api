@@ -1,12 +1,60 @@
-from sp_api.base import sp_endpoint, fill_query_params, ApiResponse, deprecated
-from sp_api.base import Client, Marketplaces
+from __future__ import annotations
+
+import enum
+from typing import Any, Literal, overload
+
+from sp_api.base import ApiResponse, Client, Marketplaces, deprecated, fill_query_params, sp_endpoint
 from sp_api.util import normalize_csv_param
+
+from .orders_2026_01_01 import OrdersV20260101
+
+
+class OrdersVersion(str, enum.Enum):
+    V0 = "v0"  # legacy
+    V_2026_01_01 = "2026-01-01"
+    LATEST = "2026-01-01"
 
 
 class Orders(Client):
-    """
+    """Orders API client.
+
+    This class implements the legacy Orders API **v0**.
+
+    If you pass version "2026-01-01" (or :class:`OrdersVersion.V_2026_01_01`)
+    to the constructor, :meth:`__new__` returns an instance of
+    :class:`~sp_api.api.orders.orders_2026_01_01.OrdersV20260101` instead.
+
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/orders-api
     """
+
+    @overload
+    def __new__(
+        cls,
+        *args: Any,
+        version: Literal[OrdersVersion.V_2026_01_01, "2026-01-01"],
+        **kwargs: Any,
+    ) -> OrdersV20260101: ...
+
+    @overload
+    def __new__(
+        cls,
+        *args: Any,
+        version: str | OrdersVersion | None = None,
+        **kwargs: Any,
+    ) -> "Orders": ...
+
+    def __new__(
+        cls,
+        *args: Any,
+        version: str | OrdersVersion | None = None,
+        **kwargs: Any,
+    ):
+        if cls is Orders:
+            v = version if version is not None else kwargs.get("version")
+            if v in (OrdersVersion.V_2026_01_01, OrdersVersion.LATEST, "2026-01-01"):
+                kwargs.pop("version", None)
+                return OrdersV20260101(*args, **kwargs)
+        return super().__new__(cls)
 
     @sp_endpoint("/orders/v0/orders")
     def get_orders(self, **kwargs) -> ApiResponse:
@@ -360,3 +408,4 @@ class Orders(Client):
         if not self.keep_restricted_data_token:
             self.restricted_data_token = None
         return r
+
