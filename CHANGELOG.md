@@ -1,3 +1,39 @@
+## v2.0.10 - 2026-02-01
+## Version 2.0.10
+
+### New Features
+
+#### Orders API Version Update
+
+- Introduced a new version of the Orders API, `2026-01-01`, alongside the legacy `v0` version. This new version includes updated endpoints and parameters, allowing for more efficient order management.
+- Added support for both synchronous and asynchronous clients for the new Orders API version.
+
+```mermaid
+graph TD;
+    A[Orders API] -->|Version Selection| B{Version};
+    B -->|v0| C[Legacy Orders Client];
+    B -->|2026-01-01| D[New OrdersV20260101 Client];
+```
+
+### Internal Changes
+
+- Refactored the Orders API to support versioning, allowing seamless integration of future updates without disrupting existing implementations.
+- Updated the import structure to accommodate the new Orders API version, ensuring compatibility and ease of use.
+
+```mermaid
+graph TD;
+    E[Refactor] -->|Support Versioning| F[Orders API];
+    F --> G[Improved Flexibility];
+```
+
+### Dependency Updates
+
+- Updated `boto3` to version `1.42.36`.
+- Updated `setuptools` to version `80.10.2`.
+- Updated `cachetools` to version `6.2.6`.
+
+These enhancements improve the flexibility and scalability of the API, providing a robust foundation for future development and integration.
+
 ## v2.0.9 - 2026-02-01
 ## Version 2.0.9
 
