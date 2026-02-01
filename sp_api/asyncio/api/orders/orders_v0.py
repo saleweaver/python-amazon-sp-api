@@ -59,7 +59,7 @@ class OrdersV0(AsyncBaseClient):
         normalize_csv_param(kwargs, "AmazonOrderIds")
 
         if "RestrictedResources" in kwargs:
-            return self._access_restricted(kwargs)
+            return await self._access_restricted(kwargs)
         return await self._request(kwargs.pop("path"), params={**kwargs})
 
     @sp_endpoint("/orders/v0/orders/{}")
@@ -98,7 +98,7 @@ class OrdersV0(AsyncBaseClient):
             kwargs.update(
                 {"original_path": fill_query_params(kwargs.get("path"), order_id)}
             )
-            return self._access_restricted(kwargs)
+            return await self._access_restricted(kwargs)
         return await self._request(
             fill_query_params(kwargs.pop("path"), order_id),
             params={**kwargs},
@@ -151,7 +151,7 @@ class OrdersV0(AsyncBaseClient):
             kwargs.update(
                 {"original_path": fill_query_params(kwargs.get("path"), order_id)}
             )
-            return self._access_restricted(kwargs)
+            return await self._access_restricted(kwargs)
         return await self._request(
             fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
         )
@@ -352,7 +352,7 @@ class OrdersV0(AsyncBaseClient):
     async def _access_restricted(self, kwargs):
         if "original_path" not in kwargs:
             kwargs.update({"original_path": kwargs["path"]})
-        token = self._get_token(**kwargs).payload
+        token = (await self._get_token(**kwargs)).payload
         self.restricted_data_token = token["restrictedDataToken"]
         r = await self._request(kwargs.pop("original_path"), params={**kwargs})
         if not self.keep_restricted_data_token:
