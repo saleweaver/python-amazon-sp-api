@@ -1,3 +1,20 @@
+## v2.0.13 - 2026-02-01
+## Version 2.0.13
+
+### Bug Fixes
+
+#### Orders API Asynchronous Handling
+
+- Fixed asynchronous handling in the `OrdersV0` client by ensuring that the `_access_restricted` method is awaited properly. This resolves potential issues with handling restricted resources in asynchronous environments.
+
+```mermaid
+graph TD;
+    A[OrdersV0 Client] -->|Fix Async Handling| B[_access_restricted Method];
+    B --> C[Await Correctly];
+```
+
+These changes enhance the reliability and correctness of asynchronous operations within the Orders API, ensuring smoother integration and execution in applications using the `python-amazon-sp-api` library.
+
 ## v2.0.12 - 2026-02-01
 ## Version 2.0.12
 
