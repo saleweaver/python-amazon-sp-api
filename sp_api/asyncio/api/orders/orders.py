@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import enum
-from typing import Any, Literal, overload
+from typing import Any, Literal, TYPE_CHECKING, overload
 
 from sp_api.asyncio.base import AsyncBaseClient
-from sp_api.base import ApiResponse, deprecated, fill_query_params, sp_endpoint
+from sp_api.base import ApiResponse, Marketplaces, deprecated, fill_query_params, sp_endpoint
 from sp_api.util import normalize_csv_param
 
 from .orders_2026_01_01 import OrdersV20260101
+from .orders_v0 import OrdersV0
 
 
 class OrdersVersion(str, enum.Enum):
@@ -16,397 +17,136 @@ class OrdersVersion(str, enum.Enum):
     LATEST = "2026-01-01"
 
 
-class Orders(AsyncBaseClient):
-    """Orders API client (async).
+class _VersionedClientMeta(type):
+    """Metaclass that dispatches construction to a version-specific implementation.
 
-    This class implements the legacy Orders API **v0**.
+    This keeps the call-site ergonomic (`Orders(version=...)`) while allowing a single
+    place to implement the dispatch logic.
 
-    If you pass version "2026-01-01" (or :class:`OrdersVersion.V_2026_01_01`)
-    to the constructor, :meth:`__new__` returns an instance of
-    :class:`~sp_api.asyncio.api.orders.orders_2026_01_01.OrdersV20260101` instead.
+    Subclasses should define:
+      - `_VERSION_MAP`: mapping of normalized version strings to implementation classes
+      - `_VERSION_ALIASES` (optional): mapping of alias strings to normalized versions
+
+    If no version is provided, the default version is used.
+    """
+
+    def __call__(cls, *args: Any, **kwargs: Any):
+        version = kwargs.pop("version", None)
+
+        # Only dispatch for the public front class itself.
+        if cls is Orders:
+            # Backwards-compatible default: if no version is provided, return the
+            # oldest supported implementation.
+            v_raw = version if version is not None else getattr(cls, "_DEFAULT_VERSION", None)
+            if v_raw is None:
+                return super().__call__(*args, **kwargs)
+
+            v_raw = getattr(v_raw, "value", v_raw)
+            v = str(v_raw)
+            aliases: dict[str, str] = getattr(cls, "_VERSION_ALIASES", {})
+            v_norm = aliases.get(v, v)
+
+            impl_map: dict[str, type] = getattr(cls, "_VERSION_MAP", {})
+            impl = impl_map.get(v_norm)
+            if impl is not None:
+                return impl(*args, **kwargs)
+
+            supported = ", ".join(sorted(impl_map.keys()))
+            raise ValueError(f"Unsupported version {v!r}. Supported: {supported}")
+
+        return super().__call__(*args, **kwargs)
+
+
+if TYPE_CHECKING:
+
+    class _OrdersMeta(_VersionedClientMeta):
+        @overload
+        def __call__(
+            self,
+            *args: Any,
+            version: Literal[OrdersVersion.V_2026_01_01, OrdersVersion.LATEST, "2026-01-01"],
+            **kwargs: Any,
+        ) -> OrdersV20260101: ...
+
+        @overload
+        def __call__(
+            self,
+            *args: Any,
+            version: Literal[OrdersVersion.V0, "v0"],
+            **kwargs: Any,
+        ) -> OrdersV0: ...
+
+        @overload
+        def __call__(
+            self,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> OrdersV0: ...
+
+        @overload
+        def __call__(
+            self,
+            *args: Any,
+            version: str | OrdersVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+
+else:
+    _OrdersMeta = _VersionedClientMeta
+
+class Orders(AsyncBaseClient, metaclass=_OrdersMeta):
+    """Orders API client.
+
+    This class dispatches to a versioned Orders API client.
+
+    If you do not pass a version, the constructor returns the oldest supported implementation ("v0").
 
     :link: https://github.com/amzn/selling-partner-api-docs/tree/main/references/orders-api
     """
 
-    @overload
-    def __new__(
-        cls,
-        *args: Any,
-        version: Literal[OrdersVersion.V_2026_01_01, "2026-01-01"],
-        **kwargs: Any,
-    ) -> OrdersV20260101: ...
-
-    @overload
-    def __new__(
-        cls,
-        *args: Any,
-        version: str | OrdersVersion | None = None,
-        **kwargs: Any,
-    ) -> "Orders": ...
-
-    def __new__(
-        cls,
-        *args: Any,
-        version: str | OrdersVersion | None = None,
-        **kwargs: Any,
-    ):
-        if cls is Orders:
-            v = version if version is not None else kwargs.get("version")
-            if v in (OrdersVersion.V_2026_01_01, OrdersVersion.LATEST, "2026-01-01"):
-                kwargs.pop("version", None)
-                return OrdersV20260101(*args, **kwargs)
-        return super().__new__(cls)
-
-    @sp_endpoint("/orders/v0/orders")
-    async def get_orders(self, **kwargs) -> ApiResponse:
-        """
-        get_orders(self, **kwargs) -> ApiResponse
-        Returns orders created or updated during the time frame indicated by the specified parameters.
-        You can also apply a range of filtering criteria to narrow the list of orders returned.
-        If NextToken is present, that will be used to retrieve the orders instead of other criteria.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Examples:
-            literal blocks::
-
-                Orders().get_orders(CreatedAfter='TEST_CASE_200', MarketplaceIds=["ATVPDKIKX0DER"])
-
-        Args:
-            key CreatedAfter: date
-            key CreatedBefore: date
-            key LastUpdatedAfter: date
-            key LastUpdatedBefore: date
-            key OrderStatuses: [str]
-            key MarketplaceIds: [str]
-            key FulfillmentChannels: [str]
-            key PaymentMethods: [str]
-            key BuyerEmail: str
-            key SellerOrderId: str
-            key MaxResultsPerPage: int
-            key EasyShipShipmentStatuses: [str]
-            key NextToken: str
-            key AmazonOrderIds: [str]
-            key RestrictedResources: [str]
-
-        Returns:
-            ApiResponse:
-
-
-        """
-        normalize_csv_param(kwargs, "OrderStatuses")
-        normalize_csv_param(kwargs, "MarketplaceIds")
-        normalize_csv_param(kwargs, "FulfillmentChannels")
-        normalize_csv_param(kwargs, "PaymentMethods")
-        normalize_csv_param(kwargs, "AmazonOrderIds")
-
-        if "RestrictedResources" in kwargs:
-            return self._access_restricted(kwargs)
-        return await self._request(kwargs.pop("path"), params={**kwargs})
-
-    @sp_endpoint("/orders/v0/orders/{}")
-    async def get_order(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        get_order(self, order_id: str, **kwargs) -> ApiResponse
-        Returns the order indicated by the specified order ID.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Examples:
-            literal blocks::
-
-                Orders().get_order('TEST_CASE_200')
-
-        Args:
-            order_id: str
-            key RestrictedResources: [str]
-            **kwargs:
-
-        Returns:
-            ApiResponse:
-
-
-        """
-        if "RestrictedResources" in kwargs:
-            kwargs.update(
-                {"original_path": fill_query_params(kwargs.get("path"), order_id)}
-            )
-            return self._access_restricted(kwargs)
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id),
-            params={**kwargs},
-            add_marketplace=False,
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/orderItems")
-    async def get_order_items(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        get_order_items(self, order_id: str, **kwargs) -> ApiResponse
-
-        Returns detailed order item information for the order indicated by the specified order ID.
-        If NextToken is provided, it's used to retrieve the next page of order items.
-
-        Note: When an order is in the Pending state (the order has been placed but payment has not been authorized),
-        the getOrderItems operation does not return information about pricing, taxes, shipping charges, gift status or
-        promotions for the order items in the order.
-        After an order leaves the Pending state (this occurs when payment has been authorized) and enters the Unshipped,
-        Partially Shipped, or Shipped state, the getOrderItems operation returns information about pricing, taxes,
-        shipping charges, gift status and promotions for the order items in the order.
-
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Examples:
-            literal blocks::
-
-                Orders().get_order_items('TEST_CASE_200')
-
-        Args:
-            order_id: str
-            key RestrictedResources: [str]
-            **kwargs:
-
-        Returns:
-            ApiResponse:
-
-        """
-        if "RestrictedResources" in kwargs:
-            kwargs.update(
-                {"original_path": fill_query_params(kwargs.get("path"), order_id)}
-            )
-            return self._access_restricted(kwargs)
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/address")
-    async def get_order_address(self, order_id, **kwargs) -> ApiResponse:
-        """
-        get_order_address(self, order_id, **kwargs) -> ApiResponse
-
-        Returns the shipping address for the order indicated by the specified order ID.
-
-        :note: To get useful information from this method, you need to have access to PII.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        Examples:
-            Orders().get_order_address('TEST_CASE_200')
-
-        Args:
-            order_id: str
-            **kwargs:
-
-        Returns:
-            ApiResponse
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/buyerInfo")
-    async def get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        get_order_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
-        Returns buyer information for the order indicated by the specified order ID.
-
-        :note: To get useful information from this method, you need to have access to PII.
-
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Examples:
-            Orders().get_order_buyer_info('TEST_CASE_200')
-
-        Args:
-            order_id: str
-            **kwargs:
-
-        Returns:
-            GetOrderBuyerInfoResponse:
-
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/orderItems/buyerInfo")
-    async def get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        get_order_items_buyer_info(self, order_id: str, **kwargs) -> ApiResponse
-
-        Returns buyer information in the order items of the order indicated by the specified order ID.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Examples:
-            literal blocks::
-
-                Orders().get_order_items_buyer_info('TEST_CASE_200')
-
-        Args:
-            order_id: str
-            key NextToken: str | retrieve data by next token
-
-        Returns:
-            ApiResponse
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id), params=kwargs
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/shipment", method="POST")
-    async def update_shipment_status(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        update_shipment_status(self, order_id: str, **kwargs) -> ApiResponse
-        Update the shipment status.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       15
-        ======================================  ==============
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        Examples:
-            literal blocks::
-                Orders().update_shipment_status(
-                    order_id='123-1234567-1234567',
-                    marketplaceId='ATVPDKIKX0DER',
-                    shipmentStatus='ReadyForPickup'
-                )
-        Args:
-            order_id: str
-        Returns:
-            ApiResponse
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id),
-            res_no_data=True,
-            data=kwargs,
-        )
-
-    @sp_endpoint("/orders/v0/orders/{}/shipmentConfirmation", method="POST")
-    async def confirm_shipment(self, order_id: str, **kwargs) -> ApiResponse:
-        """
-        confirm_shipment(self, order_id: str, **kwargs) -> ApiResponse
-        Updates the shipment confirmation status for a specified order.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        2                                       10
-        ======================================  ==============
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        Examples:
-            literal blocks::
-                Orders().confirm_shipment(
-                    order_id='123-1234567-1234567',
-                    marketplaceId='ATVPDKIKX0DER',
-                    packageDetail={
-                        'packageReferenceId': '0001',
-                        'carrierCode': 'DHL',
-                        "shippingMethod": 'Paket',
-                        'trackingNumber': '1234567890',
-                        'shipDate': '2023-03-19T12:00:00Z',
-                        'orderItems': [
-                            {
-                                'orderItemId': '123456789',
-                                'quantity': 1
-                            },
-                            {
-                                'orderItemId': '2345678901',
-                                'quantity': 2
-                            },
-                        ]
-                    }
-                )
-        Args:
-            order_id: str
-        Returns:
-            ApiResponse
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id),
-            add_marketplace=False,
-            res_no_data=True,
-            data=kwargs,
-        )
-
-    @sp_endpoint("/tokens/2021-03-01/restrictedDataToken", method="POST")
-    async def _get_token(self, **kwargs):
-        data_elements = kwargs.pop("RestrictedResources")
-
-        restricted_resources = [
-            {
-                "method": "GET",
-                "path": kwargs.get("original_path"),
-                "dataElements": data_elements,
-            }
-        ]
-
-        return await self._request(
-            kwargs.pop("path"),
-            data={"restrictedResources": restricted_resources, **kwargs},
-        )
-
-    async def _access_restricted(self, kwargs):
-        if "original_path" not in kwargs:
-            kwargs.update({"original_path": kwargs["path"]})
-        token = self._get_token(**kwargs).payload
-        self.restricted_data_token = token["restrictedDataToken"]
-        r = await self._request(kwargs.pop("original_path"), params={**kwargs})
-        if not self.keep_restricted_data_token:
-            self.restricted_data_token = None
-        return r
-
+    if TYPE_CHECKING:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[OrdersVersion.V_2026_01_01, OrdersVersion.LATEST, "2026-01-01"],
+            **kwargs: Any,
+        ) -> OrdersV20260101: ...
+
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[OrdersVersion.V0, "v0"],
+            **kwargs: Any,
+        ) -> OrdersV0: ...
+
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> OrdersV0: ...
+
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: str | OrdersVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+    _DEFAULT_VERSION = "v0"
+
+    _VERSION_MAP = {
+        "v0": OrdersV0,
+        "2026-01-01": OrdersV20260101,
+    }
+
+    _VERSION_ALIASES = {
+        "v0": "v0",
+        "2026-01-01": "2026-01-01",
+    }

@@ -32,7 +32,7 @@ class OrdersV20260101(Client):
         normalize_csv_param(kwargs, "marketplaceIds")
         normalize_csv_param(kwargs, "fulfilledBy")
         normalize_csv_param(kwargs, "includedData")
-
+        print(kwargs)
         return self._request(kwargs.pop("path"), params={**kwargs})
 
     @sp_endpoint("/orders/2026-01-01/orders/{}")
