@@ -1,3 +1,26 @@
+## v2.0.15 - 2026-02-01
+## Version 2.0.15
+
+### New Features
+
+#### Orders API Enhancements
+
+- Enhanced the `OrdersV20260101` client with detailed docstrings for the `search_orders` and `get_order` methods. These updates include usage plans, examples, and argument details, improving the developer experience and understanding of API capabilities.
+
+```mermaid
+graph TD;
+    A[OrdersV20260101 Client] -->|Enhanced Docstrings| B[search_orders Method];
+    A -->|Enhanced Docstrings| C[get_order Method];
+    B --> D[Usage Plans & Examples];
+    C --> D;
+```
+
+### Internal Changes
+
+- Removed unnecessary `print` statement from the `search_orders` method to clean up the codebase.
+
+These changes provide clearer guidance for developers using the Orders API, ensuring they can implement and utilize the API more effectively.
+
 ## v2.0.14 - 2026-02-01
 ## Version 2.0.14
 
