@@ -1,3 +1,28 @@
+## v2.0.14 - 2026-02-01
+## Version 2.0.14
+
+### Bug Fixes
+
+#### Orders API Asynchronous Handling
+
+- Fixed asynchronous handling in the `OrdersV0` client by ensuring that the `_access_restricted` method is awaited properly. This resolves potential issues with handling restricted resources in asynchronous environments.
+
+```mermaid
+graph TD;
+    A[OrdersV0 Client] -->|Fix Async Handling| B[_access_restricted Method];
+    B --> C[Await Correctly];
+```
+
+These changes enhance the reliability and correctness of asynchronous operations within the Orders API, ensuring smoother integration and execution in applications using the `python-amazon-sp-api` library.
+
+### Documentation
+
+- Updated the Fulfillment Inbound documentation to replace `.. info::` with `.. note::` for better clarity.
+
+### Dependencies
+
+- Added `httpx` to `docs/requirements.txt` to support HTTP requests in documentation examples.
+
 ## v2.0.13 - 2026-02-01
 ## Version 2.0.13
 
