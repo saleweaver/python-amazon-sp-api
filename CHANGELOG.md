@@ -1,3 +1,28 @@
+## v2.1.3 - 2026-02-04
+# Changelog
+
+## Version 2.1.3
+
+### New Features
+- No new features added in this release.
+
+### Changes
+- Updated version number from 2.1.1 to 2.1.3 for consistency and alignment with internal versioning.
+
+### Bug Fixes
+- No specific bug fixes were documented in this release.
+
+### Internal
+- No internal changes were documented in this release.
+
+### Diagram of Version Update
+```mermaid
+graph TD;
+    A[Version 2.1.1] --> B[Version 2.1.3];
+```
+
+This update primarily reflects a version number change, ensuring the package is up-to-date with internal versioning practices.
+
 ## v2.0.15 - 2026-02-01
 ## Version 2.0.15
 
