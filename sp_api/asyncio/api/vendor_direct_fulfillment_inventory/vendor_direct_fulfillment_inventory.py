@@ -18,43 +18,30 @@ class VendorDirectFulfillmentInventory(AsyncBaseClient):
     async def submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse:
         """
         submit_inventory_update(self, warehouseId, **kwargs) -> ApiResponse
-
+        
         Submits inventory updates for the specified warehouse for either a partial or full feed of inventory items.
-
-        **Usage Plans:**
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await VendorDirectFulfillmentInventory().submit_inventory_update("value")
+        
         Args:
-            warehouseId:string | * REQUIRED Identifier for the warehouse for which to update inventory.
-            body: {
-              "inventory": {
-                "sellingParty": {
-                  "partyId": "string"
-                },
-                "isFullUpdate": true,
-                "items": [
-                  {
-                    "buyerProductIdentifier": "string",
-                    "vendorProductIdentifier": "string",
-                    "availableQuantity": {
-                      "amount": 0,
-                      "unitOfMeasure": "string"
-                    },
-                    "isObsolete": true
-                  }
-                ]
-              }
-            }
-
+            body: SubmitInventoryUpdateRequest | required The request body containing the inventory update data to submit.
+            warehouseId: object | required Identifier for the warehouse for which to update inventory.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return await self._request(

@@ -1,0 +1,5 @@
+Feeds V2021_06_30
+=================
+
+
+..  autoclass:: sp_api.api.FeedsV20210630

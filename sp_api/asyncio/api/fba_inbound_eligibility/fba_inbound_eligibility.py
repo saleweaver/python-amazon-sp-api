@@ -21,28 +21,31 @@ class FbaInboundEligibility(AsyncBaseClient):
     async def get_item_eligibility_preview(self, **kwargs) -> ApiResponse:
         """
         get_item_eligibility_preview(self, **kwargs) -> ApiResponse
-
+        
         This operation gets an eligibility preview for an item that you specify. You can specify the type of eligibility preview that you want (INBOUND or COMMINGLING). For INBOUND previews, you can specify the marketplace in which you want to determine the item's eligibility.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       1
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                await FbaInboundEligibility().get_item_eligibility_preview()
+        
         Args:
-            key marketplaceIds:array |  The identifier for the marketplace in which you want to determine eligibility. Required only when program=INBOUND.
-            key asin:string | * REQUIRED The ASIN of the item for which you want an eligibility preview.
-            key program:string | * REQUIRED The program that you want to check eligibility against.
-
-
+            key marketplaceIds: object |  The identifier for the marketplace in which you want to determine eligibility. Required only when program=INBOUND.
+            key asin: object | required The ASIN of the item for which you want an eligibility preview.
+            key program: object | required The program that you want to check eligibility against.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), params=kwargs)
 
@@ -50,28 +53,31 @@ class FbaInboundEligibility(AsyncBaseClient):
     async def get_item_eligibility_preview_extended(self, **kwargs) -> ApiResponse:
         """
         get_item_eligibility_preview_extended(self, **kwargs) -> ApiResponse
-
+        
         This operation gets an eligibility preview for an item that you specify. You can specify the type of eligibility preview that you want (INBOUND or COMMINGLING). For INBOUND previews, you can specify the marketplace in which you want to determine the item's eligibility.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       1
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                await FbaInboundEligibility().get_item_eligibility_preview_extended()
+        
         Args:
-            key marketplaceIds:array |  The identifier for the marketplace in which you want to determine eligibility. Required only when program=INBOUND.
-            key asin:string | * REQUIRED The ASIN of the item for which you want an eligibility preview.
-            key program:string | * REQUIRED The program that you want to check eligibility against.
-
-
+            key marketplaceIds: object |  The identifier for the marketplace in which you want to determine eligibility. Required only when program=INBOUND.
+            key asin: object | required The ASIN of the item for which you want an eligibility preview.
+            key program: object | required The program that you want to check eligibility against.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         api_response = await self._request(kwargs.pop("path"), params=kwargs)

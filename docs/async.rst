@@ -21,7 +21,7 @@ Basic usage
 .. code-block:: python
 
    import asyncio
-   from datetime import datetime, timedelta
+   from datetime import datetime, timedelta, timezone
 
    from sp_api.asyncio.api import Orders, Reports
    from sp_api.base.reportTypes import ReportType
@@ -30,7 +30,7 @@ Basic usage
    async def main():
        async with Orders() as orders_client:
            res = await orders_client.get_orders(
-               LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+               LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
            )
            print(res.payload)
 

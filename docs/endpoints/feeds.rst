@@ -2,9 +2,7 @@ Feeds
 =====
 
 
+..  toctree::
+    :maxdepth: 1
 
-
-
-..  autoclass:: sp_api.api.Feeds
-
-
+    feeds_v2021_06_30

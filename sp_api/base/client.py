@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 import os
 
@@ -72,7 +72,7 @@ class Client(BaseClient):
             "host": self.endpoint[8:],
             "user-agent": self.user_agent,
             "x-amz-access-token": self.restricted_data_token or self.auth.access_token,
-            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "x-amz-date": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
             "content-type": "application/json",
         }
 
@@ -179,7 +179,7 @@ class Client(BaseClient):
             "host": self.endpoint[8:],
             "user-agent": self.user_agent,
             "x-amz-access-token": self.grantless_auth.access_token,
-            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "x-amz-date": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
             "content-type": "application/json",
         }
         log.debug("HTTP Method: %s", self.method)

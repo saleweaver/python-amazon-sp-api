@@ -1,170 +1,116 @@
-from sp_api.base import (
-    Client,
-    sp_endpoint,
-    fill_query_params,
-    ApiResponse,
-    IncludedData,
-)
-from sp_api.util import normalize_included_data
+from __future__ import annotations
+
+import enum
+from typing import Any, Literal, TYPE_CHECKING, overload
+
 from sp_api.asyncio.base import AsyncBaseClient
+from sp_api.util.versioned_client import VersionedClientMeta
+
+from .listings_items_2020_09_01 import ListingsItemsV20200901
+from .listings_items_2021_08_01 import ListingsItemsV20210801
 
 
-class ListingsItems(AsyncBaseClient):
+class ListingsItemsVersion(str, enum.Enum):
+    V_2020_09_01 = "2020-09-01"
+    V_2021_08_01 = "2021-08-01"
+    LATEST = "2021-08-01"
+
+
+if TYPE_CHECKING:
+
+    class _ListingsItemsMeta(VersionedClientMeta):
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[
+                ListingsItemsVersion.V_2021_08_01, ListingsItemsVersion.LATEST, "2021-08-01"
+            ],
+            **kwargs: Any,
+        ) -> ListingsItemsV20210801: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[ListingsItemsVersion.V_2020_09_01, "2020-09-01"],
+            **kwargs: Any,
+        ) -> ListingsItemsV20200901: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> ListingsItemsV20200901: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: str | ListingsItemsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+
+else:
+    _ListingsItemsMeta = VersionedClientMeta
+
+
+class ListingsItems(AsyncBaseClient, metaclass=_ListingsItemsMeta):
+    """Listings Items API client.
+
+    This class dispatches to a versioned Listings Items API client.
+
+    If you do not pass a version, the constructor returns the 2021-08-01 supported implementation ("2021-08-01").
     """
-        ListingsItems SP-API Client
-        :link:
 
-        The Selling Partner API for Listings Items (Listings Items API) provides programmatic access to selling partner listings on Amazon. Use this API in collaboration with the Selling Partner API for Product Type Definitions, which you use to retrieve the information about Amazon product types needed to use the Listings Items API.
+    if TYPE_CHECKING:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[
+                ListingsItemsVersion.V_2021_08_01, ListingsItemsVersion.LATEST, "2021-08-01"
+            ],
+            **kwargs: Any,
+        ) -> ListingsItemsV20210801: ...
 
-    For more information, see the [Listings Items API Use Case Guide](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/use-case-guides/listings-items-api-use-case-guide/listings-items-api-use-case-guide_2021-08-01.md).
-    """
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[ListingsItemsVersion.V_2020_09_01, "2020-09-01"],
+            **kwargs: Any,
+        ) -> ListingsItemsV20200901: ...
 
-    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="DELETE")
-    async def delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
-        delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
-        Delete a listings item for a selling partner.
-        **Usage Plans:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       10
-        ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-        Returns:
-            ApiResponse:
-        """
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> ListingsItemsV20200901: ...
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), sellerId, sku), data=kwargs
-        )
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: str | ListingsItemsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
 
-    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="GET")
-    async def get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
-        get_listings_item(self, sellerId, **kwargs) -> ApiResponse
-        Returns details about a listings item for a selling partner.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       10
-        ======================================  ==============
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
-        Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
-        Returns:
-            ApiResponse:
-        """
-        normalize_included_data(kwargs, enum_cls=IncludedData)
+    _DISPATCH = True
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), sellerId, sku), params=kwargs
-        )
+    _DEFAULT_VERSION = "2021-08-01"
 
-    @sp_endpoint("/listings/2021-08-01/items/{}", method="GET")
-    async def search_listings_items(self, sellerId, **kwargs) -> ApiResponse:
-        """
-        search_listings_items(self, sellerId, **kwargs) -> ApiResponse
-        Search for and return list of listings items and respective details for a selling partner.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       5
-        ======================================  ==============
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
-        Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
-        Returns:
-            ApiResponse:
-        """
-        normalize_included_data(kwargs, enum_cls=IncludedData)
+    _VERSION_MAP = {
+        "2020-09-01": ListingsItemsV20200901,
+        "2021-08-01": ListingsItemsV20210801,
+    }
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), sellerId), params=kwargs
-        )
-
-    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="PATCH")
-    async def patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
-        patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
-        Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.
-        **Usage Plans:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       10
-        ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            body: {
-              "productType": "string",
-              "patches": [
-                {
-                  "op": "add",
-                  "path": "string",
-                  "value": [
-                    {}
-                  ]
-                }
-              ]
-            }
-
-         Returns:
-            ApiResponse:
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), sellerId, sku),
-            data=kwargs.pop("body"),
-            params=kwargs,
-        )
-
-    @sp_endpoint("/listings/2021-08-01/items/{}/{}", method="PUT")
-    async def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
-        """
-        put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
-        Creates a new or fully-updates an existing listings item for a selling partner.
-        **Usage Plans:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       10
-        ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-        Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            body: {
-              "productType": "string",
-              "requirements": "LISTING",
-              "attributes": {}
-            }
-
-        Returns:
-            ApiResponse:
-        """
-
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), sellerId, sku),
-            data=kwargs.pop("body"),
-            params=kwargs,
-        )
+    _VERSION_ALIASES = {
+        "2020-09-01": "2020-09-01",
+        "2021-08-01": "2021-08-01",
+    }

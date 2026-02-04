@@ -17,30 +17,29 @@ class ApplicationIntegrations(AsyncBaseClient):
     async def create_notification(self, **kwargs) -> ApiResponse:
         """
         create_notification(self, **kwargs) -> ApiResponse
-
-        Create a notification for sellers in Seller Central.
-
-        **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1 | 5 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Sellers whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
-        Args:
         
-                    body: | * REQUIRED {'description': 'The request for the `createNotification` operation.',
-         'example': {'marketplaceId': 'ATVPDKIKX0DER', 'notificationParameters': {'priceValue': '200'}, 'templateId': 'PRICE_CHANGE'},
-         'properties': {'marketplaceId': {'description': 'An encrypted marketplace identifier for the posted notification.', 'type': 'string'},
-                        'notificationParameters': {'$ref': '#/definitions/NotificationParameters', 'description': 'The parameters specified in the template you used to onboard your application.'},
-                        'templateId': {'description': 'The unique identifier of the notification template you used to onboard your application.', 'type': 'string'}},
-         'required': ['templateId', 'notificationParameters'],
-         'type': 'object'}
-
-
+        Create a notification for sellers in Seller Central.
+        
+        **Usage Plan:**
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ApplicationIntegrations().create_notification()
+        
+        Args:
+            body: CreateNotificationRequest | required The request body for the `createNotification` operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
     
         return await self._request(kwargs.pop('path'), data=kwargs)
@@ -50,33 +49,29 @@ class ApplicationIntegrations(AsyncBaseClient):
     async def delete_notifications(self, **kwargs) -> ApiResponse:
         """
         delete_notifications(self, **kwargs) -> ApiResponse
-
+        
         Remove your application's notifications from the Appstore notifications dashboard.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1 | 5 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Sellers whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
-                Args:
-
-                    body: | * REQUIRED {'description': 'The request for the `deleteNotifications` operation.',
-         'example': {'deletionReason': 'INCORRECT_CONTENT', 'templateId': 'PRICE_CHANGE'},
-         'properties': {'deletionReason': {'description': 'The unique identifier that maps each notification status to a reason code.',
-                                           'enum': ['INCORRECT_CONTENT', 'INCORRECT_RECIPIENT'],
-                                           'type': 'string',
-                                           'x-docgen-enum-table-extension': [{'description': "The notification's content is recognized to be incorrect.", 'value': 'INCORRECT_CONTENT'},
-                                                                             {'description': 'The notification was sent to incorrect seller.', 'value': 'INCORRECT_RECIPIENT'}]},
-                        'templateId': {'description': 'The unique identifier of the notification template you used to onboard your application.', 'type': 'string'}},
-         'required': ['templateId', 'deletionReason'],
-         'type': 'object'}
-
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ApplicationIntegrations().delete_notifications()
+        
+        Args:
+            body: DeleteNotificationsRequest | required The request body for the `deleteNotifications` operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
     
         return await self._request(kwargs.pop('path'), data=kwargs)
@@ -86,34 +81,30 @@ class ApplicationIntegrations(AsyncBaseClient):
     async def record_action_feedback(self, notificationId, **kwargs) -> ApiResponse:
         """
         record_action_feedback(self, notificationId, **kwargs) -> ApiResponse
-
+        
         Records the seller's response to a notification.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1 | 5 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Sellers whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
-                Args:
-
-                    notificationId:string | * REQUIRED A `notificationId` uniquely identifies a notification.
-
-                    body: | * REQUIRED {'description': 'The request for the `recordActionFeedback` operation.',
-         'example': {'feedbackActionCode': 'SELLER_ACTION_COMPLETED'},
-         'properties': {'feedbackActionCode': {'description': 'The unique identifier for each notification status.',
-                                               'enum': ['SELLER_ACTION_COMPLETED'],
-                                               'type': 'string',
-                                               'x-docgen-enum-table-extension': [{'description': 'The seller completed the action attached to the posted notification.', 'value': 'SELLER_ACTION_COMPLETED'}]}},
-         'required': ['feedbackActionCode'],
-         'type': 'object'}
-
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ApplicationIntegrations().record_action_feedback("value")
+        
+        Args:
+            notificationId: object | required A `notificationId` uniquely identifies a notification.
+            body: RecordActionFeedbackRequest | required The request body for the `recordActionFeedback` operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
     
         return await self._request(fill_query_params(kwargs.pop('path'), notificationId), data=kwargs)
-    

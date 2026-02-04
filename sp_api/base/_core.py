@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from json import JSONDecodeError
 
 from .ApiResponse import ApiResponse
@@ -52,7 +52,7 @@ def build_headers(endpoint, user_agent, access_token, content_type="application/
         "host": endpoint[8:],
         "user-agent": user_agent,
         "x-amz-access-token": access_token,
-        "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+        "x-amz-date": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
         "content-type": content_type,
     }
 

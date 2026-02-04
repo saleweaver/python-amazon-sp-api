@@ -49,9 +49,12 @@ if AwsEnv(AWS_ENVIRONMENT) == AwsEnv.SANDBOX:
 
 class Marketplaces(Enum):
     """Enumeration for MWS marketplaces, containing endpoints and marketplace IDs.
-    Example, endpoint and ID for UK marketplace:
-        endpoint = Marketplaces.UK.endpoint
-        marketplace_id = Marketplaces.UK.marketplace_id
+
+    Examples:
+        literal blocks::
+
+            endpoint = Marketplaces.UK.endpoint
+            marketplace_id = Marketplaces.UK.marketplace_id
     """
 
     #: Amazon marketplace in United Arab Emirates (AE)

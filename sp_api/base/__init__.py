@@ -23,6 +23,8 @@ from .schedules import Schedules
 from .report_status import ReportStatus
 from .sales_enum import FirstDayOfWeek, Granularity, BuyerType
 from .fulfillment_channel import FulfillmentChannel
+from .identifiersType import IdentifiersType
+from .InventoryEnums import InventoryGranularity
 from .included_data import (
     IncludedData,
     ListingItemsIncludedData,
@@ -46,6 +48,7 @@ __all__ = [
     "AccessTokenClient",
     "ReportType",
     "FeedType",
+    "FeedTypes",
     "ProcessingStatus",
     "ApiResponse",
     "Client",
@@ -70,6 +73,9 @@ __all__ = [
     "Granularity",
     "BuyerType",
     "FulfillmentChannel",
+    "FulfillmentChannels",
+    "IdentifiersType",
+    "InventoryGranularity",
     "deprecated",
     "NotificationType",
     "CredentialProvider",
@@ -82,3 +88,7 @@ __all__ = [
     "CatalogItemsIncludedData",
     "AwsEnv",
 ]
+
+# Backward-compatibility aliases for docs and legacy imports.
+FeedTypes = FeedType
+FulfillmentChannels = FulfillmentChannel

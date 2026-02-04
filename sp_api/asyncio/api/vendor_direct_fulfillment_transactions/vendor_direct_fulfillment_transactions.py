@@ -1,43 +1,126 @@
-import urllib.parse
+from __future__ import annotations
 
-from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+import enum
+from typing import Any, Literal, TYPE_CHECKING, overload
+
 from sp_api.asyncio.base import AsyncBaseClient
+from sp_api.util.versioned_client import VersionedClientMeta
+
+from .vendor_direct_fulfillment_transactions_2021_12_28 import (
+    VendorDirectFulfillmentTransactionsV20211228,
+)
+from .vendor_direct_fulfillment_transactions_v1 import (
+    VendorDirectFulfillmentTransactionsV1,
+)
 
 
-class VendorDirectFulfillmentTransactions(AsyncBaseClient):
+class VendorDirectFulfillmentTransactionsVersion(str, enum.Enum):
+    V1 = "v1"
+    V_2021_12_28 = "2021-12-28"
+    LATEST = "2021-12-28"
+
+
+if TYPE_CHECKING:
+
+    class _VendorDirectFulfillmentTransactionsMeta(VersionedClientMeta):
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[
+                VendorDirectFulfillmentTransactionsVersion.V_2021_12_28,
+                VendorDirectFulfillmentTransactionsVersion.LATEST,
+                "2021-12-28",
+            ],
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV20211228: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[VendorDirectFulfillmentTransactionsVersion.V1, "v1"],
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV1: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV1: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: str | VendorDirectFulfillmentTransactionsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+
+else:
+    _VendorDirectFulfillmentTransactionsMeta = VersionedClientMeta
+
+
+class VendorDirectFulfillmentTransactions(
+    AsyncBaseClient, metaclass=_VendorDirectFulfillmentTransactionsMeta
+):
+    """Vendor Direct Fulfillment Transactions API client.
+
+    This class dispatches to a versioned Vendor Direct Fulfillment Transactions API client.
+
+    If you do not pass a version, the constructor returns the oldest supported implementation ("v1").
     """
-    VendorDirectFulfillmentTransactions SP-API Client
-    :link:
 
-    The Selling Partner API for Direct Fulfillment Transaction Status provides programmatic access to a direct fulfillment vendor's transaction status.
-    """
+    if TYPE_CHECKING:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[
+                VendorDirectFulfillmentTransactionsVersion.V_2021_12_28,
+                VendorDirectFulfillmentTransactionsVersion.LATEST,
+                "2021-12-28",
+            ],
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV20211228: ...
 
-    @sp_endpoint(
-        "/vendor/directFulfillment/transactions/v1/transactions/{}", method="GET"
-    )
-    async def get_transaction_status(self, transactionId, **kwargs) -> ApiResponse:
-        """
-        get_transaction_status(self, transactionId, **kwargs) -> ApiResponse
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[VendorDirectFulfillmentTransactionsVersion.V1, "v1"],
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV1: ...
 
-        Returns the status of the transaction indicated by the specified transactionId.
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> VendorDirectFulfillmentTransactionsV1: ...
 
-        **Usage Plans:**
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: str | VendorDirectFulfillmentTransactionsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
 
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        10                                      10
-        ======================================  ==============
+    _DISPATCH = True
 
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+    _DEFAULT_VERSION = "v1"
 
-        Args:
-            transactionId:string | * REQUIRED Previously returned in the response to the POST request of a specific transaction.
+    _VERSION_MAP = {
+        "v1": VendorDirectFulfillmentTransactionsV1,
+        "2021-12-28": VendorDirectFulfillmentTransactionsV20211228,
+    }
 
-        Returns:
-            ApiResponse:
-        """
-
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), transactionId), params=kwargs
-        )
+    _VERSION_ALIASES = {
+        "v1": "v1",
+        "2021-12-28": "2021-12-28",
+    }

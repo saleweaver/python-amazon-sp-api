@@ -141,3 +141,5 @@ dmypy.json
 cython_debug/
 
 env.env
+AGENTS.md
+models

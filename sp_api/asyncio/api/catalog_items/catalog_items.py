@@ -1,8 +1,13 @@
-import enum
+from __future__ import annotations
 
-from sp_api.base import ApiResponse, fill_query_params, sp_endpoint
-from sp_api.util import normalize_included_data
+import enum
+from typing import Any, Literal, TYPE_CHECKING, overload
+
 from sp_api.asyncio.base import AsyncBaseClient
+from sp_api.util.versioned_client import VersionedClientMeta
+
+from .catalog_items_2020_12_01 import CatalogItemsV20201201
+from .catalog_items_2022_04_01 import CatalogItemsV20220401
 
 
 class CatalogItemsVersion(str, enum.Enum):
@@ -11,83 +16,101 @@ class CatalogItemsVersion(str, enum.Enum):
     LATEST = "2022-04-01"
 
 
-class CatalogItems(AsyncBaseClient):
+if TYPE_CHECKING:
+
+    class _CatalogItemsMeta(VersionedClientMeta):
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[
+                CatalogItemsVersion.V_2022_04_01, CatalogItemsVersion.LATEST, "2022-04-01"
+            ],
+            **kwargs: Any,
+        ) -> CatalogItemsV20220401: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[CatalogItemsVersion.V_2020_12_01, "2020-12-01"],
+            **kwargs: Any,
+        ) -> CatalogItemsV20201201: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> CatalogItemsV20201201: ...
+
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: str | CatalogItemsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+
+else:
+    _CatalogItemsMeta = VersionedClientMeta
+
+
+class CatalogItems(AsyncBaseClient, metaclass=_CatalogItemsMeta):
+    """Catalog Items API client.
+
+    This class dispatches to a versioned Catalog Items API client.
+
+    If you do not pass a version, the constructor returns the oldest supported implementation ("2020-12-01").
     """
-    CatalogItems SP-API Client
-    :link:
 
-    The Selling Partner API for Catalog Items provides programmatic access to information about items in the Amazon catalog.
-    """
+    if TYPE_CHECKING:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[
+                CatalogItemsVersion.V_2022_04_01, CatalogItemsVersion.LATEST, "2022-04-01"
+            ],
+            **kwargs: Any,
+        ) -> CatalogItemsV20220401: ...
 
-    version: CatalogItemsVersion = CatalogItemsVersion.V_2020_12_01
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[CatalogItemsVersion.V_2020_12_01, "2020-12-01"],
+            **kwargs: Any,
+        ) -> CatalogItemsV20201201: ...
 
-    def __init__(self, *args, **kwargs):
-        if "version" in kwargs:
-            self.version = kwargs.get("version", CatalogItemsVersion.V_2020_12_01)
-        super().__init__(*args, **{**kwargs, "version": self.version})
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> CatalogItemsV20201201: ...
 
-    @sp_endpoint("/catalog/<version>/items", method="GET")
-    async def search_catalog_items(self, **kwargs) -> ApiResponse:
-        """
-        search_catalog_items(self, **kwargs) -> ApiResponse
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: str | CatalogItemsVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
 
-        Search for and return a list of Amazon catalog items and associated information.
+    _DISPATCH = True
 
-        **Usage Plans:**
+    _DEFAULT_VERSION = "2020-12-01"
 
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       5
-        ======================================  ==============
+    _VERSION_MAP = {
+        "2020-12-01": CatalogItemsV20201201,
+        "2022-04-01": CatalogItemsV20220401,
+    }
 
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Args:
-            key keywords:array | * REQUIRED A comma-delimited list of words or item identifiers to search the Amazon catalog for.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
-            key brandNames:array |  A comma-delimited list of brand names to limit the search to.
-            key classificationIds:array |  A comma-delimited list of classification identifiers to limit the search to.
-            key pageSize:integer |  Number of results to be returned per page.
-            key pageToken:string |  A token to fetch a certain page when there are multiple pages worth of results.
-            key keywordsLocale:string |  The language the keywords are provided in. Defaults to the primary locale of the marketplace.
-            key locale:string |  Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.
-
-        Returns:
-            ApiResponse:
-        """
-
-        normalize_included_data(kwargs)
-        return await self._request(kwargs.pop("path"), params=kwargs)
-
-    @sp_endpoint("/catalog/<version>/items/{}", method="GET")
-    async def get_catalog_item(self, asin, **kwargs) -> ApiResponse:
-        """
-        get_catalog_item(self, asin, **kwargs) -> ApiResponse
-
-        Retrieves details for an item in the Amazon catalog.
-
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       5
-        ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        Args:
-            asin:string | * REQUIRED The Amazon Standard Identification Number (ASIN) of the item.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers. Data sets in the response contain data only for the specified marketplaces.
-            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
-            key locale:string |  Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.
-
-        Returns:
-            ApiResponse:
-        """
-
-        normalize_included_data(kwargs)
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), asin), params=kwargs
-        )
+    _VERSION_ALIASES = {
+        "2020-12-01": "2020-12-01",
+        "2022-04-01": "2022-04-01",
+    }

@@ -1,6 +1,6 @@
 import urllib
 
-from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
+from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse, fill_query_params
 from sp_api.base.InventoryEnums import InventoryGranularity
 from sp_api.util import normalize_csv_param
 
@@ -13,51 +13,25 @@ class Inventories(Client):
     @sp_endpoint("/fba/inventory/v1/summaries")
     def get_inventory_summary_marketplace(self, **kwargs) -> ApiResponse:
         """
-        get_inventory_summary_marketplace(self, **kwargs) -> GetInventorySummariesResponse
-
-
-        Returns a list of inventory summaries. The summaries returned depend on the presence or absence of the startDateTime and sellerSkus parameters:
-
-        - All inventory summaries with available details are returned when the startDateTime and sellerSkus parameters are omitted.
-        - When startDateTime is provided, the operation returns inventory summaries that have had changes after the date and time specified. The sellerSkus parameter is ignored.
-        - When the sellerSkus parameter is provided, the operation returns inventory summaries for only the specified sellerSkus.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        2                                       2
-        ======================================  ==============
-
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-        All inventory summaries with available details are returned when the startDateTime and sellerSkus parameters are omitted.
-        When startDateTime is provided, the operation returns inventory summaries that have had changes after the date and time specified. The sellerSkus parameter is ignored.
-        When the sellerSkus parameter is provided, the operation returns inventory summaries for only the specified sellerSkus.
-        Usage Plan:
-
+        get_inventory_summary_marketplace(self, **kwargs) -> ApiResponse
+        
+        Returns a list of inventory summaries. The summaries returned depend on the presence or absence of the startDateTime, sellerSkus and sellerSku parameters:
+                        - All inventory summaries with available details are returned when the startDateTime, sellerSkus and sellerSku parameters are omitted.
+                        - When startDateTime is provided, the operation returns inventory summaries that have had changes after the date and time specified. The sellerSkus and sellerSku parameters are ignored. Important: To avoid errors, use both startDateTime and nextToken to get the next page of inventory summaries that have changed after the date and time specified.
+                        - When the sellerSkus parameter is provided, the operation returns inventory summaries for only the specified sellerSkus. The sellerSku parameter is ignored.
+                        - When the sellerSku parameter is provided, the operation returns inventory summaries for only the specified sellerSku.
+                        Note: The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         Examples:
             literal blocks::
-
-                Inventories().get_inventory_summary_marketplace(**{
-                        "details": True,
-                        "marketplaceIds": ["ATVPDKIKX0DER"]
-                    })
-
+            
+                Inventories().get_inventory_summary_marketplace()
+        
         Args:
-            key details: bool | true to return inventory summaries with additional summarized inventory details and quantities. Otherwise, returns inventory summaries only (default value).	boolean	"false"
-            key granularityType: Granularity Type | The granularity type for the inventory aggregation level.	enum (GranularityType)	-
-            key granularityId: str The granularity ID for the inventory aggregation level.	string	-
-            key startDateTime: datetime | A start date and time in ISO8601 format. If specified, all inventory summaries that have changed since then are returned. You must specify a date and time that is no earlier than 18 months prior to the date and time when you call the API. Note: Changes in inboundWorkingQuantity, inboundShippedQuantity and inboundReceivingQuantity are not detected.	string (date-time)	-
-            key sellerSkus: [str] | A list of seller SKUs for which to return inventory summaries. You may specify up to 50 SKUs.
-            key nextToken: str | String token returned in the response of your previous request.	string	-
-            key marketplaceIds: str | The marketplace ID for the marketplace for which to return inventory summaries.
-
+            **kwargs:
+        
         Returns:
-            GetInventorySummariesResponse:
-
+            ApiResponse
         """
 
         kwargs.update(
@@ -71,3 +45,66 @@ class Inventories(Client):
         normalize_csv_param(kwargs, "sellerSkus")
 
         return self._request(kwargs.pop("path"), params=kwargs)
+
+
+    @sp_endpoint("/fba/inventory/v1/items", method="POST")
+    def create_inventory_item(self, **kwargs) -> ApiResponse:
+        """
+        create_inventory_item(self, **kwargs) -> ApiResponse
+        
+        Requests that Amazon create product-details in the Sandbox Inventory in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+        
+        Examples:
+            literal blocks::
+            
+                Inventories().create_inventory_item()
+        
+        Args:
+            createInventoryItemRequestBody: CreateInventoryItemRequest | required CreateInventoryItem Request Body Parameter.
+        
+        Returns:
+            ApiResponse
+        """
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/fba/inventory/v1/items/{}", method="DELETE")
+    def delete_inventory_item(self, sellerSku, **kwargs) -> ApiResponse:
+        """
+        delete_inventory_item(self, sellerSku, **kwargs) -> ApiResponse
+        
+        Requests that Amazon Deletes an item from the Sandbox Inventory in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+        
+        Examples:
+            literal blocks::
+            
+                Inventories().delete_inventory_item("value")
+        
+        Args:
+            sellerSku: object | required A single seller SKU used for querying the specified seller SKU inventory summaries.
+            key marketplaceId: object | required The marketplace ID for the marketplace for which the sellerSku is to be deleted.
+        
+        Returns:
+            ApiResponse
+        """
+        return self._request(fill_query_params(kwargs.pop("path"), sellerSku), params=kwargs)
+
+    @sp_endpoint("/fba/inventory/v1/items/inventory", method="POST")
+    def add_inventory(self, **kwargs) -> ApiResponse:
+        """
+        add_inventory(self, **kwargs) -> ApiResponse
+        
+        Requests that Amazon add items to the Sandbox Inventory with desired amount of quantity in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+        
+        Examples:
+            literal blocks::
+            
+                Inventories().add_inventory()
+        
+        Args:
+            x-amzn-idempotency-token: object | required A unique token/requestId provided with each call to ensure idempotency.
+            addInventoryRequestBody: AddInventoryRequest | required List of items to add to Sandbox inventory.
+        
+        Returns:
+            ApiResponse
+        """
+        return self._request(kwargs.pop("path"), data=kwargs)

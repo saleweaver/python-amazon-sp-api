@@ -14,26 +14,30 @@ class AplusContent(Client):
     def search_content_documents(self, **kwargs) -> ApiResponse:
         """
         search_content_documents(self, **kwargs) -> ApiResponse
-
-        Returns a list of all A+ Content documents assigned to a selling partner. This operation returns only the metadata of the A+ Content documents. Call the getContentDocument operation to get the actual contents of the A+ Content documents.
-
-        **Usage Plans:**
-
-
+        
+        Returns a list of all A+ Content documents, including metadata, that are assigned to a selling partner. To get the actual contents of the A+ Content documents, call the `getContentDocument` operation.
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().search_content_documents()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            key pageToken:string |  A page token from the nextPageToken response element returned by your previous call to this operation. nextPageToken is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include pageToken as the only parameter. Specifying pageToken with any other parameter will cause the request to fail. When no nextPageToken value is returned there are no more pages to return. A pageToken value is not usable across different operations.
-
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key pageToken: object |  A token that you use to fetch a specific page when there are multiple pages of results.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -42,27 +46,30 @@ class AplusContent(Client):
     def create_content_document(self, **kwargs) -> ApiResponse:
         """
         create_content_document(self, **kwargs) -> ApiResponse
-
+        
         Creates a new A+ Content document.
-
-        **Usage Plans:**
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        10                                       10
+        10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().create_content_document()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            postContentDocumentRequest: | * REQUIRED {'properties': {'contentDocument': {'$ref': '#/definitions/ContentDocument'}}, 'required': ['contentDocument'], 'type': 'object'}
-
-
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            postContentDocumentRequest: PostContentDocumentRequest | required The content document request details.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -76,28 +83,31 @@ class AplusContent(Client):
     def get_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse:
         """
         get_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse
-
+        
         Returns an A+ Content document, if available.
-
-        **Usage Plans:**
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().get_content_document("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            key includedDataSet:array | * REQUIRED The set of A+ Content data types to include in the response.
-
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key includedDataSet: object | required The set of A+ Content data types to include in the response.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -108,25 +118,31 @@ class AplusContent(Client):
     def update_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse:
         """
         update_content_document(self, contentReferenceKey, **kwargs) -> ApiResponse
-
+        
         Updates an existing A+ Content document.
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().update_content_document("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            postContentDocumentRequest: | * REQUIRED {'properties': {'contentDocument': {'$ref': '#/definitions/ContentDocument'}}, 'required': ['contentDocument'], 'type': 'object'}
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            postContentDocumentRequest: PostContentDocumentRequest | required The content document request details.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -142,27 +158,33 @@ class AplusContent(Client):
     ) -> ApiResponse:
         """
         list_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse
-
-        Returns a list of ASINs related to the specified A+ Content document, if available. If you do not include the asinSet parameter, the operation returns all ASINs related to the content document.
-
-
+        
+        Returns a list of ASINs that are related to the specified A+ Content document, if available. If you don't include the `asinSet` parameter, this operation returns all ASINs related to the content document.
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().list_content_document_asin_relations("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            key includedDataSet:array |  The set of A+ Content data types to include in the response. If you do not include this parameter, the operation returns the related ASINs without metadata.
-            key asinSet:array |  The set of ASINs.
-            key pageToken:string |  A page token from the nextPageToken response element returned by your previous call to this operation. nextPageToken is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include pageToken as the only parameter. Specifying pageToken with any other parameter will cause the request to fail. When no nextPageToken value is returned there are no more pages to return. A pageToken value is not usable across different operations.
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key includedDataSet: object |  The set of A+ Content data types to include in the response. If you don't include this parameter, the operation returns the related ASINs without metadata.
+            key asinSet: object |  The set of ASINs.
+            key pageToken: object |  A token that you use to fetch a specific page when there are multiple pages of results.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -175,25 +197,31 @@ class AplusContent(Client):
     ) -> ApiResponse:
         """
         post_content_document_asin_relations(self, contentReferenceKey, **kwargs) -> ApiResponse
-
-        Replaces all ASINs related to the specified A+ Content document, if available. This may add or remove ASINs, depending on the current set of related ASINs. Removing an ASIN has the side effect of suspending the content document from that ASIN.
-
-
+        
+        Replaces all ASINs related to the specified A+ Content document, if available. This operation can add or remove ASINs, depending on the current set of related ASINs. Removing an ASIN will suspend the content document from that ASIN.
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().post_content_document_asin_relations("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            postContentDocumentAsinRelationsRequest: | * REQUIRED {'properties': {'asinSet': {'$ref': '#/definitions/AsinSet'}}, 'required': ['asinSet'], 'type': 'object'}
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            postContentDocumentAsinRelationsRequest: PostContentDocumentAsinRelationsRequest | required The request details for the content document ASIN relations.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -207,26 +235,31 @@ class AplusContent(Client):
     def validate_content_document_asin_relations(self, **kwargs) -> ApiResponse:
         """
         validate_content_document_asin_relations(self, **kwargs) -> ApiResponse
-
+        
         Checks if the A+ Content document is valid for use on a set of ASINs.
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        10                                       10
+        10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().validate_content_document_asin_relations()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            key asinSet:array |  The set of ASINs.
-            postContentDocumentRequest: | * REQUIRED {'properties': {'contentDocument': {'$ref': '#/definitions/ContentDocument'}}, 'required': ['contentDocument'], 'type': 'object'}
-
-
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key asinSet: object |  The set of ASINs.
+            postContentDocumentRequest: PostContentDocumentRequest | required The content document request details.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -240,25 +273,31 @@ class AplusContent(Client):
     def search_content_publish_records(self, **kwargs) -> ApiResponse:
         """
         search_content_publish_records(self, **kwargs) -> ApiResponse
-
+        
         Searches for A+ Content publishing records, if available.
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().search_content_publish_records()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-            key asin:string | * REQUIRED The Amazon Standard Identification Number (ASIN).
-            key pageToken:string |  A page token from the nextPageToken response element returned by your previous call to this operation. nextPageToken is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include pageToken as the only parameter. Specifying pageToken with any other parameter will cause the request to fail. When no nextPageToken value is returned there are no more pages to return. A pageToken value is not usable across different operations.
-
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key asin: object | required The Amazon Standard Identification Number (ASIN) is the unique identifier of a product within a marketplace.
+            key pageToken: object |  A token that you use to fetch a specific page when there are multiple pages of results.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -271,24 +310,30 @@ class AplusContent(Client):
     ) -> ApiResponse:
         """
         post_content_document_approval_submission(self, contentReferenceKey, **kwargs) -> ApiResponse
-
+        
         Submits an A+ Content document for review, approval, and publishing.
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        10                                       10
+        10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().post_content_document_approval_submission("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -303,24 +348,30 @@ class AplusContent(Client):
     ) -> ApiResponse:
         """
         post_content_document_suspend_submission(self, contentReferenceKey, **kwargs) -> ApiResponse
-
-        Submits a request to suspend visible A+ Content. This neither deletes the content document nor the ASIN relations.
-
-
+        
+        Submits a request to suspend visible A+ Content. This doesn't delete the content document or the ASIN relations.
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        10                                       10
+        10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                AplusContent().post_content_document_suspend_submission("value")
+        
         Args:
-            contentReferenceKey:string | * REQUIRED The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ content identifier.
-            key marketplaceId:string | * REQUIRED The identifier for the marketplace where the A+ Content is published.
-
+            contentReferenceKey: object | required The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.
+            key marketplaceId: object | required The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(

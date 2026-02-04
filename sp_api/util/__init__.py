@@ -22,6 +22,7 @@ from .products_definitions import (
     CompetitiveSummaryRequest,
     GetCompetitiveSummaryBatch,
 )
+from .versioned_client import VersionedClientMeta
 
 __all__ = [
     "retry",
@@ -46,4 +47,5 @@ __all__ = [
     "GetFeaturedOfferExpectedPriceBatch",
     "CompetitiveSummaryRequest",
     "GetCompetitiveSummaryBatch",
+    "VersionedClientMeta",
 ]
