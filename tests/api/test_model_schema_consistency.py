@@ -14,6 +14,7 @@ import pytest
 
 MODELS_REPO_URL = "https://github.com/amzn/selling-partner-api-models"
 MODELS_REPO_DIRNAME = "selling-partner-api-models"
+MODELS_REPO_REF = "5ff77a6ae5a485ff5e47bfeaaded5987f11a89d0"
 
 SERVICE_DIR_OVERRIDES = {
     "amazon-warehousing-and-distribution-model": "amazon_warehousing_and_distribu",
@@ -37,10 +38,39 @@ def _ensure_models_repo() -> Path:
     repo_root = base / MODELS_REPO_DIRNAME
     models_dir = repo_root / "models"
     if models_dir.exists():
+        try:
+            current_ref = subprocess.run(
+                ["git", "-C", str(repo_root), "rev-parse", "HEAD"],
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+        except subprocess.CalledProcessError:
+            current_ref = ""
+        if current_ref == MODELS_REPO_REF:
+            return models_dir
+        subprocess.run(
+            ["git", "-C", str(repo_root), "fetch", "--depth", "1", "origin", MODELS_REPO_REF],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        subprocess.run(
+            ["git", "-C", str(repo_root), "checkout", MODELS_REPO_REF],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
         return models_dir
 
     subprocess.run(
         ["git", "clone", "--depth", "1", MODELS_REPO_URL, str(repo_root)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    subprocess.run(
+        ["git", "-C", str(repo_root), "checkout", MODELS_REPO_REF],
         check=True,
         capture_output=True,
         text=True,

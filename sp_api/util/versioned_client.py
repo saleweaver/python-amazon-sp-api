@@ -36,6 +36,7 @@ class VersionedClientMeta(type):
             impl_map: dict[str, type] = getattr(cls, "_VERSION_MAP", {})
             impl = impl_map.get(v_norm)
             if impl is not None:
+                kwargs["version"] = v_norm
                 return impl(*args, **kwargs)
 
             supported = ", ".join(sorted(impl_map.keys()))
