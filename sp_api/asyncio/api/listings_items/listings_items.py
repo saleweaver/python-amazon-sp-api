@@ -63,7 +63,7 @@ class ListingsItems(AsyncBaseClient, metaclass=_ListingsItemsMeta):
 
     This class dispatches to a versioned Listings Items API client.
 
-    If you do not pass a version, the constructor returns the oldest supported implementation ("2020-09-01").
+    If you do not pass a version, the constructor returns the 2021-08-01 supported implementation ("2021-08-01").
     """
 
     if TYPE_CHECKING:
