@@ -357,3 +357,59 @@ class OrdersV0(Client):
             self.restricted_data_token = None
         return r
 
+
+
+
+
+
+
+
+    @sp_endpoint("/orders/v0/orders/{}/regulatedInfo", method="GET")
+    def get_order_regulated_info(self, orderId, **kwargs) -> ApiResponse:
+        """
+        get_order_regulated_info(self, orderId, **kwargs) -> ApiResponse
+
+        Returns regulated information for the order that you specify.
+        
+        **Usage Plan:**
+        
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.5 | 30 |
+        
+        The `x-amzn-RateLimit-Limit` response header contains the usage plan rate limits for the operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput might have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            orderId:string | * REQUIRED The Amazon order identifier in 3-7-7 format.
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(fill_query_params(kwargs.pop("path"), orderId), params=kwargs)
+
+    @sp_endpoint("/orders/v0/orders/{}/regulatedInfo", method="PATCH")
+    def update_verification_status(self, orderId, **kwargs) -> ApiResponse:
+        """
+        update_verification_status(self, orderId, **kwargs) -> ApiResponse
+
+        Updates (approves or rejects) the verification status of an order containing regulated products.
+        
+        **Usage Plan:**
+        
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.5 | 30 |
+        
+        The `x-amzn-RateLimit-Limit` response header contains the usage plan rate limits for the operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput might have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            orderId:string | * REQUIRED The Amazon order identifier in 3-7-7 format.
+            payload:UpdateVerificationStatusRequest | * REQUIRED {'description': 'The request body for the `updateVerificationStatus` operation.',
+             'properties': {'regulatedOrderVerificationStatus': {'$ref': '#/definitions/UpdateVerificationStatusRequestBody', 'description': 'The updated values of the `VerificationStatus` field.'}},
+             'required': ['regulatedOrderVerificationStatus'],
+             'type': 'object'}
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(fill_query_params(kwargs.pop("path"), orderId), data=kwargs)

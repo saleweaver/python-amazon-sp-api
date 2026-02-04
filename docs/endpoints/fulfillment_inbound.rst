@@ -2,7 +2,6 @@ FulfillmentInbound
 ==================
 
 
-
 .. note::
 
     To use the `load all pages decorator`_ for this endpoints, pass `extras` to it
@@ -15,6 +14,8 @@ FulfillmentInbound
         @load_all_pages(extras=dict(QueryType='NEXT_TOKEN'))
 
 
+..  toctree::
+    :maxdepth: 1
 
-    
-..  autoclass:: sp_api.api.FulfillmentInbound
+    fulfillment_inbound_v0
+    fulfillment_inbound_v2024_03_20

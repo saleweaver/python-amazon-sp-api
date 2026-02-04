@@ -2,7 +2,7 @@ AmazonWarehousingAndDistribution
 ================================
 
 
+..  toctree::
+    :maxdepth: 1
 
-.. autoclass:: sp_api.api.AmazonWarehousingAndDistribution
-    :members:
-    :inherited-members:
+    awd_v2024_05_09

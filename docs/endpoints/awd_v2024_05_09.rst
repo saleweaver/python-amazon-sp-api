@@ -1,0 +1,7 @@
+AmazonWarehousingAndDistribution V2024_05_09
+============================================
+
+
+..  autoclass:: sp_api.api.AmazonWarehousingAndDistributionV20240509
+    :members:
+    :inherited-members:

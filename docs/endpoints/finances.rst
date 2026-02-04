@@ -2,6 +2,8 @@ Finances
 ========
 
 
+..  toctree::
+    :maxdepth: 1
 
-
-..  autoclass:: sp_api.api.Finances
+    finances_v0
+    finances_v2024_06_19

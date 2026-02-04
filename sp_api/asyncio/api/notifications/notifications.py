@@ -293,3 +293,31 @@ class Notifications(AsyncBaseClient):
         return await self._request_grantless_operation(
             fill_query_params(kwargs.pop("path"), destination_id), params={**kwargs}
         )
+
+
+
+    @sp_endpoint("/notifications/v1/subscriptions/{}/{}", method="GET")
+    async def get_subscription_by_id(self, notificationType, subscriptionId, **kwargs) -> ApiResponse:
+        """
+        get_subscription_by_id(self, notificationType, subscriptionId, **kwargs) -> ApiResponse
+
+        Returns information about a subscription for the specified notification type. The `getSubscriptionById` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
+        
+        **Usage Plan:**
+        
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 1 | 5 |
+        
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may observe higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            subscriptionId:string | * REQUIRED The identifier for the subscription that you want to get.
+            notificationType:string | * REQUIRED The type of notification.
+            
+             For more information about notification types, refer to [Notification Type Values](https://developer-docs.amazon.com/sp-api/docs/notification-type-values).
+
+        Returns:
+            ApiResponse:
+        """
+        return await self._request(fill_query_params(kwargs.pop("path"), notificationType, subscriptionId), params=kwargs)

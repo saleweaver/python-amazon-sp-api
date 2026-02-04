@@ -116,6 +116,30 @@ class FulfillmentOutbound(AsyncBaseClient):
 
         return await self._request(kwargs.pop("path"), data=kwargs)
 
+    @sp_endpoint("/fba/outbound/2020-07-01/deliveryOffers", method="POST")
+    async def delivery_offers(self, **kwargs) -> ApiResponse:
+        """
+        delivery_offers(self, **kwargs) -> ApiResponse
+
+        Returns delivery options that include an estimated delivery date and offer expiration, based on criteria that you specify.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 5 | 30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            body: GetDeliveryOffersRequest parameter
+
+        Returns:
+            ApiResponse:
+        """
+
+        return await self._request(kwargs.pop("path"), data=kwargs)
+
     @sp_endpoint("/fba/outbound/2020-07-01/fulfillmentOrders", method="GET")
     async def list_all_fulfillment_orders(self, **kwargs) -> ApiResponse:
         """
@@ -616,6 +640,29 @@ class FulfillmentOutbound(AsyncBaseClient):
             fill_query_params(kwargs.pop("path"), sellerFulfillmentOrderId), data=kwargs
         )
 
+    @sp_endpoint(
+        "/fba/outbound/2020-07-01/fulfillmentOrders/{}/status", method="PUT"
+    )
+    async def submit_fulfillment_order_status_update(
+        self, sellerFulfillmentOrderId, **kwargs
+    ) -> ApiResponse:
+        """
+        submit_fulfillment_order_status_update(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
+
+        Requests that Amazon update the status of an order in the sandbox testing environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Fulfillment Outbound Dynamic Sandbox Guide](https://developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-dynamic-sandbox-guide) and [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+
+        Args:
+            sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
+            body: | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return await self._request(
+            fill_query_params(kwargs.pop("path"), sellerFulfillmentOrderId), data=kwargs
+        )
+
     @sp_endpoint("/fba/outbound/2020-07-01/fulfillmentOrders/{}/cancel", method="PUT")
     async def cancel_fulfillment_order(
         self, sellerFulfillmentOrderId, **kwargs
@@ -702,6 +749,36 @@ class FulfillmentOutbound(AsyncBaseClient):
 
         return await self._request(
             fill_query_params(kwargs.pop("path"), featureName), params=kwargs
+        )
+
+    @sp_endpoint(
+        "/fba/outbound/2020-07-01/features/inventory/{}/{}", method="GET"
+    )
+    async def get_feature_sku(self, featureName, sellerSku, **kwargs) -> ApiResponse:
+        """
+        get_feature_sku(self, featureName, sellerSku, **kwargs) -> ApiResponse
+
+        Returns the number of items with the `sellerSku` you specify that can have orders fulfilled using the specified feature. Note that if the `sellerSku` isn't eligible, the response will contain an empty `skuInfo` object. The parameters for this operation may contain special characters that require URL encoding. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 2 | 30 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            key marketplaceId:string | * REQUIRED The marketplace for which to return the count.
+            featureName:string | * REQUIRED The name of the feature.
+            sellerSku:string | * REQUIRED Used to identify an item in the given marketplace. `sellerSku` is qualified by the seller's `sellerId`, which is included with every operation that you submit.
+
+        Returns:
+            ApiResponse:
+        """
+
+        return await self._request(
+            fill_query_params(kwargs.pop("path"), featureName, sellerSku), params=kwargs
         )
 
     @sp_endpoint("/fba/outbound/2020-07-01/features/inventory/{}", method="GET")

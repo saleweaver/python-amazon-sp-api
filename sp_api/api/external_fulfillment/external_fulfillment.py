@@ -9,6 +9,9 @@ class ExternalFulfillment(Client):
     :link:
 
     The Selling Partner API to work with Amazon External Fulfillment shipments management/processing services.
+
+    Deprecated: use ExternalFulfillmentInventory, ExternalFulfillmentReturns, and
+    ExternalFulfillmentShipping for versioned access. This facade remains for backward compatibility.
     """
 
     @sp_endpoint("/externalFulfillment/2024-09-11/shipments", method="GET")

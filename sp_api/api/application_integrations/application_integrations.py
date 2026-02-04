@@ -115,4 +115,3 @@ class ApplicationIntegrations(Client):
         """
     
         return self._request(fill_query_params(kwargs.pop('path'), notificationId), data=kwargs)
-    

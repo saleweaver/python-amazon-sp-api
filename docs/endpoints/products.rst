@@ -2,7 +2,8 @@ Products
 ========
 
 
+..  toctree::
+    :maxdepth: 1
 
-..  autoclass:: sp_api.api.Products
-
-
+    products_v0
+    products_v2022_05_01

@@ -1,6 +1,6 @@
 import urllib
 
-from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse
+from sp_api.base import Client, Marketplaces, sp_endpoint, ApiResponse, fill_query_params
 from sp_api.base.InventoryEnums import InventoryGranularity
 from sp_api.util import normalize_csv_param
 
@@ -71,3 +71,54 @@ class Inventories(Client):
         normalize_csv_param(kwargs, "sellerSkus")
 
         return self._request(kwargs.pop("path"), params=kwargs)
+
+
+    @sp_endpoint("/fba/inventory/v1/items", method="POST")
+    def create_inventory_item(self, **kwargs) -> ApiResponse:
+        """
+        create_inventory_item(self, **kwargs) -> ApiResponse
+
+        Requests that Amazon create product-details in the Sandbox Inventory in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+
+        Args:
+            createInventoryItemRequestBody:CreateInventoryItemRequest | * REQUIRED {'description': 'An item to be created in the inventory.',
+             'properties': {'marketplaceId': {'description': 'The marketplaceId.', 'type': 'string'}, 'productName': {'description': 'The name of the item.', 'type': 'string'}, 'sellerSku': {'description': 'The seller SKU of the item.', 'type': 'string'}},
+             'required': ['sellerSku', 'marketplaceId', 'productName'],
+             'type': 'object'}
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(kwargs.pop("path"), data=kwargs)
+
+    @sp_endpoint("/fba/inventory/v1/items/{}", method="DELETE")
+    def delete_inventory_item(self, sellerSku, **kwargs) -> ApiResponse:
+        """
+        delete_inventory_item(self, sellerSku, **kwargs) -> ApiResponse
+
+        Requests that Amazon Deletes an item from the Sandbox Inventory in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+
+        Args:
+            sellerSku:string | * REQUIRED A single seller SKU used for querying the specified seller SKU inventory summaries.
+            key marketplaceId:string | * REQUIRED The marketplace ID for the marketplace for which the sellerSku is to be deleted.
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(fill_query_params(kwargs.pop("path"), sellerSku), params=kwargs)
+
+    @sp_endpoint("/fba/inventory/v1/items/inventory", method="POST")
+    def add_inventory(self, **kwargs) -> ApiResponse:
+        """
+        add_inventory(self, **kwargs) -> ApiResponse
+
+        Requests that Amazon add items to the Sandbox Inventory with desired amount of quantity in the sandbox environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
+
+        Args:
+            x-amzn-idempotency-token:string | * REQUIRED A unique token/requestId provided with each call to ensure idempotency.
+            addInventoryRequestBody:AddInventoryRequest | * REQUIRED {'description': 'The object with the list of Inventory to be added', 'properties': {'inventoryItems': {'$ref': '#/definitions/InventoryItems'}}, 'type': 'object'}
+
+        Returns:
+            ApiResponse:
+        """
+        return self._request(kwargs.pop("path"), data=kwargs)

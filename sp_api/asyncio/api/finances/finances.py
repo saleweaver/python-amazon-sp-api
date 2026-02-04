@@ -1,100 +1,132 @@
-import enum
+from __future__ import annotations
 
-from sp_api.base import Client, Marketplaces, ApiResponse
+import enum
+from typing import Any, Literal, TYPE_CHECKING, overload
+
 from sp_api.asyncio.base import AsyncBaseClient
-from sp_api.base import sp_endpoint, fill_query_params
+from sp_api.util.versioned_client import VersionedClientMeta
+
+from .finances_2024_06_01 import FinancesV20240601
+from .finances_2024_06_19 import FinancesV20240619
+from .finances_v0 import FinancesV0
+
 
 class FinancesVersion(str, enum.Enum):
-    V_0 = "v0"
+    V0 = "v0"
+    V_2024_06_01 = "2024-06-01"
     V_2024_06_19 = "2024-06-19"
     LATEST = "2024-06-19"
 
 
-class Finances(AsyncBaseClient):
-    version: FinancesVersion = FinancesVersion.V_0
+if TYPE_CHECKING:
 
-    def __init__(self, *args, **kwargs):
-        if "version" in kwargs:
-            self.version = kwargs.get("version", FinancesVersion.V_0)
-        super().__init__(*args, **{**kwargs, "version": self.version})
+    class _FinancesMeta(VersionedClientMeta):
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V_2024_06_19, FinancesVersion.LATEST, "2024-06-19"],
+            **kwargs: Any,
+        ) -> FinancesV20240619: ...
 
-    @sp_endpoint("/finances/<version>/orders/{}/financialEvents")
-    async def get_financial_events_for_order(self, order_id, **kwargs) -> ApiResponse:
-        """
-        get_financial_events_for_order(self, order_id, **kwargs) -> ApiResponse
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V_2024_06_01, "2024-06-01"],
+            **kwargs: Any,
+        ) -> FinancesV20240601: ...
 
-        Examples:
-            literal blocks::
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V0, "v0"],
+            **kwargs: Any,
+        ) -> FinancesV0: ...
 
-                Finances().get_financial_events_for_order('485-734-5434857', MaxResultsPerPage=10)
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> FinancesV0: ...
 
-        Args:
-            order_id:
-            **kwargs:
-
-        Returns:
-
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
-        )
-
-    @sp_endpoint("/finances/<version>/financialEvents")
-    async def list_financial_events(self, **kwargs) -> ApiResponse:
-        """
-        list_financial_events(self, **kwargs) -> ApiResponse:
-
-
-        Args:
-            **kwargs:
-
-        Returns:
-
-        """
-        return await self._request(fill_query_params(kwargs.pop("path")), params={**kwargs})
-
-    @sp_endpoint("/finances/<version>/financialEventGroups/{}/financialEvents")
-    async def list_financial_events_by_group_id(
-        self, event_group_id, **kwargs
-    ) -> ApiResponse:
-        """
-        list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
+        @overload
+        def __call__(
+            cls,
+            *args: Any,
+            version: str | FinancesVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
 
 
-        Args:
-            event_group_id
-            **kwargs:
-
-        Returns:
-
-        """
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), event_group_id), params={**kwargs}
-        )
-
-    @sp_endpoint("/finances/<version>/financialEventGroups")
-    async def list_financial_event_groups(self, **kwargs) -> ApiResponse:
-        """
-        list_financial_event_groups(self, **kwargs) -> ApiResponse:
+else:
+    _FinancesMeta = VersionedClientMeta
 
 
-        Args:
-            **kwargs:
+class Finances(AsyncBaseClient, metaclass=_FinancesMeta):
+    """Finances API client.
 
-        Returns:
+    This class dispatches to a versioned Finances API client.
 
-        """
-        return await self._request(kwargs.pop("path"), params={**kwargs})
+    If you do not pass a version, the constructor returns the oldest supported implementation ("v0").
+    """
 
-    @sp_endpoint("/finances/<version>/transactions")
-    async def list_transactions(self, **kwargs) -> ApiResponse:
-        """
-        list_transactions(self, **kwargs) -> ApiResponse:
+    if TYPE_CHECKING:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V_2024_06_19, FinancesVersion.LATEST, "2024-06-19"],
+            **kwargs: Any,
+        ) -> FinancesV20240619: ...
 
-        Args:
-            **kwargs:
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V_2024_06_01, "2024-06-01"],
+            **kwargs: Any,
+        ) -> FinancesV20240601: ...
 
-        Returns: ApiResponse
-        """
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: Literal[FinancesVersion.V0, "v0"],
+            **kwargs: Any,
+        ) -> FinancesV0: ...
 
-        return await self._request(kwargs.pop("path"), params={**kwargs})
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: None = None,
+            **kwargs: Any,
+        ) -> FinancesV0: ...
+
+        @overload
+        def __new__(
+            cls,
+            *args: Any,
+            version: str | FinancesVersion,
+            **kwargs: Any,
+        ) -> AsyncBaseClient: ...
+
+    _DISPATCH = True
+
+    _DEFAULT_VERSION = "v0"
+
+    _VERSION_MAP = {
+        "v0": FinancesV0,
+        "2024-06-01": FinancesV20240601,
+        "2024-06-19": FinancesV20240619,
+    }
+
+    _VERSION_ALIASES = {
+        "v0": "v0",
+        "2024-06-01": "2024-06-01",
+        "2024-06-19": "2024-06-19",
+    }

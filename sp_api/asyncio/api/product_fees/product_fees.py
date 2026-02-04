@@ -139,6 +139,33 @@ class ProductFees(AsyncBaseClient):
         )
         return await self._request(fill_query_params(kwargs.pop("path"), asin), data=kwargs)
 
+    @sp_endpoint("/products/fees/v0/feesEstimate", method="POST")
+    async def get_my_fees_estimates(
+        self, estimate_requests: List[dict], **kwargs
+    ) -> ApiResponse:
+        """
+        get_my_fees_estimates(self, estimate_requests: List[dict], **kwargs) -> ApiResponse
+
+        Returns the estimated fees for a list of products.
+
+        **Usage Plan:**
+
+        | Rate (requests per second) | Burst |
+        | ---- | ---- |
+        | 0.5 | 1 |
+
+        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+
+        Args:
+            body: | * REQUIRED The request body schema for the getMyFeesEstimates operation
+
+        Returns:
+            ApiResponse:
+        """
+        kwargs.pop("path", None)
+        kwargs.pop("method", None)
+        return await self.get_product_fees_estimate(estimate_requests)
+
     async def get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse:
         """
         get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse
