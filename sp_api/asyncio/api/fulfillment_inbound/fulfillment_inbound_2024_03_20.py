@@ -843,30 +843,30 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
             params=kwargs,
         )
 
-    @sp_endpoint(
-        "/inbound/fba/2024-03-20/inboundPlans/{}/deliveryChallanDocument", method="GET"
-    )
-    async def get_delivery_challan_document(self, inboundPlanId, **kwargs) -> ApiResponse:
+    async def get_delivery_challan_document(
+        self, inboundPlanId, shipmentId, **kwargs
+    ) -> ApiResponse:
         """
-        get_delivery_challan_document(self, inboundPlanId, **kwargs) -> ApiResponse
+        get_delivery_challan_document(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
         
         Provide delivery challan document for PCP transportation in IN marketplace.
         
         Examples:
             literal blocks::
             
-                await FulfillmentInboundV20240320().get_delivery_challan_document("value")
+                await FulfillmentInboundV20240320().get_delivery_challan_document("value", "value")
         
         Args:
-            inboundPlanId:  | required
+            inboundPlanId: object | required Identifier of an inbound plan.
+            shipmentId: object | required Identifier of a shipment. A shipment contains the boxes and units being inbounded.
             **kwargs:
         
         Returns:
             ApiResponse
         """
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), inboundPlanId), params=kwargs
+        return await self.get_delivery_challan_document_get(
+            inboundPlanId, shipmentId, **kwargs
         )
 
     @sp_endpoint("/inbound/fba/2024-03-20/inboundPlans/{}/deliveryWindow", method="POST")
@@ -893,83 +893,84 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
             fill_query_params(kwargs.pop("path"), inboundPlanId), data=kwargs
         )
 
-    @sp_endpoint(
-        "/inbound/fba/2024-03-20/inboundPlans/{}/selfShipAppointmentSlots", method="GET"
-    )
-    async def get_self_ship_appointment_slots(self, inboundPlanId, **kwargs) -> ApiResponse:
+    async def get_self_ship_appointment_slots(
+        self, inboundPlanId, shipmentId, **kwargs
+    ) -> ApiResponse:
         """
-        get_self_ship_appointment_slots(self, inboundPlanId, **kwargs) -> ApiResponse
+        get_self_ship_appointment_slots(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
         
         Retrieves a list of available self-ship appointment slots used to drop off a shipment at a warehouse.
         
         Examples:
             literal blocks::
             
-                await FulfillmentInboundV20240320().get_self_ship_appointment_slots("value")
+                await FulfillmentInboundV20240320().get_self_ship_appointment_slots("value", "value")
         
         Args:
-            inboundPlanId:  | required
+            inboundPlanId: object | required Identifier of an inbound plan.
+            shipmentId: object | required Identifier of a shipment. A shipment contains the boxes and units being inbounded.
             **kwargs:
         
         Returns:
             ApiResponse
         """
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), inboundPlanId), params=kwargs
+        return await self.get_self_ship_appointment_slots_get(
+            inboundPlanId, shipmentId, **kwargs
         )
 
-    @sp_endpoint(
-        "/inbound/fba/2024-03-20/inboundPlans/{}/selfShipAppointmentSlots", method="POST"
-    )
     async def generate_self_ship_appointment_slots(
-        self, inboundPlanId, **kwargs
+        self, inboundPlanId, shipmentId, **kwargs
     ) -> ApiResponse:
         """
-        generate_self_ship_appointment_slots(self, inboundPlanId, **kwargs) -> ApiResponse
+        generate_self_ship_appointment_slots(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
         
         Initiates the process of generating the appointment slots list.
         
         Examples:
             literal blocks::
             
-                await FulfillmentInboundV20240320().generate_self_ship_appointment_slots("value")
+                await FulfillmentInboundV20240320().generate_self_ship_appointment_slots("value", "value")
         
         Args:
-            inboundPlanId:  | required
+            inboundPlanId: object | required Identifier of an inbound plan.
+            shipmentId: object | required Identifier of a shipment. A shipment contains the boxes and units being inbounded.
             **kwargs:
         
         Returns:
             ApiResponse
         """
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), inboundPlanId), data=kwargs
+        return await self.generate_self_ship_appointment_slots_post(
+            inboundPlanId, shipmentId, **kwargs
         )
 
 
-    @sp_endpoint("/inbound/fba/2024-03-20/inboundPlans/{}/schedule", method="POST")
-    async def schedule_self_ship_appointment(self, inboundPlanId, **kwargs) -> ApiResponse:
+    async def schedule_self_ship_appointment(
+        self, inboundPlanId, shipmentId, slotId, **kwargs
+    ) -> ApiResponse:
         """
-        schedule_self_ship_appointment(self, inboundPlanId, **kwargs) -> ApiResponse
+        schedule_self_ship_appointment(self, inboundPlanId, shipmentId, slotId, **kwargs) -> ApiResponse
         
         Confirms or reschedules a self-ship appointment slot against a shipment.
         
         Examples:
             literal blocks::
             
-                await FulfillmentInboundV20240320().schedule_self_ship_appointment("value")
+                await FulfillmentInboundV20240320().schedule_self_ship_appointment("value", "value", "value")
         
         Args:
-            inboundPlanId:  | required
+            inboundPlanId: object | required Identifier of an inbound plan.
+            shipmentId: object | required Identifier of a shipment. A shipment contains the boxes and units being inbounded.
+            slotId: object | required An identifier to a self-ship appointment slot.
             **kwargs:
         
         Returns:
             ApiResponse
         """
 
-        return await self._request(
-            fill_query_params(kwargs.pop("path"), inboundPlanId), data=kwargs
+        return await self.schedule_self_ship_appointment_post(
+            inboundPlanId, shipmentId, slotId, **kwargs
         )
 
     @sp_endpoint("/inbound/fba/2024-03-20/inboundPlans/{}/trackingDetails", method="PUT")
@@ -1622,6 +1623,14 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
             ApiResponse
         """
         return await self._request(fill_query_params(kwargs.pop("path"), inboundPlanId, shipmentId), data=kwargs)
+
+    async def cancel_self_ship_appointment(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
+        """
+        cancel_self_ship_appointment(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse
+
+        Backward-compatible alias for `cancel_self_ship_appointment_put`.
+        """
+        return await self.cancel_self_ship_appointment_put(inboundPlanId, shipmentId, **kwargs)
 
     @sp_endpoint("/inbound/fba/2024-03-20/inboundPlans/{}/shipments/{}/selfShipAppointmentSlots", method="GET")
     async def get_self_ship_appointment_slots_get(self, inboundPlanId, shipmentId, **kwargs) -> ApiResponse:
