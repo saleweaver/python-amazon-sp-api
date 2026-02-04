@@ -27,6 +27,7 @@ class ExternalFulfillmentInventoryV20240911(AsyncBaseClient):
         Returns:
             ApiResponse
         """
+        headers = await self._get_headers()
         return await self._request(
             fill_query_params(kwargs.pop("path"), locationId, skuId),
             params=kwargs,
@@ -67,6 +68,7 @@ class ExternalFulfillmentInventoryV20240911(AsyncBaseClient):
         return await self._request(
             fill_query_params(kwargs.pop("path"), locationId, skuId),
             params=kwargs,
+            headers=headers,
             add_marketplace=False,
         )
 

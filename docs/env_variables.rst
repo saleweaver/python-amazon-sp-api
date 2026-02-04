@@ -43,7 +43,8 @@ Usage with default account
 
 ..  code-block:: python
 
-    Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    from datetime import datetime, timedelta, timezone
+    Orders().get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 
 **************************
@@ -54,7 +55,7 @@ You can use every account's name
 
 ..  code-block:: python
 
-    Orders(account='ANOTHER_ACCOUNT').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    Orders(account='ANOTHER_ACCOUNT').get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 .. note::
 
@@ -62,5 +63,4 @@ You can use every account's name
 
     ..  code-block:: python
 
-        Orders(account='ANOTHER_ACCOUNT', refresh_token='<refresh_token_for_this_request>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
-
+        Orders(account='ANOTHER_ACCOUNT', refresh_token='<refresh_token_for_this_request>').get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())

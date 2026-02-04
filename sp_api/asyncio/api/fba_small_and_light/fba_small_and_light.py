@@ -79,7 +79,8 @@ class FbaSmallAndLight(AsyncBaseClient):
         return await self._request(
             fill_query_params(kwargs.pop("path"), seller_sku),
             params={
-                "marketplaceIds": kwargs.get("marketplaceIds", self.marketplace_id)
+                "marketplaceIds": kwargs.get("marketplaceIds", self.marketplace_id),
+                "method": kwargs.get("method", "PUT"),
             },
         )
 

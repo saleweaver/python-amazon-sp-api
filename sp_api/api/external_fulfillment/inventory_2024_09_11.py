@@ -26,6 +26,7 @@ class ExternalFulfillmentInventoryV20240911(Client):
         Returns:
             ApiResponse
         """
+        headers = self.headers.copy()
         return self._request(
             fill_query_params(kwargs.pop("path"), locationId, skuId),
             params=kwargs,
@@ -65,6 +66,7 @@ class ExternalFulfillmentInventoryV20240911(Client):
         return self._request(
             fill_query_params(kwargs.pop("path"), locationId, skuId),
             params=kwargs,
+            headers=headers,
             add_marketplace=False,
         )
 

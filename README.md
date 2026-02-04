@@ -70,7 +70,7 @@ from sp_api.api import DataKiosk
 from sp_api.api import Feeds
 from sp_api.base import SellingApiException
 from sp_api.base.reportTypes import ReportType
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # DATA KIOSK API
 client = DataKiosk()
@@ -80,7 +80,7 @@ print(res)
 
 # orders API
 try:
-    res = Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    res = Orders().get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
     print(res.payload)  # json data
 except SellingApiException as ex:
     print(ex)
@@ -96,11 +96,11 @@ Feeds().submit_feed(<feed_type>, <file_or_bytes_io>, content_type='text/tsv', **
 
 # PII Data
 
-Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+Orders(restricted_data_token='<token>').get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 # or use the shortcut
 orders = Orders().get_orders(
-    LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+    LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
 )
 ```
 
@@ -110,7 +110,7 @@ orders = Orders().get_orders(
 
 ```python
 import asyncio
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from sp_api.asyncio.api import Orders, Reports
 from sp_api.base.reportTypes import ReportType
@@ -119,7 +119,7 @@ from sp_api.base.reportTypes import ReportType
 async def main():
     async with Orders() as orders_client:
         res = await orders_client.get_orders(
-            LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+            LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
         )
         print(res.payload)
 

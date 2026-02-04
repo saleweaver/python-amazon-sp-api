@@ -21,7 +21,7 @@ def load_date_bound(interval_days: int = 30):
                 {
                     "dataStartTime": parse_if_needed(kwargs["dataStartTime"]),
                     "dataEndTime": parse_if_needed(
-                        kwargs.get("dataEndTime", datetime.datetime.utcnow())
+                        kwargs.get("dataEndTime", datetime.datetime.now(datetime.timezone.utc))
                     ),
                 }
             )

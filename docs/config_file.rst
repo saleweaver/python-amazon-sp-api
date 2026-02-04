@@ -51,7 +51,8 @@ Usage with default account
 
 ..  code-block:: python
 
-    Orders().get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    from datetime import datetime, timedelta, timezone
+    Orders().get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 
 **************************
@@ -62,7 +63,7 @@ You can use every account's name from the config file for account
 
 ..  code-block:: python
 
-    Orders(account=another_account).get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    Orders(account=another_account).get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 .. note::
 
@@ -70,7 +71,7 @@ You can use every account's name from the config file for account
 
     ..  code-block:: python
 
-        Orders(account='another_account', refresh_token='<refresh_token_for_this_request>').get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+        Orders(account='another_account', refresh_token='<refresh_token_for_this_request>').get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
 
 **********
@@ -81,5 +82,3 @@ References
 
 .. _`credentials.yml`: https://github.com/saleweaver/python-amazon-sp-api/blob/master/credentials.yml
 .. _`confused`: https://confuse.readthedocs.io/en/latest/usage.html#search-paths
-
-

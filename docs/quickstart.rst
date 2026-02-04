@@ -73,6 +73,7 @@ You can change this:
 .. code-block:: python
 
    from sp_api.base import Marketplaces
+   from datetime import datetime, timedelta, timezone
    from sp_api.api import Orders
 
    # Explicit marketplace
@@ -118,7 +119,7 @@ that turns endpoint calls into a **generator** that automatically follows all pa
 
 .. code-block:: python
 
-   from datetime import datetime, timedelta
+   from datetime import datetime, timedelta, timezone
 
    from sp_api.api import Orders
    from sp_api.util import throttle_retry, load_all_pages
@@ -129,7 +130,7 @@ that turns endpoint calls into a **generator** that automatically follows all pa
        return Orders().get_orders(**kwargs)
 
    for page in iter_orders(
-       LastUpdatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat()
+       LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
    ):
        for order in page.payload.get('Orders', []):
            print(order['AmazonOrderId'], order['OrderStatus'])
@@ -193,7 +194,7 @@ Creating a report with :class:`sp_api.api.ReportsV2`:
 
 .. code-block:: python
 
-   from datetime import datetime, timedelta
+   from datetime import datetime, timedelta, timezone
 
    from sp_api.api import ReportsV2
    from sp_api.base.reportTypes import ReportType
@@ -202,8 +203,8 @@ Creating a report with :class:`sp_api.api.ReportsV2`:
 
    res = reports.create_report(
        reportType=ReportType.GET_FLAT_FILE_ALL_ORDERS_DATA_BY_LAST_UPDATE_GENERAL,
-       dataStartTime=(datetime.utcnow() - timedelta(days=7)).isoformat(),
-       dataEndTime=(datetime.utcnow() - timedelta(days=1)).isoformat(),
+       dataStartTime=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat(),
+       dataEndTime=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat(),
    )
 
    print(res.payload)  # contains the report id

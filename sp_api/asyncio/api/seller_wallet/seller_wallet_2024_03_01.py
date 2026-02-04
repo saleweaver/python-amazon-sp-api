@@ -115,7 +115,7 @@ class SellerWalletV20240301(AsyncBaseClient):
         Returns:
             ApiResponse
         """
-        headers = self.headers.copy()
+        headers = await self._get_headers()
         if "destAccountDigitalSignature" in kwargs:
             headers["destAccountDigitalSignature"] = kwargs.pop("destAccountDigitalSignature")
         if "amountDigitalSignature" in kwargs:
@@ -214,7 +214,7 @@ class SellerWalletV20240301(AsyncBaseClient):
         Returns:
             ApiResponse
         """
-        headers = self.headers.copy()
+        headers = await self._get_headers()
         if "destAccountDigitalSignature" in kwargs:
             headers["destAccountDigitalSignature"] = kwargs.pop("destAccountDigitalSignature")
         if "amountDigitalSignature" in kwargs:
@@ -245,7 +245,7 @@ class SellerWalletV20240301(AsyncBaseClient):
         Returns:
             ApiResponse
         """
-        headers = self.headers.copy()
+        headers = await self._get_headers()
         if "destAccountDigitalSignature" in kwargs:
             headers["destAccountDigitalSignature"] = kwargs.pop("destAccountDigitalSignature")
         if "amountDigitalSignature" in kwargs:

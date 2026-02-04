@@ -1,7 +1,7 @@
 import enum
 import os
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sp_api.base import (
     Client,
@@ -60,7 +60,7 @@ class Shipping(Client):
             "host": self.endpoint[8:],
             "user-agent": self.user_agent,
             "x-amz-access-token": self.restricted_data_token or self.auth.access_token,
-            "x-amz-date": datetime.utcnow().strftime("%Y%m%dT%H%M%SZ"),
+            "x-amz-date": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
             "content-type": "application/json",
             "x-amzn-shipping-business-id": self.amzn_shipping_business.value,
         }

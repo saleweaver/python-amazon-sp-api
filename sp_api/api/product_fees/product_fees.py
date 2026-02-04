@@ -208,6 +208,7 @@ class ProductFees(Client):
             "/products/fees/v0/feesEstimate",
             data=data,
             params=dict(method="POST"),
+            add_marketplace=False,
             wrap_list=True,
         )
 

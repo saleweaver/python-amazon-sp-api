@@ -7,13 +7,14 @@ If your application has access to PII-Data, you can request a token with the `To
 
 .. code-block:: python
 
+    from datetime import datetime, timedelta, timezone
     token_res = Tokens().create_restricted_data_token(restrictedResources=[{
          "method": "GET",
          "path": "/orders/v0/orders",
          "dataElements": ["buyerInfo", "shippingAddress"]
         }
     ])
-    orders = Orders(restricted_data_token=token_res.payload['restrictedDataToken']).get_orders(LastUpdatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
+    orders = Orders(restricted_data_token=token_res.payload['restrictedDataToken']).get_orders(LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
 
     # orders have buyerInfo and shippingAddress
     print(orders)
@@ -24,7 +25,7 @@ Starting with v0.9.0, you can also pass the `RestrictedResources` to the `Orders
 
         orders = Orders().get_orders(
             RestrictedResources=['buyerInfo', 'shippingAddress'],
-            LastUpdatedAfter=(datetime.utcnow() - timedelta(days=1)).isoformat()
+            LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=1)).isoformat()
         )
 
         order = Orders().get_order(
@@ -36,4 +37,3 @@ Starting with v0.9.0, you can also pass the `RestrictedResources` to the `Orders
             'order-id',
             RestrictedResources=['buyerInfo']
         )
-

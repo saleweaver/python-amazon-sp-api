@@ -10,7 +10,7 @@ Some examples:
 
 .. code-block:: python
 
-    from datetime import datetime, timedelta
+    from datetime import datetime, timedelta, timezone
     from sp_api.base import Marketplaces
     from sp_api.api import Orders
     from sp_api.util import throttle_retry, load_all_pages
@@ -25,7 +25,7 @@ Some examples:
         return Orders().get_orders(**kwargs)
 
 
-    for page in load_all_orders(LastUpdatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat()):
+    for page in load_all_orders(LastUpdatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat()):
         for order in page.payload.get('Orders'):
             print(order)
 
@@ -52,5 +52,3 @@ Some examples:
         @load_all_pages(next_token_param='next_token')
 
     Now it will look for a key named `next_token` in payload, instead of `NextToken`
-
-

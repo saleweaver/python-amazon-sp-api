@@ -35,5 +35,5 @@ Usage
 
 ..  code-block:: python
 
-    Orders(credentials=credentials).get_orders(CreatedAfter=(datetime.utcnow() - timedelta(days=7)).isoformat())
-
+    from datetime import datetime, timedelta, timezone
+    Orders(credentials=credentials).get_orders(CreatedAfter=(datetime.now(timezone.utc) - timedelta(days=7)).isoformat())

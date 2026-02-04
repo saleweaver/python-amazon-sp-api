@@ -199,10 +199,7 @@ class MerchantFulfillment(Client):
         """
         get_additional_seller_inputs_old(self, shipping_service_id, ship_from_address, order_id, **kwargs) -> ApiResponse
         
-        get_additional_seller_inputs_old(self, shipping_service_id: str,  ship_from_address: dict, order_id: str,
-                                **kwargs) -> ApiResponse
-                                Get a list of additional seller inputs required for a ship method. This is generally
-                                used for international shipping.
+        Gets a list of additional seller inputs required for a ship method. This is generally used for international shipping.
         
         Examples:
             literal blocks::
@@ -224,6 +221,8 @@ class MerchantFulfillment(Client):
             "ShippingServiceId": shipping_service_id,
             "ShipFromAddress": ship_from_address,
             "OrderId": order_id,
+            **{k: v for k, v in kwargs.items() if k not in {"path", "method"}},
+            "method": kwargs.get("method", "POST"),
         }
         return self._request(kwargs.pop("path"), data=data, add_marketplace=False)
 
@@ -263,5 +262,7 @@ class MerchantFulfillment(Client):
             "ShippingServiceId": shipping_service_id,
             "ShipFromAddress": ship_from_address,
             "OrderId": order_id,
+            **{k: v for k, v in kwargs.items() if k not in {"path", "method"}},
+            "method": kwargs.get("method", "POST"),
         }
         return self._request(kwargs.pop("path"), data=data, add_marketplace=False)

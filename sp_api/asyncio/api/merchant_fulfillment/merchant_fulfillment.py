@@ -225,6 +225,8 @@ class MerchantFulfillment(AsyncBaseClient):
             "ShippingServiceId": shipping_service_id,
             "ShipFromAddress": ship_from_address,
             "OrderId": order_id,
+            **{k: v for k, v in kwargs.items() if k not in {"path", "method"}},
+            "method": kwargs.get("method", "POST"),
         }
         return await self._request(kwargs.pop("path"), data=data, add_marketplace=False)
 
@@ -264,5 +266,7 @@ class MerchantFulfillment(AsyncBaseClient):
             "ShippingServiceId": shipping_service_id,
             "ShipFromAddress": ship_from_address,
             "OrderId": order_id,
+            **{k: v for k, v in kwargs.items() if k not in {"path", "method"}},
+            "method": kwargs.get("method", "POST"),
         }
         return await self._request(kwargs.pop("path"), data=data, add_marketplace=False)

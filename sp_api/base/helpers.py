@@ -7,7 +7,18 @@ from urllib import parse
 
 
 def fill_query_params(query, *args):
-    return query.format(*[parse.quote(arg, safe="") for arg in args])
+    quoted = [parse.quote(str(arg), safe="") for arg in args]
+    try:
+        return query.format(*quoted)
+    except KeyError:
+        import string
+
+        formatter = string.Formatter()
+        fields = [field_name for _, field_name, _, _ in formatter.parse(query) if field_name]
+        if fields and len(fields) == len(quoted):
+            mapping = dict(zip(fields, quoted))
+            return query.format_map(mapping)
+        raise
 
 
 def sp_endpoint(path, method="GET"):
