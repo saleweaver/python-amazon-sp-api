@@ -1,3 +1,31 @@
+## v2.1.4 - 2026-02-04
+# Changelog
+
+## Version 2.1.4
+
+### New Features
+- No new features added in this release.
+
+### Changes
+- **Documentation Enhancements**: 
+  - Updated the documentation theme from `pydata_sphinx_theme` to `alabaster` for improved aesthetics and usability.
+  - Added custom CSS for better styling of Python classes, methods, and functions in the documentation.
+  - Increased the `toctree` max depth from 1 to 2 in `endpoints.rst` to allow for deeper navigation in the documentation.
+
+### Bug Fixes
+- No specific bug fixes were documented in this release.
+
+### Internal
+- Updated version number from 2.1.3 to 2.1.4.
+
+### Diagram of Version Update
+```mermaid
+graph TD;
+    A[Version 2.1.3] --> B[Version 2.1.4];
+```
+
+This update primarily focuses on documentation improvements, enhancing the user experience when navigating and reading the project documentation.
+
 ## v2.1.3 - 2026-02-04
 # Changelog
 
