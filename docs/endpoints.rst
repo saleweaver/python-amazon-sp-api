@@ -16,6 +16,7 @@ You can use the playground to test endpoints:
     endpoints/catalog
     endpoints/catalog_items
     endpoints/data_kiosk
+    endpoints/delivery_by_amazon
     endpoints/easy_ship
     endpoints/external_fulfillment_inventory
     endpoints/external_fulfillment_returns
@@ -27,6 +28,7 @@ You can use the playground to test endpoints:
     endpoints/fulfillment_inbound
     endpoints/fulfillment_outbound
     endpoints/inventories
+    endpoints/invoices
     endpoints/listings_items
     endpoints/listings_restrictions
     endpoints/merchant_fulfillment
@@ -39,9 +41,11 @@ You can use the playground to test endpoints:
     endpoints/replenishment
     endpoints/reports
     endpoints/sales
+    endpoints/seller_wallet
     endpoints/sellers
     endpoints/services
     endpoints/shipping
+    endpoints/shipment_invoicing
     endpoints/solicitations
     endpoints/supply_sources
     endpoints/tokens
@@ -50,9 +54,10 @@ You can use the playground to test endpoints:
     endpoints/vendor_direct_fulfillment_orders
     endpoints/vendor_direct_fulfillment_payments
     endpoints/vendor_direct_fulfillment_shipping
+    endpoints/vendor_direct_fulfillment_sandbox_test_data
     endpoints/vendor_direct_fulfillment_transactions
     endpoints/vendor_invoices
     endpoints/vendor_orders
     endpoints/vendor_shipments
     endpoints/vendor_transaction_status
-
+    endpoints/vehicles

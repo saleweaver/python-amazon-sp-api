@@ -17,24 +17,29 @@ class VendorDirectFulfillmentTransactionsV20211228(Client):
     def get_transaction_status(self, transactionId, **kwargs) -> ApiResponse:
         """
         get_transaction_status(self, transactionId, **kwargs) -> ApiResponse
-
+        
         Returns the status of the transaction indicated by the specified transactionId.
-
-        **Usage Plans:**
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         10                                      10
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                VendorDirectFulfillmentTransactionsV20211228().get_transaction_status("value")
+        
         Args:
-            transactionId:string | * REQUIRED Previously returned in the response to the POST request of a specific transaction.
-
+            transactionId: object | required Previously returned in the response to the POST request of a specific transaction.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(

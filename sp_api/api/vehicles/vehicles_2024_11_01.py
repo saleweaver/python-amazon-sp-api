@@ -16,13 +16,18 @@ class VehiclesV20241101(Client):
         
         Get the latest collection of vehicles
         
+        Examples:
+            literal blocks::
+            
+                VehiclesV20241101().get_vehicles()
+        
         Args:
-            key pageToken:string | A token to fetch a certain page when there are multiple pages worth of results.
-            key marketplaceId:string | * REQUIRED An identifier for the marketplace in which the resource operates.
-            key vehicleType:string | * REQUIRED An identifier for vehicle type.
-            key updatedAfter:string | Date in ISO 8601 format, if provided only vehicles which are modified/added to Amazon's catalog after this date will be returned.
+            key pageToken: object |  A token to fetch a certain page when there are multiple pages worth of results.
+            key marketplaceId: object | required An identifier for the marketplace in which the resource operates.
+            key vehicleType: object | required An identifier for vehicle type.
+            key updatedAfter: object |  Date in ISO 8601 format, if provided only vehicles which are modified/added to Amazon's catalog after this date will be returned.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)

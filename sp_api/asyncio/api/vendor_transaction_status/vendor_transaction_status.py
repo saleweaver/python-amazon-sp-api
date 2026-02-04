@@ -16,24 +16,29 @@ class VendorTransactionStatus(AsyncBaseClient):
     async def get_transaction(self, transactionId, **kwargs) -> ApiResponse:
         """
         get_transaction(self, transactionId, **kwargs) -> ApiResponse
-
+        
         Returns the status of the transaction that you specify.
-
-        **Usage Plans:**
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        10                                      10
+        10                                      20
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await VendorTransactionStatus().get_transaction("value")
+        
         Args:
-            transactionId:string | * REQUIRED The GUID provided by Amazon in the 'transactionId' field in response to the post request of a specific transaction.
-
+            transactionId: object | required The GUID provided by Amazon in the 'transactionId' field in response to the post request of a specific transaction.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return await self._request(

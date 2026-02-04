@@ -17,13 +17,16 @@ class VendorDirectFulfillmentSandboxTestDataV20211028(AsyncBaseClient):
         
         Submits a request to generate test order data for Vendor Direct Fulfillment API entities.
         
+        Examples:
+            literal blocks::
+            
+                await VendorDirectFulfillmentSandboxTestDataV20211028().generate_order_scenarios()
+        
         Args:
-            body: | * REQUIRED {'description': 'The request body for the generateOrderScenarios operation.',
-         'properties': {'orders': {'description': 'The list of test orders requested as indicated by party identifiers.', 'items': {'$ref': '#/definitions/OrderScenarioRequest'}, 'type': 'array'}},
-         'type': 'object'}
+            body: GenerateOrderScenarioRequest | required The request payload containing parameters for generating test order data scenarios.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
@@ -34,10 +37,15 @@ class VendorDirectFulfillmentSandboxTestDataV20211028(AsyncBaseClient):
         
         Returns the status of the transaction indicated by the specified transactionId. If the transaction was successful, also returns the requested test order data.
         
+        Examples:
+            literal blocks::
+            
+                await VendorDirectFulfillmentSandboxTestDataV20211028().get_order_scenarios("value")
+        
         Args:
-            transactionId:string | * REQUIRED The transaction identifier returned in the response to the generateOrderScenarios operation.
+            transactionId: object | required The transaction identifier returned in the response to the generateOrderScenarios operation.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(fill_query_params(kwargs.pop("path"), transactionId), params=kwargs, add_marketplace=False)

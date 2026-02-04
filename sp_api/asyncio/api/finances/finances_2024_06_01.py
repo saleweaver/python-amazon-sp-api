@@ -14,22 +14,29 @@ class FinancesV20240601(AsyncBaseClient):
     async def initiate_payout(self, **kwargs) -> ApiResponse:
         """
         initiate_payout(self, **kwargs) -> ApiResponse
-
+        
         Initiates an on-demand payout to the seller's default deposit method in Seller Central for the given `marketplaceId` and `accountType`, if eligible. You can only initiate one on-demand payout for each marketplace and account type within a 24-hour period.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 0.017 | 2 |
-
-        The `x-amzn-RateLimit-Limit` response header contains the usage plan rate limits for the operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput might have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.017                                   2
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await FinancesV20240601().initiate_payout()
+        
         Args:
-            body: | * REQUIRED The request body for the `initiatePayout` operation.
-
+            body: InitiatePayoutRequest | required The request body for the `initiatePayout` operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), data=kwargs, add_marketplace=False)
 
@@ -37,22 +44,29 @@ class FinancesV20240601(AsyncBaseClient):
     async def get_payment_methods(self, **kwargs) -> ApiResponse:
         """
         get_payment_methods(self, **kwargs) -> ApiResponse
-
+        
         Returns the list of payment methods for the seller, which can be filtered by method type.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | .5 | 30 |
-
-        The `x-amzn-RateLimit-Limit` response header contains the usage plan rate limits for the operation, when available. The preceding table contains the default rate and burst values for this operation. Selling partners whose business demands require higher throughput might have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        .5                                      30
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await FinancesV20240601().get_payment_methods()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The identifier of the marketplace from which you want to retrieve payment methods. For the list of possible marketplace identifiers, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
-            key paymentMethodTypes:string | A comma-separated list of the payment method types you want to include in the response.
-
+            key marketplaceId: object | required The identifier of the marketplace from which you want to retrieve payment methods. For the list of possible marketplace identifiers, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key paymentMethodTypes: object |  A comma-separated list of the payment method types you want to include in the response.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)

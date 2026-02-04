@@ -20,30 +20,37 @@ class ProductsV0(Client):
         self, seller_sku_list: [str], item_condition=None, offer_type=None, **kwargs
     ) -> ApiResponse:
         """
-        get_product_pricing_for_skus(self, seller_sku_list: [str], item_condition: str = None, **kwargs) -> ApiResponse
-        Returns pricing information for a seller's offer listings based on SKU.
-
+        get_product_pricing_for_skus(self, seller_sku_list, item_condition, offer_type, **kwargs) -> ApiResponse
+        
+        Returns pricing information for a seller's offer listings based on seller SKU or ASIN.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                      1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                Products().get_product_pricing_for_skus(['sku', 'sku1'], MarketplaceId="ATVPDKIKX0DER")
-
+            
+                ProductsV0().get_product_pricing_for_skus("value", "value", "value")
+        
         Args:
-            seller_sku_list: [str]
-            item_condition: str ("New", "Used", "Collectible", "Refurbished", "Club")
-            offer_type: str ("B2C" or "B2B") Default is B2C.
-            **kwargs:
-
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key Asins: object |  A list of up to twenty Amazon Standard Identification Number (ASIN) values used to identify items in the given marketplace.
+            key Skus: object |  A list of up to twenty seller SKU values used to identify items in the given marketplace.
+            key ItemType: object | required Indicates whether ASIN values or seller SKU values are used to identify items. If you specify Asin, the information in the response will be dependent on the list of Asins you provide in the Asins parameter. If you specify Sku, the information in the response will be dependent on the list of Skus you provide in the Skus parameter.
+            key ItemCondition: object |  Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
+            key OfferType: object |  Indicates whether to request pricing information for the seller's B2C or B2B offers. Default is B2C.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         if item_condition is not None:
             kwargs["ItemCondition"] = item_condition
@@ -57,26 +64,35 @@ class ProductsV0(Client):
         self, asin_list: [str], item_condition=None, offer_type=None, **kwargs
     ) -> ApiResponse:
         """
-        get_product_pricing_for_asins(self, asin_list: [str], item_condition=None, **kwargs) -> ApiResponse
-        Returns pricing information for a seller's offer listings based on ASIN.
-
+        get_product_pricing_for_asins(self, asin_list, item_condition, offer_type, **kwargs) -> ApiResponse
+        
+        Returns pricing information for a seller's offer listings based on seller SKU or ASIN.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                      1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                Products().get_product_pricing_for_asins(['asin1', 'asin2'], MarketplaceId="ATVPDKIKX0DER")
-
+            
+                ProductsV0().get_product_pricing_for_asins("value", "value", "value")
+        
         Args:
-            asin_list: [str]
-            item_condition: str | ("New", "Used", "Collectible", "Refurbished", "Club") Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club. Available values : New, Used, Collectible, Refurbished, Club
-            offer_type: str ("B2C" or "B2B") Default is B2C.
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key Asins: object |  A list of up to twenty Amazon Standard Identification Number (ASIN) values used to identify items in the given marketplace.
+            key Skus: object |  A list of up to twenty seller SKU values used to identify items in the given marketplace.
+            key ItemType: object | required Indicates whether ASIN values or seller SKU values are used to identify items. If you specify Asin, the information in the response will be dependent on the list of Asins you provide in the Asins parameter. If you specify Sku, the information in the response will be dependent on the list of Skus you provide in the Skus parameter.
+            key ItemCondition: object |  Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
+            key OfferType: object |  Indicates whether to request pricing information for the seller's B2C or B2B offers. Default is B2C.
+        
         Returns:
             ApiResponse
         """
@@ -93,26 +109,34 @@ class ProductsV0(Client):
         self, seller_sku_list: [str], customer_type=None, **kwargs
     ) -> ApiResponse:
         """
-        get_competitive_pricing_for_skus(self, seller_sku_list, **kwargs) -> ApiResponse
-        Returns competitive pricing information for a seller's offer listings based on Seller Sku
-
+        get_competitive_pricing_for_skus(self, seller_sku_list, customer_type, **kwargs) -> ApiResponse
+        
+        Returns competitive pricing information for a seller's offer listings based on seller SKU or ASIN.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                      1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                Products().get_competitive_pricing_for_skus([], MarketplaceId="ATVPDKIKX0DER")
-
+            
+                ProductsV0().get_competitive_pricing_for_skus("value", "value")
+        
         Args:
-            seller_sku_list: [str]
-            customer_type: Optional (query) str ("Consumer" or "Business") Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
-
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key Asins: object |  A list of up to twenty Amazon Standard Identification Number (ASIN) values used to identify items in the given marketplace.
+            key Skus: object |  A list of up to twenty seller SKU values used to identify items in the given marketplace.
+            key ItemType: object | required Indicates whether ASIN values or seller SKU values are used to identify items. If you specify Asin, the information in the response will be dependent on the list of Asins you provide in the Asins parameter. If you specify Sku, the information in the response will be dependent on the list of Skus you provide in the Skus parameter. Possible values: Asin, Sku.
+            key CustomerType: object |  Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
+        
         Returns:
             ApiResponse
         """
@@ -127,29 +151,36 @@ class ProductsV0(Client):
         self, asin_list: [str], customer_type=None, **kwargs
     ) -> ApiResponse:
         """
-        get_competitive_pricing_for_asins(self, asin_list, **kwargs) -> ApiResponse
-        Returns competitive pricing information for a seller's offer listings based on ASIN
-
+        get_competitive_pricing_for_asins(self, asin_list, customer_type, **kwargs) -> ApiResponse
+        
+        Returns competitive pricing information for a seller's offer listings based on seller SKU or ASIN.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                      1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                Products().get_competitive_pricing_for_asins([], MarketplaceId="ATVPDKIKX0DER")
-
+            
+                ProductsV0().get_competitive_pricing_for_asins("value", "value")
+        
         Args:
-            asin_list: [str]
-            customer_type: Optional (query) str ("Consumer" or "Business") Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
-
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key Asins: object |  A list of up to twenty Amazon Standard Identification Number (ASIN) values used to identify items in the given marketplace.
+            key Skus: object |  A list of up to twenty seller SKU values used to identify items in the given marketplace.
+            key ItemType: object | required Indicates whether ASIN values or seller SKU values are used to identify items. If you specify Asin, the information in the response will be dependent on the list of Asins you provide in the Asins parameter. If you specify Sku, the information in the response will be dependent on the list of Skus you provide in the Skus parameter. Possible values: Asin, Sku.
+            key CustomerType: object |  Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
+        
         Returns:
             ApiResponse
-
         """
         if customer_type is not None:
             kwargs["CustomerType"] = customer_type
@@ -162,27 +193,35 @@ class ProductsV0(Client):
         self, seller_sku: str, item_condition: str, customer_type: str = None, **kwargs
     ) -> ApiResponse:
         """
-        get_listings_offer(self, seller_sku: str, **kwargs) -> ApiResponse
-        Returns the lowest priced offers for a single SKU listing
-
+        get_listings_offer(self, seller_sku, item_condition, customer_type, **kwargs) -> ApiResponse
+        
+        Returns the lowest priced offers for a single SKU listing.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       2
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ProductsV0().get_listings_offer("value", "value", "value")
+        
         Args:
-            key MarketplaceId: Required (query) str
-            item_condition: Required (query) str | ("New", "Used", "Collectible", "Refurbished", "Club") Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club. Available values : New, Used, Collectible, Refurbished, Club
-            seller_sku: Required (path) str
-            customer_type: Optional (query) str ("Consumer" or "Business") Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
-
-
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key ItemCondition: object | required Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
+            SellerSKU: object | required Identifies an item in the given marketplace. SellerSKU is qualified by the seller's SellerId, which is included with every operation that you submit.
+            key CustomerType: object |  Indicates whether to request Consumer or Business offers. Default is Consumer.
+        
         Returns:
             ApiResponse
-
         """
         kwargs["ItemCondition"] = item_condition
 
@@ -198,27 +237,33 @@ class ProductsV0(Client):
         self, asin: str, item_condition: str, customer_type: str = None, **kwargs
     ) -> ApiResponse:
         """
-        get_item_offers(self, asin: str, **kwargs) -> ApiResponse
-        Returns the lowest priced offers for a single item based on ASIN
-
+        get_item_offers(self, asin, item_condition, customer_type, **kwargs) -> ApiResponse
+        
+        Returns the lowest priced offers for a single item based on ASIN.
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                      1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ProductsV0().get_item_offers("value", "value", "value")
+        
         Args:
-            key MarketplaceId: Required (query) str
-            item_condition: Required (query) str | ("New", "Used", "Collectible", "Refurbished", "Club") Filters the offer listings based on item condition. Possible values: New, Used, Collectible, Refurbished, Club. Available values : New, Used, Collectible, Refurbished, Club
-            asin: Required (path) str
-            customer_type: Optional (query) str ("Consumer" or "Business") Indicates whether to request pricing information from the point of view of Consumer or Business buyers. Default is Consumer.
-
-
+            key MarketplaceId: object | required A marketplace identifier. Specifies the marketplace for which prices are returned.
+            key ItemCondition: object | required Filters the offer listings to be considered based on item condition. Possible values: New, Used, Collectible, Refurbished, Club.
+            Asin: object | required The Amazon Standard Identification Number (ASIN) of the item.
+            key CustomerType: object |  Indicates whether to request Consumer or Business offers. Default is Consumer.
+        
         Returns:
             ApiResponse
-
         """
         kwargs["ItemCondition"] = item_condition
 
@@ -236,24 +281,30 @@ class ProductsV0(Client):
         **kwargs,
     ) -> ApiResponse:
         """
-        get_item_offers_batch(self, requests_: Optional[List[Union[Dict, ItemOffersRequest]]], **kwargs) -> ApiResponse
+        get_item_offers_batch(self, requests_, **kwargs) -> ApiResponse
+        
         Returns the lowest priced offers for a batch of items based on ASIN.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                       1
+        0.1                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ProductsV0().get_item_offers_batch("value")
+        
         Args:
-            requests_: Optional (Body) [dict] The request associated with the getItemOffersBatch API call.
-
-
+            getItemOffersBatchRequestBody: GetItemOffersBatchRequest | required The request associated with the `getItemOffersBatch` API call.
+        
         Returns:
             ApiResponse
-
         """
         if isinstance(requests_, GetItemOffersBatchRequest):
             get_item_offers_batch_request = requests_.to_dict()
@@ -274,24 +325,30 @@ class ProductsV0(Client):
         **kwargs,
     ) -> ApiResponse:
         """
-        get_listing_offers_batch(self, requests_: Optional[Union[List[Dict], GetListingOffersBatchRequest]], **kwargs) -> ApiResponse
-        Returns the lowest priced offers for a batch of listings based on ASIN.
-
+        get_listing_offers_batch(self, requests_, **kwargs) -> ApiResponse
+        
+        Returns the lowest priced offers for a batch of listings by SKU.
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        .5                                       1
+        0.5                                     1
         ======================================  ==============
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ProductsV0().get_listing_offers_batch("value")
+        
         Args:
-            requests_: Optional (Body) [dict] The request associated with the getListingOffersBatch API call.
-
-
+            getListingOffersBatchRequestBody: GetListingOffersBatchRequest | required The request associated with the `getListingOffersBatch` API call.
+        
         Returns:
             ApiResponse
-
         """
         if isinstance(requests_, GetListingOffersBatchRequest):
             get_listing_offers_batch_request = requests_.to_dict()

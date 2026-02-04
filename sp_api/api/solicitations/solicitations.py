@@ -17,25 +17,30 @@ class Solicitations(Client):
     ) -> ApiResponse:
         """
         get_solicitation_actions_for_order(self, amazonOrderId, **kwargs) -> ApiResponse
-
+        
         Returns a list of solicitation types that are available for an order that you specify. A solicitation type is represented by an actions object, which contains a path and query parameter(s). You can use the path and parameter(s) to call an operation that sends a solicitation. Currently only the productReviewAndSellerFeedbackSolicitation solicitation type is available.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                Solicitations().get_solicitation_actions_for_order("value")
+        
         Args:
-            amazonOrderId:string | * REQUIRED An Amazon order identifier. This specifies the order for which you want a list of available solicitation types.
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-
+            amazonOrderId: object | required An Amazon order identifier. This specifies the order for which you want a list of available solicitation types.
+            key marketplaceIds: object | required A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -51,25 +56,30 @@ class Solicitations(Client):
     ) -> ApiResponse:
         """
         create_product_review_and_seller_feedback_solicitation(self, amazonOrderId, **kwargs) -> ApiResponse
-
+        
         Sends a solicitation to a buyer asking for seller feedback and a product review for the specified order. Send only one productReviewAndSellerFeedback or free form proactive message per order.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                Solicitations().create_product_review_and_seller_feedback_solicitation("value")
+        
         Args:
-            amazonOrderId:string | * REQUIRED An Amazon order identifier. This specifies the order for which a solicitation is sent.
-            key marketplaceIds:array | * REQUIRED A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
-
+            amazonOrderId: object | required An Amazon order identifier. This specifies the order for which a solicitation is sent.
+            key marketplaceIds: object | required A marketplace identifier. This specifies the marketplace in which the order was placed. Only one marketplace can be specified.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(

@@ -15,102 +15,29 @@ class FulfillmentOutbound(Client):
     def get_fulfillment_preview(self, **kwargs) -> ApiResponse:
         """
         get_fulfillment_preview(self, **kwargs) -> ApiResponse
-
+        
         Returns a list of fulfillment order previews based on shipping criteria that you specify.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                {
-                      "marketplaceId": "string",
-                      "address": {
-                        "name": "string",
-                        "addressLine1": "string",
-                        "addressLine2": "string",
-                        "addressLine3": "string",
-                        "city": "string",
-                        "districtOrCounty": "string",
-                        "stateOrRegion": "string",
-                        "postalCode": "string",
-                        "countryCode": "string",
-                        "phone": "string"
-                      },
-                      "items": [
-                        {
-                          "sellerSku": "string",
-                          "quantity": 0,
-                          "perUnitDeclaredValue": {
-                            "currencyCode": "string",
-                            "value": "string"
-                          },
-                          "sellerFulfillmentOrderItemId": "string"
-                        }
-                      ],
-                      "shippingSpeedCategories": [
-                        "Standard"
-                      ],
-                      "includeCODFulfillmentPreview": true,
-                      "includeDeliveryWindows": true,
-                      "featureConstraints": [
-                        {
-                          "featureName": "string",
-                          "featureFulfillmentPolicy": "Required"
-                        }
-                      ]
-                    }
-
+            
+                FulfillmentOutbound().get_fulfillment_preview()
+        
         Args:
-            body: {
-              "marketplaceId": "string",
-              "address": {
-                "name": "string",
-                "addressLine1": "string",
-                "addressLine2": "string",
-                "addressLine3": "string",
-                "city": "string",
-                "districtOrCounty": "string",
-                "stateOrRegion": "string",
-                "postalCode": "string",
-                "countryCode": "string",
-                "phone": "string"
-              },
-              "items": [
-                {
-                  "sellerSku": "string",
-                  "quantity": 0,
-                  "perUnitDeclaredValue": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  },
-                  "sellerFulfillmentOrderItemId": "string"
-                }
-              ],
-              "shippingSpeedCategories": [
-                "Standard"
-              ],
-              "includeCODFulfillmentPreview": true,
-              "includeDeliveryWindows": true,
-              "featureConstraints": [
-                {
-                  "featureName": "string",
-                  "featureFulfillmentPolicy": "Required"
-                }
-              ]
-            }
-
-
+            body: GetFulfillmentPreviewRequest | required GetFulfillmentPreviewRequest parameter
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), data=kwargs)
@@ -119,22 +46,29 @@ class FulfillmentOutbound(Client):
     def delivery_offers(self, **kwargs) -> ApiResponse:
         """
         delivery_offers(self, **kwargs) -> ApiResponse
-
+        
         Returns delivery options that include an estimated delivery date and offer expiration, based on criteria that you specify.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 5 | 30 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may have higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        5                                       30
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().delivery_offers()
+        
         Args:
-            body: GetDeliveryOffersRequest parameter
-
+            body: GetDeliveryOffersRequest | required GetDeliveryOffersRequest parameter
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), data=kwargs)
@@ -143,25 +77,30 @@ class FulfillmentOutbound(Client):
     def list_all_fulfillment_orders(self, **kwargs) -> ApiResponse:
         """
         list_all_fulfillment_orders(self, **kwargs) -> ApiResponse
-
-        Returns a list of fulfillment orders fulfilled after (or at) a specified date-time, or indicated by the next token parameter.
-
+        
+        Returns a list of fulfillment orders fulfilled after (or at) a specified date-time, or indicated by the `nextToken` parameter.
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().list_all_fulfillment_orders()
+        
         Args:
-            key queryStartDate:string |  A date used to select fulfillment orders that were last updated after (or at) a specified time. An update is defined as any change in fulfillment order status, including the creation of a new fulfillment order.
-            key nextToken:string |  A string token returned in the response to your previous request.
-
+            key queryStartDate: object |  A date used to select fulfillment orders that were last updated after (or at) a specified time. An update is defined as any change in fulfillment order status, including the creation of a new fulfillment order.
+            key nextToken: object |  A string token returned in the response to your previous request.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -170,183 +109,29 @@ class FulfillmentOutbound(Client):
     def create_fulfillment_order(self, **kwargs) -> ApiResponse:
         """
         create_fulfillment_order(self, **kwargs) -> ApiResponse
-
+        
         Requests that Amazon ship items from the seller's inventory in Amazon's fulfillment network to a destination address.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                {
-                      "marketplaceId": "string",
-                      "sellerFulfillmentOrderId": "string",
-                      "displayableOrderId": "string",
-                      "displayableOrderDate": "2019-08-24T14:15:22Z",
-                      "displayableOrderComment": "string",
-                      "shippingSpeedCategory": "Standard",
-                      "deliveryWindow": {
-                        "startDate": "2019-08-24T14:15:22Z",
-                        "endDate": "2019-08-24T14:15:22Z"
-                      },
-                      "destinationAddress": {
-                        "name": "string",
-                        "addressLine1": "string",
-                        "addressLine2": "string",
-                        "addressLine3": "string",
-                        "city": "string",
-                        "districtOrCounty": "string",
-                        "stateOrRegion": "string",
-                        "postalCode": "string",
-                        "countryCode": "string",
-                        "phone": "string"
-                      },
-                      "fulfillmentAction": "Ship",
-                      "fulfillmentPolicy": "FillOrKill",
-                      "codSettings": {
-                        "isCodRequired": true,
-                        "codCharge": {
-                          "currencyCode": "string",
-                          "value": "string"
-                        },
-                        "codChargeTax": {
-                          "currencyCode": "string",
-                          "value": "string"
-                        },
-                        "shippingCharge": {
-                          "currencyCode": "string",
-                          "value": "string"
-                        },
-                        "shippingChargeTax": {
-                          "currencyCode": "string",
-                          "value": "string"
-                        }
-                      },
-                      "shipFromCountryCode": "string",
-                      "notificationEmails": [
-                        "string"
-                      ],
-                      "featureConstraints": [
-                        {
-                          "featureName": "string",
-                          "featureFulfillmentPolicy": "Required"
-                        }
-                      ],
-                      "items": [
-                        {
-                          "sellerSku": "string",
-                          "sellerFulfillmentOrderItemId": "string",
-                          "quantity": 0,
-                          "giftMessage": "string",
-                          "displayableComment": "string",
-                          "fulfillmentNetworkSku": "string",
-                          "perUnitDeclaredValue": {
-                            "currencyCode": "string",
-                            "value": "string"
-                          },
-                          "perUnitPrice": {
-                            "currencyCode": "string",
-                            "value": "string"
-                          },
-                          "perUnitTax": {
-                            "currencyCode": "string",
-                            "value": "string"
-                          }
-                        }
-                      ]
-                    }
-
+            
+                FulfillmentOutbound().create_fulfillment_order()
+        
         Args:
-            body: {
-              "marketplaceId": "string",
-              "sellerFulfillmentOrderId": "string",
-              "displayableOrderId": "string",
-              "displayableOrderDate": "2019-08-24T14:15:22Z",
-              "displayableOrderComment": "string",
-              "shippingSpeedCategory": "Standard",
-              "deliveryWindow": {
-                "startDate": "2019-08-24T14:15:22Z",
-                "endDate": "2019-08-24T14:15:22Z"
-              },
-              "destinationAddress": {
-                "name": "string",
-                "addressLine1": "string",
-                "addressLine2": "string",
-                "addressLine3": "string",
-                "city": "string",
-                "districtOrCounty": "string",
-                "stateOrRegion": "string",
-                "postalCode": "string",
-                "countryCode": "string",
-                "phone": "string"
-              },
-              "fulfillmentAction": "Ship",
-              "fulfillmentPolicy": "FillOrKill",
-              "codSettings": {
-                "isCodRequired": true,
-                "codCharge": {
-                  "currencyCode": "string",
-                  "value": "string"
-                },
-                "codChargeTax": {
-                  "currencyCode": "string",
-                  "value": "string"
-                },
-                "shippingCharge": {
-                  "currencyCode": "string",
-                  "value": "string"
-                },
-                "shippingChargeTax": {
-                  "currencyCode": "string",
-                  "value": "string"
-                }
-              },
-              "shipFromCountryCode": "string",
-              "notificationEmails": [
-                "string"
-              ],
-              "featureConstraints": [
-                {
-                  "featureName": "string",
-                  "featureFulfillmentPolicy": "Required"
-                }
-              ],
-              "items": [
-                {
-                  "sellerSku": "string",
-                  "sellerFulfillmentOrderItemId": "string",
-                  "quantity": 0,
-                  "giftMessage": "string",
-                  "displayableComment": "string",
-                  "fulfillmentNetworkSku": "string",
-                  "perUnitDeclaredValue": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  },
-                  "perUnitPrice": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  },
-                  "perUnitTax": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  }
-                }
-              ]
-            }
-
-
+            body: CreateFulfillmentOrderRequest | required CreateFulfillmentOrderRequest parameter
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), data=kwargs)
@@ -355,24 +140,29 @@ class FulfillmentOutbound(Client):
     def get_package_tracking_details(self, **kwargs) -> ApiResponse:
         """
         get_package_tracking_details(self, **kwargs) -> ApiResponse
-
+        
         Returns delivery tracking information for a package in an outbound shipment for a Multi-Channel Fulfillment order.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_package_tracking_details()
+        
         Args:
-            key packageNumber:integer | * REQUIRED The unencrypted package identifier returned by the getFulfillmentOrder operation.
-
+            key packageNumber: object | required The unencrypted package identifier. You can obtain this value from the `getFulfillmentOrder` operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -381,28 +171,32 @@ class FulfillmentOutbound(Client):
     def list_return_reason_codes(self, **kwargs) -> ApiResponse:
         """
         list_return_reason_codes(self, **kwargs) -> ApiResponse
-
-        Returns a list of return reason codes for a seller SKU in a given marketplace.
-
+        
+        Returns a list of return reason codes for a seller SKU in a given marketplace. The parameters for this operation may contain special characters that require URL encoding. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().list_return_reason_codes()
+        
         Args:
-            key sellerSku:string | * REQUIRED The seller SKU for which return reason codes are required.
-            key marketplaceId:string |  The marketplace for which the seller wants return reason codes.
-            key sellerFulfillmentOrderId:string |  The identifier assigned to the item by the seller when the fulfillment order was created. The service uses this value to determine the marketplace for which the seller wants return reason codes.
-            key language:string | * REQUIRED The language that the TranslatedDescription property of the ReasonCodeDetails response object should be translated into.
-
+            key sellerSku: object | required The seller SKU for which return reason codes are required.
+            key marketplaceId: object |  The marketplace for which the seller wants return reason codes.
+            key sellerFulfillmentOrderId: object |  The identifier assigned to the item by the seller when the fulfillment order was created. The service uses this value to determine the marketplace for which the seller wants return reason codes.
+            key language: object |  The language that the `TranslatedDescription` property of the `ReasonCodeDetails` response object should be translated into.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -413,52 +207,30 @@ class FulfillmentOutbound(Client):
     ) -> ApiResponse:
         """
         create_fulfillment_return(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
-
+        
         Creates a fulfillment return.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                {
-                  "items": [
-                    {
-                      "sellerReturnItemId": "string",
-                      "sellerFulfillmentOrderItemId": "string",
-                      "amazonShipmentId": "string",
-                      "returnReasonCode": "string",
-                      "returnComment": "string"
-                    }
-                  ]
-                }
-
+            
+                FulfillmentOutbound().create_fulfillment_return("value")
+        
         Args:
-            sellerFulfillmentOrderId:string | * REQUIRED An identifier assigned by the seller to the fulfillment order at the time it was created. The seller uses their own records to find the correct SellerFulfillmentOrderId value based on the buyer's request to return items.
-            body: {
-              "items": [
-                {
-                  "sellerReturnItemId": "string",
-                  "sellerFulfillmentOrderItemId": "string",
-                  "amazonShipmentId": "string",
-                  "returnReasonCode": "string",
-                  "returnComment": "string"
-                }
-              ]
-            }
-
-
-         Returns:
-            ApiResponse:
+            body: CreateFulfillmentReturnRequest | required The request body of the `createFulfillmentReturn` operation.
+            sellerFulfillmentOrderId: object | required An identifier the seller assigns to the fulfillment order at the time it was created. The seller uses their own records to find the correct `sellerFulfillmentOrderId` value based on the buyer's request to return items.
+        
+        Returns:
+            ApiResponse
         """
 
         return self._request(
@@ -469,24 +241,29 @@ class FulfillmentOutbound(Client):
     def get_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse:
         """
         get_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
-
+        
         Returns the fulfillment order indicated by the specified order identifier.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_fulfillment_order("value")
+        
         Args:
-            sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
-
+            sellerFulfillmentOrderId: object | required The identifier assigned to the item by the seller when the fulfillment order was created.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -500,139 +277,30 @@ class FulfillmentOutbound(Client):
     ) -> ApiResponse:
         """
         update_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
-
+        
         Updates and/or requests shipment for a fulfillment order with an order hold on it.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                {
-                  "marketplaceId": "string",
-                  "displayableOrderId": "string",
-                  "displayableOrderDate": "2019-08-24T14:15:22Z",
-                  "displayableOrderComment": "string",
-                  "shippingSpeedCategory": "Standard",
-                  "destinationAddress": {
-                    "name": "string",
-                    "addressLine1": "string",
-                    "addressLine2": "string",
-                    "addressLine3": "string",
-                    "city": "string",
-                    "districtOrCounty": "string",
-                    "stateOrRegion": "string",
-                    "postalCode": "string",
-                    "countryCode": "string",
-                    "phone": "string"
-                  },
-                  "fulfillmentAction": "Ship",
-                  "fulfillmentPolicy": "FillOrKill",
-                  "shipFromCountryCode": "string",
-                  "notificationEmails": [
-                    "string"
-                  ],
-                  "featureConstraints": [
-                    {
-                      "featureName": "string",
-                      "featureFulfillmentPolicy": "Required"
-                    }
-                  ],
-                  "items": [
-                    {
-                      "sellerSku": "string",
-                      "sellerFulfillmentOrderItemId": "string",
-                      "quantity": 0,
-                      "giftMessage": "string",
-                      "displayableComment": "string",
-                      "fulfillmentNetworkSku": "string",
-                      "orderItemDisposition": "string",
-                      "perUnitDeclaredValue": {
-                        "currencyCode": "string",
-                        "value": "string"
-                      },
-                      "perUnitPrice": {
-                        "currencyCode": "string",
-                        "value": "string"
-                      },
-                      "perUnitTax": {
-                        "currencyCode": "string",
-                        "value": "string"
-                      }
-                    }
-                  ]
-                }
-
+            
+                FulfillmentOutbound().update_fulfillment_order("value")
+        
         Args:
-            sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
-            body: {
-              "marketplaceId": "string",
-              "displayableOrderId": "string",
-              "displayableOrderDate": "2019-08-24T14:15:22Z",
-              "displayableOrderComment": "string",
-              "shippingSpeedCategory": "Standard",
-              "destinationAddress": {
-                "name": "string",
-                "addressLine1": "string",
-                "addressLine2": "string",
-                "addressLine3": "string",
-                "city": "string",
-                "districtOrCounty": "string",
-                "stateOrRegion": "string",
-                "postalCode": "string",
-                "countryCode": "string",
-                "phone": "string"
-              },
-              "fulfillmentAction": "Ship",
-              "fulfillmentPolicy": "FillOrKill",
-              "shipFromCountryCode": "string",
-              "notificationEmails": [
-                "string"
-              ],
-              "featureConstraints": [
-                {
-                  "featureName": "string",
-                  "featureFulfillmentPolicy": "Required"
-                }
-              ],
-              "items": [
-                {
-                  "sellerSku": "string",
-                  "sellerFulfillmentOrderItemId": "string",
-                  "quantity": 0,
-                  "giftMessage": "string",
-                  "displayableComment": "string",
-                  "fulfillmentNetworkSku": "string",
-                  "orderItemDisposition": "string",
-                  "perUnitDeclaredValue": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  },
-                  "perUnitPrice": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  },
-                  "perUnitTax": {
-                    "currencyCode": "string",
-                    "value": "string"
-                  }
-                }
-              ]
-            }
-
-
-
+            body: UpdateFulfillmentOrderRequest | required The request body of the `updateFulfillmentOrder` operation.
+            sellerFulfillmentOrderId: object | required The identifier assigned to the item by the seller when the fulfillment order was created.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -647,15 +315,20 @@ class FulfillmentOutbound(Client):
     ) -> ApiResponse:
         """
         submit_fulfillment_order_status_update(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
-
+        
         Requests that Amazon update the status of an order in the sandbox testing environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to [Fulfillment Outbound Dynamic Sandbox Guide](https://developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-dynamic-sandbox-guide) and [Selling Partner API sandbox](https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox) for more information.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().submit_fulfillment_order_status_update("value")
+        
         Args:
-            sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
-            body: | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
-
+            sellerFulfillmentOrderId: object | required The identifier assigned to the item by the seller when the fulfillment order was created.
+            body: SubmitFulfillmentOrderStatusUpdateRequest | required The identifier assigned to the item by the seller when the fulfillment order was created.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -668,25 +341,29 @@ class FulfillmentOutbound(Client):
     ) -> ApiResponse:
         """
         cancel_fulfillment_order(self, sellerFulfillmentOrderId, **kwargs) -> ApiResponse
-
+        
         Requests that Amazon stop attempting to fulfill the fulfillment order indicated by the specified order identifier.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().cancel_fulfillment_order("value")
+        
         Args:
-            sellerFulfillmentOrderId:string | * REQUIRED The identifier assigned to the item by the seller when the fulfillment order was created.
-
-
+            sellerFulfillmentOrderId: object | required The identifier assigned to the item by the seller when the fulfillment order was created.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -697,25 +374,29 @@ class FulfillmentOutbound(Client):
     def get_features(self, **kwargs) -> ApiResponse:
         """
         get_features(self, **kwargs) -> ApiResponse
-
+        
         Returns a list of features available for Multi-Channel Fulfillment orders in the marketplace you specify, and whether the seller for which you made the call is enrolled for each feature.
-
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_features()
+        
         Args:
-            key marketplaceId:string | * REQUIRED The marketplace for which to return the list of features.
-
+            key marketplaceId: object | required The marketplace for which to return the list of features.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params=kwargs)
@@ -724,26 +405,32 @@ class FulfillmentOutbound(Client):
     def get_feature_inventory(self, featureName, **kwargs) -> ApiResponse:
         """
         get_feature_inventory(self, featureName, **kwargs) -> ApiResponse
-
+        
         Returns a list of inventory items that are eligible for the fulfillment feature you specify.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_feature_inventory("value")
+        
         Args:
-            key marketplaceId:string | * REQUIRED The marketplace for which to return a list of the inventory that is eligible for the specified feature.
-            featureName:string | * REQUIRED The name of the feature for which to return a list of eligible inventory.
-            key nextToken:string |  A string token returned in the response to your previous request that is used to return the next response page. A value of null will return the first page.
-
+            key marketplaceId: object | required The marketplace for which to return a list of the inventory that is eligible for the specified feature.
+            featureName: object | required The name of the feature for which to return a list of eligible inventory.
+            key nextToken: object |  A string token returned in the response to your previous request that is used to return the next response page. A value of `null` will return the first page.
+            key queryStartDate: object |  A date that you can use to select inventory that has been updated since a specified date. An update is defined as any change in feature-enabled inventory availability. The date must be in the format `yyyy-MM-ddTHH:mm:ss.sssZ`
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -756,24 +443,31 @@ class FulfillmentOutbound(Client):
     def get_feature_sku(self, featureName, sellerSku, **kwargs) -> ApiResponse:
         """
         get_feature_sku(self, featureName, sellerSku, **kwargs) -> ApiResponse
-
+        
         Returns the number of items with the `sellerSku` you specify that can have orders fulfilled using the specified feature. Note that if the `sellerSku` isn't eligible, the response will contain an empty `skuInfo` object. The parameters for this operation may contain special characters that require URL encoding. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 2 | 30 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The preceding table indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        2                                       30
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_feature_sku("value", "value")
+        
         Args:
-            key marketplaceId:string | * REQUIRED The marketplace for which to return the count.
-            featureName:string | * REQUIRED The name of the feature.
-            sellerSku:string | * REQUIRED Used to identify an item in the given marketplace. `sellerSku` is qualified by the seller's `sellerId`, which is included with every operation that you submit.
-
+            key marketplaceId: object | required The marketplace for which to return the count.
+            featureName: object | required The name of the feature.
+            sellerSku: object | required Used to identify an item in the given marketplace. `sellerSku` is qualified by the seller's `sellerId`, which is included with every operation that you submit.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -784,27 +478,32 @@ class FulfillmentOutbound(Client):
     def get_feature_s_k_u(self, featureName, **kwargs) -> ApiResponse:
         """
         get_feature_s_k_u(self, featureName, **kwargs) -> ApiResponse
-
-        Returns the number of items with the sellerSKU you specify that can have orders fulfilled using the specified feature. Note that if the sellerSKU isn't eligible, the response will contain an empty skuInfo object.
-
+        
+        Returns a list of inventory items that are eligible for the fulfillment feature you specify.
+        
         **Usage Plan:**
-
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         2                                       30
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                FulfillmentOutbound().get_feature_s_k_u("value")
+        
         Args:
-            key marketplaceId:string | * REQUIRED The marketplace for which to return the count.
-            featureName:string | * REQUIRED The name of the feature.
-            sellerSku:string | * REQUIRED Used to identify an item in the given marketplace. SellerSKU is qualified by the seller's SellerId, which is included with every operation that you submit.
-
+            key marketplaceId: object | required The marketplace for which to return a list of the inventory that is eligible for the specified feature.
+            featureName: object | required The name of the feature for which to return a list of eligible inventory.
+            key nextToken: object |  A string token returned in the response to your previous request that is used to return the next response page. A value of `null` will return the first page.
+            key queryStartDate: object |  A date that you can use to select inventory that has been updated since a specified date. An update is defined as any change in feature-enabled inventory availability. The date must be in the format `yyyy-MM-ddTHH:mm:ss.sssZ`
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(

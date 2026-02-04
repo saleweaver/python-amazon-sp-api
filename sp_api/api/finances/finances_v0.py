@@ -8,18 +8,20 @@ class FinancesV0(Client):
     def get_financial_events_for_order(self, order_id, **kwargs) -> ApiResponse:
         """
         get_financial_events_for_order(self, order_id, **kwargs) -> ApiResponse
-
+        
+        Returns all financial events for the specified order. Orders from the last 48 hours might not be included in financial events.
+        
         Examples:
             literal blocks::
-
-                Finances().get_financial_events_for_order('485-734-5434857', MaxResultsPerPage=10)
-
+            
+                FinancesV0().get_financial_events_for_order("value")
+        
         Args:
-            order_id:
+            order_id:  | required
             **kwargs:
-
+        
         Returns:
-
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), order_id), params={**kwargs}
@@ -28,14 +30,21 @@ class FinancesV0(Client):
     @sp_endpoint("/finances/v0/financialEvents")
     def list_financial_events(self, **kwargs) -> ApiResponse:
         """
-        list_financial_events(self, **kwargs) -> ApiResponse:
-
-
+        list_financial_events(self, **kwargs) -> ApiResponse
+        
+        Returns financial events for the specified data range. Orders from the last 48 hours might not be included in financial events.
+                        **Note:** in `ListFinancialEvents`, deferred events don't show up in responses until they are released.
+        
+        Examples:
+            literal blocks::
+            
+                FinancesV0().list_financial_events()
+        
         Args:
             **kwargs:
-
+        
         Returns:
-
+            ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop("path")), params={**kwargs})
 
@@ -44,15 +53,22 @@ class FinancesV0(Client):
         self, event_group_id, **kwargs
     ) -> ApiResponse:
         """
-        list_financial_events_by_groupid(self, event_group_id,  **kwargs) -> ApiResponse:
-
-
+        list_financial_events_by_group_id(self, event_group_id, **kwargs) -> ApiResponse
+        
+        Returns all financial events for the specified financial event group. Orders from the last 48 hours might not be included in financial events.
+                        **Note:** This operation only retrieves a group's data for the past two years. A request for data spanning more than two years produces an empty response.
+        
+        Examples:
+            literal blocks::
+            
+                FinancesV0().list_financial_events_by_group_id("value")
+        
         Args:
-            event_group_id
+            event_group_id:  | required
             **kwargs:
-
+        
         Returns:
-
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), event_group_id), params={**kwargs}
@@ -61,26 +77,40 @@ class FinancesV0(Client):
     @sp_endpoint("/finances/v0/financialEventGroups")
     def list_financial_event_groups(self, **kwargs) -> ApiResponse:
         """
-        list_financial_event_groups(self, **kwargs) -> ApiResponse:
-
-
+        list_financial_event_groups(self, **kwargs) -> ApiResponse
+        
+        Returns financial event groups for a given date range. Orders from the last 48 hours might not be included in financial events.
+        
+        Examples:
+            literal blocks::
+            
+                FinancesV0().list_financial_event_groups()
+        
         Args:
             **kwargs:
-
+        
         Returns:
-
+            ApiResponse
         """
         return self._request(kwargs.pop("path"), params={**kwargs})
 
     @sp_endpoint("/finances/v0/transactions")
     def list_transactions(self, **kwargs) -> ApiResponse:
         """
-        list_transactions(self, **kwargs) -> ApiResponse:
-
+        list_transactions(self, **kwargs) -> ApiResponse
+        
+         
+        
+        Examples:
+            literal blocks::
+            
+                FinancesV0().list_transactions()
+        
         Args:
             **kwargs:
-
-        Returns: ApiResponse
+        
+        Returns:
+            ApiResponse
         """
 
         return self._request(kwargs.pop("path"), params={**kwargs})

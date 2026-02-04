@@ -15,32 +15,40 @@ class CatalogItemsV20220401(AsyncBaseClient):
     async def search_catalog_items(self, **kwargs) -> ApiResponse:
         """
         search_catalog_items(self, **kwargs) -> ApiResponse
-
-        Search for and return a list of Amazon catalog items and associated information.
-
-        **Usage Plans:**
-
+        
+        Search for a list of Amazon catalog items and item-related information. You can search by identifier or by keywords.
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       5
+        2                                       2
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await CatalogItemsV20220401().search_catalog_items()
+        
         Args:
-            key keywords:array | * REQUIRED A comma-delimited list of words or item identifiers to search the Amazon catalog for.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
-            key brandNames:array |  A comma-delimited list of brand names to limit the search to.
-            key classificationIds:array |  A comma-delimited list of classification identifiers to limit the search to.
-            key pageSize:integer |  Number of results to be returned per page.
-            key pageToken:string |  A token to fetch a certain page when there are multiple pages worth of results.
-            key keywordsLocale:string |  The language the keywords are provided in. Defaults to the primary locale of the marketplace.
-            key locale:string |  Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.
-
+            key identifiers: object |  A comma-delimited list of product identifiers that you can use to search the Amazon catalog. **Note:** You cannot include `identifiers` and `keywords` in the same request.
+            key identifiersType: object |  The type of product identifiers that you can use to search the Amazon catalog. **Note:** `identifiersType` is required when `identifiers` is in the request.
+            key marketplaceIds: object | required A comma-delimited list of Amazon marketplace identifiers. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key includedData: object |  A comma-delimited list of datasets to include in the response.
+            key locale: object |  The locale for which you want to retrieve localized summaries. Defaults to the primary locale of the marketplace.
+            key sellerId: object |  A selling partner identifier, such as a seller account or vendor code. **Note:** Required when `identifiersType` is `SKU`.
+            key keywords: object |  A comma-delimited list of keywords that you can use to search the Amazon catalog. **Note:** You cannot include `keywords` and `identifiers` in the same request.
+            key brandNames: object |  A comma-delimited list of brand names that you can use to limit the search in queries based on `keywords`. **Note:** Cannot be used with `identifiers`.
+            key classificationIds: object |  A comma-delimited list of classification identifiers that you can use to limit the search in queries based on `keywords`. **Note:** Cannot be used with `identifiers`.
+            key pageSize: object |  The number of results to include on each page.
+            key pageToken: object |  A token that you can use to fetch a specific page when there are multiple pages of results.
+            key keywordsLocale: object |  The language of the keywords that are included in queries based on `keywords`. Defaults to the primary locale of the marketplace. **Note:** Cannot be used with `identifiers`.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         normalize_included_data(kwargs)
@@ -50,26 +58,32 @@ class CatalogItemsV20220401(AsyncBaseClient):
     async def get_catalog_item(self, asin, **kwargs) -> ApiResponse:
         """
         get_catalog_item(self, asin, **kwargs) -> ApiResponse
-
+        
         Retrieves details for an item in the Amazon catalog.
-
-
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        5                                       5
+        2                                       2
         ======================================  ==============
-
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await CatalogItemsV20220401().get_catalog_item("value")
+        
         Args:
-            asin:string | * REQUIRED The Amazon Standard Identification Number (ASIN) of the item.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers. Data sets in the response contain data only for the specified marketplaces.
-            key includedData:array |  A comma-delimited string or list of data sets to include in the response. Default: summaries.
-            key locale:string |  Locale for retrieving localized summaries. Defaults to the primary locale of the marketplace.
-
+            asin: object | required The Amazon Standard Identification Number (ASIN) of the item.
+            key marketplaceIds: object | required A comma-delimited list of Amazon marketplace identifiers. To find the ID for your marketplace, refer to [Marketplace IDs](https://developer-docs.amazon.com/sp-api/docs/marketplace-ids).
+            key includedData: object |  A comma-delimited list of datasets to include in the response.
+            key locale: object |  The locale for which you want to retrieve localized summaries. Defaults to the primary locale of the marketplace.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         normalize_included_data(kwargs)

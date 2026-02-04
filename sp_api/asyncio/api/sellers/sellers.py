@@ -13,29 +13,19 @@ class Sellers(AsyncBaseClient):
     async def get_marketplace_participation(self, **kwargs) -> ApiResponse:
         """
         get_marketplace_participation(self, **kwargs) -> ApiResponse
-        Returns a list of marketplaces that the seller submitting the request can sell in and information about the seller's participation in those marketplaces.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        .016                                    15
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Returns a list of marketplaces where the seller can list items and information about the seller's participation in those marketplaces.
+        
         Examples:
             literal blocks::
-
-                res = Sellers().get_marketplace_participation()
-
+            
+                await Sellers().get_marketplace_participation()
+        
         Args:
             **kwargs:
-
+        
         Returns:
-            GetMarketplaceParticipationsResponse:
-
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), add_marketplace=False)
 
@@ -43,28 +33,18 @@ class Sellers(AsyncBaseClient):
     async def get_account(self, **kwargs) -> ApiResponse:
         """
         get_account(self, **kwargs) -> ApiResponse
+        
         Returns information about a seller account and its marketplaces.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        .016                                    15
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                res = Sellers().get_account()
-
+            
+                await Sellers().get_account()
+        
         Args:
             **kwargs:
-
+        
         Returns:
-            GetAccountResponse:
-
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), add_marketplace=False)

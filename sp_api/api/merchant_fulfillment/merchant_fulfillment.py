@@ -12,62 +12,21 @@ class MerchantFulfillment(Client):
         self, shipment_request_details: dict, **kwargs
     ) -> ApiResponse:
         """
-        get_eligible_shipment_services_old(self, shipment_request_details: dict, **kwargs) -> ApiResponse
+        get_eligible_shipment_services_old(self, shipment_request_details, **kwargs) -> ApiResponse
+        
         Returns a list of shipping service offers that satisfy the specified shipment request details.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                MerchantFulfillment().get_eligible_shipment_services_old({
-                        "AmazonOrderId": "903-5563053-5647845",
-                        "ItemList": [
-                            {
-                                "OrderItemId": "52986411826454",
-                                "Quantity": 1
-                            }
-                        ],
-                        "ShipFromAddress": {
-                            "Name": "John Doe",
-                            "AddressLine1": "300 Turnbull Ave",
-                            "Email": "jdoeasdfllkj@yahoo.com",
-                            "City": "Detroit",
-                            "StateOrProvinceCode": "MI",
-                            "PostalCode": "48123",
-                            "CountryCode": "US",
-                            "Phone": "7132341234"
-                        },
-                        "PackageDimensions": {
-                            "Length": 10,
-                            "Width": 10,
-                            "Height": 10,
-                            "Unit": "inches"
-                        },
-                        "Weight": {
-                            "Value": 10,
-                            "Unit": "oz"
-                        },
-                        "ShippingServiceOptions": {
-                            "DeliveryExperience": "NoTracking",
-                            "CarrierWillPickUp": False,
-                            "CarrierWillPickUpOption": "ShipperWillDropOff"
-                        }
-                    })
-
+            
+                MerchantFulfillment().get_eligible_shipment_services_old("value")
+        
         Args:
-            shipment_request_details: dict:
-
+            shipment_request_details:  | required
+            **kwargs:
+        
         Returns:
-            GetEligibleShipmentServicesResponse:
+            ApiResponse
         """
         # GetEligibleShipmentServicesRequest
         data = {"ShipmentRequestDetails": shipment_request_details, **kwargs}
@@ -79,62 +38,30 @@ class MerchantFulfillment(Client):
         self, shipment_request_details: dict, **kwargs
     ) -> ApiResponse:
         """
-        get_eligible_shipment_services(self, shipment_request_details: dict, **kwargs) -> ApiResponse
+        get_eligible_shipment_services(self, shipment_request_details, **kwargs) -> ApiResponse
+        
         Returns a list of shipping service offers that satisfy the specified shipment request details.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        6                                       12
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                MerchantFulfillment().get_eligible_shipment_services({
-                        "AmazonOrderId": "903-5563053-5647845",
-                        "ItemList": [
-                            {
-                                "OrderItemId": "52986411826454",
-                                "Quantity": 1
-                            }
-                        ],
-                        "ShipFromAddress": {
-                            "Name": "John Doe",
-                            "AddressLine1": "300 Turnbull Ave",
-                            "Email": "jdoeasdfllkj@yahoo.com",
-                            "City": "Detroit",
-                            "StateOrProvinceCode": "MI",
-                            "PostalCode": "48123",
-                            "CountryCode": "US",
-                            "Phone": "7132341234"
-                        },
-                        "PackageDimensions": {
-                            "Length": 10,
-                            "Width": 10,
-                            "Height": 10,
-                            "Unit": "inches"
-                        },
-                        "Weight": {
-                            "Value": 10,
-                            "Unit": "oz"
-                        },
-                        "ShippingServiceOptions": {
-                            "DeliveryExperience": "NoTracking",
-                            "CarrierWillPickUp": False,
-                            "CarrierWillPickUpOption": "ShipperWillDropOff"
-                        }
-                    })
-
+            
+                MerchantFulfillment().get_eligible_shipment_services("value")
+        
         Args:
-            shipment_request_details: dict:
-
+            body: GetEligibleShipmentServicesRequest | required The request schema for the `GetEligibleShipmentServices` operation.
+        
         Returns:
-            GetEligibleShipmentServicesResponse:
+            ApiResponse
         """
 
         # GetEligibleShipmentServicesRequest
@@ -145,29 +72,21 @@ class MerchantFulfillment(Client):
     @sp_endpoint("/mfn/v0/shipments/{}")
     def get_shipment(self, shipment_id: str, **kwargs) -> ApiResponse:
         """
-        get_shipment(self, shipmentId:str) -> ApiResponse
-        Returns a specified item and its attributes.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        get_shipment(self, shipment_id, **kwargs) -> ApiResponse
+        
+        Returns the shipment information for an existing shipment.
+        
         Examples:
             literal blocks::
-
-                MerchantFulfillment().get_shipment("abcddcba-00c3-4f6f-a63a-639f76ee9253")
-
+            
+                MerchantFulfillment().get_shipment("value")
+        
         Args:
-            shipment_id: str:
-
+            shipment_id:  | required
+            **kwargs:
+        
         Returns:
-            GetShipmentResponse:
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), shipment_id),
@@ -178,24 +97,30 @@ class MerchantFulfillment(Client):
     @sp_endpoint("/mfn/v0/shipments/{}", method="DELETE")
     def cancel_shipment(self, shipment_id: str, **kwargs) -> ApiResponse:
         """
-        cancel_shipment(self, shipment_id: str, **kwargs) -> ApiResponse
+        cancel_shipment(self, shipment_id, **kwargs) -> ApiResponse
+        
         Cancel the shipment indicated by the specified shipment identifier.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       1
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                MerchantFulfillment().cancel_shipment("value")
+        
         Args:
-            shipment_id: str:
-
+            shipmentId: object | required The Amazon-defined shipment identifier for the shipment to cancel.
+        
         Returns:
-            CancelShipmentResponse:
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), shipment_id),
@@ -206,24 +131,21 @@ class MerchantFulfillment(Client):
     @sp_endpoint("/mfn/v0/shipments/{}/cancel", method="PUT")
     def cancel_shipment_old(self, shipment_id: str, **kwargs) -> ApiResponse:
         """
-        cancel_shipment_old(self, shipment_id: str, **kwargs) -> ApiResponse
+        cancel_shipment_old(self, shipment_id, **kwargs) -> ApiResponse
+        
         Cancel the shipment indicated by the specified shipment identifer.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                MerchantFulfillment().cancel_shipment_old("value")
+        
         Args:
-            shipment_id: str:
-
+            shipment_id:  | required
+            **kwargs:
+        
         Returns:
-            CancelShipmentResponse:
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), shipment_id),
@@ -236,70 +158,30 @@ class MerchantFulfillment(Client):
         self, shipment_request_details: dict, shipping_service_id: str, **kwargs
     ) -> ApiResponse:
         """
-        create_shipment(self, shipment_request_details: dict, shipping_service_id: str, **kwargs) -> ApiResponse
+        create_shipment(self, shipment_request_details, shipping_service_id, **kwargs) -> ApiResponse
+        
         Create a shipment with the information provided.
-
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
-        1                                       1
+        2                                       2
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                MerchantFulfillment().create_shipment(
-                        shipment_request_details={
-                            "AmazonOrderId": "903-5563053-5647845",
-                            "ItemList": [
-                                {
-                                    "OrderItemId": "52986411826454",
-                                    "Quantity": 1
-                                }
-                            ],
-                            "ShipFromAddress": {
-                                "Name": "John Doe",
-                                "AddressLine1": "300 Turnbull Ave",
-                                "Email": "jdoeasdfllkj@yahoo.com",
-                                "City": "Detroit",
-                                "StateOrProvinceCode": "MI",
-                                "PostalCode": "48123",
-                                "CountryCode": "US",
-                                "Phone": "7132341234"
-                            },
-                            "PackageDimensions": {
-                                "Length": 10,
-                                "Width": 10,
-                                "Height": 10,
-                                "Unit": "inches"
-                            },
-                            "Weight": {
-                                "Value": 10,
-                                "Unit": "oz"
-                            },
-                            "ShippingServiceOptions": {
-                                "DeliveryExperience": "NoTracking",
-                                "CarrierWillPickUp": False,
-                                "CarrierWillPickUpOption": "ShipperWillDropOff"
-                            }
-                        },
-                        shipping_service_id="UPS_PTP_2ND_DAY_AIR",
-                        ShippingServiceOfferId="WHgxtyn6qjGGaCzOCog1azF5HLHje5Pz3Lc2Fmt5eKoZAReW8oJ1SMumuBS8lA/Hjuglhyiu0"
-                                               "+KRLvyJxFV0PB9YFMDhygs3VyTL0WGYkGxiuRkmuEvpqldUn9rrkWVodqnR4vx2VtXvtER"
-                                               "/Ju6RqYoddJZGy6RS2KLzzhQ2NclN0NYXMZVqpOe5RsRBddXaGuJr7oza3M52"
-                                               "+JzChocAHzcurIhCRynpbxfmNLzZMQEbgnpGLzuaoSMzfxg90/NaXFR/Ou01du/uKd5AbfMW"
-                                               "/AxAKP9ht6Oi9lDHq6WkGqvjkVLW0/jj/fBgblIwcs+t"
-                    )
-
+            
+                MerchantFulfillment().create_shipment("value", "value")
+        
         Args:
-            shipment_request_details: dict
-            shipping_service_id: str:
+            body: CreateShipmentRequest | required The request schema for the `CreateShipment` operation.
+        
         Returns:
-            CreateShipmentResponse:
+            ApiResponse
         """
 
         # CreateShipmentRequest
@@ -315,27 +197,26 @@ class MerchantFulfillment(Client):
         self, shipping_service_id: str, ship_from_address: dict, order_id: str, **kwargs
     ) -> ApiResponse:
         """
+        get_additional_seller_inputs_old(self, shipping_service_id, ship_from_address, order_id, **kwargs) -> ApiResponse
+        
         get_additional_seller_inputs_old(self, shipping_service_id: str,  ship_from_address: dict, order_id: str,
-        **kwargs) -> ApiResponse
-        Get a list of additional seller inputs required for a ship method. This is generally
-        used for international shipping.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       1
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+                                **kwargs) -> ApiResponse
+                                Get a list of additional seller inputs required for a ship method. This is generally
+                                used for international shipping.
+        
+        Examples:
+            literal blocks::
+            
+                MerchantFulfillment().get_additional_seller_inputs_old("value", "value", "value")
+        
         Args:
-            shipping_service_id: str
-            ship_from_address: dict
-            order_id: str:
+            shipping_service_id:  | required
+            ship_from_address:  | required
+            order_id:  | required
+            **kwargs:
+        
         Returns:
-            GetAdditionalSellerInputsResponse:
+            ApiResponse
         """
 
         # GetAdditionalSellerInputsRequest
@@ -351,27 +232,30 @@ class MerchantFulfillment(Client):
         self, shipping_service_id: str, ship_from_address: dict, order_id: str, **kwargs
     ) -> ApiResponse:
         """
-        get_additional_seller_inputs(self, shipping_service_id: str,  ship_from_address: dict, order_id: str,
-        **kwargs) -> ApiResponse
-        Gets a list of additional seller inputs required for a ship method. This is
-        generally used for international shipping.
-
+        get_additional_seller_inputs(self, shipping_service_id, ship_from_address, order_id, **kwargs) -> ApiResponse
+        
+        Gets a list of additional seller inputs required for a ship method. This is generally used for international shipping.
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       1
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                MerchantFulfillment().get_additional_seller_inputs("value", "value", "value")
+        
         Args:
-            shipping_service_id: str
-            ship_from_address: dict
-            order_id: str:
+            body: GetAdditionalSellerInputsRequest | required The request schema for the `GetAdditionalSellerInputs` operation.
+        
         Returns:
-            GetAdditionalSellerInputsResponse:
+            ApiResponse
         """
 
         # GetAdditionalSellerInputsRequest

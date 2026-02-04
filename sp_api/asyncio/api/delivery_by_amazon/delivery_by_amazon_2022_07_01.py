@@ -19,28 +19,26 @@ class DeliveryByAmazonV20220701(AsyncBaseClient):
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1.133 | 25 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1.133                                   25
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await DeliveryByAmazonV20220701().submit_invoice()
         
         Args:
-            key orderId:string | The identifier for the order.
-            key shipmentId:string | The identifier for the shipment.
-            body: | * REQUIRED {'description': 'The request schema for the `submitInvoice` operation.',
-         'properties': {'contentMD5Value': {'description': 'MD5 sum for validating the invoice data. For more information about calculating this value, see [Working with Content-MD5 '
-                                                           'Checksums](https://docs.developer.amazonservices.com/en_US/dev_guide/DG_MD5.html).',
-                                            'type': 'string'},
-                        'invoiceContent': {'$ref': '#/definitions/Blob', 'description': "The binary object representing an invoice's content."},
-                        'invoiceType': {'$ref': '#/definitions/InvoiceType', 'description': 'The type of an invoice.'},
-                        'marketplaceId': {'description': 'An Amazon marketplace identifier.', 'type': 'string'},
-                        'programType': {'$ref': '#/definitions/ProgramType', 'description': 'The Amazon program that the seller is currently enrolled.'}},
-         'required': ['contentMD5Value', 'invoiceContent', 'invoiceType', 'programType', 'marketplaceId'],
-         'type': 'object'}
+            key orderId: object |  The identifier for the order.
+            key shipmentId: object |  The identifier for the shipment.
+            body: SubmitInvoiceRequest | required The request body that specifies invoice, program and marketplace values.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         params = {}
         if "orderId" in kwargs:
@@ -58,20 +56,27 @@ class DeliveryByAmazonV20220701(AsyncBaseClient):
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1.133 | 25 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1.133                                   25
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await DeliveryByAmazonV20220701().get_invoice_status()
         
         Args:
-            key orderId:string | The order identifier.
-            key shipmentId:string | The shipment identifier.
-            key marketplaceId:string | * REQUIRED The marketplace identifier.
-            key invoiceType:string | * REQUIRED The invoice's type.
-            key programType:string | * REQUIRED The Amazon program that seller is currently enrolled.
+            key orderId: object |  The order identifier.
+            key shipmentId: object |  The shipment identifier.
+            key marketplaceId: object | required The marketplace identifier.
+            key invoiceType: object | required The invoice's type.
+            key programType: object | required The Amazon program that seller is currently enrolled.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(kwargs.pop("path"), params=kwargs, add_marketplace=False)

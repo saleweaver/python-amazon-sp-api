@@ -11,7 +11,23 @@ class Notifications(Client):
 
     @deprecated
     def add_subscription(self, notification_type: NotificationType or str, **kwargs):
-        """deprecated, use create_subscription"""
+        """
+        add_subscription(self, notification_type, **kwargs) -> ApiResponse
+        
+        deprecated, use create_subscription
+        
+        Examples:
+            literal blocks::
+            
+                Notifications().add_subscription("value")
+        
+        Args:
+            notification_type:  | required
+            **kwargs:
+        
+        Returns:
+            ApiResponse
+        """
         return self.create_subscription(notification_type, **kwargs)
 
     @sp_endpoint("/notifications/v1/subscriptions/{}", method="POST")
@@ -22,34 +38,31 @@ class Notifications(Client):
         **kwargs
     ) -> ApiResponse:
         """
-        create_subscription(self, notification_type: NotificationType or str, destination_id: str = None, **kwargs) -> ApiResponse
-        Creates a subscription for the specified notification type to be delivered to the specified destination.
-        Before you can subscribe, you must first create the destination by calling the createDestination operation.
-
+        create_subscription(self, notification_type, destination_id, **kwargs) -> ApiResponse
+        
+        Creates a subscription for the specified notification type to be delivered to the specified destination. Before you can subscribe, you must first create the destination by calling the `createDestination` operation. In cases where the specified notification type supports multiple payload versions, you can utilize this API to subscribe to a different payload version if you already have an existing subscription for a different payload version.
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
             literal blocks::
-
-                Notifications().create_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, destination_id='dest_id')
-
+            
+                Notifications().create_subscription("value", "value")
+        
         Args:
-            notification_type: NotificationType or str
-            destination_id: str
-            **kwargs:
-
-
+            body: CreateSubscriptionRequest | required
+            param: object |
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         data = {
             "destinationId": kwargs.pop("destinationId", destination_id),
@@ -72,31 +85,21 @@ class Notifications(Client):
         self, notification_type: NotificationType or str, **kwargs
     ) -> ApiResponse:
         """
-        get_subscription(self, notification_type: NotificationType or str, **kwargs) -> ApiResponse
-        Returns information about subscriptions of the specified notification type. You can use this API to get subscription information when you do not have a subscription identifier.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       5
-        ======================================  ==============
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        get_subscription(self, notification_type, **kwargs) -> ApiResponse
+        
+        Returns information about subscription of the specified notification type and payload version. `payloadVersion` is an optional parameter. When `payloadVersion` is not provided, it will return latest payload version subscription's information. You can use this API to get subscription information when you do not have a subscription identifier.
+        
         Examples:
             literal blocks::
-
-                Notifications().get_subscription(NotificationType.REPORT_PROCESSING_FINISHED)
-
+            
+                Notifications().get_subscription("value")
+        
         Args:
-            notification_type: NotificationType or str
+            notification_type:  | required
             **kwargs:
-
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         return self._request(
             fill_query_params(
@@ -115,31 +118,31 @@ class Notifications(Client):
         self, notification_type: NotificationType or str, subscription_id: str, **kwargs
     ) -> ApiResponse:
         """
-        delete_notification_subscription(self, notification_type: NotificationType or str, subscription_id: str, **kwargs) -> ApiResponse
-        Deletes the subscription indicated by the subscription identifier and notification type that you specify.
-        The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The deleteSubscriptionById API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
+        delete_notification_subscription(self, notification_type, subscription_id, **kwargs) -> ApiResponse
+        
+        Deletes the subscription indicated by the subscription identifier and notification type that you specify. The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The `deleteSubscriptionById` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
         Examples:
-            Notifications().delete_notification_subscription(NotificationType.MFN_ORDER_STATUS_CHANGE, 'subscription_id')
-
+            literal blocks::
+            
+                Notifications().delete_notification_subscription("value", "value")
+        
         Args:
-            notification_type: NotificationType or str
-            subscription_id: str
-            **kwargs:
-
+            subscriptionId: object | required The identifier for the subscription that you want to delete.
+            param: object |
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         return self._request(
             fill_query_params(
@@ -164,32 +167,24 @@ class Notifications(Client):
         **kwargs
     ) -> ApiResponse:
         """
-        create_destination(self, name: str, arn: str, **kwargs) -> ApiResponse
+        create_destination(self, name, arn, account_id, region, **kwargs) -> ApiResponse
+        
         Creates a destination resource to receive notifications. The createDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
-        **Usage Plan:**
-
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        1                                       5
-        ======================================  ==============
-
+        
         Examples:
             literal blocks::
-
-                Notifications().create_destination(name='test', arn='arn:aws:sqs:us-east-2:444455556666:queue1')
-
+            
+                Notifications().create_destination("value", "value", "value", "value")
+        
         Args:
-            account_id:
-            region:
-            name: str
-            arn: str
+            name:  | required
+            arn:  | required
+            account_id:  | required
+            region:  | required
             **kwargs:
-
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         resource_name = "sqs" if not account_id else "eventBridge"
         region = region if region else self.region
@@ -213,53 +208,59 @@ class Notifications(Client):
     def get_destinations(self, **kwargs) -> ApiResponse:
         """
         get_destinations(self, **kwargs) -> ApiResponse
-        Returns information about all destinations. The getDestinations API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
+        
+        Returns information about all destinations. The `getDestinations` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                Notifications().get_destinations()
+        
         Args:
             **kwargs:
-
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         return self._request_grantless_operation(kwargs.pop("path"), params={**kwargs})
 
     @sp_endpoint("/notifications/v1/destinations/{}", method="GET")
     def get_destination(self, destination_id: str, **kwargs) -> ApiResponse:
         """
-        get_destination(self, destination_id: str, **kwargs) -> ApiResponse
-        Returns information about all destinations. The getDestinations API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
+        get_destination(self, destination_id, **kwargs) -> ApiResponse
+        
+        Returns information about the destination that you specify. The `getDestination` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
-
+        
+        Examples:
+            literal blocks::
+            
+                Notifications().get_destination("value")
+        
         Args:
-            destination_id: str
-            **kwargs:
-
+            destinationId: object | required The identifier generated when you created the destination.
+        
         Returns:
-            ApiResponse:
-
-
+            ApiResponse
         """
         return self._request_grantless_operation(
             fill_query_params(kwargs.pop("path"), destination_id), params={**kwargs}
@@ -268,26 +269,30 @@ class Notifications(Client):
     @sp_endpoint("/notifications/v1/destinations/{}", method="DELETE")
     def delete_destination(self, destination_id: str, **kwargs) -> ApiResponse:
         """
-        delete_destination(self, destination_id: str, **kwargs) -> ApiResponse
-        Deletes the destination that you specify. The deleteDestination API is grantless. For more information, see "Grantless operations" in the Selling Partner API Developer Guide.
-
+        delete_destination(self, destination_id, **kwargs) -> ApiResponse
+        
+        Deletes the destination that you specify. The `deleteDestination` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
+        
         **Usage Plan:**
-
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         1                                       5
         ======================================  ==============
-
+        
         For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                Notifications().delete_destination("value")
+        
         Args:
-            destination_id: str
-            **kwargs:
-
+            destinationId: object | required The identifier for the destination that you want to delete.
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         return self._request_grantless_operation(
             fill_query_params(kwargs.pop("path"), destination_id), params={**kwargs}
@@ -299,24 +304,29 @@ class Notifications(Client):
     def get_subscription_by_id(self, notificationType, subscriptionId, **kwargs) -> ApiResponse:
         """
         get_subscription_by_id(self, notificationType, subscriptionId, **kwargs) -> ApiResponse
-
+        
         Returns information about a subscription for the specified notification type. The `getSubscriptionById` operation is grantless. For more information, refer to [Grantless operations](https://developer-docs.amazon.com/sp-api/docs/grantless-operations).
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1 | 5 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       5
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may observe higher rate and burst values than those shown here. For more information, refer to [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).
-
-        Args:
-            subscriptionId:string | * REQUIRED The identifier for the subscription that you want to get.
-            notificationType:string | * REQUIRED The type of notification.
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
             
-             For more information about notification types, refer to [Notification Type Values](https://developer-docs.amazon.com/sp-api/docs/notification-type-values).
-
+                Notifications().get_subscription_by_id("value", "value")
+        
+        Args:
+            subscriptionId: object | required The identifier for the subscription that you want to get.
+            param: object |
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return self._request(fill_query_params(kwargs.pop("path"), notificationType, subscriptionId), params=kwargs)

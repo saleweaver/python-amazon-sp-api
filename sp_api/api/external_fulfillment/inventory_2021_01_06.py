@@ -10,25 +10,21 @@ class ExternalFulfillmentInventoryV20210106(Client):
     def get_inventory(self, locationId, skuId, **kwargs) -> ApiResponse:
         """
         get_inventory(self, locationId, skuId, **kwargs) -> ApiResponse
-
+        
         Get the current inventory for a given SKU at a given location.
-
-        **Usage Plan:**
-
-        ======================================
-        Rate (requests per second)
-        ======================================
-        5
-        ======================================
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                ExternalFulfillmentInventoryV20210106().get_inventory("value", "value")
+        
         Args:
-            locationId:string | * REQUIRED The node identifier for the seller's location in smart connect for which inventory is being updated
-            skuId:string | * REQUIRED The seller's identifier for the SKU for which inventory is being updated
-
+            locationId:  | required
+            skuId:  | required
+            **kwargs:
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), locationId, skuId),
@@ -41,28 +37,22 @@ class ExternalFulfillmentInventoryV20210106(Client):
     def update_inventory(self, locationId, skuId, quantity, **kwargs) -> ApiResponse:
         """
         update_inventory(self, locationId, skuId, quantity, **kwargs) -> ApiResponse
-
+        
         Get the current inventory for a given SKU at a given location.
-
-        **Usage Plan:**
-
-        ======================================
-        Rate (requests per second)
-        ======================================
-        5
-        ======================================
-
-        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
-
+        
+        Examples:
+            literal blocks::
+            
+                ExternalFulfillmentInventoryV20210106().update_inventory("value", "value", "value")
+        
         Args:
-            locationId:string | * REQUIRED The node identifier for the seller's location in smart connect for which inventory is being updated
-            skuId:string | * REQUIRED The seller's identifier for the SKU for which inventory is being updated
-            quantity:integer | * REQUIRED The absolute number of items of the specified SKU available at the specified node. This value should always be a non-zero or zero positive integer
-            key if_match:string | A unique number provided with each call to update the inventory. This number must be latest version of entity that exist in system. It will be equal to comparison against existing version of entity.
-            key if_unmodified_since:string | Timestamp or increasing number which does greater than comparison before applying the change. This is different than version of entity and used to overwrite the latest data. It should follow data/time format of rfc2616
-
+            locationId:  | required
+            skuId:  | required
+            quantity:  | required
+            **kwargs:
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         kwargs["quantity"] = quantity
 

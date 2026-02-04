@@ -22,21 +22,34 @@ class ListingsItemsV20200901(Client):
     def delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         delete_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
+        
         Delete a listings item for a selling partner.
-        **Usage Plans:**
+        
+        **Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         5                                       10
         ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ListingsItemsV20200901().delete_listings_item("value", "value")
+        
         Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
+            sellerId: object | required A selling partner identifier, such as a merchant account or vendor code.
+            sku: object | required A selling partner provided identifier for an Amazon listing.
+            key marketplaceIds: object | required A comma-delimited list of Amazon marketplace identifiers for the request.
+            key issueLocale: object |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(
@@ -46,23 +59,22 @@ class ListingsItemsV20200901(Client):
     @sp_endpoint("/listings/2020-09-01/items/{}/{}", method="GET")
     def get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
-        get_listings_item(self, sellerId, **kwargs) -> ApiResponse
+        get_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
+        
         Returns details about a listings item for a selling partner.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       10
-        ======================================  ==============
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
+        
+        Examples:
+            literal blocks::
+            
+                ListingsItemsV20200901().get_listings_item("value", "value")
+        
         Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
+            sellerId:  | required
+            sku:  | required
+            **kwargs:
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         normalize_included_data(kwargs, enum_cls=IncludedData)
 
@@ -74,21 +86,20 @@ class ListingsItemsV20200901(Client):
     def search_listings_items(self, sellerId, **kwargs) -> ApiResponse:
         """
         search_listings_items(self, sellerId, **kwargs) -> ApiResponse
+        
         Search for and return list of listings items and respective details for a selling partner.
-        **Usage Plan:**
-        ======================================  ==============
-        Rate (requests per second)               Burst
-        ======================================  ==============
-        5                                       5
-        ======================================  ==============
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values then those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://github.com/amzn/selling-partner-api-docs/blob/main/guides/en-US/usage-plans-rate-limits/Usage-Plans-and-Rate-Limits.md).
+        
+        Examples:
+            literal blocks::
+            
+                ListingsItemsV20200901().search_listings_items("value")
+        
         Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            key includedData:array |  A comma-delimited list of data sets to include in the response. Default: summaries.
+            sellerId:  | required
+            **kwargs:
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         normalize_included_data(kwargs, enum_cls=IncludedData)
 
@@ -100,34 +111,35 @@ class ListingsItemsV20200901(Client):
     def patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         patch_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
+        
         Partially update (patch) a listings item for a selling partner. Only top-level listings item attributes can be patched. Patching nested attributes is not supported.
-        **Usage Plans:**
+        
+        **Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         5                                       10
         ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ListingsItemsV20200901().patch_listings_item("value", "value")
+        
         Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            body: {
-              "productType": "string",
-              "patches": [
-                {
-                  "op": "add",
-                  "path": "string",
-                  "value": [
-                    {}
-                  ]
-                }
-              ]
-            }
-
-         Returns:
-            ApiResponse:
+            sellerId: object | required A selling partner identifier, such as a merchant account or vendor code.
+            sku: object | required A selling partner provided identifier for an Amazon listing.
+            key marketplaceIds: object | required A comma-delimited list of Amazon marketplace identifiers for the request.
+            key issueLocale: object |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
+            body: ListingsItemPatchRequest | required The request body schema for the patchListingsItem operation.
+        
+        Returns:
+            ApiResponse
         """
         return self._request(
             fill_query_params(kwargs.pop("path"), sellerId, sku),
@@ -139,27 +151,35 @@ class ListingsItemsV20200901(Client):
     def put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse:
         """
         put_listings_item(self, sellerId, sku, **kwargs) -> ApiResponse
+        
         Creates a new or fully-updates an existing listings item for a selling partner.
-        **Usage Plans:**
+        
+        **Note:** The parameters associated with this operation may contain special characters that must be encoded to successfully call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
+        **Usage Plan:**
+        
         ======================================  ==============
         Rate (requests per second)               Burst
         ======================================  ==============
         5                                       10
         ======================================  ==============
-        The x-amzn-RateLimit-Limit response header returns the usage plan rate limits that were applied to the requested operation. Rate limits for some selling partners will vary from the default rate and burst shown in the table above. For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ListingsItemsV20200901().put_listings_item("value", "value")
+        
         Args:
-            sellerId:string | * REQUIRED A selling partner identifier, such as a merchant account or vendor code.
-            sku:string | * REQUIRED A selling partner provided identifier for an Amazon listing.
-            key marketplaceIds:array | * REQUIRED A comma-delimited list of Amazon marketplace identifiers for the request.
-            key issueLocale:string |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
-            body: {
-              "productType": "string",
-              "requirements": "LISTING",
-              "attributes": {}
-            }
-
+            sellerId: object | required A selling partner identifier, such as a merchant account or vendor code.
+            sku: object | required A selling partner provided identifier for an Amazon listing.
+            key marketplaceIds: object | required A comma-delimited list of Amazon marketplace identifiers for the request.
+            key issueLocale: object |  A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: "en_US", "fr_CA", "fr_FR". Localized messages default to "en_US" when a localization is not available in the specified locale.
+            body: ListingsItemPutRequest | required The request body schema for the putListingsItem operation.
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
 
         return self._request(

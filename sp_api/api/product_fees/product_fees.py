@@ -26,37 +26,39 @@ class ProductFees(Client):
         **kwargs
     ) -> ApiResponse:
         """
-        get_product_fees_estimate_for_sku(self, seller_sku, price: float, shipping_price=None, currency='USD', is_fba=False, points: dict = dict, **kwargs) -> ApiResponse
-
-        Returns fees for sku
-
+        get_product_fees_estimate_for_sku(self, seller_sku, price, shipping_price, currency, is_fba, points, marketplace_id, optional_fulfillment_program, force_safe_sku, **kwargs) -> ApiResponse
+        
+        Returns the estimated fees for the item indicated by the specified seller SKU in the marketplace specified in the request body.
+        
+        **Note:** The parameters associated with this operation may contain special characters that require URL encoding to call the API. To avoid errors with SKUs when encoding URLs, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).
+        
+        You can call `getMyFeesEstimateForSKU` for an item on behalf of a selling partner before the selling partner sets the item's price. The selling partner can then take any estimated fees into account. Each fees estimate request must include an original identifier. This identifier is included in the fees estimate so that you can correlate a fees estimate with the original request.
+        
+        **Note:** This identifier value is used to identify an estimate. Actual costs may vary. Search "fees" in [Seller Central](https://sellercentral.amazon.com/) and consult the store-specific fee schedule for the most up-to-date information.
+        
+        **Note:** When sellers use the `getMyFeesEstimateForSKU` operation with their `SellerSKU`, they get accurate fees based on real item measurements, but only after they've sent their items to Amazon.
+        
+        **Usage Plan:**
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       2
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                ProductFees().get_product_fees_estimate_for_sku("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
-                                                          points={
-                                                              "PointsNumber": 0,
-                                                              "PointsMonetaryValue": {
-                                                                  "CurrencyCode": "USD",
-                                                                  "Amount": 0
-                                                              }
-                                                          })
-
+            
+                ProductFees().get_product_fees_estimate_for_sku("value", "value", "value", "value", "value", "value", "value", "value", "value")
+        
         Args:
-            seller_sku:
-            price:
-            shipping_price:
-            currency:
-            is_fba:
-            points:
-            marketplace_id: str | Defaults to self.marketplace_id
-            optional_fulfillment_program:
-            force_safe_sku: bool | Force user SKU quote
-            **kwargs:
-
+            body: GetMyFeesEstimateRequest | required The request body schema for the getMyFeesEstimates operation
+            SellerSKU: object | required Used to identify an item in the given marketplace. SellerSKU is qualified by the seller's SellerId, which is included with every operation that you submit.
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
 
         if force_safe_sku:
@@ -93,36 +95,37 @@ class ProductFees(Client):
         **kwargs
     ) -> ApiResponse:
         """
-        get_product_fees_estimate_for_asin(self, asin, price: float, currency='USD', shipping_price=None, is_fba=False,  points: dict = dict, **kwargs) -> ApiResponse
-
-        Returns fees for asin
-
+        get_product_fees_estimate_for_asin(self, asin, price, currency, shipping_price, is_fba, points, marketplace_id, optional_fulfillment_program, **kwargs) -> ApiResponse
+        
+        Returns the estimated fees for the item indicated by the specified ASIN in the marketplace specified in the request body.
+        
+        You can call `getMyFeesEstimateForASIN` for an item on behalf of a selling partner before the selling partner sets the item's price. The selling partner can then take estimated fees into account. Each fees request must include an original identifier. This identifier is included in the fees estimate so you can correlate a fees estimate with the original request.
+        
+        **Note:** This identifier value is used to identify an estimate. Actual costs may vary. Search "fees" in [Seller Central](https://sellercentral.amazon.com/) and consult the store-specific fee schedule for the most up-to-date information.
+        
+        **Note:** When using the `getMyFeesEstimateForASIN` operation with an ASIN, the fee estimates might be different. This is because these estimates use the item's catalog size, which might not always match the actual size of the item sent to Amazon.
+        
+        **Usage Plan:**
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1                                       2
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
         Examples:
             literal blocks::
-
-                ProductFees().get_product_fees_estimate_for_asin("UmaS1", 10, currency='USD', shipping_price=10, is_fba=False,
-                                                           points={
-                                                               "PointsNumber": 0,
-                                                               "PointsMonetaryValue": {
-                                                                   "CurrencyCode": "USD",
-                                                                   "Amount": 0
-                                                               }
-                                                           })
-
+            
+                ProductFees().get_product_fees_estimate_for_asin("value", "value", "value", "value", "value", "value", "value", "value")
+        
         Args:
-            asin:
-            price:
-            currency:
-            shipping_price:
-            is_fba:
-            points:
-            marketplace_id: str | Defaults to self.marketplace_id
-            optional_fulfillment_program:
-            **kwargs:
-
+            body: GetMyFeesEstimateRequest | required The request body schema for the getMyFeesEstimates operation
+            Asin: object | required The Amazon Standard Identification Number (ASIN) of the item.
+        
         Returns:
-            ApiResponse:
-
+            ApiResponse
         """
         kwargs.update(
             create_fees_body(
@@ -143,23 +146,30 @@ class ProductFees(Client):
         self, estimate_requests: List[dict], **kwargs
     ) -> ApiResponse:
         """
-        get_my_fees_estimates(self, estimate_requests: List[dict], **kwargs) -> ApiResponse
-
+        get_my_fees_estimates(self, estimate_requests, **kwargs) -> ApiResponse
+        
         Returns the estimated fees for a list of products.
-
+        
         **Usage Plan:**
-
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 0.5 | 1 |
-
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
-
+        
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        0.5                                     1
+        ======================================  ==============
+        
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                ProductFees().get_my_fees_estimates("value")
+        
         Args:
-            body: | * REQUIRED The request body schema for the getMyFeesEstimates operation
-
+            body: GetMyFeesEstimatesRequest | required The request body schema for the getMyFeesEstimates operation
+        
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         kwargs.pop("path", None)
         kwargs.pop("method", None)
@@ -167,32 +177,20 @@ class ProductFees(Client):
 
     def get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse:
         """
-        get_product_fees_estimate(self, estimate_requests: List[dict]) -> ApiResponse
-
+        get_product_fees_estimate(self, estimate_requests) -> ApiResponse
+        
         Return fees for multiple products
-
+        
         Examples:
             literal blocks::
-
-                ProductFees().get_product_fees_estimate(
-                        [
-                            dict(id_type='ASIN', id_value='B012345678', price=100),
-                            dict(id_type='ASIN', id_value='B012345678', price=50, is_fba=True),
-                        ]
-                    )
-
-
+            
+                ProductFees().get_product_fees_estimate("value")
+        
         Args:
-            estimate_requests: list of dict where the allowed keys are :
-                id_type: str | ASIN or SellerSKU
-                id_value: str
-                price:
-                currency:
-                shipping_price:
-                is_fba:
-                points:
-                marketplace_id: str | Defaults to self.marketplace_id
-                optional_fulfillment_program:
+            estimate_requests:  | required
+        
+        Returns:
+            ApiResponse
         """
         data = []
         for estimate in estimate_requests:

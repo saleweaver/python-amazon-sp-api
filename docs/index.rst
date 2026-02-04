@@ -14,6 +14,7 @@ Welcome to PYTHON-AMAZON-SP-API's documentation!
    credentials
    examples
    quickstart
+   client_usage
    async
    architecture
    versions

@@ -19,17 +19,24 @@ class ShipmentInvoicingV0(AsyncBaseClient):
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1.133 | 25 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1.133                                   25
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ShipmentInvoicingV0().get_shipment_details("value")
         
         Args:
-            shipmentId:string | * REQUIRED The identifier for the shipment. Get this value from the FBAOutboundShipmentStatus notification. For information about subscribing to notifications, see the [Notifications API Use Case Guide](doc:notifications-api-v1-use-case-guide).
+            shipmentId: object | required The identifier for the shipment. Get this value from the FBAOutboundShipmentStatus notification. For information about subscribing to notifications, see the [Notifications API Use Case Guide](doc:notifications-api-v1-use-case-guide).
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(fill_query_params(kwargs.pop("path"), shipmentId), params=kwargs, add_marketplace=False)
 
@@ -42,25 +49,25 @@ class ShipmentInvoicingV0(AsyncBaseClient):
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1.133 | 25 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1.133                                   25
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ShipmentInvoicingV0().submit_invoice("value")
         
         Args:
-            shipmentId:string | * REQUIRED The identifier for the shipment.
-            body: | * REQUIRED {'description': 'The request schema for the submitInvoice operation.',
-         'properties': {'ContentMD5Value': {'description': 'MD5 sum for validating the invoice data. For more information about calculating this value, see [Working with Content-MD5 '
-                                                           'Checksums](https://docs.developer.amazonservices.com/en_US/dev_guide/DG_MD5.html).',
-                                            'type': 'string'},
-                        'InvoiceContent': {'$ref': '#/definitions/Blob'},
-                        'MarketplaceId': {'description': 'An Amazon marketplace identifier.', 'type': 'string'}},
-         'required': ['ContentMD5Value', 'InvoiceContent'],
-         'type': 'object'}
+            shipmentId: object | required The identifier for the shipment.
+            body: SubmitInvoiceRequest | required
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(fill_query_params(kwargs.pop("path"), shipmentId), data=kwargs, add_marketplace=False)
 
@@ -73,16 +80,23 @@ class ShipmentInvoicingV0(AsyncBaseClient):
         
         **Usage Plan:**
         
-        | Rate (requests per second) | Burst |
-        | ---- | ---- |
-        | 1.133 | 25 |
+        ======================================  ==============
+        Rate (requests per second)               Burst
+        ======================================  ==============
+        1.133                                   25
+        ======================================  ==============
         
-        The `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](doc:usage-plans-and-rate-limits-in-the-sp-api).
+        For more information, see "Usage Plans and Rate Limits" in the Selling Partner API documentation.
+        
+        Examples:
+            literal blocks::
+            
+                await ShipmentInvoicingV0().get_invoice_status("value")
         
         Args:
-            shipmentId:string | * REQUIRED The shipment identifier for the shipment.
+            shipmentId: object | required The shipment identifier for the shipment.
         
         Returns:
-            ApiResponse:
+            ApiResponse
         """
         return await self._request(fill_query_params(kwargs.pop("path"), shipmentId), params=kwargs, add_marketplace=False)
