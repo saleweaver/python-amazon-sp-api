@@ -57,19 +57,27 @@ autodoc_default_options = {"members": True, "undoc-members": True, 'member-order
 # a list of builtin themes.
 #
 # html_theme = 'sphinx_rtd_theme'
-html_theme = "pydata_sphinx_theme"
+# html_theme = "pydata_sphinx_theme"
+html_theme = 'alabaster'
 
 html_theme_options = {
-    "logo": {
-        "text": "python-amazon-sp-api",
-    },
-    # optional tweaks
-    "show_prev_next": False,
+    'github_button': True,    # optional tweaks
+    'github_banner': True,
+    'github_button': True,
+    'description': '''
+A wrapper to access Amazon's Selling Partner API with an easy-to-use interface.
+    ''',
+    'donate_url': 'https://github.com/sponsors/saleweaver',
+    'github_user': 'saleweaver',
+    'github_repo': 'python-amazon-sp-api',
+    "github_type": "star",  # watch|star|fork
+'fixed_sidebar': True
 }
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['custom.css']
 
 
 napoleon_google_docstring = True

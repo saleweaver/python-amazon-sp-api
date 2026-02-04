@@ -6,7 +6,7 @@ You can use the playground to test endpoints:
 
 
 ..  toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
     endpoints/aplus_content
     endpoints/authorization

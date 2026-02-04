@@ -1,0 +1,23 @@
+.rst-content dl.py.method,
+.rst-content dl.py.function,
+.rst-content dl.py.class {
+  margin-top: 1.5rem;
+}
+
+.rst-content dl.py.method > dt,
+.rst-content dl.py.function > dt,
+.rst-content dl.py.class > dt {
+  margin-top: 1.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e2e2e2;
+}
+
+.rst-content dl.py.method > dd,
+.rst-content dl.py.function > dd,
+.rst-content dl.py.class > dd {
+  margin-bottom: 1.25rem;
+}
+
+.py .method {
+  margin-top: 1.5rem;
+}
