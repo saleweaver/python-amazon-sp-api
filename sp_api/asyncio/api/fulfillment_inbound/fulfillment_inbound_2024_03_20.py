@@ -58,9 +58,9 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
     @sp_endpoint("/fba/inbound/2024-03-20/shipments/{}", method="POST")
     async def create_shipment(self, shipment_id, data, **kwargs):
         """
-        create_shipment(self, shipment_id, data, **kwargs) -> ApiResponse
+        ``create_shipment(self, shipment_id, data, **kwargs) -> ApiResponse``
         
-        create_shipment(self, shipment_id, data, **kwargs)
+        ``create_shipment(self, shipment_id, data, **kwargs)``
         
         Examples:
             literal blocks::
@@ -156,9 +156,9 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
     @sp_endpoint("/fba/inbound/2024-03-20/shipments/{}/preorder/confirm", method="PUT")
     async def confirm_preorder(self, shipment_id, **kwargs):
         """
-        confirm_preorder(self, shipment_id, **kwargs) -> ApiResponse
+        ``confirm_preorder(self, shipment_id, **kwargs) -> ApiResponse``
         
-        confirm_preorder(self, shipment_id, **kwargs)
+        ``confirm_preorder(self, shipment_id, **kwargs)``
         
         Examples:
             literal blocks::
@@ -306,9 +306,9 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
     @sp_endpoint("/fba/inbound/2024-03-20/shipments/{}/labels")
     async def get_labels(self, shipment_id, **kwargs):
         """
-        get_labels(self, shipment_id, **kwargs) -> ApiResponse
+        ``get_labels(self, shipment_id, **kwargs) -> ApiResponse``
         
-        get_labels(self, shipment_id, **kwargs)
+        ``get_labels(self, shipment_id, **kwargs)``
         
         Examples:
             literal blocks::
@@ -1303,7 +1303,7 @@ class FulfillmentInboundV20240320(AsyncBaseClient):
     @sp_endpoint("/inbound/fba/2024-03-20/items/prepDetails", method="GET")
     async def list_prep_details(self, **kwargs) -> ApiResponse:
         """
-        list_prep_details(self, **kwargs) -> ApiResponse
+        ``list_prep_details(self, **kwargs) -> ApiResponse``
         
         Get preparation details for a list of MSKUs in a specified marketplace.\n\n**Note:** MSKUs that contain certain characters must be encoded. For more information, refer to [URL Encoding](https://developer-docs.amazon.com/sp-api/docs/url-encoding).\n\nThe following characters must be double percent encoded:\n\n- `%`\n- `+`\n- `,`\n\n**Examples:** An MSKU value of `test%msku` is encoded as `test%2525msku`. An MSKU value of `test,msku` is encoded as `test%252Cmsku`.
         
