@@ -197,7 +197,7 @@ class DataKiosk(Client):
         )
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             with httpx.Client(
-                proxies=self.proxies,
+                proxy=self.proxies,
                 verify=self.verify,
             ) as client:
                 document_response = client.get(res.payload.get("documentUrl"))

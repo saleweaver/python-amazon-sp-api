@@ -367,7 +367,7 @@ class Reports(Client):
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             compression_algorithm = res.payload.get("compressionAlgorithm")
             with httpx.Client(
-                proxies=self.proxies,
+                proxy=self.proxies,
                 verify=self.verify,
                 timeout=timeout,
             ) as client:
