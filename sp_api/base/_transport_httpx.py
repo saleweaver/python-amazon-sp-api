@@ -1,7 +1,22 @@
+from typing import Mapping
+
 import httpx
 
 
-class HttpxTransport:
+_PROXY_KEY_PREFERENCE = ("https", "https://", "http", "http://", "all", "all://")
+
+
+def _select_proxy_from_mapping(proxies: Mapping):
+    for key in _PROXY_KEY_PREFERENCE:
+        if key in proxies and proxies[key]:
+            return proxies[key]
+    return next(iter(proxies.values()), None)
+
+
+        if proxy_param == "proxy" and isinstance(proxies, Mapping):
+            client_kwargs[proxy_param] = _select_proxy_from_mapping(proxies)
+        else:
+            client_kwargs[proxy_param] = proxies
     def __init__(
         self, *, timeout=None, proxies=None, proxy=None, verify=True, client=None
     ):
