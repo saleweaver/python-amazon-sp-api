@@ -10,6 +10,7 @@ from sp_api.base import (
     ApiResponse,
     Marketplaces,
 )
+from sp_api.base._transport_httpx import _httpx_client_kwargs
 from sp_api.util import (
     normalize_csv_param,
     normalize_datetime_kwargs,
@@ -367,9 +368,11 @@ class Reports(Client):
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             compression_algorithm = res.payload.get("compressionAlgorithm")
             with httpx.Client(
-                proxies=self.proxies,
-                verify=self.verify,
-                timeout=timeout,
+                **_httpx_client_kwargs(
+                    proxies=self.proxies,
+                    verify=self.verify,
+                    timeout=timeout,
+                )
             ) as client:
                 if stream and file:
                     with client.stream("GET", res.payload.get("url")) as document_response:

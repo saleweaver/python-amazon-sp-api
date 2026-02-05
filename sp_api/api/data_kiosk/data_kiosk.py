@@ -1,9 +1,11 @@
-import httpx
 import urllib.parse
 from io import BytesIO, StringIO
 from typing import Union, BinaryIO, TextIO
 
+import httpx
+
 from sp_api.base import Client, sp_endpoint, fill_query_params, ApiResponse
+from sp_api.base._transport_httpx import _httpx_client_kwargs
 
 
 class DataKiosk(Client):
@@ -197,8 +199,10 @@ class DataKiosk(Client):
         )
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             with httpx.Client(
-                proxies=self.proxies,
-                verify=self.verify,
+                **_httpx_client_kwargs(
+                    proxies=self.proxies,
+                    verify=self.verify,
+                )
             ) as client:
                 document_response = client.get(res.payload.get("documentUrl"))
                 document = document_response.content

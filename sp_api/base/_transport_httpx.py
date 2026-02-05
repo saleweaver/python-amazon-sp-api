@@ -1,4 +1,19 @@
+import random
+
 import httpx
+
+
+def _httpx_client_kwargs(*, proxies=None, verify=True, timeout=None):
+    client_kwargs = {"verify": verify}
+    if timeout is not None:
+        client_kwargs["timeout"] = timeout
+    if proxies is not None:
+        if isinstance(proxies, (list, tuple)):
+            proxy_value = random.choice(proxies)
+        else:
+            proxy_value = proxies
+        client_kwargs["proxy"] = proxy_value
+    return client_kwargs
 
 
 class HttpxTransport:
@@ -7,9 +22,11 @@ class HttpxTransport:
     ):
         proxy_config = proxy if proxy is not None else proxies
         self._client = client or httpx.Client(
-            timeout=timeout,
-            proxy=proxy_config,
-            verify=verify,
+            **_httpx_client_kwargs(
+                timeout=timeout,
+                proxies=proxy_config,
+                verify=verify,
+            )
         )
 
     def request(self, method, url, *, params=None, data=None, content=None, headers=None):
