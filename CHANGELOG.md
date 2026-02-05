@@ -1,3 +1,29 @@
+## v2.1.5 - 2026-02-05
+## Version 2.1.5
+
+### New Features
+- **Improved Proxy Handling**: 
+  - Introduced `_httpx_client_kwargs` function to enhance proxy handling. This allows for dynamic selection of proxies when provided as a list, improving flexibility and robustness in network configurations.
+
+### Changes
+- **DataKiosk and Reports Modules**: 
+  - Updated the use of `httpx.Client` to utilize the new `_httpx_client_kwargs` function for better proxy and timeout management.
+
+### Bug Fixes
+- No specific bug fixes were documented in this release.
+
+### Internal
+- Added tests for `_httpx_client_kwargs` to ensure correct proxy selection and configuration.
+- Updated version number from 2.1.4 to 2.1.5.
+
+### Diagram of Version Update
+```mermaid
+graph TD;
+    A[Version 2.1.4] --> B[Version 2.1.5];
+```
+
+This update enhances the flexibility of the HTTP client configuration, particularly in handling proxies, which is crucial for users operating in diverse network environments.
+
 ## v2.1.4 - 2026-02-04
 # Changelog
 
