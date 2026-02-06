@@ -1,3 +1,30 @@
+## v2.1.6 - 2026-02-06
+## Version 2.1.6
+
+### New Features
+- **Enhanced Character Encoding Resolution**:
+  - Improved the `resolve_character_code` function to better handle character encoding by considering `response_charset_encoding`. This ensures more accurate encoding detection, especially for responses with implicit UTF-8 encoding.
+
+### Changes
+- **Reports Module**:
+  - Updated the `Reports` class to utilize the enhanced `resolve_character_code` function. This change improves the handling of character encoding in both synchronous and asynchronous report downloads.
+
+### Bug Fixes
+- No specific bug fixes were documented in this release.
+
+### Internal
+- Added comprehensive tests for the `resolve_character_code` function to ensure correct behavior across various encoding scenarios.
+
+### Diagram of Character Encoding Resolution Update
+```mermaid
+graph TD;
+    A[Previous Encoding Handling] --> B[Enhanced Encoding Handling];
+    B --> C[Considers response_charset_encoding];
+    B --> D[Improved Fallback Logic];
+```
+
+This update enhances the robustness of character encoding detection, particularly in scenarios where the response charset is not explicitly set, ensuring more reliable data processing for users.
+
 ## v2.1.5 - 2026-02-05
 ## Version 2.1.5
 
