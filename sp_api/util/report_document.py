@@ -3,8 +3,24 @@ import zlib
 from io import BytesIO, StringIO
 
 
-def resolve_character_code(response_encoding, fallback="iso-8859-1"):
-    character_code = response_encoding or fallback
+def resolve_character_code(
+    response_encoding=None,
+    fallback="iso-8859-1",
+    response_charset_encoding=None,
+):
+    """Resolve report text encoding while preserving pre-httpx behavior.
+
+    requests exposed ``None`` when a response had no charset, and the reports
+    client then fell back to iso-8859-1. httpx exposes ``utf-8`` by default in
+    the same scenario, so we treat implicit utf-8 as "missing" and keep the
+    historical fallback.
+    """
+    if response_charset_encoding:
+        character_code = response_charset_encoding
+    elif response_encoding and response_encoding.lower() != "utf-8":
+        character_code = response_encoding
+    else:
+        character_code = fallback
     if character_code and character_code.lower() == "windows-31j":
         character_code = "cp932"
     return character_code

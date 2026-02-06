@@ -378,7 +378,9 @@ class Reports(Client):
                     with client.stream("GET", res.payload.get("url")) as document_response:
                         if not character_code:
                             character_code = resolve_character_code(
-                                document_response.encoding, fallback="iso-8859-1"
+                                document_response.encoding,
+                                fallback="iso-8859-1",
+                                response_charset_encoding=getattr(document_response, "charset_encoding", None),
                             )
                         stream_to_file_sync(
                             document_response,
@@ -390,7 +392,9 @@ class Reports(Client):
                     document_response = client.get(res.payload.get("url"))
                     if not character_code:
                         character_code = resolve_character_code(
-                            document_response.encoding, fallback="iso-8859-1"
+                            document_response.encoding,
+                            fallback="iso-8859-1",
+                            response_charset_encoding=getattr(document_response, "charset_encoding", None),
                         )
                     document = decompress_bytes(
                         document_response.content, compression_algorithm
