@@ -26,8 +26,6 @@ This tool helps developers and businesses connect seamlessly with Amazon's vast 
 If you appreciate this project and find it useful, please consider supporting its continued development:
 
 - 🙌 [GitHub Sponsors](https://github.com/sponsors/saleweaver)
-- 🌐 BTC Address: `bc1q6uqgczasmnvnc5upumarugw2mksnwneg0f65ws`
-- 🌐 ETH Address: `0xf59534F7a7F5410DBCD0c779Ac3bB6503bd32Ae5`
 
 Your support helps keep the project alive and evolving, and is greatly appreciated!
 
