@@ -1,5 +1,6 @@
+from typing import TYPE_CHECKING
+
 from .base_client import BaseClient
-from .client import Client
 from .helpers import (
     fill_query_params,
     sp_endpoint,
@@ -36,10 +37,13 @@ from .ApiResponse import ApiResponse
 from .processing_status import ProcessingStatus
 from .reportTypes import ReportType
 from .feedTypes import FeedType
-from sp_api.auth import AccessTokenClient, Credentials
-from sp_api.auth.exceptions import AuthorizationError
 from sp_api.base.inegibility_reasons import IneligibilityReasonList
 from .marketplaces import AwsEnv
+
+if TYPE_CHECKING:
+    from .client import Client
+    from sp_api.auth import AccessTokenClient, Credentials
+    from sp_api.auth.exceptions import AuthorizationError
 
 
 __all__ = [
@@ -92,3 +96,23 @@ __all__ = [
 # Backward-compatibility aliases for docs and legacy imports.
 FeedTypes = FeedType
 FulfillmentChannels = FulfillmentChannel
+
+
+def __getattr__(name):
+    if name == "Client":
+        from .client import Client
+
+        globals()[name] = Client
+        return Client
+    if name in {"AccessTokenClient", "Credentials"}:
+        from sp_api.auth import AccessTokenClient, Credentials
+
+        exports = {"AccessTokenClient": AccessTokenClient, "Credentials": Credentials}
+        globals()[name] = exports[name]
+        return exports[name]
+    if name == "AuthorizationError":
+        from sp_api.auth.exceptions import AuthorizationError
+
+        globals()[name] = AuthorizationError
+        return AuthorizationError
+    raise AttributeError(f"module '{__name__}' has no attribute '{name}'")
