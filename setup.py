@@ -8,7 +8,8 @@ setup(
     install_requires=[
         "httpx>=0.27.0",
         "cachetools>=4.2",
-        "confuse>=1.4"
+        "confuse>=1.4",
+        "typing-extensions"
     ],
     extras_require={
         "aws-caching": ["aws-secretsmanager-caching", "boto3"],
