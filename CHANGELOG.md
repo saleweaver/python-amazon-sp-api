@@ -1,3 +1,24 @@
+## v2.1.8 - 2026-02-24
+## Version 2.1.8
+
+### New Features
+- **Dependency Update**:
+  - Added `typing-extensions` to the list of required dependencies. This ensures compatibility with newer Python features and enhances type hinting capabilities.
+
+### Internal
+- **Version Bump**:
+  - Updated the version from `2.1.7` to `2.1.8` to reflect the latest changes and improvements.
+
+### Diagram of Dependency Update
+```mermaid
+graph TD;
+    A[Previous Dependencies] --> B[Added typing-extensions];
+    B --> C[Enhanced Type Hinting];
+    B --> D[Improved Compatibility];
+```
+
+This release focuses on maintaining compatibility with Python's evolving type system and improving the overall robustness of the library.
+
 ## v2.1.7 - 2026-02-09
 ## Version 2.1.7
 
