@@ -1,3 +1,28 @@
+## v2.1.7 - 2026-02-09
+## Version 2.1.7
+
+### New Features
+- **Dynamic Import Handling**:
+  - Introduced dynamic import handling for `Client`, `AccessTokenClient`, `Credentials`, and `AuthorizationError` using `__getattr__`. This change optimizes the import process and reduces unnecessary imports, improving performance.
+
+### Changes
+- **README Update**:
+  - Removed cryptocurrency addresses from the README file, streamlining the support section.
+
+### Internal
+- **Type Checking Enhancements**:
+  - Added `TYPE_CHECKING` imports to optimize the import process during type checking, ensuring that certain imports are only processed when type checking is enabled.
+
+### Diagram of Dynamic Import Handling
+```mermaid
+graph TD;
+    A[Static Imports] --> B[Dynamic Import Handling];
+    B --> C[Reduces Unnecessary Imports];
+    B --> D[Improves Performance];
+```
+
+This update focuses on improving the efficiency of the import process within the library, enhancing performance and maintainability.
+
 ## v2.1.6 - 2026-02-06
 ## Version 2.1.6
 
