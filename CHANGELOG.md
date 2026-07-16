@@ -1,3 +1,29 @@
+## v2.1.9 - 2026-07-16
+## Version 2.1.9
+
+### New Features
+- **Dependency Updates**:
+  - Upgraded `requests` to version `2.34.2` to ensure better performance and security.
+  - Updated `httpx` to version `0.28.1` for improved HTTP client capabilities.
+  - Bumped `boto3` to version `1.43.36` for enhanced AWS SDK functionalities.
+
+### Internal
+- **Version Bump**:
+  - Updated the version from `2.1.8` to `2.1.9` to incorporate the latest dependency updates.
+
+### Diagram of Dependency Updates
+```mermaid
+graph TD;
+    A[Previous Dependencies] --> B[Updated requests to 2.34.2];
+    A --> C[Updated httpx to 0.28.1];
+    A --> D[Updated boto3 to 1.43.36];
+    B --> E[Improved Performance];
+    C --> F[Enhanced HTTP Client];
+    D --> G[Enhanced AWS SDK];
+```
+
+This release focuses on updating core dependencies to maintain the library's security, performance, and compatibility with external services.
+
 ## v2.1.8 - 2026-02-24
 ## Version 2.1.8
 
