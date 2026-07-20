@@ -4,7 +4,7 @@ httpx>=0.28.1
 boto3~=1.43.36
 
 cachetools~=6.2.6
-setuptools~=80.10.2
+setuptools~=83.0.0
 pytz~=2025.1
 confuse~=2.1.0
 jinja2
