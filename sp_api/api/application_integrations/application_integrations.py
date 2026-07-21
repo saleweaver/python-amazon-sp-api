@@ -36,12 +36,12 @@ class ApplicationIntegrations(Client):
         
         Args:
             body: CreateNotificationRequest | required The request body for the `createNotification` operation.
-        
+
         Returns:
             ApiResponse
         """
-    
-        return self._request(kwargs.pop('path'), data=kwargs)
+
+        return self._request(kwargs.pop('path'), data=kwargs.pop('body'), params=kwargs)
     
 
     @sp_endpoint('/appIntegrations/2024-04-01/notifications/deletion', method='POST')
@@ -68,12 +68,12 @@ class ApplicationIntegrations(Client):
         
         Args:
             body: DeleteNotificationsRequest | required The request body for the `deleteNotifications` operation.
-        
+
         Returns:
             ApiResponse
         """
-    
-        return self._request(kwargs.pop('path'), data=kwargs)
+
+        return self._request(kwargs.pop('path'), data=kwargs.pop('body'), params=kwargs)
     
 
     @sp_endpoint('/appIntegrations/2024-04-01/notifications/{}/feedback', method='POST')
@@ -101,9 +101,9 @@ class ApplicationIntegrations(Client):
         Args:
             notificationId: object | required A `notificationId` uniquely identifies a notification.
             body: RecordActionFeedbackRequest | required The request body for the `recordActionFeedback` operation.
-        
+
         Returns:
             ApiResponse
         """
-    
-        return self._request(fill_query_params(kwargs.pop('path'), notificationId), data=kwargs)
+
+        return self._request(fill_query_params(kwargs.pop('path'), notificationId), data=kwargs.pop('body'), params=kwargs)
