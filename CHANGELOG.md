@@ -1,3 +1,27 @@
+## v2.1.10 - 2026-07-21
+## Version 2.1.10
+
+### Changes to Existing Features
+- **Application Integrations**:
+  - Updated the `create_notification`, `delete_notifications`, and `record_action_feedback` methods to correctly handle request parameters. The `body` is now explicitly popped from `kwargs` and passed as `data`, while other parameters are passed as `params`.
+
+### Internal
+- **Version Bump**:
+  - Updated the version from `2.1.9` to `2.1.10`.
+
+### Diagram of Method Changes
+```mermaid
+graph TD;
+    A[Previous Method Implementation] --> B[create_notification];
+    A --> C[delete_notifications];
+    A --> D[record_action_feedback];
+    B --> E[Corrected Parameter Handling];
+    C --> F[Corrected Parameter Handling];
+    D --> G[Corrected Parameter Handling];
+``` 
+
+This update ensures that the methods in the `ApplicationIntegrations` class handle request bodies and parameters correctly, improving the reliability of API interactions.
+
 ## v2.1.9 - 2026-07-16
 ## Version 2.1.9
 
