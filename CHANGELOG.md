@@ -1,3 +1,27 @@
+## v2.1.11 - 2026-07-24
+## Version 2.1.11
+
+### Changes to Existing Features
+- **Application Integrations**:
+  - Improved the handling of request parameters in the `create_notification`, `delete_notifications`, and `record_action_feedback` methods. The `body` is now explicitly extracted from `kwargs` and passed as `data`, while other parameters are passed as `params`. This change enhances the reliability of API interactions.
+
+### Internal
+- **Dependencies**:
+  - Updated `boto3` from `1.43.36` to `1.43.55` in both `requirements.txt` and `docs/requirements.txt`.
+
+### Diagram of Method Changes
+```mermaid
+graph TD;
+    A[Previous Method Implementation] --> B[create_notification];
+    A --> C[delete_notifications];
+    A --> D[record_action_feedback];
+    B --> E[Corrected Parameter Handling];
+    C --> F[Corrected Parameter Handling];
+    D --> G[Corrected Parameter Handling];
+``` 
+
+This update ensures that the methods in the `ApplicationIntegrations` class handle request bodies and parameters correctly, improving the reliability of API interactions.
+
 ## v2.1.10 - 2026-07-21
 ## Version 2.1.10
 
