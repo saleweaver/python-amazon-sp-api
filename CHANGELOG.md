@@ -1,3 +1,25 @@
+## v2.1.15 - 2026-07-25
+## Version 2.1.15
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `setuptools` to version `83.0.0` in both `requirements.txt` and `docs/requirements.txt`. This update ensures compatibility with the latest features and security improvements.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.15` to reflect the changes in dependencies.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous setuptools Version 80.10.2] --> B[requirements.txt];
+    A --> C[docs/requirements.txt];
+    B --> D[Updated to setuptools 83.0.0];
+    C --> E[Updated to setuptools 83.0.0];
+```
+
+This update focuses on maintaining the package's compatibility and security by aligning with the latest dependency versions.
+
 ## v2.1.14 - 2026-07-25
 ## Version 2.1.14
 
