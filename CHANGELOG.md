@@ -1,3 +1,29 @@
+## v2.1.14 - 2026-07-25
+## Version 2.1.14
+
+### Changes to Existing Features
+- **Python Version Requirement**:
+  - Updated the minimum required Python version to 3.10. This change ensures compatibility with the latest features and improvements in the Python ecosystem.
+  - Updated the quickstart documentation to reflect the new Python 3.10+ requirement.
+
+### Internal
+- **CI/CD Workflows**:
+  - Updated GitHub Actions workflows (`python-publish.yml` and `version_increment.yml`) to use Python 3.10 instead of 3.9, aligning with the new minimum version requirement.
+  
+- **Dependencies**:
+  - Added `python_requires='>=3.10'` in `setup.py` to enforce the new minimum Python version requirement.
+
+### Diagram of Workflow Changes
+```mermaid
+graph TD;
+    A[Previous Python Version 3.9] --> B[python-publish.yml];
+    A --> C[version_increment.yml];
+    B --> D[Updated to Python 3.10];
+    C --> E[Updated to Python 3.10];
+```
+
+This update ensures that the package and its workflows are aligned with Python 3.10, enhancing performance and security.
+
 ## v2.1.13 - 2026-07-24
 ## Version 2.1.13
 
