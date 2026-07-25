@@ -15,6 +15,7 @@ setup(
         "aws-caching": ["aws-secretsmanager-caching", "boto3"],
         "aws": ["boto3"]
     },
+    python_requires='>=3.10',
     packages=find_packages(include=["sp_api*"]),
     scripts=['make_endpoint/make_endpoint'],
     url='https://github.com/saleweaver/python-amazon-sp-api',

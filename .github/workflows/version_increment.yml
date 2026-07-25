@@ -22,7 +22,7 @@ jobs:
         if: github.actor != 'dependabot[bot]'
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Increment version
         if: github.actor != 'dependabot[bot]'

@@ -12,7 +12,7 @@ This page focuses on **practical workflows** rather than listing every parameter
 Prerequisites
 -------------
 
-- Python 3.8+
+- Python 3.10+
 - An SP-API application in Seller Central
 - A valid refresh token and IAM role / user configured according to Amazon's guide
 
