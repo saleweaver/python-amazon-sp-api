@@ -1,3 +1,25 @@
+## v2.1.16 - 2026-07-25
+## Version 2.1.16
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `cachetools` to version `7.1.6` in both `requirements.txt` and `docs/requirements.txt`. This update ensures improved performance and compatibility with other dependencies.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.16` to reflect the changes in dependencies.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous cachetools Version 6.2.6] --> B[requirements.txt];
+    A --> C[docs/requirements.txt];
+    B --> D[Updated to cachetools 7.1.6];
+    C --> E[Updated to cachetools 7.1.6];
+```
+
+This update focuses on enhancing the package's performance and maintaining compatibility with the latest dependency versions.
+
 ## v2.1.15 - 2026-07-25
 ## Version 2.1.15
 
