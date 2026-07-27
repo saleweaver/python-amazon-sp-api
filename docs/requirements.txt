@@ -8,7 +8,7 @@ boto3~=1.43.55
 
 cachetools~=7.1.6
 setuptools~=83.0.0
-pytz~=2025.1
+pytz~=2026.3
 confuse~=2.1.0
 jinja2
 
