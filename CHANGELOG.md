@@ -1,3 +1,23 @@
+## v2.1.19 - 2026-08-01
+## Version 2.1.19
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `confuse` to version `2.2.1` in both `docs/requirements.txt` and `requirements.txt`. This update includes improvements and bug fixes that enhance configuration management.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.19` to reflect the changes in dependencies.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous confuse Version 2.1.0] --> B[docs/requirements.txt & requirements.txt];
+    B --> C[Updated to confuse 2.2.1];
+```
+
+This update ensures that the dependency on `confuse` is current, benefiting from the latest enhancements and fixes.
+
 ## v2.1.18 - 2026-08-01
 ## Version 2.1.18
 
