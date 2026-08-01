@@ -1,3 +1,25 @@
+## v2.1.17 - 2026-08-01
+## Version 2.1.17
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `pytz` to version `2026.3` in both `requirements.txt` and `docs/requirements.txt`. This update ensures compatibility with the latest timezone data.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.17` to reflect the changes in dependencies.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous pytz Version 2025.1] --> B[requirements.txt];
+    A --> C[docs/requirements.txt];
+    B --> D[Updated to pytz 2026.3];
+    C --> E[Updated to pytz 2026.3];
+```
+
+This update focuses on maintaining compatibility with the latest timezone data by updating the `pytz` dependency.
+
 ## v2.1.16 - 2026-07-25
 ## Version 2.1.16
 
