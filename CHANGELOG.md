@@ -1,3 +1,23 @@
+## v2.1.20 - 2026-08-01
+## Version 2.1.20
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `boto3` to version `1.43.58` in both `docs/requirements.txt` and `requirements.txt`. This update ensures compatibility with the latest AWS services and includes various bug fixes and improvements.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.20` to incorporate the latest dependency updates.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous boto3 Version 1.43.55] --> B[docs/requirements.txt & requirements.txt];
+    B --> C[Updated to boto3 1.43.58];
+```
+
+This update maintains the package's compatibility with the latest AWS services by keeping the `boto3` dependency current.
+
 ## v2.1.19 - 2026-08-01
 ## Version 2.1.19
 
