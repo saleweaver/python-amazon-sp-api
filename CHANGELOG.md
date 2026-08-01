@@ -1,3 +1,23 @@
+## v2.1.18 - 2026-08-01
+## Version 2.1.18
+
+### Changes to Existing Features
+- **Documentation**:
+  - Updated `sphinx-toolbox` to version `4.3.0` in `docs/requirements.txt`. This upgrade enhances the documentation generation capabilities with the latest features and fixes.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.18` to reflect the changes in documentation dependencies.
+
+### Diagram of Documentation Dependency Changes
+```mermaid
+graph TD;
+    A[Previous sphinx-toolbox Version 4.2.0] --> B[docs/requirements.txt];
+    B --> C[Updated to sphinx-toolbox 4.3.0];
+```
+
+This update ensures that the documentation tools are up-to-date, leveraging new improvements and maintaining compatibility with the latest documentation standards.
+
 ## v2.1.17 - 2026-08-01
 ## Version 2.1.17
 
