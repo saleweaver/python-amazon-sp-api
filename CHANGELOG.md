@@ -1,3 +1,26 @@
+## v2.1.22 - 2026-08-29
+## Version 2.1.22
+
+### Changes to Existing Features
+- **Dependencies**:
+  - Updated `boto3` to version `1.43.81` in both `docs/requirements.txt` and `requirements.txt`. This update includes improvements and bug fixes.
+  - Updated `setuptools` to version `84.0.0` in both `docs/requirements.txt` and `requirements.txt`.
+
+### Internal
+- **Version Update**:
+  - Bumped the package version to `2.1.22` to incorporate the latest dependency updates.
+
+### Diagram of Dependency Changes
+```mermaid
+graph TD;
+    A[Previous boto3 Version 1.43.58] --> B[docs/requirements.txt & requirements.txt];
+    B --> C[Updated to boto3 1.43.81];
+    D[Previous setuptools Version 83.0.0] --> E[docs/requirements.txt & requirements.txt];
+    E --> F[Updated to setuptools 84.0.0];
+```
+
+These updates ensure the package benefits from the latest enhancements and fixes in the `boto3` and `setuptools` libraries.
+
 ## v2.1.21 - 2026-08-29
 ## Version 2.1.21
 
