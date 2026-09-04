@@ -6,7 +6,7 @@ requests~=2.34.2
 
 boto3~=1.43.81
 
-cachetools~=7.1.7
+cachetools~=7.1.8
 setuptools~=84.0.0
 pytz~=2026.3
 confuse~=2.2.1
