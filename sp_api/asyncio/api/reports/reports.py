@@ -358,6 +358,14 @@ class Reports(AsyncBaseClient):
         
         Returns:
             ApiResponse
+        
+        Note:
+            When the document itself is retrieved (``download``, ``file`` or
+            ``decrypt``), the character encoding the document was decoded and
+            written with is available as ``response.character_code``. It is the
+            value of ``character_code`` when one is passed, otherwise the
+            encoding resolved from the document response's ``Content-Type``.
+            On a metadata-only call, ``response.character_code`` is ``None``.
         """
         res = await self._request(
             fill_query_params(kwargs.pop("path"), reportDocumentId),
@@ -407,4 +415,5 @@ class Reports(AsyncBaseClient):
                     )
                 if file:
                     handle_file(file, decoded_document, character_code)
+            res.character_code = character_code
         return res
