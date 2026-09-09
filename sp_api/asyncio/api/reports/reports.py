@@ -371,6 +371,7 @@ class Reports(AsyncBaseClient):
             fill_query_params(kwargs.pop("path"), reportDocumentId),
             add_marketplace=False,
         )
+        res.character_code = None
         if download or file or ("decrypt" in kwargs and kwargs["decrypt"]):
             compression_algorithm = res.payload.get("compressionAlgorithm")
             if stream and file:

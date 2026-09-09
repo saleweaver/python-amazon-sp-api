@@ -35,11 +35,13 @@ def _document_response(charset):
     )
 
 
-def _api_response(method, url):
+def _api_response(method, url, extra_payload=None):
     if "api.amazon.com" in url:
         payload = {"access_token": "TEST_TOKEN", "expires_in": 3600}
     else:
-        payload = {"payload": {"reportDocumentId": DOCUMENT_ID, "url": DOCUMENT_URL}}
+        document = {"reportDocumentId": DOCUMENT_ID, "url": DOCUMENT_URL}
+        document.update(extra_payload or {})
+        payload = {"payload": document}
     return httpx.Response(200, json=payload, headers={})
 
 
@@ -63,11 +65,13 @@ class DummyDocumentClient:
 
 @pytest.fixture()
 def sync_mock(monkeypatch):
-    def _mock(charset):
+    def _mock(charset, extra_payload=None):
         monkeypatch.setattr(
             HttpxTransport,
             "request",
-            lambda self, method, url, **kwargs: _api_response(method, url),
+            lambda self, method, url, **kwargs: _api_response(
+                method, url, extra_payload
+            ),
         )
         monkeypatch.setattr(DummyDocumentClient, "charset", charset)
         monkeypatch.setattr(httpx, "Client", DummyDocumentClient)
@@ -134,6 +138,20 @@ def test_get_report_document_character_code_is_none_without_download(
     res = Reports(credentials=credentials).get_report_document(DOCUMENT_ID)
     assert res.character_code is None
     assert "document" not in res.payload
+
+
+def test_get_report_document_character_code_ignores_colliding_payload_field(
+    sync_mock, credentials
+):
+    """A ``character_code`` field in Amazon's payload must not leak through.
+
+    ``ApiResponse.__getattr__`` falls back to ``payload.get(item)``, so the
+    attribute has to be set on every path -- not only when the document is
+    fetched -- for a metadata-only call to read as ``None``.
+    """
+    sync_mock("Cp1252", extra_payload={"character_code": "FROM_AMAZON_PAYLOAD"})
+    res = Reports(credentials=credentials).get_report_document(DOCUMENT_ID)
+    assert res.character_code is None
 
 
 def test_async_get_report_document_exposes_resolved_character_code(
