@@ -1,3 +1,30 @@
+## v2.1.33 - 2026-10-17
+## Version 2.1.33
+
+### New Features
+- **Reports API**:
+  - Introduced support for retrieving the character encoding of downloaded report documents. The encoding is accessible via `response.character_code`. If a character code is explicitly provided, it is echoed back; otherwise, it is determined from the document response's `Content-Type`. For metadata-only requests, `response.character_code` is `None`.
+
+### Bug Fixes
+- **Reports API**:
+  - Resolved an issue where the character encoding information could be incorrectly set or omitted when processing report documents.
+
+### Internal
+- **Dependencies**:
+  - Updated `boto3` dependency to version 1.43.113 in both `requirements.txt` and `docs/requirements.txt`.
+
+### Diagram of Character Encoding Handling
+```mermaid
+graph TD;
+    A[Request Report Document] --> B{Download/Decrypt};
+    B -->|Yes| C[Resolve Character Encoding];
+    B -->|No| D[Set character_code to None];
+    C --> E[Return ApiResponse with character_code];
+    D --> E;
+```
+
+These changes enhance the usability of the Reports API by providing more detailed information about document encoding, which is crucial for correctly processing and displaying report data.
+
 ## v2.1.32 - 2026-10-17
 ## Version 2.1.32
 
