@@ -163,7 +163,6 @@ class Client(BaseClient):
         error = js.get("errors", None)
 
         if error:
-            log.error("Error Response: %s", error)
             exception = get_exception_for_code(res.status_code)
             raise exception(error, headers=res.headers)
 
