@@ -3,7 +3,7 @@ httpx>=0.28.1
 
 boto3~=1.43.119
 
-cachetools~=7.2.4
+cachetools~=7.2.6
 setuptools~=84.2.1
 pytz~=2026.5
 confuse~=2.3.0
