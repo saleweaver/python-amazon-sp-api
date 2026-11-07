@@ -9,7 +9,7 @@ boto3~=1.43.119
 cachetools~=7.2.6
 setuptools~=84.2.1
 pytz~=2026.6
-confuse~=2.3.0
+confuse~=2.3.1
 jinja2
 
 sphinxcontrib-napoleon
