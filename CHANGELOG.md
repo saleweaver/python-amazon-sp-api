@@ -1,3 +1,23 @@
+## v2.1.39 - 2026-11-07
+## Version 2.1.39
+
+### Internal
+- **Dependencies**:
+  - Updated `pytz` dependency to version 2026.6.
+
+### Diagram of Dependency Update Process
+```mermaid
+graph TD;
+    A[Check Current Dependencies] --> B{Identify Outdated Versions};
+    B -->|Outdated| C[Update Dependency Version];
+    C --> D[Run Tests];
+    D -->|Pass| E[Deploy New Version];
+    D -->|Fail| F[Fix Issues];
+    F --> D;
+```
+
+These internal changes ensure the package remains up-to-date with its dependencies, enhancing stability and compatibility.
+
 ## v2.1.38 - 2026-10-31
 ## Version 2.1.38
 
