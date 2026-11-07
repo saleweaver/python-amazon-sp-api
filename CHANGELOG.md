@@ -1,3 +1,23 @@
+## v2.1.41 - 2026-11-07
+## Version 2.1.41
+
+### Internal
+- **Dependencies**:
+  - Updated `cachetools` dependency to version 7.2.8.
+
+### Diagram of Dependency Update Process
+```mermaid
+graph TD;
+    A[Check Current Dependencies] --> B{Identify Outdated Versions};
+    B -->|Outdated| C[Update Dependency Version];
+    C --> D[Run Tests];
+    D -->|Pass| E[Deploy New Version];
+    D -->|Fail| F[Fix Issues];
+    F --> D;
+```
+
+These internal updates ensure the package remains compatible with the latest versions of its dependencies, improving overall stability and functionality.
+
 ## v2.1.40 - 2026-11-07
 ## Version 2.1.40
 
