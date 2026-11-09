@@ -1,7 +1,7 @@
 pytest
 httpx>=0.28.1
 
-boto3~=1.43.123
+boto3~=1.43.125
 
 cachetools~=7.2.8
 setuptools~=84.2.1
